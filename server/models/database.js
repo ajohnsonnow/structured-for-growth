@@ -1,4 +1,4 @@
-import Database from 'better-sqlite3';
+import initSqlJs from 'sql.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
@@ -14,21 +14,46 @@ if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
 }
 
+let SQL;
 let db;
 
-export function getDatabase() {
-    if (!db) {
-        db = new Database(dbPath);
-        db.pragma('journal_mode = WAL');
+async function initDB() {
+    if (!SQL) {
+        SQL = await initSqlJs();
     }
+    
+    if (!db) {
+        // Load existing database or create new one
+        try {
+            const buffer = fs.readFileSync(dbPath);
+            db = new SQL.Database(buffer);
+        } catch (err) {
+            // Database doesn't exist, create new one
+            db = new SQL.Database();
+        }
+    }
+    
     return db;
 }
 
-export function initializeDatabase() {
-    const database = getDatabase();
+// Save database to disk
+function saveDatabase() {
+    if (db) {
+        const data = db.export();
+        const buffer = Buffer.from(data);
+        fs.writeFileSync(dbPath, buffer);
+    }
+}
+
+export async function getDatabase() {
+    return await initDB();
+}
+
+export async function initializeDatabase() {
+    const database = await initDB();
     
     // Users table for authentication
-    database.exec(`
+    database.run(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
@@ -41,7 +66,7 @@ export function initializeDatabase() {
     `);
     
     // Clients table
-    database.exec(`
+    database.run(`
         CREATE TABLE IF NOT EXISTS clients (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
@@ -58,7 +83,7 @@ export function initializeDatabase() {
     `);
     
     // Projects table
-    database.exec(`
+    database.run(`
         CREATE TABLE IF NOT EXISTS projects (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             client_id INTEGER NOT NULL,
@@ -75,7 +100,7 @@ export function initializeDatabase() {
     `);
     
     // Contact submissions table
-    database.exec(`
+    database.run(`
         CREATE TABLE IF NOT EXISTS contact_submissions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
@@ -88,7 +113,15 @@ export function initializeDatabase() {
         )
     `);
     
+    saveDatabase();
     console.log('✅ Database initialized successfully');
 }
+
+// Auto-save on process exit
+process.on('exit', saveDatabase);
+process.on('SIGINT', () => {
+    saveDatabase();
+    process.exit();
+});
 
 export default { getDatabase, initializeDatabase };

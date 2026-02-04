@@ -276,6 +276,125 @@
         </div>
     </section>
 
+    <!-- Value Proposition Calculator -->
+    <section id="value" class="value-proposition">
+        <div class="container">
+            <h2 class="section-title">The Value Proposition</h2>
+            <p class="section-subtitle">Real cost comparison: Solo expert vs. development team</p>
+            
+            <div class="value-calculator">
+                <div class="calculator-intro">
+                    <h3>Why Structured For Growth?</h3>
+                    <p>Get expert-level development at a fraction of traditional team costs. Our template library accelerates delivery while maintaining enterprise quality.</p>
+                </div>
+
+                <div class="cost-comparison">
+                    <div class="comparison-card solo-card">
+                        <div class="card-header">
+                            <h3>Solo Expert</h3>
+                            <span class="badge badge-success">Recommended</span>
+                        </div>
+                        <div class="rate-display">
+                            <div class="rate-amount">$420</div>
+                            <div class="rate-unit">per hour</div>
+                        </div>
+                        <ul class="benefits-list">
+                            <li>✓ Direct communication</li>
+                            <li>✓ No coordination overhead</li>
+                            <li>✓ Consistent code quality</li>
+                            <li>✓ Fast decision-making</li>
+                            <li>✓ Template library access</li>
+                            <li>✓ 16+ production templates</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-card team-card">
+                        <div class="card-header">
+                            <h3>Development Team</h3>
+                            <span class="badge badge-warning">Traditional</span>
+                        </div>
+                        <div class="rate-display">
+                            <div class="rate-amount">$600-$1,250</div>
+                            <div class="rate-unit">per hour (3-5 devs)</div>
+                        </div>
+                        <ul class="benefits-list">
+                            <li>○ Multiple stakeholders</li>
+                            <li>○ Communication overhead</li>
+                            <li>○ Variable code quality</li>
+                            <li>○ Slower decision-making</li>
+                            <li>○ Custom builds only</li>
+                            <li>○ No template savings</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="savings-calculator">
+                    <h3>Calculate Your Savings</h3>
+                    <div class="calculator-controls">
+                        <div class="control-group">
+                            <label for="project-hours">Estimated Project Hours:</label>
+                            <input type="number" id="project-hours" value="160" min="10" max="1000" step="10">
+                        </div>
+                        <div class="control-group">
+                            <label for="template-usage">Templates to Use:</label>
+                            <input type="number" id="template-usage" value="5" min="0" max="16" step="1">
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-row">
+                            <span class="result-label">Solo Expert Cost:</span>
+                            <span class="result-value solo-cost">$67,200</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Template Time Saved:</span>
+                            <span class="result-value template-savings">15 hours ($6,300)</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Adjusted Solo Cost:</span>
+                            <span class="result-value adjusted-solo">$60,900</span>
+                        </div>
+                        <div class="result-divider"></div>
+                        <div class="result-row">
+                            <span class="result-label">Team Cost (avg):</span>
+                            <span class="result-value team-cost">$148,000</span>
+                        </div>
+                        <div class="result-row highlight-row">
+                            <span class="result-label">Your Savings:</span>
+                            <span class="result-value total-savings">$87,100 (59%)</span>
+                        </div>
+                    </div>
+
+                    <div class="calculator-footnote">
+                        <p><strong>Note:</strong> Team rates based on industry average of $150-250/hour per developer (3-5 person team). Template time savings calculated at 3 hours average per template.</p>
+                    </div>
+                </div>
+
+                <div class="template-value">
+                    <h3>Template Library ROI</h3>
+                    <div class="template-stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="template-count">16</div>
+                            <div class="stat-label">Production Templates</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="hours-saved">48</div>
+                            <div class="stat-label">Hours Saved (avg)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="cost-saved">$20,160</div>
+                            <div class="stat-label">Cost Savings</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">60-90%</div>
+                            <div class="stat-label">Time Reduction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
@@ -391,6 +510,7 @@
     </footer>
 
     <script type="module" src="/js/main.js"></script>
+    <script type="module" src="/scripts/value-calculator.js"></script>
     <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 </body>

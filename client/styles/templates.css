@@ -1,9 +1,10 @@
 /* Templates Page Styles */
 
 .hero-small {
-    background: linear-gradient(135deg, var(--bg-secondary) 0%, #e0e7ff 100%);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
     padding: var(--spacing-xl) 0;
     text-align: center;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .hero-small h1 {
@@ -32,23 +33,26 @@
 
 .template-nav-btn {
     padding: 0.5rem 1rem;
-    border: 1px solid var(--border-color);
-    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    background: var(--bg-card);
     border-radius: var(--radius-md);
     cursor: pointer;
     font-weight: 500;
+    color: var(--text-secondary);
     transition: all var(--transition-fast);
 }
 
 .template-nav-btn:hover {
     border-color: var(--primary-color);
-    color: var(--primary-color);
+    color: var(--forest-green-accent);
+    box-shadow: var(--glow-green);
 }
 
 .template-nav-btn.active {
-    background-color: var(--primary-color);
-    color: white;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--forest-green-medium) 100%);
+    color: var(--warm-white);
     border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
 }
 
 /* Template Search */

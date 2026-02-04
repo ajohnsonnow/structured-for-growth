@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url';
 import contactRoutes from './routes/contact.js';
 import clientRoutes from './routes/clients.js';
 import authRoutes from './routes/auth.js';
+import projectRoutes from './routes/projects.js';
 
 // Import database initialization
 import { initializeDatabase } from './models/database.js';
@@ -52,6 +53,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/contact', contactRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/projects', projectRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
