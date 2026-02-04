@@ -28,6 +28,9 @@ async function checkAuth() {
         if (response.ok) {
             const data = await response.json();
             currentUser = data.user;
+            // Show the dashboard content for authenticated users
+            document.querySelector('.dashboard-nav').classList.add('authenticated');
+            document.querySelector('.dashboard-container').classList.add('authenticated');
             onAuthSuccess();
         } else {
             localStorage.removeItem('authToken');
@@ -75,6 +78,9 @@ async function handleLogin(e) {
             localStorage.setItem('authToken', authToken);
             currentUser = data.user;
             document.getElementById('loginModal').classList.remove('active');
+            // Show the dashboard content after login
+            document.querySelector('.dashboard-nav').classList.add('authenticated');
+            document.querySelector('.dashboard-container').classList.add('authenticated');
             onAuthSuccess();
         } else {
             showFormMessage('loginForm', 'error', data.message || 'Login failed');
@@ -829,6 +835,8 @@ function switchView(view) {
 }
 
 function showLoginModal() {
+    // Dashboard content is hidden by default via CSS
+    // Just show the login modal
     document.getElementById('loginModal').classList.add('active');
 }
 
