@@ -26,6 +26,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust proxy for Render and other PaaS platforms
+app.set('trust proxy', 1);
+
 // Initialize database
 initializeDatabase();
 

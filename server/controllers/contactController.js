@@ -1,4 +1,6 @@
-import nodemailer from 'nodemailer';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const nodemailer = require('nodemailer');
 
 // Create email transporter
 const createTransporter = () => {
@@ -7,7 +9,13 @@ const createTransporter = () => {
         return null;
     }
     
-    return nodemailer.createTransporter({
+    // Check if email config is available
+    if (!process.env.EMAIL_HOST || !process.env.EMAIL_USER) {
+        console.log('Email not configured - submissions will be logged only');
+        return null;
+    }
+    
+    return nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
         secure: false, // true for 465, false for other ports
