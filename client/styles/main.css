@@ -614,6 +614,25 @@ section {
     padding-top: var(--spacing-md);
     text-align: center;
     color: #9ca3af;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.admin-login-link {
+    font-size: 0.75rem;
+    color: #6b7280;
+    opacity: 0.6;
+    transition: opacity var(--transition-fast);
+}
+
+.admin-login-link:hover {
+    opacity: 1;
+    color: #9ca3af;
 }
 
 /* Animations */
