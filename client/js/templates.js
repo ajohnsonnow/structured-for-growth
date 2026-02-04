@@ -338,7 +338,42 @@ function showFieldError(form, fieldName, message) {
 document.addEventListener('DOMContentLoaded', () => {
     initTemplates();
     setupEventListeners();
+    handleHashNavigation();
 });
+
+// Handle hash navigation from Explore buttons on index page
+function handleHashNavigation() {
+    const hash = window.location.hash.slice(1); // Remove the # symbol
+    if (hash) {
+        // Map hash to category (forms, auth, database, ui, api, utils, email)
+        const validCategories = ['forms', 'auth', 'database', 'ui', 'api', 'utils', 'email'];
+        if (validCategories.includes(hash)) {
+            currentCategory = hash;
+            
+            // Update active button
+            document.querySelectorAll('.template-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === hash) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter to show only that category
+            filterTemplates();
+            
+            // Smooth scroll to templates grid
+            const grid = document.getElementById('templatesGrid');
+            if (grid) {
+                setTimeout(() => {
+                    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
+    }
+}
+
+// Listen for hash changes (in case user clicks back/forward)
+window.addEventListener('hashchange', handleHashNavigation);
 
 function initTemplates() {
     displayTemplates(templates);

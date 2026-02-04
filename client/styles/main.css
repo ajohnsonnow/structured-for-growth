@@ -856,6 +856,32 @@ section {
     font-size: 1.5rem;
 }
 
+/* Time Factor Section */
+.time-factor-section {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, rgba(34, 139, 34, 0.1) 0%, rgba(0, 100, 0, 0.15) 100%);
+    border: 2px solid var(--forest-green-accent);
+    border-radius: var(--radius-md);
+}
+
+.time-factor-section h4 {
+    color: var(--forest-green-accent);
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.time-row {
+    padding: var(--spacing-xs) 0;
+}
+
+.time-row .result-value {
+    color: var(--forest-green-accent);
+    font-weight: 700;
+}
+
 .calculator-footnote {
     padding: var(--spacing-md);
     background: var(--bg-secondary);
