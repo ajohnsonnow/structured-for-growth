@@ -1,6 +1,6 @@
 {
   "name": "structured-for-growth-www",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
   "main": "server/index.js",
   "type": "module",
@@ -12,6 +12,7 @@
     "dev:server": "nodemon server/index.js",
     "dev:client": "vite",
     "build": "vite build",
+    "postinstall": "npm run build",
     "preview": "vite preview",
     "start": "node server/index.js",
     "render-build": "npm install && npm run build",
