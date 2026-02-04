@@ -111,7 +111,7 @@ const demoConfigs = {
         init: () => {
             window.showAuthTab = (tab) => {
                 document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-                document.querySelector(\`[onclick="showAuthTab('\${tab}')"]\`).classList.add('active');
+                document.querySelector(`[onclick="showAuthTab('${tab}')"]`).classList.add('active');
                 document.getElementById('loginTab').style.display = tab === 'login' ? 'block' : 'none';
                 document.getElementById('registerTab').style.display = tab === 'register' ? 'block' : 'none';
             };
@@ -119,13 +119,13 @@ const demoConfigs = {
             document.getElementById('loginForm').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const result = document.getElementById('authResult');
-                result.innerHTML = \`
+                result.innerHTML = `
                     <div class="success-msg">
                         ✓ Login successful!<br>
                         <code>JWT Token: eyJhbGciOiJIUzI1NiIs...</code><br>
                         <small>Token expires in 7 days</small>
                     </div>
-                \`;
+                `;
             });
             
             document.getElementById('registerForm').addEventListener('submit', (e) => {
@@ -153,11 +153,11 @@ const demoConfigs = {
             window.showDemoToast = (type, message) => {
                 const container = document.getElementById('toastContainer');
                 const toast = document.createElement('div');
-                toast.className = \`toast toast-\${type}\`;
-                toast.innerHTML = \`
-                    <span class="toast-message">\${message}</span>
+                toast.className = `toast toast-${type}`;
+                toast.innerHTML = `
+                    <span class="toast-message">${message}</span>
                     <button class="toast-close" onclick="this.parentElement.remove()">×</button>
-                \`;
+                `;
                 container.appendChild(toast);
                 
                 // Animate in
@@ -214,7 +214,7 @@ const demoConfigs = {
                     footer.innerHTML = '<button class="btn btn-secondary" onclick="closeDemoModal()">Cancel</button><button class="btn btn-danger" onclick="alert(\'Confirmed!\'); closeDemoModal()">Delete</button>';
                 } else if (type === 'form') {
                     title.textContent = 'Add New Item';
-                    body.innerHTML = \`
+                    body.innerHTML = `
                         <form class="demo-form">
                             <div class="form-group">
                                 <label>Item Name</label>
@@ -225,7 +225,7 @@ const demoConfigs = {
                                 <textarea placeholder="Enter description" rows="2"></textarea>
                             </div>
                         </form>
-                    \`;
+                    `;
                     footer.innerHTML = '<button class="btn btn-secondary" onclick="closeDemoModal()">Cancel</button><button class="btn btn-primary" onclick="alert(\'Item saved!\'); closeDemoModal()">Save</button>';
                 }
                 
@@ -275,17 +275,17 @@ const demoConfigs = {
             
             window.renderDemoTable = (items) => {
                 const tbody = document.getElementById('tableBody');
-                tbody.innerHTML = items.map(item => \`
+                tbody.innerHTML = items.map(item => `
                     <tr>
-                        <td>\${item.name}</td>
-                        <td>\${item.email}</td>
-                        <td><span class="status-badge status-\${item.status.toLowerCase()}">\${item.status}</span></td>
+                        <td>${item.name}</td>
+                        <td>${item.email}</td>
+                        <td><span class="status-badge status-${item.status.toLowerCase()}">${item.status}</span></td>
                         <td>
-                            <button class="btn-icon" onclick="alert('Edit \${item.name}')">✏️</button>
-                            <button class="btn-icon" onclick="alert('Delete \${item.name}')">🗑️</button>
+                            <button class="btn-icon" onclick="alert('Edit ${item.name}')">✏️</button>
+                            <button class="btn-icon" onclick="alert('Delete ${item.name}')">🗑️</button>
                         </td>
                     </tr>
-                \`).join('');
+                `).join('');
             };
             
             window.filterDemoTable = () => {
