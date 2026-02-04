@@ -60,9 +60,24 @@ app.get('/api/health', (req, res) => {
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
+    // Serve static assets
     app.use(express.static(path.join(__dirname, '../dist')));
     
+    // Handle client-side routing
+    app.get('/dashboard', (req, res) => {
+        res.sendFile(path.join(__dirname, '../dist/dashboard.html'));
+    });
+    
+    app.get('/templates', (req, res) => {
+        res.sendFile(path.join(__dirname, '../dist/templates.html'));
+    });
+    
+    // Catch-all route for main page
     app.get('*', (req, res) => {
+        // Don't catch API routes
+        if (req.path.startsWith('/api')) {
+            return res.status(404).json({ error: 'API endpoint not found' });
+        }
         res.sendFile(path.join(__dirname, '../dist/index.html'));
     });
 }

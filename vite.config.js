@@ -1,5 +1,10 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export default defineConfig({
   root: 'client',
@@ -10,6 +15,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'client/index.html'),
+        dashboard: resolve(__dirname, 'client/dashboard.html'),
+        templates: resolve(__dirname, 'client/templates.html'),
       },
     },
   },
