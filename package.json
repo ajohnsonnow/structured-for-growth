@@ -1,9 +1,12 @@
 {
   "name": "structured-for-growth-www",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
   "main": "server/index.js",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "nodemon server/index.js",
@@ -11,6 +14,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "node server/index.js",
+    "render-build": "npm install && npm run build",
     "audit": "node scripts/audit.js",
     "audit:bump": "node scripts/audit.js --bump",
     "audit:major": "node scripts/audit.js --bump major",
@@ -27,7 +31,7 @@
   "author": "Structured For Growth",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
