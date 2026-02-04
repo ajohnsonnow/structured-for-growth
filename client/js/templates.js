@@ -881,3 +881,38 @@ document.getElementById('templateModal')?.addEventListener('click', (e) => {
         closeTemplateModal();
     }
 });
+
+// Mobile Menu Toggle for templates page
+function initMobileMenu() {
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (mobileToggle && navMenu) {
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+        });
+        
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (navMenu.classList.contains('active')) {
+                if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                }
+            }
+        });
+        
+        // Close on link click
+        navMenu.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+            });
+        });
+    }
+}
+
+// Initialize mobile menu
+initMobileMenu();

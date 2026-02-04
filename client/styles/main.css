@@ -229,20 +229,36 @@ img {
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    z-index: 1001;
 }
 
 .mobile-menu-toggle span {
     display: block;
-    width: 24px;
+    width: 26px;
     height: 3px;
     background-color: var(--text-primary);
     border-radius: 2px;
-    transition: all var(--transition-fast);
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+/* Hamburger to X animation when active */
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 /* Hero Section */
@@ -670,12 +686,29 @@ section {
         right: 0;
         background: var(--bg-primary);
         flex-direction: column;
-        padding: var(--spacing-md);
+        padding: var(--spacing-lg);
         box-shadow: var(--shadow-lg);
+        border-top: 1px solid var(--border-light);
+        gap: var(--spacing-xs);
     }
     
     .nav-menu.active {
         display: flex;
+    }
+    
+    .nav-menu .nav-link {
+        padding: var(--spacing-md);
+        text-align: center;
+        border-radius: var(--radius-md);
+        width: 100%;
+    }
+    
+    .nav-menu .nav-link:hover {
+        background: var(--bg-secondary);
+    }
+    
+    .nav-menu .nav-highlight {
+        margin-top: var(--spacing-sm);
     }
     
     .mobile-menu-toggle {

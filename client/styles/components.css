@@ -478,3 +478,39 @@
 .flex-center { justify-content: center; align-items: center; }
 .flex-between { justify-content: space-between; }
 .flex-gap { gap: var(--spacing-md); }
+/* Mobile Responsive Modal */
+@media (max-width: 768px) {
+    .modal {
+        padding: var(--spacing-sm);
+        align-items: flex-start;
+        padding-top: var(--spacing-lg);
+    }
+    
+    .modal-content {
+        max-width: 100%;
+        max-height: calc(100vh - var(--spacing-xl));
+        padding: var(--spacing-md);
+        margin: 0;
+        border-radius: var(--radius-md);
+    }
+    
+    .modal-header {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .modal-header h2 {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal {
+        padding: var(--spacing-xs);
+        padding-top: var(--spacing-md);
+    }
+    
+    .modal-content {
+        padding: var(--spacing-sm);
+        border-radius: var(--radius-sm);
+    }
+}

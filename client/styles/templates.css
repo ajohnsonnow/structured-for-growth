@@ -753,23 +753,183 @@
     border-radius: var(--radius-sm);
     color: var(--primary-color);
     font-size: 0.85rem;
+    word-wrap: break-word;
+    overflow-x: auto;
 }
 
-/* Responsive */
+/* ========================================
+   RESPONSIVE / MOBILE STYLES
+   ======================================== */
+
+/* Tablet and smaller */
 @media (max-width: 768px) {
-    .templates-grid {
-        grid-template-columns: 1fr;
+    /* Hero */
+    .hero-small {
+        padding: var(--spacing-lg) var(--spacing-sm);
     }
     
+    .hero-small h1 {
+        font-size: 1.75rem;
+    }
+    
+    .hero-small p {
+        font-size: 1rem;
+    }
+    
+    /* Filter Buttons - Stay Centered! */
     .template-nav {
-        justify-content: flex-start;
+        justify-content: center;
+        gap: var(--spacing-xs);
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .template-nav-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    /* Search */
+    .template-search {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    /* Grid */
+    .templates-grid {
+        grid-template-columns: 1fr;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    /* Modal Large */
+    .modal-large {
+        max-width: 100%;
+        margin: var(--spacing-sm);
+    }
+    
+    /* Template Tabs */
+    .template-tabs {
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+    }
+    
+    .tab-btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.875rem;
+        flex: 1;
+        text-align: center;
+        min-width: 100px;
+    }
+    
+    /* Demo Area */
+    .demo-container {
+        padding: var(--spacing-md);
+    }
+    
+    .demo-area {
+        padding: var(--spacing-md);
     }
     
     .demo-actions {
         flex-direction: column;
+        gap: var(--spacing-sm);
     }
     
+    .demo-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Table */
     .table-controls {
         flex-direction: column;
     }
+    
+    .demo-table {
+        font-size: 0.85rem;
+    }
+    
+    .demo-table th,
+    .demo-table td {
+        padding: var(--spacing-xs);
+    }
+    
+    /* Forms in demos */
+    .crud-form {
+        flex-direction: column;
+    }
+    
+    .storage-form {
+        flex-direction: column;
+    }
+    
+    .validation-test {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .validation-test label {
+        min-width: unset;
+    }
+    
+    .validation-test input {
+        min-width: unset;
+    }
+    
+    .form-row {
+        flex-direction: column;
+    }
+    
+    /* Demo Modal Overlay (the toasts/popup demos) */
+    .demo-modal {
+        width: 95%;
+        max-height: 90vh;
+    }
 }
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .hero-small h1 {
+        font-size: 1.5rem;
+    }
+    
+    /* Filter buttons wrap nicely */
+    .template-nav {
+        gap: 6px;
+    }
+    
+    .template-nav-btn {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Template cards */
+    .template-card {
+        padding: var(--spacing-md);
+    }
+    
+    .template-card-title {
+        font-size: 1.1rem;
+    }
+    
+    /* Tabs stack on very small screens */
+    .template-tabs {
+        flex-direction: column;
+    }
+    
+    .tab-btn {
+        width: 100%;
+    }
+    
+    /* Demo buttons */
+    .loading-buttons {
+        flex-direction: column;
+    }
+    
+    .toast-buttons {
+        flex-direction: column;
+    }
+    
+    .auth-tabs {
+        flex-direction: column;
+    }
+    
+    .state-actions {

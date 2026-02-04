@@ -6,15 +6,32 @@ export function initNavigation() {
     
     // Mobile menu toggle
     if (mobileToggle) {
-        mobileToggle.addEventListener('click', () => {
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             navMenu.classList.toggle('active');
             mobileToggle.classList.toggle('active');
         });
     }
     
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (navMenu && navMenu.classList.contains('active')) {
+            if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+            }
+        }
+    });
+    
     // Active link highlighting
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
+            // Close mobile menu on any link click
+            if (navMenu && mobileToggle) {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+            }
+            
             // Don't prevent default for external links
             if (link.getAttribute('href').startsWith('#')) {
                 e.preventDefault();
@@ -24,9 +41,6 @@ export function initNavigation() {
                 
                 // Add active class to clicked link
                 link.classList.add('active');
-                
-                // Close mobile menu if open
-                navMenu.classList.remove('active');
                 
                 // Scroll to section
                 const targetId = link.getAttribute('href');
