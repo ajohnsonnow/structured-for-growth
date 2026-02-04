@@ -11,6 +11,8 @@ import contactRoutes from './routes/contact.js';
 import clientRoutes from './routes/clients.js';
 import authRoutes from './routes/auth.js';
 import projectRoutes from './routes/projects.js';
+import messageRoutes from './routes/messages.js';
+import campaignRoutes from './routes/campaigns.js';
 
 // Import database initialization
 import { initializeDatabase } from './models/database.js';
@@ -54,6 +56,8 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/campaigns', campaignRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

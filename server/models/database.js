@@ -177,11 +177,214 @@ export async function initializeDatabase() {
         )
     `);
 
+    // Messages table for client communication
+    db.run(`
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            client_id INTEGER NOT NULL,
+            user_id INTEGER,
+            direction TEXT NOT NULL DEFAULT 'outbound',
+            subject TEXT,
+            content TEXT NOT NULL,
+            sent_via TEXT DEFAULT 'email',
+            read_at DATETIME,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    `);
+
+    // Campaigns table for email marketing
+    db.run(`
+        CREATE TABLE IF NOT EXISTS campaigns (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            subject TEXT NOT NULL,
+            content TEXT NOT NULL,
+            status TEXT DEFAULT 'draft',
+            segment_id INTEGER,
+            sent_count INTEGER DEFAULT 0,
+            open_count INTEGER DEFAULT 0,
+            click_count INTEGER DEFAULT 0,
+            scheduled_at DATETIME,
+            sent_at DATETIME,
+            created_by INTEGER,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (segment_id) REFERENCES segments(id),
+            FOREIGN KEY (created_by) REFERENCES users(id)
+        )
+    `);
+
+    // Segments table for client grouping
+    db.run(`
+        CREATE TABLE IF NOT EXISTS segments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            description TEXT,
+            filter_rules TEXT,
+            client_count INTEGER DEFAULT 0,
+            created_by INTEGER,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (created_by) REFERENCES users(id)
+        )
+    `);
+
+    // Campaign recipients tracking
+    db.run(`
+        CREATE TABLE IF NOT EXISTS campaign_recipients (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            campaign_id INTEGER NOT NULL,
+            client_id INTEGER NOT NULL,
+            status TEXT DEFAULT 'pending',
+            sent_at DATETIME,
+            opened_at DATETIME,
+            clicked_at DATETIME,
+            FOREIGN KEY (campaign_id) REFERENCES campaigns(id) ON DELETE CASCADE,
+            FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+        )
+    `);
+
+    // Email templates
+    db.run(`
+        CREATE TABLE IF NOT EXISTS email_templates (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            subject TEXT NOT NULL,
+            content TEXT NOT NULL,
+            category TEXT DEFAULT 'general',
+            created_by INTEGER,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (created_by) REFERENCES users(id)
+        )
+    `);
+
+    // Seed test data if database is empty
+    await seedTestData();
+
     saveDatabase();
     isInitialized = true;
     console.log('✅ Database tables initialized');
     
     return db;
+}
+
+// Seed test data for development
+async function seedTestData() {
+    const bcryptModule = await import('bcryptjs');
+    const bcrypt = bcryptModule.default;
+    
+    // Check if we have users
+    const userCount = query('SELECT COUNT(*) as count FROM users')[0]?.count || 0;
+    
+    if (userCount === 0) {
+        // Create default admin user
+        const adminPassword = await bcrypt.hash('admin123!', 10);
+        execute(`
+            INSERT INTO users (username, email, password, role)
+            VALUES (?, ?, ?, ?)
+        `, ['admin', 'admin@structuredforgrowth.com', adminPassword, 'admin']);
+        console.log('👤 Created default admin user: admin / admin123!');
+        
+        // Create test client user
+        const clientPassword = await bcrypt.hash('client123!', 10);
+        execute(`
+            INSERT INTO users (username, email, password, role)
+            VALUES (?, ?, ?, ?)
+        `, ['testclient', 'client@example.com', clientPassword, 'user']);
+        console.log('👤 Created test client user: testclient / client123!');
+    }
+    
+    // Check if we have clients
+    const clientCount = query('SELECT COUNT(*) as count FROM clients')[0]?.count || 0;
+    
+    if (clientCount === 0) {
+        // Create sample clients
+        const sampleClients = [
+            { name: 'Acme Corporation', email: 'contact@acme.com', company: 'Acme Corp', phone: '555-0101', status: 'active', monthly_retainer: 2500 },
+            { name: 'TechStart Inc', email: 'hello@techstart.io', company: 'TechStart Inc', phone: '555-0102', status: 'active', monthly_retainer: 1500 },
+            { name: 'Green Valley Farms', email: 'info@greenvalley.com', company: 'Green Valley Farms', phone: '555-0103', status: 'active', monthly_retainer: 1000 },
+            { name: 'Urban Design Studio', email: 'studio@urbandesign.co', company: 'Urban Design Studio', phone: '555-0104', status: 'inactive' },
+            { name: 'Sarah Johnson', email: 'sarah@freelancer.com', company: null, phone: '555-0105', status: 'active', monthly_retainer: 500 }
+        ];
+        
+        for (const client of sampleClients) {
+            execute(`
+                INSERT INTO clients (name, email, company, phone, status, monthly_retainer, created_by)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            `, [client.name, client.email, client.company, client.phone, client.status, client.monthly_retainer || null, 1]);
+        }
+        console.log('👥 Created 5 sample clients');
+    }
+    
+    // Check if we have segments
+    const segmentCount = query('SELECT COUNT(*) as count FROM segments')[0]?.count || 0;
+    
+    if (segmentCount === 0) {
+        const segments = [
+            { name: 'All Clients', description: 'All active and inactive clients', filter_rules: '{}' },
+            { name: 'Active Retainers', description: 'Clients with active monthly retainers', filter_rules: '{"status":"active","has_retainer":true}' },
+            { name: 'Inactive Clients', description: 'Clients marked as inactive', filter_rules: '{"status":"inactive"}' }
+        ];
+        
+        for (const seg of segments) {
+            execute(`
+                INSERT INTO segments (name, description, filter_rules, created_by)
+                VALUES (?, ?, ?, ?)
+            `, [seg.name, seg.description, seg.filter_rules, 1]);
+        }
+        console.log('📊 Created default segments');
+    }
+    
+    // Check if we have email templates
+    const templateCount = query('SELECT COUNT(*) as count FROM email_templates')[0]?.count || 0;
+    
+    if (templateCount === 0) {
+        const templates = [
+            {
+                name: 'Welcome Email',
+                subject: 'Welcome to Structured For Growth!',
+                content: `<h1>Welcome, {{clientName}}!</h1>
+<p>Thank you for choosing Structured For Growth for your web development needs.</p>
+<p>We're excited to work with you on building something amazing together.</p>
+<p>Best regards,<br>The SFG Team</p>`,
+                category: 'onboarding'
+            },
+            {
+                name: 'Project Update',
+                subject: 'Project Update - {{projectName}}',
+                content: `<h1>Project Update</h1>
+<p>Hi {{clientName}},</p>
+<p>Here's the latest update on your project:</p>
+<p>{{updateContent}}</p>
+<p>Let us know if you have any questions!</p>`,
+                category: 'updates'
+            },
+            {
+                name: 'Monthly Newsletter',
+                subject: 'SFG Monthly Update - {{month}}',
+                content: `<h1>Monthly Newsletter</h1>
+<p>Hi {{clientName}},</p>
+<p>Here's what's new this month at Structured For Growth:</p>
+<ul>
+<li>New template releases</li>
+<li>Tips & tricks</li>
+<li>Industry insights</li>
+</ul>`,
+                category: 'newsletter'
+            }
+        ];
+        
+        for (const tmpl of templates) {
+            execute(`
+                INSERT INTO email_templates (name, subject, content, category, created_by)
+                VALUES (?, ?, ?, ?, ?)
+            `, [tmpl.name, tmpl.subject, tmpl.content, tmpl.category, 1]);
+        }
+        console.log('📧 Created default email templates');
+    }
 }
 
 // Get database instance (synchronous after init)

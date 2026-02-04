@@ -772,6 +772,35 @@ function initEventListeners() {
     document.getElementById('searchProjects').addEventListener('input', filterProjects);
     document.getElementById('projectStatusFilter').addEventListener('change', filterProjects);
     document.getElementById('projectClientFilter').addEventListener('change', filterProjects);
+    
+    // Messages
+    const threadForm = document.getElementById('threadComposeForm');
+    if (threadForm) {
+        threadForm.addEventListener('submit', handleThreadReply);
+    }
+    const messageForm = document.getElementById('messageForm');
+    if (messageForm) {
+        messageForm.addEventListener('submit', handleMessageSubmit);
+    }
+    
+    // Campaigns
+    const campaignForm = document.getElementById('campaignForm');
+    if (campaignForm) {
+        campaignForm.addEventListener('submit', handleCampaignSubmit);
+    }
+    const segmentForm = document.getElementById('segmentForm');
+    if (segmentForm) {
+        segmentForm.addEventListener('submit', handleSegmentSubmit);
+    }
+    const templateForm = document.getElementById('templateForm');
+    if (templateForm) {
+        templateForm.addEventListener('submit', handleTemplateSubmit);
+    }
+    
+    // Campaign tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchCampaignTab(btn.dataset.tab));
+    });
 }
 
 function switchView(view) {
@@ -792,6 +821,10 @@ function switchView(view) {
         loadUsers();
     } else if (view === 'activity' && currentUser?.role === 'admin') {
         loadActivity();
+    } else if (view === 'messages') {
+        loadMessages();
+    } else if (view === 'campaigns') {
+        loadCampaigns();
     }
 }
 
@@ -850,12 +883,744 @@ function getPriorityBadge(priority) {
     return badges[priority] || 'secondary';
 }
 
+// ============ MESSAGES ============
+
+let allConversations = [];
+let currentConversationClientId = null;
+let allSegments = [];
+let allTemplates = [];
+let allCampaigns = [];
+
+async function loadMessages() {
+    try {
+        const response = await fetch('/api/messages', {
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            allConversations = data.conversations;
+            displayConversations(allConversations);
+            updateUnreadBadge();
+        }
+    } catch (error) {
+        console.error('Load messages error:', error);
+    }
+}
+
+async function updateUnreadBadge() {
+    try {
+        const response = await fetch('/api/messages/unread/count', {
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            const badge = document.getElementById('unreadBadge');
+            if (badge) {
+                badge.textContent = data.count || 0;
+                badge.style.display = data.count > 0 ? 'inline-flex' : 'none';
+            }
+        }
+    } catch (error) {
+        console.error('Unread count error:', error);
+    }
+}
+
+function displayConversations(conversations) {
+    const container = document.getElementById('conversationsList');
+    
+    if (conversations.length === 0) {
+        container.innerHTML = '<p class="empty-message">No conversations yet. Start messaging clients!</p>';
+        return;
+    }
+    
+    container.innerHTML = conversations.map(conv => `
+        <div class="conversation-item ${conv.unread_count > 0 ? 'unread' : ''} ${currentConversationClientId === conv.client_id ? 'active' : ''}" 
+             onclick="openConversation(${conv.client_id})">
+            <div class="conversation-avatar">${conv.client_name.charAt(0).toUpperCase()}</div>
+            <div class="conversation-info">
+                <div class="conversation-header">
+                    <strong class="conversation-name">${conv.client_name}</strong>
+                    <span class="conversation-time">${formatRelativeTime(conv.last_message_at)}</span>
+                </div>
+                <p class="conversation-preview">${conv.last_message || 'No messages yet'}</p>
+            </div>
+            ${conv.unread_count > 0 ? `<span class="conversation-badge">${conv.unread_count}</span>` : ''}
+        </div>
+    `).join('');
+}
+
+window.openConversation = async function(clientId) {
+    currentConversationClientId = clientId;
+    const conv = allConversations.find(c => c.client_id === clientId);
+    
+    // Update UI
+    document.getElementById('threadClientName').textContent = conv?.client_name || 'Client';
+    document.getElementById('messageThread').innerHTML = '<p class="loading-text">Loading messages...</p>';
+    
+    // Highlight active conversation
+    document.querySelectorAll('.conversation-item').forEach(item => item.classList.remove('active'));
+    document.querySelector(`.conversation-item[onclick="openConversation(${clientId})"]`)?.classList.add('active');
+    
+    try {
+        const response = await fetch(`/api/messages/client/${clientId}`, {
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            displayThread(data.messages);
+            updateUnreadBadge();
+            loadMessages(); // Refresh conversations to update unread counts
+        }
+    } catch (error) {
+        console.error('Load thread error:', error);
+        document.getElementById('messageThread').innerHTML = '<p class="error-message">Failed to load messages</p>';
+    }
+}
+
+function displayThread(messages) {
+    const container = document.getElementById('messageThread');
+    
+    if (messages.length === 0) {
+        container.innerHTML = '<p class="empty-thread">No messages in this conversation yet.</p>';
+        return;
+    }
+    
+    container.innerHTML = messages.map(msg => `
+        <div class="message ${msg.direction}">
+            <div class="message-bubble">
+                ${msg.subject ? `<div class="message-subject">${msg.subject}</div>` : ''}
+                <div class="message-content">${msg.content.replace(/\n/g, '<br>')}</div>
+                <div class="message-meta">
+                    <span class="message-time">${formatRelativeTime(msg.created_at)}</span>
+                    ${msg.direction === 'outgoing' && msg.sent_via ? `<span class="message-via">via ${msg.sent_via}</span>` : ''}
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    // Scroll to bottom
+    container.scrollTop = container.scrollHeight;
+}
+
+async function handleThreadReply(e) {
+    e.preventDefault();
+    
+    if (!currentConversationClientId) {
+        alert('Please select a conversation first');
+        return;
+    }
+    
+    const content = document.getElementById('threadReplyContent').value.trim();
+    if (!content) return;
+    
+    try {
+        const response = await fetch(`/api/messages/client/${currentConversationClientId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ content })
+        });
+        
+        if (response.ok) {
+            document.getElementById('threadReplyContent').value = '';
+            openConversation(currentConversationClientId);
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Failed to send message');
+        }
+    } catch (error) {
+        console.error('Send message error:', error);
+        alert('Connection error. Please try again.');
+    }
+}
+
+window.openMessageModal = function() {
+    const modal = document.getElementById('messageModal');
+    const form = document.getElementById('messageForm');
+    form.reset();
+    
+    // Populate client dropdown
+    const select = document.getElementById('messageClient');
+    select.innerHTML = '<option value="">Choose a client...</option>' +
+        allClients.map(c => `<option value="${c.id}">${c.name}${c.company ? ` (${c.company})` : ''}</option>`).join('');
+    
+    modal.classList.add('active');
+}
+
+window.closeMessageModal = function() {
+    document.getElementById('messageModal').classList.remove('active');
+}
+
+async function handleMessageSubmit(e) {
+    e.preventDefault();
+    
+    const clientId = document.getElementById('messageClient').value;
+    const subject = document.getElementById('messageSubject').value;
+    const content = document.getElementById('messageContent').value;
+    
+    try {
+        const response = await fetch(`/api/messages/client/${clientId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ subject, content })
+        });
+        
+        if (response.ok) {
+            closeMessageModal();
+            loadMessages();
+            openConversation(parseInt(clientId));
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Failed to send message');
+        }
+    } catch (error) {
+        console.error('Send message error:', error);
+        alert('Connection error. Please try again.');
+    }
+}
+
+// ============ CAMPAIGNS ============
+
+async function loadCampaigns() {
+    try {
+        const [campaignsRes, segmentsRes, templatesRes] = await Promise.all([
+            fetch('/api/campaigns', { headers: { 'Authorization': `Bearer ${authToken}` } }),
+            fetch('/api/campaigns/segments/list', { headers: { 'Authorization': `Bearer ${authToken}` } }),
+            fetch('/api/campaigns/templates/list', { headers: { 'Authorization': `Bearer ${authToken}` } })
+        ]);
+        
+        if (campaignsRes.ok) {
+            const data = await campaignsRes.json();
+            allCampaigns = data.campaigns;
+            displayCampaigns(allCampaigns);
+        }
+        
+        if (segmentsRes.ok) {
+            const data = await segmentsRes.json();
+            allSegments = data.segments;
+            displaySegments(allSegments);
+            populateSegmentDropdowns();
+        }
+        
+        if (templatesRes.ok) {
+            const data = await templatesRes.json();
+            allTemplates = data.templates;
+            displayTemplates(allTemplates);
+            populateTemplateDropdowns();
+        }
+    } catch (error) {
+        console.error('Load campaigns error:', error);
+    }
+}
+
+function displayCampaigns(campaigns) {
+    const container = document.getElementById('campaignsGrid');
+    
+    if (campaigns.length === 0) {
+        container.innerHTML = '<p class="empty-message">No campaigns yet. Create your first campaign!</p>';
+        return;
+    }
+    
+    container.innerHTML = campaigns.map(campaign => `
+        <div class="campaign-card">
+            <div class="campaign-header">
+                <h4>${campaign.name}</h4>
+                <span class="badge badge-${getCampaignStatusBadge(campaign.status)}">${campaign.status}</span>
+            </div>
+            <p class="campaign-subject">${campaign.subject}</p>
+            <div class="campaign-stats">
+                <span title="Sent"><span class="stat-icon">📤</span> ${campaign.sent_count || 0}</span>
+                <span title="Opened"><span class="stat-icon">👁️</span> ${campaign.open_count || 0}</span>
+                <span title="Clicked"><span class="stat-icon">🖱️</span> ${campaign.click_count || 0}</span>
+            </div>
+            <div class="campaign-meta">
+                ${campaign.segment_name ? `<span class="campaign-segment">🎯 ${campaign.segment_name}</span>` : ''}
+                <span class="campaign-date">${campaign.sent_at ? formatRelativeTime(campaign.sent_at) : 'Not sent'}</span>
+            </div>
+            <div class="campaign-actions">
+                ${campaign.status === 'draft' ? `
+                    <button class="btn btn-sm btn-primary" onclick="sendCampaign(${campaign.id})">Send Now</button>
+                    <button class="btn btn-sm btn-outline" onclick="editCampaign(${campaign.id})">Edit</button>
+                ` : ''}
+                <button class="btn btn-sm btn-danger" onclick="deleteCampaign(${campaign.id})">Delete</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function displaySegments(segments) {
+    const container = document.getElementById('segmentsGrid');
+    
+    if (segments.length === 0) {
+        container.innerHTML = '<p class="empty-message">No segments yet. Create segments to target specific clients!</p>';
+        return;
+    }
+    
+    container.innerHTML = segments.map(segment => `
+        <div class="segment-card">
+            <h4>${segment.name}</h4>
+            <p class="segment-description">${segment.description || 'No description'}</p>
+            <div class="segment-meta">
+                <span class="segment-count"><strong>${segment.client_count || 0}</strong> clients</span>
+            </div>
+            <div class="segment-actions">
+                <button class="btn btn-sm btn-outline" onclick="editSegment(${segment.id})">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteSegment(${segment.id})">Delete</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function displayTemplates(templates) {
+    const container = document.getElementById('templatesGrid');
+    
+    if (templates.length === 0) {
+        container.innerHTML = '<p class="empty-message">No templates yet. Create reusable email templates!</p>';
+        return;
+    }
+    
+    container.innerHTML = templates.map(template => `
+        <div class="template-card">
+            <div class="template-header">
+                <h4>${template.name}</h4>
+                <span class="badge badge-${getTemplateCategoryBadge(template.category)}">${template.category}</span>
+            </div>
+            <p class="template-subject"><strong>Subject:</strong> ${template.subject}</p>
+            <p class="template-preview">${template.content.substring(0, 100)}${template.content.length > 100 ? '...' : ''}</p>
+            <div class="template-actions">
+                <button class="btn btn-sm btn-outline" onclick="editTemplate(${template.id})">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteTemplate(${template.id})">Delete</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function populateSegmentDropdowns() {
+    const select = document.getElementById('campaignSegment');
+    if (select) {
+        select.innerHTML = '<option value="">All Clients</option>' +
+            allSegments.map(s => `<option value="${s.id}">${s.name} (${s.client_count || 0} clients)</option>`).join('');
+    }
+}
+
+function populateTemplateDropdowns() {
+    const select = document.getElementById('campaignTemplate');
+    if (select) {
+        select.innerHTML = '<option value="">None (Write Custom)</option>' +
+            allTemplates.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+    }
+}
+
+window.loadTemplate = function(templateId) {
+    if (!templateId) return;
+    
+    const template = allTemplates.find(t => t.id == templateId);
+    if (template) {
+        document.getElementById('campaignSubject').value = template.subject;
+        document.getElementById('campaignContent').value = template.content;
+    }
+}
+
+window.switchCampaignTab = function(tab) {
+    // Update tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tab);
+    });
+    
+    // Update tab content - tabs are named "campaigns-list", "segments-list", "templates-list"
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('active', content.id === tab);
+    });
+}
+
+// Campaign Modal
+window.openCampaignModal = function(campaignId = null) {
+    const modal = document.getElementById('campaignModal');
+    const form = document.getElementById('campaignForm');
+    
+    form.reset();
+    document.getElementById('campaignId').value = '';
+    document.getElementById('campaignModalTitle').textContent = 'Create Campaign';
+    
+    if (campaignId) {
+        const campaign = allCampaigns.find(c => c.id === campaignId);
+        if (campaign) {
+            document.getElementById('campaignId').value = campaign.id;
+            document.getElementById('campaignName').value = campaign.name;
+            document.getElementById('campaignSegment').value = campaign.segment_id || '';
+            document.getElementById('campaignSubject').value = campaign.subject;
+            document.getElementById('campaignContent').value = campaign.content;
+            document.getElementById('campaignModalTitle').textContent = 'Edit Campaign';
+        }
+    }
+    
+    modal.classList.add('active');
+}
+
+window.closeCampaignModal = function() {
+    document.getElementById('campaignModal').classList.remove('active');
+}
+
+window.saveCampaignAsDraft = async function() {
+    await submitCampaign('draft');
+}
+
+async function handleCampaignSubmit(e) {
+    e.preventDefault();
+    await submitCampaign('sending');
+}
+
+async function submitCampaign(status) {
+    const campaignId = document.getElementById('campaignId').value;
+    const campaignData = {
+        name: document.getElementById('campaignName').value,
+        subject: document.getElementById('campaignSubject').value,
+        content: document.getElementById('campaignContent').value,
+        segment_id: document.getElementById('campaignSegment').value || null,
+        status
+    };
+    
+    try {
+        let response;
+        
+        if (campaignId) {
+            // Update existing campaign
+            response = await fetch(`/api/campaigns/${campaignId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: JSON.stringify(campaignData)
+            });
+        } else {
+            // Create new campaign
+            response = await fetch('/api/campaigns', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: JSON.stringify(campaignData)
+            });
+        }
+        
+        if (response.ok) {
+            const data = await response.json();
+            
+            // If sending, actually send the campaign
+            if (status === 'sending') {
+                const sendRes = await fetch(`/api/campaigns/${data.campaign?.id || campaignId}/send`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                if (sendRes.ok) {
+                    const sendData = await sendRes.json();
+                    alert(`Campaign sent to ${sendData.sent_count} recipients!`);
+                } else {
+                    alert('Campaign saved but sending failed');
+                }
+            }
+            
+            closeCampaignModal();
+            loadCampaigns();
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Operation failed');
+        }
+    } catch (error) {
+        console.error('Campaign submit error:', error);
+        alert('Connection error. Please try again.');
+    }
+}
+
+window.editCampaign = function(campaignId) {
+    openCampaignModal(campaignId);
+}
+
+window.sendCampaign = async function(campaignId) {
+    if (!confirm('Are you sure you want to send this campaign now?')) return;
+    
+    try {
+        const response = await fetch(`/api/campaigns/${campaignId}/send`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            alert(`Campaign sent to ${data.sent_count} recipients!`);
+            loadCampaigns();
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Failed to send campaign');
+        }
+    } catch (error) {
+        console.error('Send campaign error:', error);
+        alert('Connection error. Please try again.');
+    }
+}
+
+window.deleteCampaign = async function(campaignId) {
+    if (!confirm('Are you sure you want to delete this campaign?')) return;
+    
+    try {
+        const response = await fetch(`/api/campaigns/${campaignId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        
+        if (response.ok) {
+            loadCampaigns();
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Failed to delete campaign');
+        }
+    } catch (error) {
+        console.error('Delete campaign error:', error);
+        alert('Connection error. Please try again.');
+    }
+}
+
+// Segment Modal
+window.openSegmentModal = function(segmentId = null) {
+    const modal = document.getElementById('segmentModal');
+    const form = document.getElementById('segmentForm');
+    
+    form.reset();
+    document.getElementById('segmentId').value = '';
+    document.getElementById('segmentModalTitle').textContent = 'Create Segment';
+    
+    if (segmentId) {
+        const segment = allSegments.find(s => s.id === segmentId);
+        if (segment) {
+            document.getElementById('segmentId').value = segment.id;
+            document.getElementById('segmentName').value = segment.name;
+            document.getElementById('segmentDescription').value = segment.description || '';
+            document.getElementById('segmentFilter').value = segment.filter_rules || '';
+            document.getElementById('segmentModalTitle').textContent = 'Edit Segment';
+        }
+    }
+    
+    modal.classList.add('active');
+}
+
+window.closeSegmentModal = function() {
+    document.getElementById('segmentModal').classList.remove('active');
+}
+
+async function handleSegmentSubmit(e) {
+    e.preventDefault();
+    
+    const segmentId = document.getElementById('segmentId').value;
+    const segmentData = {
+        name: document.getElementById('segmentName').value,
+        description: document.getElementById('segmentDescription').value || null,
+        filter_rules: document.getElementById('segmentFilter').value || null
+    };
+    
+    try {
+        const url = segmentId ? `/api/campaigns/segments/${segmentId}` : '/api/campaigns/segments';
+        const method = segmentId ? 'PUT' : 'POST';
+        
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(segmentData)
+        });
+        
+        if (response.ok) {
+            closeSegmentModal();
+            loadCampaigns();
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Operation failed');
+        }
+    } catch (error) {
+        console.error('Segment submit error:', error);
+        alert('Connection error. Please try again.');
+    }
+}
+
+window.editSegment = function(segmentId) {
+    openSegmentModal(segmentId);
+}
+
+window.deleteSegment = async function(segmentId) {
+    if (!confirm('Are you sure you want to delete this segment?')) return;
+    
+    try {
+        const response = await fetch(`/api/campaigns/segments/${segmentId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        
+        if (response.ok) {
+            loadCampaigns();
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Failed to delete segment');
+        }
+    } catch (error) {
+        console.error('Delete segment error:', error);
+        alert('Connection error. Please try again.');
+    }
+}
+
+// Template Modal
+window.openTemplateModal = function(templateId = null) {
+    const modal = document.getElementById('templateModal');
+    const form = document.getElementById('templateForm');
+    
+    form.reset();
+    document.getElementById('templateId').value = '';
+    document.getElementById('templateModalTitle').textContent = 'Create Template';
+    
+    if (templateId) {
+        const template = allTemplates.find(t => t.id === templateId);
+        if (template) {
+            document.getElementById('templateId').value = template.id;
+            document.getElementById('templateName').value = template.name;
+            document.getElementById('templateCategory').value = template.category || 'general';
+            document.getElementById('templateSubject').value = template.subject;
+            document.getElementById('templateContent').value = template.content;
+            document.getElementById('templateModalTitle').textContent = 'Edit Template';
+        }
+    }
+    
+    modal.classList.add('active');
+}
+
+window.closeTemplateModal = function() {
+    document.getElementById('templateModal').classList.remove('active');
+}
+
+async function handleTemplateSubmit(e) {
+    e.preventDefault();
+    
+    const templateId = document.getElementById('templateId').value;
+    const templateData = {
+        name: document.getElementById('templateName').value,
+        subject: document.getElementById('templateSubject').value,
+        content: document.getElementById('templateContent').value,
+        category: document.getElementById('templateCategory').value
+    };
+    
+    try {
+        const url = templateId ? `/api/campaigns/templates/${templateId}` : '/api/campaigns/templates';
+        const method = templateId ? 'PUT' : 'POST';
+        
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(templateData)
+        });
+        
+        if (response.ok) {
+            closeTemplateModal();
+            loadCampaigns();
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Operation failed');
+        }
+    } catch (error) {
+        console.error('Template submit error:', error);
+        alert('Connection error. Please try again.');
+    }
+}
+
+window.editTemplate = function(templateId) {
+    openTemplateModal(templateId);
+}
+
+window.deleteTemplate = async function(templateId) {
+    if (!confirm('Are you sure you want to delete this template?')) return;
+    
+    try {
+        const response = await fetch(`/api/campaigns/templates/${templateId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        
+        if (response.ok) {
+            loadCampaigns();
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Failed to delete template');
+        }
+    } catch (error) {
+        console.error('Delete template error:', error);
+        alert('Connection error. Please try again.');
+    }
+}
+
+// Helper functions
+function getCampaignStatusBadge(status) {
+    const badges = {
+        'draft': 'secondary',
+        'scheduled': 'info',
+        'sending': 'warning',
+        'sent': 'success',
+        'failed': 'danger'
+    };
+    return badges[status] || 'secondary';
+}
+
+function getTemplateCategoryBadge(category) {
+    const badges = {
+        'general': 'secondary',
+        'welcome': 'success',
+        'follow-up': 'info',
+        'promotional': 'warning',
+        'newsletter': 'primary'
+    };
+    return badges[category] || 'secondary';
+}
+
+function formatRelativeTime(dateString) {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = now - date;
+    
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+    
+    if (minutes < 1) return 'Just now';
+    if (minutes < 60) return `${minutes}m ago`;
+    if (hours < 24) return `${hours}h ago`;
+    if (days < 7) return `${days}d ago`;
+    
+    return date.toLocaleDateString();
+}
+
 // Close modals on escape key
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeModal();
         closeProjectModal();
         closeRegisterModal();
+        closeCampaignModal();
+        closeSegmentModal();
+        closeTemplateModal();
+        closeMessageModal();
     }
 });
 

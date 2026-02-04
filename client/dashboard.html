@@ -43,6 +43,15 @@
                     <span class="icon">📁</span>
                     Projects
                 </a>
+                <a href="#" class="sidebar-link" data-view="messages">
+                    <span class="icon">💬</span>
+                    Messages
+                    <span class="badge badge-danger unread-badge" id="unreadBadge" style="display: none;">0</span>
+                </a>
+                <a href="#" class="sidebar-link" data-view="campaigns">
+                    <span class="icon">📧</span>
+                    Campaigns
+                </a>
                 <div class="sidebar-divider admin-only"></div>
                 <a href="#" class="sidebar-link admin-only" data-view="users">
                     <span class="icon">🔑</span>
@@ -241,6 +250,87 @@
 
                 <div class="activity-list" id="activityList">
                     <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Messages View -->
+            <div id="messagesView" class="dashboard-view">
+                <div class="dashboard-header">
+                    <h2>Messages</h2>
+                </div>
+
+                <div class="messages-container">
+                    <div class="conversations-list" id="conversationsList">
+                        <div class="conversations-header">
+                            <h3>Conversations</h3>
+                        </div>
+                        <div id="conversationsListBody">
+                            <p class="empty-message">No conversations yet</p>
+                        </div>
+                    </div>
+                    
+                    <div class="message-thread" id="messageThread">
+                        <div class="thread-header" id="threadHeader">
+                            <h3>Select a conversation</h3>
+                        </div>
+                        <div class="thread-messages" id="threadMessages">
+                            <p class="empty-message">Select a client to view messages</p>
+                        </div>
+                        <div class="thread-compose" id="threadCompose" style="display: none;">
+                            <form id="messageForm">
+                                <input type="hidden" id="messageClientId">
+                                <div class="form-group">
+                                    <input type="text" id="messageSubject" placeholder="Subject (optional)">
+                                </div>
+                                <div class="form-group">
+                                    <textarea id="messageContent" rows="3" placeholder="Type your message..." required></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campaigns View -->
+            <div id="campaignsView" class="dashboard-view">
+                <div class="dashboard-header">
+                    <h2>Email Campaigns</h2>
+                    <button id="addCampaignBtn" class="btn btn-primary" onclick="openCampaignModal()">+ New Campaign</button>
+                </div>
+
+                <div class="campaigns-tabs">
+                    <button class="tab-btn active" data-tab="campaigns-list">📧 Campaigns</button>
+                    <button class="tab-btn" data-tab="segments-list">👥 Segments</button>
+                    <button class="tab-btn" data-tab="templates-list">📄 Templates</button>
+                </div>
+
+                <div class="tab-content active" id="campaigns-list">
+                    <div class="campaigns-grid" id="campaignsGrid">
+                        <p class="empty-message">No campaigns yet. Create your first campaign!</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="segments-list">
+                    <div class="dashboard-header" style="margin-bottom: 1rem;">
+                        <h3>Client Segments</h3>
+                        <button class="btn btn-secondary btn-small" onclick="openSegmentModal()">+ New Segment</button>
+                    </div>
+                    <div class="segments-grid" id="segmentsGrid">
+                        <p class="empty-message">No segments defined</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="templates-list">
+                    <div class="dashboard-header" style="margin-bottom: 1rem;">
+                        <h3>Email Templates</h3>
+                        <button class="btn btn-secondary btn-small" onclick="openTemplateModal()">+ New Template</button>
+                    </div>
+                    <div class="templates-grid" id="templatesGrid">
+                        <p class="empty-message">No templates yet</p>
+                    </div>
                 </div>
             </div>
         </main>
@@ -475,6 +565,175 @@
                 </div>
                 
                 <div class="form-message" style="display: none; margin-top: 1rem;"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Campaign Modal -->
+    <div id="campaignModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="campaignModalTitle">Create Campaign</h2>
+                <button class="modal-close" onclick="closeCampaignModal()">&times;</button>
+            </div>
+            
+            <form id="campaignForm">
+                <input type="hidden" id="campaignId">
+                
+                <div class="form-group">
+                    <label for="campaignName">Campaign Name</label>
+                    <input type="text" id="campaignName" required placeholder="e.g., Summer Promotion">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="campaignSegment">Target Segment</label>
+                        <select id="campaignSegment">
+                            <option value="">All Clients</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="campaignTemplate">Use Template</label>
+                        <select id="campaignTemplate" onchange="loadTemplate(this.value)">
+                            <option value="">None (Write Custom)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="campaignSubject">Email Subject</label>
+                    <input type="text" id="campaignSubject" required placeholder="e.g., Exciting News from Structured for Growth!">
+                </div>
+                
+                <div class="form-group">
+                    <label for="campaignContent">Email Content</label>
+                    <textarea id="campaignContent" rows="10" required placeholder="Hi {{firstName}},&#10;&#10;Write your message here...&#10;&#10;Best regards,&#10;The Team"></textarea>
+                    <small class="form-hint">Variables: {{clientName}}, {{firstName}}, {{lastName}}, {{company}}, {{email}}</small>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeCampaignModal()">Cancel</button>
+                    <button type="button" class="btn btn-outline" onclick="saveCampaignAsDraft()">Save as Draft</button>
+                    <button type="submit" class="btn btn-primary">Send Now</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Segment Modal -->
+    <div id="segmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="segmentModalTitle">Create Segment</h2>
+                <button class="modal-close" onclick="closeSegmentModal()">&times;</button>
+            </div>
+            
+            <form id="segmentForm">
+                <input type="hidden" id="segmentId">
+                
+                <div class="form-group">
+                    <label for="segmentName">Segment Name</label>
+                    <input type="text" id="segmentName" required placeholder="e.g., VIP Clients">
+                </div>
+                
+                <div class="form-group">
+                    <label for="segmentDescription">Description</label>
+                    <textarea id="segmentDescription" rows="3" placeholder="Describe what this segment represents..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="segmentFilter">Filter Rules (JSON)</label>
+                    <textarea id="segmentFilter" rows="4" placeholder='{"tier": "vip"}'></textarea>
+                    <small class="form-hint">Use JSON to define filter criteria</small>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeSegmentModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Segment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Template Modal -->
+    <div id="templateModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="templateModalTitle">Create Template</h2>
+                <button class="modal-close" onclick="closeTemplateModal()">&times;</button>
+            </div>
+            
+            <form id="templateForm">
+                <input type="hidden" id="templateId">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="templateName">Template Name</label>
+                        <input type="text" id="templateName" required placeholder="e.g., Welcome Email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="templateCategory">Category</label>
+                        <select id="templateCategory">
+                            <option value="general">General</option>
+                            <option value="welcome">Welcome</option>
+                            <option value="follow-up">Follow-up</option>
+                            <option value="promotional">Promotional</option>
+                            <option value="newsletter">Newsletter</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="templateSubject">Subject Line</label>
+                    <input type="text" id="templateSubject" required placeholder="e.g., Welcome to Structured for Growth, {{firstName}}!">
+                </div>
+                
+                <div class="form-group">
+                    <label for="templateContent">Template Content</label>
+                    <textarea id="templateContent" rows="12" required placeholder="Hi {{firstName}},&#10;&#10;Write your template here...&#10;&#10;Best regards,&#10;The Team"></textarea>
+                    <small class="form-hint">Variables: {{clientName}}, {{firstName}}, {{lastName}}, {{company}}, {{email}}</small>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeTemplateModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Template</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Message Modal (for composing new message) -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>New Message</h2>
+                <button class="modal-close" onclick="closeMessageModal()">&times;</button>
+            </div>
+            
+            <form id="messageForm">
+                <div class="form-group">
+                    <label for="messageClient">Select Client</label>
+                    <select id="messageClient" required>
+                        <option value="">Choose a client...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="messageSubject">Subject</label>
+                    <input type="text" id="messageSubject" required placeholder="Message subject">
+                </div>
+                
+                <div class="form-group">
+                    <label for="messageContent">Message</label>
+                    <textarea id="messageContent" rows="6" required placeholder="Write your message..."></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeMessageModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
             </form>
         </div>
     </div>
