@@ -74,16 +74,34 @@
                 <div class="template-meta">
                     <span class="badge" id="templateCategory"></span>
                     <span class="badge badge-primary" id="templateLanguage"></span>
+                    <span class="badge badge-time" id="templateTimeSaved"></span>
                 </div>
                 
                 <div class="template-tabs">
-                    <button class="tab active" data-tab="code">Code</button>
-                    <button class="tab" data-tab="usage">Usage</button>
-                    <button class="tab" data-tab="notes">Notes</button>
+                    <button class="tab active" data-tab="demo">🎮 Live Demo</button>
+                    <button class="tab" data-tab="code">📝 Code</button>
+                    <button class="tab" data-tab="usage">📖 Usage</button>
+                    <button class="tab" data-tab="notes">📋 Notes</button>
                 </div>
                 
                 <div class="template-tab-content">
-                    <div id="codeTab" class="tab-content active">
+                    <div id="demoTab" class="tab-content active">
+                        <div class="demo-container">
+                            <div class="demo-header">
+                                <h3>Interactive Preview</h3>
+                                <p>Try out this template below - it's fully functional!</p>
+                            </div>
+                            <div id="demoArea" class="demo-area">
+                                <!-- Live demo will be rendered here -->
+                            </div>
+                            <div class="demo-actions">
+                                <button class="btn btn-secondary" onclick="resetDemo()">🔄 Reset Demo</button>
+                                <button class="btn btn-primary" onclick="copyCode()">📋 Copy Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="codeTab" class="tab-content">
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-language" id="codeLanguage"></span>
