@@ -379,6 +379,7 @@ section {
     text-decoration: none;
     color: inherit;
     display: block;
+    height: 100%;
 }
 
 .project-card-link:hover .project-card {
@@ -394,6 +395,9 @@ section {
     padding: var(--spacing-lg);
     box-shadow: var(--shadow-md);
     transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .project-card:hover {
@@ -428,6 +432,7 @@ section {
     color: var(--text-secondary);
     margin-bottom: var(--spacing-md);
     line-height: 1.6;
+    flex: 1;
 }
 
 .project-tech {
