@@ -312,19 +312,336 @@ const demoConfigs = {
 const defaultDemo = {
     html: `
         <div class="demo-placeholder">
-            <div class="demo-icon">📝</div>
-            <h4>Code Preview</h4>
-            <p>This template provides reusable code that you can copy and integrate into your project.</p>
+            <div class="demo-icon">🎯</div>
+            <h4>Template Overview</h4>
+            <p>This template provides production-ready patterns you can use in your projects.</p>
             <ul class="demo-features">
-                <li>✓ Production-ready code</li>
-                <li>✓ Well-documented</li>
+                <li>✓ Battle-tested in production</li>
+                <li>✓ Follows best practices</li>
                 <li>✓ Easy to customize</li>
-                <li>✓ Best practices included</li>
+                <li>✓ Full documentation included</li>
             </ul>
-            <p class="demo-tip">💡 Switch to the <strong>Code</strong> tab to view and copy the implementation.</p>
+            <p class="demo-tip">💡 Check the <strong>Usage</strong> and <strong>Notes</strong> tabs for implementation details.</p>
         </div>
     `,
     init: () => {}
+};
+
+// Form State Manager Demo
+demoConfigs['form-state-manager'] = {
+    html: `
+        <div class="demo-form-state">
+            <h4>Form State Manager Demo</h4>
+            <form id="stateForm" class="demo-form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Enter email">
+                </div>
+                <div class="form-row">
+                    <button type="button" class="btn btn-secondary" onclick="clearStateForm()">Clear</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStateForm()">Save to State</button>
+                </div>
+            </form>
+            <div class="state-display">
+                <h5>Current State:</h5>
+                <pre id="stateOutput">{ }</pre>
+            </div>
+            <div class="state-actions">
+                <button class="btn btn-secondary" onclick="undoState()">↩️ Undo</button>
+                <button class="btn btn-secondary" onclick="redoState()">↪️ Redo</button>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const stateHistory = [{}];
+        let stateIndex = 0;
+        
+        window.saveStateForm = () => {
+            const form = document.getElementById('stateForm');
+            const state = {
+                username: form.username.value,
+                email: form.email.value,
+                timestamp: new Date().toLocaleTimeString()
+            };
+            stateHistory.splice(stateIndex + 1);
+            stateHistory.push(state);
+            stateIndex = stateHistory.length - 1;
+            updateStateDisplay();
+        };
+        
+        window.clearStateForm = () => {
+            document.getElementById('stateForm').reset();
+        };
+        
+        window.undoState = () => {
+            if (stateIndex > 0) {
+                stateIndex--;
+                restoreState();
+            }
+        };
+        
+        window.redoState = () => {
+            if (stateIndex < stateHistory.length - 1) {
+                stateIndex++;
+                restoreState();
+            }
+        };
+        
+        function restoreState() {
+            const state = stateHistory[stateIndex];
+            const form = document.getElementById('stateForm');
+            form.username.value = state.username || '';
+            form.email.value = state.email || '';
+            updateStateDisplay();
+        }
+        
+        function updateStateDisplay() {
+            document.getElementById('stateOutput').textContent = 
+                JSON.stringify(stateHistory[stateIndex], null, 2);
+        }
+    }
+};
+
+// CRUD Database Demo
+demoConfigs['crud-database-model'] = {
+    html: `
+        <div class="demo-crud">
+            <h4>CRUD Operations Demo</h4>
+            <div class="crud-form">
+                <input type="text" id="crudInput" placeholder="Enter item name">
+                <button class="btn btn-primary" onclick="crudCreate()">➕ Create</button>
+            </div>
+            <div class="crud-list" id="crudList">
+                <p class="empty-state">No items yet. Create one above!</p>
+            </div>
+        </div>
+    `,
+    init: () => {
+        let items = [];
+        let nextId = 1;
+        
+        window.crudCreate = () => {
+            const input = document.getElementById('crudInput');
+            const name = input.value.trim();
+            if (!name) return;
+            
+            items.push({ id: nextId++, name, createdAt: new Date().toLocaleTimeString() });
+            input.value = '';
+            renderCrudList();
+        };
+        
+        window.crudUpdate = (id) => {
+            const item = items.find(i => i.id === id);
+            const newName = prompt('Enter new name:', item.name);
+            if (newName && newName.trim()) {
+                item.name = newName.trim();
+                item.updatedAt = new Date().toLocaleTimeString();
+                renderCrudList();
+            }
+        };
+        
+        window.crudDelete = (id) => {
+            items = items.filter(i => i.id !== id);
+            renderCrudList();
+        };
+        
+        function renderCrudList() {
+            const list = document.getElementById('crudList');
+            if (items.length === 0) {
+                list.innerHTML = '<p class="empty-state">No items yet. Create one above!</p>';
+                return;
+            }
+            list.innerHTML = items.map(item => 
+                '<div class="crud-item">' +
+                    '<span class="item-name">' + item.name + '</span>' +
+                    '<span class="item-meta">ID: ' + item.id + '</span>' +
+                    '<div class="item-actions">' +
+                        '<button class="btn-icon" onclick="crudUpdate(' + item.id + ')">✏️</button>' +
+                        '<button class="btn-icon" onclick="crudDelete(' + item.id + ')">🗑️</button>' +
+                    '</div>' +
+                '</div>'
+            ).join('');
+        }
+    }
+};
+
+// Notification System Demo (alias for toast)
+demoConfigs['notification-system'] = demoConfigs['toast-notification'];
+
+// Loading State Manager Demo
+demoConfigs['loading-state-manager'] = {
+    html: `
+        <div class="demo-loading">
+            <h4>Loading State Manager Demo</h4>
+            <p>Click to simulate async operations:</p>
+            <div class="loading-buttons">
+                <button class="btn btn-primary" id="loadBtn1" onclick="simulateLoad(this, 2000)">Fetch Data (2s)</button>
+                <button class="btn btn-secondary" id="loadBtn2" onclick="simulateLoad(this, 3000)">Process (3s)</button>
+                <button class="btn btn-warning" id="loadBtn3" onclick="simulateLoadError(this)">Simulate Error</button>
+            </div>
+            <div id="loadingResult" class="loading-result"></div>
+        </div>
+    `,
+    init: () => {
+        window.simulateLoad = (btn, duration) => {
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Loading...';
+            
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = originalText;
+                document.getElementById('loadingResult').innerHTML = 
+                    '<div class="success-msg">✓ Operation completed successfully!</div>';
+            }, duration);
+        };
+        
+        window.simulateLoadError = (btn) => {
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Loading...';
+            
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = originalText;
+                document.getElementById('loadingResult').innerHTML = 
+                    '<div class="error-msg">✗ Error: Connection timeout. Please try again.</div>';
+            }, 1500);
+        };
+    }
+};
+
+// Data Table Demo (rename from 'data-table' to match ID)
+demoConfigs['data-table-component'] = demoConfigs['data-table'];
+
+// Validation Utilities Demo
+demoConfigs['validation-utilities'] = {
+    html: `
+        <div class="demo-validation">
+            <h4>Validation Utilities Demo</h4>
+            <div class="validation-tests">
+                <div class="validation-test">
+                    <label>Email Validation:</label>
+                    <input type="text" id="valEmail" placeholder="test@example.com" oninput="validateEmail(this)">
+                    <span id="valEmailResult" class="val-result"></span>
+                </div>
+                <div class="validation-test">
+                    <label>Phone Number:</label>
+                    <input type="text" id="valPhone" placeholder="(555) 123-4567" oninput="validatePhone(this)">
+                    <span id="valPhoneResult" class="val-result"></span>
+                </div>
+                <div class="validation-test">
+                    <label>Password Strength:</label>
+                    <input type="password" id="valPassword" placeholder="Enter password" oninput="validatePassword(this)">
+                    <span id="valPasswordResult" class="val-result"></span>
+                </div>
+            </div>
+        </div>
+    `,
+    init: () => {
+        window.validateEmail = (input) => {
+            const result = document.getElementById('valEmailResult');
+            const isValid = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(input.value);
+            result.textContent = isValid ? '✓ Valid email' : '✗ Invalid email';
+            result.className = 'val-result ' + (isValid ? 'valid' : 'invalid');
+        };
+        
+        window.validatePhone = (input) => {
+            const result = document.getElementById('valPhoneResult');
+            const cleaned = input.value.replace(/\\D/g, '');
+            const isValid = cleaned.length === 10;
+            result.textContent = isValid ? '✓ Valid phone' : '✗ Need 10 digits';
+            result.className = 'val-result ' + (isValid ? 'valid' : 'invalid');
+        };
+        
+        window.validatePassword = (input) => {
+            const result = document.getElementById('valPasswordResult');
+            const pw = input.value;
+            let strength = 0;
+            if (pw.length >= 8) strength++;
+            if (/[A-Z]/.test(pw)) strength++;
+            if (/[a-z]/.test(pw)) strength++;
+            if (/[0-9]/.test(pw)) strength++;
+            if (/[^A-Za-z0-9]/.test(pw)) strength++;
+            
+            const labels = ['Weak', 'Fair', 'Good', 'Strong', 'Excellent'];
+            const colors = ['invalid', 'invalid', 'warning', 'valid', 'valid'];
+            result.textContent = pw.length > 0 ? labels[strength - 1] || 'Too weak' : '';
+            result.className = 'val-result ' + (colors[strength - 1] || 'invalid');
+        };
+    }
+};
+
+// Local Storage Manager Demo
+demoConfigs['local-storage-manager'] = {
+    html: `
+        <div class="demo-storage">
+            <h4>Local Storage Manager Demo</h4>
+            <div class="storage-form">
+                <input type="text" id="storageKey" placeholder="Key">
+                <input type="text" id="storageValue" placeholder="Value">
+                <button class="btn btn-primary" onclick="storageSet()">💾 Save</button>
+            </div>
+            <div class="storage-actions">
+                <button class="btn btn-secondary" onclick="storageGet()">📖 Get</button>
+                <button class="btn btn-warning" onclick="storageRemove()">🗑️ Remove</button>
+                <button class="btn btn-danger" onclick="storageClear()">🧹 Clear All</button>
+            </div>
+            <div id="storageOutput" class="storage-output">
+                <h5>Stored Items:</h5>
+                <pre id="storageItems">{ }</pre>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const DEMO_PREFIX = 'demo_';
+        
+        window.storageSet = () => {
+            const key = document.getElementById('storageKey').value.trim();
+            const value = document.getElementById('storageValue').value.trim();
+            if (key && value) {
+                localStorage.setItem(DEMO_PREFIX + key, value);
+                updateStorageDisplay();
+            }
+        };
+        
+        window.storageGet = () => {
+            const key = document.getElementById('storageKey').value.trim();
+            if (key) {
+                const value = localStorage.getItem(DEMO_PREFIX + key);
+                alert(value ? 'Value: ' + value : 'Key not found');
+            }
+        };
+        
+        window.storageRemove = () => {
+            const key = document.getElementById('storageKey').value.trim();
+            if (key) {
+                localStorage.removeItem(DEMO_PREFIX + key);
+                updateStorageDisplay();
+            }
+        };
+        
+        window.storageClear = () => {
+            Object.keys(localStorage).filter(k => k.startsWith(DEMO_PREFIX)).forEach(k => {
+                localStorage.removeItem(k);
+            });
+            updateStorageDisplay();
+        };
+        
+        function updateStorageDisplay() {
+            const items = {};
+            Object.keys(localStorage).filter(k => k.startsWith(DEMO_PREFIX)).forEach(k => {
+                items[k.replace(DEMO_PREFIX, '')] = localStorage.getItem(k);
+            });
+            document.getElementById('storageItems').textContent = JSON.stringify(items, null, 2);
+        }
+        
+        updateStorageDisplay();
+    }
 };
 
 function showFieldError(form, fieldName, message) {
@@ -477,8 +794,6 @@ function openTemplateModal(template) {
     document.getElementById('templateCategory').textContent = template.category;
     document.getElementById('templateCategory').className = 'badge badge-' + getCategoryBadgeClass(template.category);
     document.getElementById('templateLanguage').textContent = template.language;
-    document.getElementById('codeLanguage').textContent = template.language;
-    document.getElementById('templateCode').textContent = template.code;
     document.getElementById('templateUsage').innerHTML = template.usage;
     document.getElementById('templateNotes').innerHTML = template.notes;
     
@@ -495,8 +810,9 @@ function openTemplateModal(template) {
     // Reset tabs to demo
     switchTab('demo');
     
-    // Show modal
+    // Show modal and lock background scroll
     document.getElementById('templateModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 function loadDemo(template) {
@@ -521,6 +837,7 @@ window.resetDemo = function() {
 
 window.closeTemplateModal = function() {
     document.getElementById('templateModal').classList.remove('active');
+    document.body.style.overflow = '';
     currentTemplate = null;
 }
 
@@ -536,25 +853,6 @@ function switchTab(tabName) {
         content.classList.remove('active');
     });
     document.getElementById(`${tabName}Tab`).classList.add('active');
-}
-
-window.copyCode = function() {
-    const code = currentTemplate.code;
-    
-    navigator.clipboard.writeText(code).then(() => {
-        const btn = document.querySelector('.copy-btn');
-        const originalText = btn.textContent;
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#10b981';
-        
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.backgroundColor = '';
-        }, 2000);
-    }).catch(err => {
-        console.error('Failed to copy:', err);
-        alert('Failed to copy code. Please select and copy manually.');
-    });
 }
 
 function getCategoryBadgeClass(category) {

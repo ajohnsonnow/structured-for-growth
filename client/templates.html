@@ -49,7 +49,10 @@
 
             <!-- Search -->
             <div class="template-search">
-                <input type="text" id="templateSearch" placeholder="Search templates..." class="search-input">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="templateSearch" placeholder="Search templates by name, tag, or feature..." class="search-input">
+                </div>
             </div>
 
             <!-- Templates Grid -->
@@ -79,7 +82,6 @@
                 
                 <div class="template-tabs">
                     <button class="tab active" data-tab="demo">🎮 Live Demo</button>
-                    <button class="tab" data-tab="code">📝 Code</button>
                     <button class="tab" data-tab="usage">📖 Usage</button>
                     <button class="tab" data-tab="notes">📋 Notes</button>
                 </div>
@@ -96,18 +98,7 @@
                             </div>
                             <div class="demo-actions">
                                 <button class="btn btn-secondary" onclick="resetDemo()">🔄 Reset Demo</button>
-                                <button class="btn btn-primary" onclick="copyCode()">📋 Copy Code</button>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div id="codeTab" class="tab-content">
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-language" id="codeLanguage"></span>
-                                <button class="copy-btn" onclick="copyCode()">Copy</button>
-                            </div>
-                            <pre><code id="templateCode"></code></pre>
                         </div>
                     </div>
                     
