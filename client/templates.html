@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Library - Structured For Growth</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/templates.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Structured <span class="highlight">For Growth</span></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/client/templates.html" class="nav-link active">Templates</a></li>
+                <li><a href="/client/dashboard.html" class="nav-link">Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-small">
+        <div class="container">
+            <h1>Template Library</h1>
+            <p>Reusable code patterns and components for rapid development</p>
+        </div>
+    </section>
+
+    <!-- Template Categories -->
+    <section class="templates-section">
+        <div class="container">
+            <!-- Category Navigation -->
+            <div class="template-nav">
+                <button class="template-nav-btn active" data-category="all">All Templates</button>
+                <button class="template-nav-btn" data-category="forms">Forms</button>
+                <button class="template-nav-btn" data-category="auth">Authentication</button>
+                <button class="template-nav-btn" data-category="database">Database</button>
+                <button class="template-nav-btn" data-category="api">API Patterns</button>
+                <button class="template-nav-btn" data-category="ui">UI Components</button>
+                <button class="template-nav-btn" data-category="email">Email</button>
+                <button class="template-nav-btn" data-category="utils">Utilities</button>
+            </div>
+
+            <!-- Search -->
+            <div class="template-search">
+                <input type="text" id="templateSearch" placeholder="Search templates..." class="search-input">
+            </div>
+
+            <!-- Templates Grid -->
+            <div id="templatesGrid" class="templates-grid">
+                <!-- Templates will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Template Detail Modal -->
+    <div id="templateModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <div>
+                    <h2 id="templateTitle"></h2>
+                    <p id="templateDescription" style="color: var(--text-secondary); margin: 0;"></p>
+                </div>
+                <button class="modal-close" onclick="closeTemplateModal()">&times;</button>
+            </div>
+            
+            <div class="template-details">
+                <div class="template-meta">
+                    <span class="badge" id="templateCategory"></span>
+                    <span class="badge badge-primary" id="templateLanguage"></span>
+                </div>
+                
+                <div class="template-tabs">
+                    <button class="tab active" data-tab="code">Code</button>
+                    <button class="tab" data-tab="usage">Usage</button>
+                    <button class="tab" data-tab="notes">Notes</button>
+                </div>
+                
+                <div class="template-tab-content">
+                    <div id="codeTab" class="tab-content active">
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-language" id="codeLanguage"></span>
+                                <button class="copy-btn" onclick="copyCode()">Copy</button>
+                            </div>
+                            <pre><code id="templateCode"></code></pre>
+                        </div>
+                    </div>
+                    
+                    <div id="usageTab" class="tab-content">
+                        <div id="templateUsage" class="template-prose"></div>
+                    </div>
+                    
+                    <div id="notesTab" class="tab-content">
+                        <div id="templateNotes" class="template-prose"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/templates.js"></script>
+</body>
+</html>

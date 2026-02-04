@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard - Structured For Growth</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/dashboard.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Structured <span class="highlight">For Growth</span></h1>
+            </div>
+            <div class="nav-user">
+                <span id="username"></span>
+                <button id="logoutBtn" class="btn btn-small btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active" data-view="clients">
+                    <span class="icon">👥</span>
+                    Clients
+                </a>
+                <a href="#" class="sidebar-link" data-view="analytics">
+                    <span class="icon">📊</span>
+                    Analytics
+                </a>
+                <a href="/" class="sidebar-link">
+                    <span class="icon">🏠</span>
+                    Back to Website
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Clients View -->
+            <div id="clientsView" class="dashboard-view active">
+                <div class="dashboard-header">
+                    <h2>Client Management</h2>
+                    <button id="addClientBtn" class="btn btn-primary">+ Add Client</button>
+                </div>
+
+                <div class="dashboard-filters">
+                    <input type="text" id="searchClients" placeholder="Search clients..." class="search-input">
+                    <select id="statusFilter" class="filter-select">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="archived">Archived</option>
+                    </select>
+                </div>
+
+                <div id="clientsTableContainer">
+                    <div class="loading-spinner" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Loading clients...</p>
+                    </div>
+                    
+                    <div class="data-table" id="clientsTable" style="display: none;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Company</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientsTableBody">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="empty-state" id="emptyState" style="display: none;">
+                        <p>No clients found. Add your first client to get started!</p>
+                        <button class="btn btn-primary" onclick="document.getElementById('addClientBtn').click()">
+                            Add Client
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics View -->
+            <div id="analyticsView" class="dashboard-view">
+                <div class="dashboard-header">
+                    <h2>Analytics</h2>
+                </div>
+                
+                <div class="analytics-grid">
+                    <div class="stat-card">
+                        <h3>Total Clients</h3>
+                        <p class="stat-value" id="totalClients">0</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Active Clients</h3>
+                        <p class="stat-value" id="activeClients">0</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>This Month</h3>
+                        <p class="stat-value" id="monthlyClients">0</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Total Projects</h3>
+                        <p class="stat-value" id="totalProjects">0</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Client Modal -->
+    <div id="clientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Client</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <form id="clientForm">
+                <input type="hidden" id="clientId">
+                
+                <div class="form-group">
+                    <label for="clientName">Name *</label>
+                    <input type="text" id="clientName" required>
+                    <span class="error-message"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientEmail">Email *</label>
+                    <input type="email" id="clientEmail" required>
+                    <span class="error-message"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientPhone">Phone</label>
+                    <input type="tel" id="clientPhone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientCompany">Company</label>
+                    <input type="text" id="clientCompany">
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientStatus">Status</label>
+                    <select id="clientStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="archived">Archived</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientNotes">Notes</label>
+                    <textarea id="clientNotes" rows="4"></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Client</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Client Portal Login</h2>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                
+                <div class="form-message" style="display: none; margin-top: 1rem;"></div>
+            </form>
+            
+            <p style="margin-top: 1rem; text-align: center; color: var(--text-secondary);">
+                Don't have an account? <a href="#" id="showRegisterLink">Register here</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Register</h2>
+                <button class="modal-close" onclick="closeRegisterModal()">&times;</button>
+            </div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">Username</label>
+                    <input type="text" id="registerUsername" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerPassword">Password (min 8 characters)</label>
+                    <input type="password" id="registerPassword" required minlength="8">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeRegisterModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+                
+                <div class="form-message" style="display: none; margin-top: 1rem;"></div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="/js/dashboard.js"></script>
+</body>
+</html>
