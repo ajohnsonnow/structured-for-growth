@@ -193,6 +193,17 @@ img {
     background-color: var(--bg-secondary);
 }
 
+.nav-link.nav-highlight {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--forest-green-medium) 100%);
+    color: var(--warm-white);
+    padding: var(--spacing-xs) var(--spacing-md);
+}
+
+.nav-link.nav-highlight:hover {
+    background: linear-gradient(135deg, var(--forest-green-medium) 0%, var(--forest-green-dark) 100%);
+    color: var(--warm-white);
+}
+
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;

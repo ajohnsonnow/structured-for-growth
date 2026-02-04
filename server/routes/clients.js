@@ -1,6 +1,6 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
-import { getDatabase } from '../models/database.js';
+import { query, queryOne, execute, logActivity } from '../models/database.js';
 import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -8,21 +8,58 @@ const router = express.Router();
 // All routes require authentication
 router.use(authenticateToken);
 
-// Get all clients
+// Get all clients with optional filtering
 router.get('/', (req, res) => {
-    const db = getDatabase();
-    
     try {
-        const clients = db.prepare(`
-            SELECT c.*, u.username as created_by_username
+        const { status, search, limit = 100, offset = 0 } = req.query;
+        
+        let sql = `
+            SELECT c.*, u.username as created_by_username,
+                   (SELECT COUNT(*) FROM projects WHERE client_id = c.id) as project_count
             FROM clients c
             LEFT JOIN users u ON c.created_by = u.id
-            ORDER BY c.created_at DESC
-        `).all();
+            WHERE 1=1
+        `;
+        const params = [];
+        
+        if (status) {
+            sql += ` AND c.status = ?`;
+            params.push(status);
+        }
+        
+        if (search) {
+            sql += ` AND (c.name LIKE ? OR c.email LIKE ? OR c.company LIKE ?)`;
+            const searchTerm = `%${search}%`;
+            params.push(searchTerm, searchTerm, searchTerm);
+        }
+        
+        sql += ` ORDER BY c.created_at DESC LIMIT ? OFFSET ?`;
+        params.push(parseInt(limit), parseInt(offset));
+        
+        const clients = query(sql, params);
+        
+        // Get total count
+        let countSql = `SELECT COUNT(*) as total FROM clients WHERE 1=1`;
+        const countParams = [];
+        if (status) {
+            countSql += ` AND status = ?`;
+            countParams.push(status);
+        }
+        if (search) {
+            countSql += ` AND (name LIKE ? OR email LIKE ? OR company LIKE ?)`;
+            const searchTerm = `%${search}%`;
+            countParams.push(searchTerm, searchTerm, searchTerm);
+        }
+        const total = queryOne(countSql, countParams)?.total || 0;
         
         res.json({
             success: true,
-            clients
+            clients,
+            pagination: {
+                total,
+                limit: parseInt(limit),
+                offset: parseInt(offset)
+            }
         });
     } catch (error) {
         console.error('Get clients error:', error);
@@ -33,18 +70,54 @@ router.get('/', (req, res) => {
     }
 });
 
-// Get single client
+// Get client statistics
+router.get('/stats/overview', (req, res) => {
+    try {
+        const totalClients = queryOne('SELECT COUNT(*) as count FROM clients')?.count || 0;
+        const activeClients = queryOne("SELECT COUNT(*) as count FROM clients WHERE status = 'active'")?.count || 0;
+        const totalProjects = queryOne('SELECT COUNT(*) as count FROM projects')?.count || 0;
+        const activeProjects = queryOne("SELECT COUNT(*) as count FROM projects WHERE status IN ('planning', 'in-progress')")?.count || 0;
+        
+        // Monthly revenue (sum of monthly retainers for active clients)
+        const monthlyRevenue = queryOne("SELECT SUM(monthly_retainer) as total FROM clients WHERE status = 'active' AND monthly_retainer IS NOT NULL")?.total || 0;
+        
+        // New clients this month
+        const newThisMonth = queryOne(`
+            SELECT COUNT(*) as count FROM clients 
+            WHERE created_at >= date('now', 'start of month')
+        `)?.count || 0;
+        
+        res.json({
+            success: true,
+            stats: {
+                totalClients,
+                activeClients,
+                totalProjects,
+                activeProjects,
+                monthlyRevenue,
+                newThisMonth
+            }
+        });
+    } catch (error) {
+        console.error('Get stats error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to get statistics'
+        });
+    }
+});
+
+// Get single client with projects
 router.get('/:id', (req, res) => {
-    const db = getDatabase();
     const { id } = req.params;
     
     try {
-        const client = db.prepare(`
+        const client = queryOne(`
             SELECT c.*, u.username as created_by_username
             FROM clients c
             LEFT JOIN users u ON c.created_by = u.id
             WHERE c.id = ?
-        `).get(id);
+        `, [id]);
         
         if (!client) {
             return res.status(404).json({
@@ -54,17 +127,26 @@ router.get('/:id', (req, res) => {
         }
         
         // Get client projects
-        const projects = db.prepare(`
+        const projects = query(`
             SELECT * FROM projects
             WHERE client_id = ?
             ORDER BY created_at DESC
-        `).all(id);
+        `, [id]);
+        
+        // Get recent activity
+        const activity = query(`
+            SELECT * FROM activity_log
+            WHERE entity_type = 'client' AND entity_id = ?
+            ORDER BY created_at DESC
+            LIMIT 10
+        `, [id]);
         
         res.json({
             success: true,
             client: {
                 ...client,
-                projects
+                projects,
+                activity
             }
         });
     } catch (error) {
@@ -83,7 +165,10 @@ router.post('/',
         body('email').trim().isEmail().withMessage('Valid email is required'),
         body('phone').optional().trim(),
         body('company').optional().trim(),
-        body('notes').optional().trim()
+        body('website').optional().trim(),
+        body('address').optional().trim(),
+        body('notes').optional().trim(),
+        body('monthly_retainer').optional().isNumeric()
     ],
     (req, res) => {
         const errors = validationResult(req);
@@ -95,16 +180,17 @@ router.post('/',
             });
         }
         
-        const { name, email, phone, company, notes } = req.body;
-        const db = getDatabase();
+        const { name, email, phone, company, website, address, notes, monthly_retainer, contract_start, contract_end } = req.body;
         
         try {
-            const result = db.prepare(`
-                INSERT INTO clients (name, email, phone, company, notes, created_by, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            `).run(name, email, phone || null, company || null, notes || null, req.user.userId, 'active');
+            const result = execute(`
+                INSERT INTO clients (name, email, phone, company, website, address, notes, monthly_retainer, contract_start, contract_end, created_by, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `, [name, email, phone || null, company || null, website || null, address || null, notes || null, monthly_retainer || null, contract_start || null, contract_end || null, req.user.userId, 'active']);
             
-            const newClient = db.prepare('SELECT * FROM clients WHERE id = ?').get(result.lastInsertRowid);
+            const newClient = queryOne('SELECT * FROM clients WHERE id = ?', [result.lastInsertRowid]);
+            
+            logActivity(req.user.userId, 'CREATE', 'client', result.lastInsertRowid, `Created client: ${name}`);
             
             res.status(201).json({
                 success: true,
@@ -128,8 +214,11 @@ router.put('/:id',
         body('email').optional().trim().isEmail(),
         body('phone').optional().trim(),
         body('company').optional().trim(),
+        body('website').optional().trim(),
+        body('address').optional().trim(),
         body('status').optional().isIn(['active', 'inactive', 'archived']),
-        body('notes').optional().trim()
+        body('notes').optional().trim(),
+        body('monthly_retainer').optional().isNumeric()
     ],
     (req, res) => {
         const errors = validationResult(req);
@@ -142,10 +231,9 @@ router.put('/:id',
         }
         
         const { id } = req.params;
-        const db = getDatabase();
         
         try {
-            const client = db.prepare('SELECT id FROM clients WHERE id = ?').get(id);
+            const client = queryOne('SELECT id, name FROM clients WHERE id = ?', [id]);
             
             if (!client) {
                 return res.status(404).json({
@@ -154,33 +242,39 @@ router.put('/:id',
                 });
             }
             
-            const fields = [];
-            const values = [];
+            const { name, email, phone, company, website, address, status, notes, monthly_retainer, contract_start, contract_end } = req.body;
             
-            ['name', 'email', 'phone', 'company', 'status', 'notes'].forEach(field => {
-                if (req.body[field] !== undefined) {
-                    fields.push(`${field} = ?`);
-                    values.push(req.body[field]);
-                }
-            });
+            // Build dynamic update query
+            const updates = [];
+            const params = [];
             
-            if (fields.length === 0) {
+            if (name !== undefined) { updates.push('name = ?'); params.push(name); }
+            if (email !== undefined) { updates.push('email = ?'); params.push(email); }
+            if (phone !== undefined) { updates.push('phone = ?'); params.push(phone); }
+            if (company !== undefined) { updates.push('company = ?'); params.push(company); }
+            if (website !== undefined) { updates.push('website = ?'); params.push(website); }
+            if (address !== undefined) { updates.push('address = ?'); params.push(address); }
+            if (status !== undefined) { updates.push('status = ?'); params.push(status); }
+            if (notes !== undefined) { updates.push('notes = ?'); params.push(notes); }
+            if (monthly_retainer !== undefined) { updates.push('monthly_retainer = ?'); params.push(monthly_retainer); }
+            if (contract_start !== undefined) { updates.push('contract_start = ?'); params.push(contract_start); }
+            if (contract_end !== undefined) { updates.push('contract_end = ?'); params.push(contract_end); }
+            
+            if (updates.length === 0) {
                 return res.status(400).json({
                     success: false,
                     message: 'No fields to update'
                 });
             }
             
-            fields.push('updated_at = CURRENT_TIMESTAMP');
-            values.push(id);
+            updates.push('updated_at = CURRENT_TIMESTAMP');
+            params.push(id);
             
-            db.prepare(`
-                UPDATE clients
-                SET ${fields.join(', ')}
-                WHERE id = ?
-            `).run(...values);
+            execute(`UPDATE clients SET ${updates.join(', ')} WHERE id = ?`, params);
             
-            const updatedClient = db.prepare('SELECT * FROM clients WHERE id = ?').get(id);
+            const updatedClient = queryOne('SELECT * FROM clients WHERE id = ?', [id]);
+            
+            logActivity(req.user.userId, 'UPDATE', 'client', id, `Updated client: ${updatedClient.name}`);
             
             res.json({
                 success: true,
@@ -200,10 +294,9 @@ router.put('/:id',
 // Delete client
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
-    const db = getDatabase();
     
     try {
-        const client = db.prepare('SELECT id FROM clients WHERE id = ?').get(id);
+        const client = queryOne('SELECT * FROM clients WHERE id = ?', [id]);
         
         if (!client) {
             return res.status(404).json({
@@ -212,7 +305,9 @@ router.delete('/:id', (req, res) => {
             });
         }
         
-        db.prepare('DELETE FROM clients WHERE id = ?').run(id);
+        execute('DELETE FROM clients WHERE id = ?', [id]);
+        
+        logActivity(req.user.userId, 'DELETE', 'client', id, `Deleted client: ${client.name}`);
         
         res.json({
             success: true,
