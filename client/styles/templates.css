@@ -757,6 +757,40 @@
     overflow-x: auto;
 }
 
+/* API Demo Styles */
+.demo-api select,
+.demo-email select {
+    width: 100%;
+    padding: var(--spacing-sm);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.api-response pre,
+.demo-api-client pre {
+    background: var(--bg-card);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    max-height: 250px;
+    overflow: auto;
+}
+
+.endpoint-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.endpoint-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
 /* ========================================
    RESPONSIVE / MOBILE STYLES
    ======================================== */

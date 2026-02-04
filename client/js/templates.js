@@ -644,6 +644,426 @@ demoConfigs['local-storage-manager'] = {
     }
 };
 
+// RESTful API Controller Demo
+demoConfigs['rest-api-controller'] = {
+    html: `
+        <div class="demo-api">
+            <h4>RESTful API Controller Demo</h4>
+            <p style="color: var(--text-muted); margin-bottom: var(--spacing-md);">Simulated REST API endpoints</p>
+            <div class="api-endpoints">
+                <div class="endpoint-group">
+                    <label>Select Endpoint:</label>
+                    <select id="apiMethod" onchange="updateApiEndpoint()">
+                        <option value="GET-all">GET /api/users (List All)</option>
+                        <option value="GET-one">GET /api/users/:id (Get One)</option>
+                        <option value="POST">POST /api/users (Create)</option>
+                        <option value="PUT">PUT /api/users/:id (Update)</option>
+                        <option value="DELETE">DELETE /api/users/:id (Delete)</option>
+                    </select>
+                </div>
+                <div id="apiInputs" class="api-inputs" style="margin-top: var(--spacing-md);"></div>
+                <button class="btn btn-primary" onclick="executeApiCall()" style="margin-top: var(--spacing-md);">
+                    🚀 Execute Request
+                </button>
+            </div>
+            <div id="apiResponse" class="api-response" style="margin-top: var(--spacing-lg);">
+                <h5>Response:</h5>
+                <pre id="apiResponseBody">// Click "Execute Request" to see response</pre>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const mockUsers = [
+            { id: 1, name: 'John Doe', email: 'john@example.com', role: 'admin' },
+            { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'user' },
+            { id: 3, name: 'Bob Wilson', email: 'bob@example.com', role: 'user' }
+        ];
+        
+        window.updateApiEndpoint = () => {
+            const method = document.getElementById('apiMethod').value;
+            const inputsDiv = document.getElementById('apiInputs');
+            
+            if (method === 'GET-all') {
+                inputsDiv.innerHTML = '<small style="color: var(--text-muted);">No parameters needed</small>';
+            } else if (method === 'GET-one' || method === 'DELETE') {
+                inputsDiv.innerHTML = '<input type="number" id="apiId" placeholder="User ID (1-3)" value="1" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">';
+            } else if (method === 'POST') {
+                inputsDiv.innerHTML = '<input type="text" id="apiName" placeholder="Name" style="margin-right: var(--spacing-sm); padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);"><input type="email" id="apiEmail" placeholder="Email" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">';
+            } else if (method === 'PUT') {
+                inputsDiv.innerHTML = '<input type="number" id="apiId" placeholder="User ID" value="1" style="margin-right: var(--spacing-sm); padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);"><input type="text" id="apiName" placeholder="New Name" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">';
+            }
+        };
+        
+        window.executeApiCall = () => {
+            const method = document.getElementById('apiMethod').value;
+            const responseEl = document.getElementById('apiResponseBody');
+            let response = {};
+            
+            if (method === 'GET-all') {
+                response = { status: 200, data: mockUsers, meta: { total: mockUsers.length } };
+            } else if (method === 'GET-one') {
+                const id = parseInt(document.getElementById('apiId')?.value) || 1;
+                const user = mockUsers.find(u => u.id === id);
+                response = user ? { status: 200, data: user } : { status: 404, error: 'User not found' };
+            } else if (method === 'POST') {
+                const name = document.getElementById('apiName')?.value || 'New User';
+                const email = document.getElementById('apiEmail')?.value || 'new@example.com';
+                response = { status: 201, data: { id: 4, name, email, role: 'user' }, message: 'User created' };
+            } else if (method === 'PUT') {
+                const id = parseInt(document.getElementById('apiId')?.value) || 1;
+                const name = document.getElementById('apiName')?.value || 'Updated';
+                response = { status: 200, data: { id, name, updated_at: new Date().toISOString() }, message: 'User updated' };
+            } else if (method === 'DELETE') {
+                const id = parseInt(document.getElementById('apiId')?.value) || 1;
+                response = { status: 200, message: 'User ' + id + ' deleted successfully' };
+            }
+            
+            responseEl.textContent = JSON.stringify(response, null, 2);
+        };
+        
+        window.updateApiEndpoint();
+    }
+};
+
+// API Client Wrapper Demo
+demoConfigs['api-client-wrapper'] = {
+    html: `
+        <div class="demo-api-client">
+            <h4>API Client Wrapper Demo</h4>
+            <p style="color: var(--text-muted); margin-bottom: var(--spacing-md);">HTTP client with interceptors & error handling</p>
+            <div class="client-config" style="margin-bottom: var(--spacing-md);">
+                <label style="display: block; margin-bottom: var(--spacing-xs); color: var(--text-secondary);">Base URL:</label>
+                <input type="text" id="clientBaseUrl" value="https://jsonplaceholder.typicode.com" style="width: 100%; padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">
+            </div>
+            <div class="client-actions" style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+                <button class="btn btn-primary" onclick="apiClientGet()">GET /posts/1</button>
+                <button class="btn btn-success" onclick="apiClientPost()">POST /posts</button>
+                <button class="btn btn-danger" onclick="apiClientError()">GET /404 (Error)</button>
+            </div>
+            <div id="clientStatus" style="margin-top: var(--spacing-md); padding: var(--spacing-sm); border-radius: var(--radius-md); background: var(--bg-tertiary);">
+                <span id="clientStatusText">Ready to make requests...</span>
+            </div>
+            <div id="clientResponse" style="margin-top: var(--spacing-md);">
+                <h5>Response:</h5>
+                <pre id="clientResponseBody" style="background: var(--bg-card); padding: var(--spacing-md); border-radius: var(--radius-md); max-height: 200px; overflow: auto;">// Click a button to make a request</pre>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const setStatus = (text, isError = false) => {
+            const el = document.getElementById('clientStatusText');
+            el.textContent = text;
+            el.style.color = isError ? '#ef4444' : '#10b981';
+        };
+        
+        const showResponse = (data) => {
+            document.getElementById('clientResponseBody').textContent = JSON.stringify(data, null, 2);
+        };
+        
+        window.apiClientGet = async () => {
+            const baseUrl = document.getElementById('clientBaseUrl').value;
+            setStatus('⏳ GET request in progress...');
+            try {
+                const res = await fetch(baseUrl + '/posts/1');
+                const data = await res.json();
+                setStatus('✓ GET successful (200 OK)');
+                showResponse(data);
+            } catch (err) {
+                setStatus('✗ Request failed: ' + err.message, true);
+                showResponse({ error: err.message });
+            }
+        };
+        
+        window.apiClientPost = async () => {
+            const baseUrl = document.getElementById('clientBaseUrl').value;
+            setStatus('⏳ POST request in progress...');
+            try {
+                const res = await fetch(baseUrl + '/posts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title: 'Demo Post', body: 'Created via API Client', userId: 1 })
+                });
+                const data = await res.json();
+                setStatus('✓ POST successful (201 Created)');
+                showResponse(data);
+            } catch (err) {
+                setStatus('✗ Request failed: ' + err.message, true);
+                showResponse({ error: err.message });
+            }
+        };
+        
+        window.apiClientError = async () => {
+            const baseUrl = document.getElementById('clientBaseUrl').value;
+            setStatus('⏳ Testing error handling...');
+            try {
+                const res = await fetch(baseUrl + '/nonexistent-endpoint-404');
+                if (!res.ok) throw new Error('HTTP ' + res.status + ': ' + res.statusText);
+                const data = await res.json();
+                showResponse(data);
+            } catch (err) {
+                setStatus('✗ Error handled gracefully: ' + err.message, true);
+                showResponse({ error: err.message, handled: true, suggestion: 'Implement retry logic or fallback' });
+            }
+        };
+    }
+};
+
+// Email Service Demo
+demoConfigs['email-service'] = {
+    html: `
+        <div class="demo-email">
+            <h4>Email Service Demo</h4>
+            <p style="color: var(--text-muted); margin-bottom: var(--spacing-md);">Simulated email sending with templates</p>
+            <div class="email-form demo-form">
+                <div class="form-group">
+                    <label>Email Template:</label>
+                    <select id="emailTemplate" onchange="previewEmailTemplate()" style="width: 100%; padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">
+                        <option value="welcome">Welcome Email</option>
+                        <option value="reset">Password Reset</option>
+                        <option value="notification">Notification</option>
+                        <option value="invoice">Invoice</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Recipient:</label>
+                    <input type="email" id="emailTo" value="user@example.com" style="width: 100%; padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">
+                </div>
+                <div class="form-group">
+                    <label>Variables (JSON):</label>
+                    <input type="text" id="emailVars" value='{"name": "John", "company": "Acme Inc"}' style="width: 100%; padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">
+                </div>
+                <button class="btn btn-primary" onclick="sendDemoEmail()">📧 Send Email</button>
+            </div>
+            <div id="emailPreview" style="margin-top: var(--spacing-lg); padding: var(--spacing-md); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                <h5 style="margin-bottom: var(--spacing-sm);">Email Preview:</h5>
+                <div id="emailPreviewContent"></div>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const emailTemplates = {
+            welcome: { subject: "Welcome to {{company}}!", body: "Hi {{name}},\n\nWelcome to {{company}}! We are excited to have you on board.\n\nBest regards,\nThe Team" },
+            reset: { subject: "Password Reset Request", body: "Hi {{name}},\n\nClick here to reset your password: [Reset Link]\n\nIf you did not request this, ignore this email." },
+            notification: { subject: "New Notification", body: "Hi {{name}},\n\nYou have a new notification from {{company}}.\n\nCheck your dashboard for details." },
+            invoice: { subject: "Invoice from {{company}}", body: "Hi {{name}},\n\nPlease find your invoice attached.\n\nAmount Due: $99.00\nDue Date: " + new Date(Date.now() + 7*24*60*60*1000).toLocaleDateString() }
+        };
+        
+        window.previewEmailTemplate = () => {
+            const template = document.getElementById('emailTemplate').value;
+            const varsStr = document.getElementById('emailVars').value;
+            let vars = {};
+            try { vars = JSON.parse(varsStr); } catch(e) { vars = { name: 'User', company: 'Company' }; }
+            
+            const t = emailTemplates[template];
+            let subject = t.subject;
+            let body = t.body;
+            
+            Object.entries(vars).forEach(([key, val]) => {
+                subject = subject.replace(new RegExp('{{' + key + '}}', 'g'), val);
+                body = body.replace(new RegExp('{{' + key + '}}', 'g'), val);
+            });
+            
+            document.getElementById('emailPreviewContent').innerHTML = 
+                '<strong>Subject:</strong> ' + subject + '<br><br>' +
+                '<strong>Body:</strong><br><pre style="white-space: pre-wrap; margin-top: var(--spacing-xs);">' + body + '</pre>';
+        };
+        
+        window.sendDemoEmail = () => {
+            const to = document.getElementById('emailTo').value;
+            const template = document.getElementById('emailTemplate').value;
+            
+            document.getElementById('emailPreviewContent').innerHTML = 
+                '<div class="success-msg">✓ Email sent successfully!<br><br>' +
+                '<small>To: ' + to + '<br>Template: ' + template + '<br>Timestamp: ' + new Date().toISOString() + '</small></div>';
+        };
+        
+        window.previewEmailTemplate();
+    }
+};
+
+// Debounce & Throttle Demo
+demoConfigs['debounce-throttle'] = {
+    html: `
+        <div class="demo-debounce">
+            <h4>Debounce & Throttle Demo</h4>
+            <p style="color: var(--text-muted); margin-bottom: var(--spacing-md);">See the difference in real-time</p>
+            
+            <div class="debounce-section" style="margin-bottom: var(--spacing-lg);">
+                <label style="display: block; margin-bottom: var(--spacing-xs); font-weight: 600;">🔍 Debounce (Search Input)</label>
+                <small style="color: var(--text-muted); display: block; margin-bottom: var(--spacing-sm);">Waits until you stop typing (500ms delay)</small>
+                <input type="text" id="debounceInput" placeholder="Type here..." oninput="handleDebounceInput()" style="width: 100%; padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">
+                <div id="debounceOutput" style="margin-top: var(--spacing-sm); color: var(--text-muted);">
+                    <span>Keystrokes: <strong id="debounceKeystrokes">0</strong></span> | 
+                    <span>API Calls: <strong id="debounceCalls">0</strong></span>
+                </div>
+            </div>
+            
+            <div class="throttle-section" style="margin-bottom: var(--spacing-lg);">
+                <label style="display: block; margin-bottom: var(--spacing-xs); font-weight: 600;">🖱️ Throttle (Mouse Move)</label>
+                <small style="color: var(--text-muted); display: block; margin-bottom: var(--spacing-sm);">Limits updates to once per 100ms</small>
+                <div id="throttleArea" onmousemove="handleThrottleMove(event)" style="height: 100px; background: var(--bg-tertiary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; cursor: crosshair;">
+                    Move mouse here
+                </div>
+                <div id="throttleOutput" style="margin-top: var(--spacing-sm); color: var(--text-muted);">
+                    <span>Mouse Events: <strong id="throttleEvents">0</strong></span> | 
+                    <span>Processed: <strong id="throttleProcessed">0</strong></span>
+                </div>
+            </div>
+            
+            <div class="comparison" style="background: var(--bg-card); padding: var(--spacing-md); border-radius: var(--radius-md);">
+                <h5>📊 Efficiency Comparison</h5>
+                <div id="efficiencyStats" style="margin-top: var(--spacing-sm); font-size: 0.9rem;"></div>
+            </div>
+        </div>
+    `,
+    init: () => {
+        let debounceKeystrokes = 0;
+        let debounceCalls = 0;
+        let throttleEvents = 0;
+        let throttleProcessed = 0;
+        let debounceTimer = null;
+        let throttleTimer = null;
+        let canThrottle = true;
+        
+        window.handleDebounceInput = () => {
+            debounceKeystrokes++;
+            document.getElementById('debounceKeystrokes').textContent = debounceKeystrokes;
+            
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                debounceCalls++;
+                document.getElementById('debounceCalls').textContent = debounceCalls;
+                updateEfficiency();
+            }, 500);
+        };
+        
+        window.handleThrottleMove = (e) => {
+            throttleEvents++;
+            document.getElementById('throttleEvents').textContent = throttleEvents;
+            
+            if (canThrottle) {
+                canThrottle = false;
+                throttleProcessed++;
+                document.getElementById('throttleProcessed').textContent = throttleProcessed;
+                document.getElementById('throttleArea').textContent = 'X: ' + e.offsetX + ', Y: ' + e.offsetY;
+                updateEfficiency();
+                
+                setTimeout(() => { canThrottle = true; }, 100);
+            }
+        };
+        
+        function updateEfficiency() {
+            const debounceEff = debounceKeystrokes > 0 ? Math.round((1 - debounceCalls / debounceKeystrokes) * 100) : 0;
+            const throttleEff = throttleEvents > 0 ? Math.round((1 - throttleProcessed / throttleEvents) * 100) : 0;
+            
+            document.getElementById('efficiencyStats').innerHTML = 
+                '• Debounce saved <strong style="color: #10b981;">' + debounceEff + '%</strong> of function calls<br>' +
+                '• Throttle saved <strong style="color: #10b981;">' + throttleEff + '%</strong> of function calls';
+        }
+    }
+};
+
+// Date & Time Utilities Demo
+demoConfigs['date-time-utils'] = {
+    html: `
+        <div class="demo-datetime">
+            <h4>Date & Time Utilities Demo</h4>
+            <p style="color: var(--text-muted); margin-bottom: var(--spacing-md);">Formatting, parsing, and relative time</p>
+            
+            <div class="datetime-section" style="margin-bottom: var(--spacing-lg);">
+                <label style="display: block; margin-bottom: var(--spacing-xs); font-weight: 600;">📅 Date Formatting</label>
+                <input type="datetime-local" id="dateInput" onchange="formatDemoDate()" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">
+                <div id="dateFormats" style="margin-top: var(--spacing-md); background: var(--bg-card); padding: var(--spacing-md); border-radius: var(--radius-md);"></div>
+            </div>
+            
+            <div class="relative-section" style="margin-bottom: var(--spacing-lg);">
+                <label style="display: block; margin-bottom: var(--spacing-xs); font-weight: 600;">⏰ Relative Time (timeAgo)</label>
+                <div class="relative-examples" style="display: grid; gap: var(--spacing-sm);" id="relativeExamples"></div>
+            </div>
+            
+            <div class="duration-section">
+                <label style="display: block; margin-bottom: var(--spacing-xs); font-weight: 600;">⏱️ Duration Formatting</label>
+                <input type="number" id="durationInput" placeholder="Seconds" value="3665" oninput="formatDuration()" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">
+                <span id="durationOutput" style="margin-left: var(--spacing-sm); font-weight: 600; color: var(--primary-color);"></span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        // Set default date to now
+        const now = new Date();
+        const localISOTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        document.getElementById('dateInput').value = localISOTime;
+        
+        window.formatDemoDate = () => {
+            const input = document.getElementById('dateInput').value;
+            if (!input) return;
+            const date = new Date(input);
+            
+            const formats = [
+                { label: 'ISO 8601', value: date.toISOString() },
+                { label: 'US Format', value: (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear() },
+                { label: 'EU Format', value: date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear() },
+                { label: 'Long Date', value: date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) },
+                { label: 'With Time', value: date.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) },
+                { label: 'Unix Timestamp', value: Math.floor(date.getTime() / 1000) }
+            ];
+            
+            document.getElementById('dateFormats').innerHTML = formats.map(f => 
+                '<div style="display: flex; justify-content: space-between; padding: var(--spacing-xs) 0; border-bottom: 1px solid var(--border-light);"><span style="color: var(--text-secondary);">' + f.label + ':</span><code style="color: var(--primary-color);">' + f.value + '</code></div>'
+            ).join('');
+        };
+        
+        function timeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            const intervals = [
+                { label: 'year', seconds: 31536000 },
+                { label: 'month', seconds: 2592000 },
+                { label: 'week', seconds: 604800 },
+                { label: 'day', seconds: 86400 },
+                { label: 'hour', seconds: 3600 },
+                { label: 'minute', seconds: 60 }
+            ];
+            
+            for (const interval of intervals) {
+                const count = Math.floor(seconds / interval.seconds);
+                if (count >= 1) {
+                    return count + ' ' + interval.label + (count > 1 ? 's' : '') + ' ago';
+                }
+            }
+            return 'Just now';
+        }
+        
+        const examples = [
+            { label: 'Just now', date: new Date() },
+            { label: '5 minutes ago', date: new Date(Date.now() - 5 * 60 * 1000) },
+            { label: '2 hours ago', date: new Date(Date.now() - 2 * 60 * 60 * 1000) },
+            { label: 'Yesterday', date: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+            { label: 'Last week', date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) }
+        ];
+        
+        document.getElementById('relativeExamples').innerHTML = examples.map(ex => 
+            '<div style="display: flex; justify-content: space-between; padding: var(--spacing-sm); background: var(--bg-card); border-radius: var(--radius-sm);"><span>' + ex.label + '</span><code style="color: var(--primary-color);">' + timeAgo(ex.date) + '</code></div>'
+        ).join('');
+        
+        window.formatDuration = () => {
+            const seconds = parseInt(document.getElementById('durationInput').value) || 0;
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            
+            let result = '';
+            if (h > 0) result += h + 'h ';
+            if (m > 0) result += m + 'm ';
+            if (s > 0 || result === '') result += s + 's';
+            
+            document.getElementById('durationOutput').textContent = result.trim();
+        };
+        
+        window.formatDemoDate();
+        window.formatDuration();
+    }
+};
+
 function showFieldError(form, fieldName, message) {
     const field = form[fieldName];
     const formGroup = field.closest('.form-group');
