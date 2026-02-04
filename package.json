@@ -1,6 +1,6 @@
 {
   "name": "structured-for-growth-www",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
   "main": "server/index.js",
   "type": "module",
@@ -41,11 +41,11 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.7",
-    "sql.js": "^1.13.0"
+    "sql.js": "^1.13.0",
+    "vite": "^5.0.8"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "nodemon": "^3.0.2",
-    "vite": "^5.0.8"
+    "nodemon": "^3.0.2"
   }
 }
