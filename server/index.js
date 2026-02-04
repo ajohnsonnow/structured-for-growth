@@ -13,6 +13,7 @@ import authRoutes from './routes/auth.js';
 import projectRoutes from './routes/projects.js';
 import messageRoutes from './routes/messages.js';
 import campaignRoutes from './routes/campaigns.js';
+import portalRoutes from './routes/portal.js';
 
 // Import database initialization
 import { initializeDatabase } from './models/database.js';
@@ -58,6 +59,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/campaigns', campaignRoutes);
+app.use('/api/portal', portalRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -76,6 +78,10 @@ if (process.env.NODE_ENV === 'production') {
     
     app.get('/templates', (req, res) => {
         res.sendFile(path.join(__dirname, '../dist/templates.html'));
+    });
+    
+    app.get('/portal', (req, res) => {
+        res.sendFile(path.join(__dirname, '../dist/portal.html'));
     });
     
     // Catch-all route for main page

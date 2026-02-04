@@ -17,6 +17,7 @@ export default defineConfig({
         main: resolve(__dirname, 'client/index.html'),
         dashboard: resolve(__dirname, 'client/dashboard.html'),
         templates: resolve(__dirname, 'client/templates.html'),
+        portal: resolve(__dirname, 'client/portal.html'),
       },
     },
   },
