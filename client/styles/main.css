@@ -336,8 +336,30 @@ section {
 
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-lg);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Center the last row when odd number of items */
+.portfolio-grid > *:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    justify-self: center;
+}
+
+/* Project card links */
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.project-card-link:hover .project-card {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl), var(--glow-green);
+    border-color: var(--primary-color);
 }
 
 .project-card {
@@ -453,8 +475,10 @@ section {
 
 .template-categories {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-lg);
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .category-card {
@@ -622,6 +646,11 @@ section {
     .services-grid,
     .template-categories {
         grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+    
+    .portfolio-grid > *:last-child:nth-child(odd) {
+        max-width: 100%;
     }
 }
 
