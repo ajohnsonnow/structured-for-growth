@@ -307,7 +307,6 @@ async function seedTestData() {
             console.log(`👤 Created configured admin user: ${ADMIN_USERNAME}`);
         }
     }
-    }
     
     // Check if we have clients
     const clientCount = query('SELECT COUNT(*) as count FROM clients')[0]?.count || 0;
