@@ -278,25 +278,35 @@ async function seedTestData() {
     const bcryptModule = await import('bcryptjs');
     const bcrypt = bcryptModule.default;
     
+    // Admin credentials from environment or defaults
+    const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Anth-Admin';
+    const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'Anth@StructuredForGrowth.com';
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Secure!813Bowl420!';
+    
     // Check if we have users
     const userCount = query('SELECT COUNT(*) as count FROM users')[0]?.count || 0;
     
     if (userCount === 0) {
-        // Create default admin user
-        const adminPassword = await bcrypt.hash('admin123!', 10);
+        // Create admin user with configured credentials
+        const adminPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
         execute(`
             INSERT INTO users (username, email, password, role)
             VALUES (?, ?, ?, ?)
-        `, ['admin', 'admin@structuredforgrowth.com', adminPassword, 'admin']);
-        console.log('👤 Created default admin user: admin / admin123!');
-        
-        // Create test client user
-        const clientPassword = await bcrypt.hash('client123!', 10);
-        execute(`
-            INSERT INTO users (username, email, password, role)
-            VALUES (?, ?, ?, ?)
-        `, ['testclient', 'client@example.com', clientPassword, 'user']);
-        console.log('👤 Created test client user: testclient / client123!');
+        `, [ADMIN_USERNAME, ADMIN_EMAIL, adminPassword, 'admin']);
+        console.log(`👤 Created admin user: ${ADMIN_USERNAME}`);
+    } else {
+        // Ensure admin user exists and update password if using env vars
+        const existingAdmin = query(`SELECT id FROM users WHERE username = ? OR email = ?`, [ADMIN_USERNAME, ADMIN_EMAIL]);
+        if (existingAdmin.length === 0) {
+            // Create the configured admin if they don't exist
+            const adminPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
+            execute(`
+                INSERT INTO users (username, email, password, role)
+                VALUES (?, ?, ?, ?)
+            `, [ADMIN_USERNAME, ADMIN_EMAIL, adminPassword, 'admin']);
+            console.log(`👤 Created configured admin user: ${ADMIN_USERNAME}`);
+        }
+    }
     }
     
     // Check if we have clients
