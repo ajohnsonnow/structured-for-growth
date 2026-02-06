@@ -14,7 +14,7 @@ const dbPath = process.env.DB_PATH || path.join(__dirname, '../data/database.db'
 
 // Admin credentials - CHANGE THESE OR USE ENVIRONMENT VARIABLES
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Anth-Admin';
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@structuredforgrowth.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'Anth@StructuredForGrowth.com';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Secure!813Bowl420!';
 
 async function seedAdmin() {
