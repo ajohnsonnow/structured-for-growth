@@ -14,6 +14,8 @@ import projectRoutes from './routes/projects.js';
 import messageRoutes from './routes/messages.js';
 import campaignRoutes from './routes/campaigns.js';
 import portalRoutes from './routes/portal.js';
+import backupRoutes from './routes/backup.js';
+import demoRoutes from './routes/demo.js';
 
 // Import database initialization
 import { initializeDatabase } from './models/database.js';
@@ -63,6 +65,8 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/campaigns', campaignRoutes);
 app.use('/api/portal', portalRoutes);
+app.use('/api/backup', backupRoutes);
+app.use('/api/demo', demoRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

@@ -1046,6 +1046,8 @@ function switchView(view) {
         loadMessages();
     } else if (view === 'campaigns') {
         loadCampaigns();
+    } else if (view === 'system' && currentUser?.role === 'admin') {
+        loadSystemView();
     }
 }
 
@@ -1453,13 +1455,17 @@ window.loadTemplate = function(templateId) {
 }
 
 window.switchCampaignTab = function(tab) {
-    // Update tab buttons
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    // Get parent container to scope tab switching
+    const activeView = document.querySelector('.dashboard-view.active');
+    if (!activeView) return;
+    
+    // Update tab buttons within this view
+    activeView.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.tab === tab);
     });
     
-    // Update tab content - tabs are named "campaigns-list", "segments-list", "templates-list"
-    document.querySelectorAll('.tab-content').forEach(content => {
+    // Update tab content within this view
+    activeView.querySelectorAll('.tab-content').forEach(content => {
         content.classList.toggle('active', content.id === tab);
     });
 }
@@ -1832,6 +1838,324 @@ function formatRelativeTime(dateString) {
     if (days < 7) return `${days}d ago`;
     
     return date.toLocaleDateString();
+}
+
+// ============ BACKUP & RESTORE ============
+
+async function loadBackups() {
+    try {
+        const response = await fetch('/api/backup/list', {
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        const data = await response.json();
+        
+        const container = document.getElementById('backupsList');
+        if (!data.success || !data.backups || data.backups.length === 0) {
+            container.innerHTML = '<p class="empty-message">No backups found. Create your first backup!</p>';
+            return;
+        }
+        
+        container.innerHTML = data.backups.map(backup => `
+            <div class="backup-item">
+                <div class="backup-info">
+                    <span class="backup-name">${backup.filename}</span>
+                    <span class="backup-meta">${backup.sizeFormatted} • ${new Date(backup.createdAt).toLocaleString()}</span>
+                </div>
+                <div class="backup-actions">
+                    <button class="btn btn-small btn-secondary" onclick="downloadBackup('${backup.filename}')">⬇️ Download</button>
+                    <button class="btn btn-small btn-warning" onclick="restoreFromBackup('${backup.filename}')">🔄 Restore</button>
+                    <button class="btn btn-small btn-danger" onclick="deleteBackup('${backup.filename}')">🗑️</button>
+                </div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error('Load backups error:', error);
+        document.getElementById('backupsList').innerHTML = '<p class="error-message">Failed to load backups</p>';
+    }
+}
+
+async function createBackup() {
+    const name = document.getElementById('backupName').value.trim();
+    
+    try {
+        showNotification('Creating backup...', 'info');
+        
+        const response = await fetch('/api/backup/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ name })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showNotification(`Backup created: ${data.filename} (${data.size})`, 'success');
+            document.getElementById('backupName').value = '';
+            loadBackups();
+        } else {
+            showNotification(data.message || 'Backup failed', 'error');
+        }
+    } catch (error) {
+        console.error('Create backup error:', error);
+        showNotification('Failed to create backup', 'error');
+    }
+}
+
+async function exportDatabaseDirect() {
+    try {
+        showNotification('Preparing export...', 'info');
+        
+        const response = await fetch('/api/backup/export', {
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        
+        if (!response.ok) throw new Error('Export failed');
+        
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `sfg-export-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+        
+        showNotification('Export downloaded', 'success');
+    } catch (error) {
+        console.error('Export error:', error);
+        showNotification('Failed to export database', 'error');
+    }
+}
+
+async function downloadBackup(filename) {
+    try {
+        window.open(`/api/backup/download/${filename}?token=${authToken}`, '_blank');
+    } catch (error) {
+        console.error('Download error:', error);
+        showNotification('Failed to download backup', 'error');
+    }
+}
+
+async function restoreFromBackup(filename) {
+    if (!confirm(`Are you sure you want to restore from "${filename}"?\n\nThis will replace ALL current data. A safety backup will be created first.`)) {
+        return;
+    }
+    
+    try {
+        showNotification('Restoring...', 'info');
+        
+        const response = await fetch('/api/backup/restore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ filename })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showNotification(`Restored ${data.totalRecords} records. Safety backup: ${data.preRestoreBackup}`, 'success');
+            // Reload the page to reflect changes
+            setTimeout(() => window.location.reload(), 2000);
+        } else {
+            showNotification(data.message || 'Restore failed', 'error');
+        }
+    } catch (error) {
+        console.error('Restore error:', error);
+        showNotification('Failed to restore backup', 'error');
+    }
+}
+
+async function handleRestoreFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    if (!confirm(`Are you sure you want to restore from "${file.name}"?\n\nThis will replace ALL current data. A safety backup will be created first.`)) {
+        input.value = '';
+        return;
+    }
+    
+    try {
+        showNotification('Reading and restoring...', 'info');
+        
+        const text = await file.text();
+        const jsonData = JSON.parse(text);
+        
+        const response = await fetch('/api/backup/restore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ data: jsonData })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showNotification(`Restored ${data.totalRecords} records from file.`, 'success');
+            setTimeout(() => window.location.reload(), 2000);
+        } else {
+            showNotification(data.message || 'Restore failed', 'error');
+        }
+    } catch (error) {
+        console.error('Restore file error:', error);
+        showNotification('Failed to parse or restore backup file', 'error');
+    }
+    
+    input.value = '';
+}
+
+async function deleteBackup(filename) {
+    if (!confirm(`Delete backup "${filename}"?`)) return;
+    
+    try {
+        const response = await fetch(`/api/backup/${filename}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showNotification('Backup deleted', 'success');
+            loadBackups();
+        } else {
+            showNotification(data.message || 'Delete failed', 'error');
+        }
+    } catch (error) {
+        console.error('Delete backup error:', error);
+        showNotification('Failed to delete backup', 'error');
+    }
+}
+
+// ============ DEMO DATA ============
+
+async function loadDemoStats() {
+    try {
+        const response = await fetch('/api/demo/stats', {
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+            const container = document.getElementById('demoStats');
+            if (container) {
+                container.innerHTML = `
+                    <div class="stats-mini-grid">
+                        <div class="stat-mini">👥 <strong>${data.stats.clients}</strong> Clients</div>
+                        <div class="stat-mini">👤 <strong>${data.stats.users}</strong> Users</div>
+                        <div class="stat-mini">📁 <strong>${data.stats.projects}</strong> Projects</div>
+                        <div class="stat-mini">✅ <strong>${data.stats.tasks}</strong> Tasks</div>
+                        <div class="stat-mini">⏱️ <strong>${data.stats.timeEntries}</strong> Time Entries</div>
+                        <div class="stat-mini">💬 <strong>${data.stats.messages}</strong> Messages</div>
+                        <div class="stat-mini">📧 <strong>${data.stats.campaigns}</strong> Campaigns</div>
+                        <div class="stat-mini">📝 <strong>${data.stats.contactSubmissions}</strong> Submissions</div>
+                    </div>
+                    <p class="total-records">Total records: <strong>${data.stats.total}</strong></p>
+                `;
+            }
+            
+            // Also update DB stats tab
+            const dbContainer = document.getElementById('dbStats');
+            if (dbContainer) {
+                dbContainer.innerHTML = Object.entries(data.stats)
+                    .filter(([key]) => key !== 'total')
+                    .map(([key, value]) => `
+                        <div class="db-stat-card">
+                            <div class="db-stat-value">${value}</div>
+                            <div class="db-stat-label">${formatTableName(key)}</div>
+                        </div>
+                    `).join('');
+            }
+        }
+    } catch (error) {
+        console.error('Load demo stats error:', error);
+    }
+}
+
+function formatTableName(name) {
+    return name.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+}
+
+async function generateDemoData(clearExisting = false) {
+    const action = clearExisting ? 'reset and regenerate' : 'add';
+    if (!confirm(`This will ${action} demo data. Continue?`)) return;
+    
+    try {
+        showNotification('Generating demo data...', 'info');
+        
+        const response = await fetch('/api/demo/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ clearExisting })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            const created = Object.entries(data.results.created)
+                .map(([k, v]) => `${v} ${k}`)
+                .join(', ');
+            showNotification(`Demo data created: ${created}`, 'success');
+            loadDemoStats();
+            loadDashboard();
+            loadClients();
+            loadProjects();
+        } else {
+            showNotification(data.message || 'Failed to generate demo data', 'error');
+        }
+    } catch (error) {
+        console.error('Generate demo data error:', error);
+        showNotification('Failed to generate demo data', 'error');
+    }
+}
+
+async function clearDemoData() {
+    if (!confirm('⚠️ WARNING: This will DELETE ALL data except your admin account!\n\nAre you absolutely sure?')) return;
+    if (!confirm('Final confirmation: Delete ALL clients, projects, messages, and other data?')) return;
+    
+    try {
+        showNotification('Clearing demo data...', 'info');
+        
+        const response = await fetch('/api/demo/clear', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showNotification('All demo data cleared', 'success');
+            loadDemoStats();
+            loadDashboard();
+            loadClients();
+            loadProjects();
+        } else {
+            showNotification(data.message || 'Failed to clear demo data', 'error');
+        }
+    } catch (error) {
+        console.error('Clear demo data error:', error);
+        showNotification('Failed to clear demo data', 'error');
+    }
+}
+
+// Load system view data when viewing
+function loadSystemView() {
+    loadBackups();
+    loadDemoStats();
 }
 
 // Close modals on escape key

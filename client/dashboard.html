@@ -61,6 +61,10 @@
                     <span class="icon">📜</span>
                     Activity Log
                 </a>
+                <a href="#" class="sidebar-link admin-only" data-view="system">
+                    <span class="icon">⚙️</span>
+                    System & Backups
+                </a>
                 <div class="sidebar-divider"></div>
                 <a href="/" class="sidebar-link">
                     <span class="icon">🏠</span>
@@ -263,6 +267,99 @@
 
                 <div class="activity-list" id="activityList">
                     <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- System & Backups View (Admin Only) -->
+            <div id="systemView" class="dashboard-view admin-only">
+                <div class="dashboard-header">
+                    <h2>System & Backups</h2>
+                </div>
+
+                <div class="system-tabs">
+                    <button class="tab-btn active" data-tab="backup-tab">💾 Backups</button>
+                    <button class="tab-btn" data-tab="demo-tab">🎲 Demo Data</button>
+                    <button class="tab-btn" data-tab="stats-tab">📊 Stats</button>
+                </div>
+
+                <!-- Backup Tab -->
+                <div class="tab-content active" id="backup-tab">
+                    <div class="system-section">
+                        <h3>Create Backup</h3>
+                        <p class="section-description">Download a complete backup of all your data.</p>
+                        <div class="backup-actions">
+                            <input type="text" id="backupName" placeholder="Backup name (optional)" class="backup-name-input">
+                            <button class="btn btn-primary" onclick="createBackup()">📥 Create Backup</button>
+                            <button class="btn btn-secondary" onclick="exportDatabaseDirect()">⬇️ Quick Export</button>
+                        </div>
+                    </div>
+
+                    <div class="system-section">
+                        <h3>Restore from Backup</h3>
+                        <p class="section-description">Upload a backup file to restore your data. A safety backup will be created first.</p>
+                        <div class="backup-actions">
+                            <input type="file" id="restoreFile" accept=".json" style="display:none" onchange="handleRestoreFile(this)">
+                            <button class="btn btn-warning" onclick="document.getElementById('restoreFile').click()">📤 Upload & Restore</button>
+                        </div>
+                    </div>
+
+                    <div class="system-section">
+                        <h3>Saved Backups</h3>
+                        <p class="section-description">Backups stored on the server.</p>
+                        <div id="backupsList" class="backups-list">
+                            <p class="empty-message">Loading backups...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo Data Tab -->
+                <div class="tab-content" id="demo-tab">
+                    <div class="system-section">
+                        <h3>Demo Data Controls</h3>
+                        <p class="section-description">Generate or clear demo data for testing all features.</p>
+                        
+                        <div class="demo-stats" id="demoStats">
+                            <!-- Populated by JavaScript -->
+                        </div>
+
+                        <div class="demo-actions">
+                            <button class="btn btn-primary btn-large" onclick="generateDemoData(false)">
+                                ➕ Add Demo Data
+                            </button>
+                            <button class="btn btn-warning btn-large" onclick="generateDemoData(true)">
+                                🔄 Reset & Generate
+                            </button>
+                            <button class="btn btn-danger btn-large" onclick="clearDemoData()">
+                                🗑️ Clear All Demo Data
+                            </button>
+                        </div>
+
+                        <div class="demo-info">
+                            <h4>Demo Data Includes:</h4>
+                            <ul>
+                                <li>✅ 10 diverse clients with various statuses</li>
+                                <li>✅ 10 client portal users (password: demo123!)</li>
+                                <li>✅ 11 projects at different stages</li>
+                                <li>✅ Multiple tasks per project</li>
+                                <li>✅ Time entries for billing</li>
+                                <li>✅ Message threads with clients</li>
+                                <li>✅ Contact form submissions</li>
+                                <li>✅ Email campaigns and templates</li>
+                                <li>✅ Client segments</li>
+                                <li>✅ Activity log entries</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Tab -->
+                <div class="tab-content" id="stats-tab">
+                    <div class="system-section">
+                        <h3>Database Statistics</h3>
+                        <div id="dbStats" class="db-stats-grid">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
                 </div>
             </div>
 
