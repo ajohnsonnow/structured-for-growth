@@ -545,7 +545,7 @@ demoConfigs['validation-utilities'] = {
     init: () => {
         window.validateEmail = (input) => {
             const result = document.getElementById('valEmailResult');
-            const isValid = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(input.value);
+            const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
             result.textContent = isValid ? '✓ Valid email' : '✗ Invalid email';
             result.className = 'val-result ' + (isValid ? 'valid' : 'invalid');
         };
