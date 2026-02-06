@@ -12,8 +12,8 @@ router.post('/generate', authenticateToken, async (req, res) => {
         const { clearExisting = false } = req.body;
         const results = { created: {}, errors: [] };
         
-        // Demo user password from environment
-        const DEMO_USER_PASSWORD = process.env.DEMO_USER_PASSWORD || 'DemoPass2026!';
+        // Demo user password from environment (dynamic default for dev)
+        const DEMO_USER_PASSWORD = process.env.DEMO_USER_PASSWORD || 'DemoUser' + Date.now().toString(36);
         
         // Create backup before generating demo data
         triggerAutoBackup('DEMO_DATA_GENERATE', req.user.userId, 'Before demo data generation');

@@ -312,11 +312,11 @@ async function seedTestData() {
     const bcryptModule = await import('bcryptjs');
     const bcrypt = bcryptModule.default;
     
-    // Admin credentials from environment or defaults
+    // Admin credentials from environment (defaults for development only)
     const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Anth-Admin';
     const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'Anth@StructuredForGrowth.com';
-    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Secure!813Bowl420!';
-    const DEMO_USER_PASSWORD = process.env.DEMO_USER_PASSWORD || 'DemoPass2026!';
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ChangeMeInProduction' + Date.now().toString(36);
+    const DEMO_USER_PASSWORD = process.env.DEMO_USER_PASSWORD || 'DemoUser' + Date.now().toString(36);
     
     // Check if we have users
     const userCount = query('SELECT COUNT(*) as count FROM users')[0]?.count || 0;

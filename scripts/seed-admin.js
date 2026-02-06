@@ -12,10 +12,10 @@ const __dirname = path.dirname(__filename);
 
 const dbPath = process.env.DB_PATH || path.join(__dirname, '../data/database.db');
 
-// Admin credentials - CHANGE THESE OR USE ENVIRONMENT VARIABLES
+// Admin credentials - MUST use environment variables in production
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Anth-Admin';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'Anth@StructuredForGrowth.com';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Secure!813Bowl420!';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ChangeMeInProduction' + Date.now().toString(36);
 
 async function seedAdmin() {
     console.log('🔐 Admin Account Seeder\n');

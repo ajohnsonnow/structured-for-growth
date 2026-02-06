@@ -83,7 +83,7 @@ const demoConfigs = {
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" placeholder="••••••••" value="password123">
+                            <input type="password" placeholder="••••••••" value="">
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
                     </form>
