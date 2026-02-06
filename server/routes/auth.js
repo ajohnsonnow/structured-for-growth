@@ -275,9 +275,11 @@ router.get('/profile', authenticateToken, (req, res) => {
 router.get('/users', authenticateToken, requireRole('admin'), (req, res) => {
     try {
         const users = query(`
-            SELECT id, username, email, role, is_active, created_at, last_login 
-            FROM users 
-            ORDER BY created_at DESC
+            SELECT u.id, u.username, u.email, u.role, u.client_id, u.is_active, u.created_at, u.last_login,
+                   c.name as client_name
+            FROM users u
+            LEFT JOIN clients c ON u.client_id = c.id
+            ORDER BY u.created_at DESC
         `);
         
         res.json({
@@ -293,15 +295,77 @@ router.get('/users', authenticateToken, requireRole('admin'), (req, res) => {
     }
 });
 
+// Create user (admin only)
+router.post('/users', authenticateToken, requireRole('admin'),
+    [
+        body('username').trim().isLength({ min: 3 }).withMessage('Username must be at least 3 characters'),
+        body('email').trim().isEmail().withMessage('Please provide a valid email'),
+        body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+        body('role').optional().isIn(['admin', 'user']),
+        body('client_id').optional().isInt()
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                message: 'Validation failed',
+                errors: errors.array()
+            });
+        }
+        
+        const { username, email, password, role = 'user', client_id, is_active = true } = req.body;
+        
+        try {
+            // Check if user already exists
+            const existingUser = queryOne('SELECT id FROM users WHERE username = ? OR email = ?', [username, email]);
+            
+            if (existingUser) {
+                return res.status(409).json({
+                    success: false,
+                    message: 'Username or email already exists'
+                });
+            }
+            
+            // Hash password
+            const hashedPassword = await bcrypt.hash(password, 10);
+            
+            // Insert user
+            const result = execute(`
+                INSERT INTO users (username, email, password, role, client_id, is_active)
+                VALUES (?, ?, ?, ?, ?, ?)
+            `, [username, email, hashedPassword, role, client_id || null, is_active ? 1 : 0]);
+            
+            logActivity(req.user.userId, 'CREATE_USER', 'user', result.lastInsertRowid, `Created user: ${username}`);
+            
+            res.status(201).json({
+                success: true,
+                message: 'User created successfully',
+                userId: result.lastInsertRowid
+            });
+        } catch (error) {
+            console.error('Create user error:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Failed to create user'
+            });
+        }
+    }
+);
+
 // Update user (admin only)
 router.put('/users/:id', authenticateToken, requireRole('admin'),
     [
         body('role').optional().isIn(['admin', 'user']),
-        body('is_active').optional().isBoolean()
+        body('is_active').optional().isBoolean(),
+        body('client_id').optional().isInt(),
+        body('username').optional().trim().isLength({ min: 3 }),
+        body('email').optional().trim().isEmail(),
+        body('password').optional().isLength({ min: 8 })
     ],
-    (req, res) => {
+    async (req, res) => {
         const { id } = req.params;
-        const { role, is_active } = req.body;
+        const { role, is_active, client_id, username, email, password } = req.body;
         
         try {
             const user = queryOne('SELECT * FROM users WHERE id = ?', [id]);
@@ -326,6 +390,14 @@ router.put('/users/:id', authenticateToken, requireRole('admin'),
             
             if (role !== undefined) { updates.push('role = ?'); params.push(role); }
             if (is_active !== undefined) { updates.push('is_active = ?'); params.push(is_active ? 1 : 0); }
+            if (client_id !== undefined) { updates.push('client_id = ?'); params.push(client_id || null); }
+            if (username !== undefined) { updates.push('username = ?'); params.push(username); }
+            if (email !== undefined) { updates.push('email = ?'); params.push(email); }
+            if (password !== undefined) {
+                const hashedPassword = await bcrypt.hash(password, 10);
+                updates.push('password = ?');
+                params.push(hashedPassword);
+            }
             
             if (updates.length === 0) {
                 return res.status(400).json({
@@ -339,7 +411,7 @@ router.put('/users/:id', authenticateToken, requireRole('admin'),
             
             execute(`UPDATE users SET ${updates.join(', ')} WHERE id = ?`, params);
             
-            const updatedUser = queryOne('SELECT id, username, email, role, is_active FROM users WHERE id = ?', [id]);
+            const updatedUser = queryOne('SELECT id, username, email, role, client_id, is_active FROM users WHERE id = ?', [id]);
             
             logActivity(req.user.userId, 'UPDATE_USER', 'user', id, `Updated user: ${user.username}`);
             

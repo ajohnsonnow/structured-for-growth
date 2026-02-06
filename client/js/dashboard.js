@@ -6,6 +6,10 @@ let allProjects = [];
 
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', () => {
+    // Always start with dashboard hidden and login modal ready
+    document.querySelector('.dashboard-nav')?.classList.remove('authenticated');
+    document.querySelector('.dashboard-container')?.classList.remove('authenticated');
+    
     checkAuth();
     initEventListeners();
 });
@@ -44,7 +48,7 @@ async function checkAuth() {
 
 function onAuthSuccess() {
     document.getElementById('username').textContent = currentUser.username;
-    document.getElementById('userRole').textContent = currentUser.role === 'admin' ? '👑 Admin' : '👤 User';
+    document.getElementById('userRole').textContent = currentUser.role === 'admin' ? '👑' : '👤';
     
     // Show/hide admin elements
     const isAdmin = currentUser.role === 'admin';
@@ -246,6 +250,7 @@ function displayClients(clients) {
             <td><span class="badge badge-info">${client.project_count || 0}</span></td>
             <td><span class="badge badge-${client.status === 'active' ? 'success' : client.status === 'inactive' ? 'warning' : 'secondary'}">${client.status}</span></td>
             <td class="action-btns">
+                <button class="btn-icon" onclick="messageClient(${client.id})" title="Message">💬</button>
                 <button class="btn-icon" onclick="editClient(${client.id})" title="Edit">✏️</button>
                 <button class="btn-icon btn-danger" onclick="deleteClient(${client.id})" title="Delete">🗑️</button>
             </td>
@@ -384,6 +389,14 @@ window.deleteClient = async function(clientId) {
     }
 }
 
+window.messageClient = function(clientId) {
+    // Switch to messages view and open conversation with this client
+    switchView('messages');
+    setTimeout(() => {
+        openConversation(clientId);
+    }, 100);
+}
+
 // ============ PROJECTS ============
 
 async function loadProjects() {
@@ -437,6 +450,104 @@ function displayProjects(projects) {
             ` : ''}
         </div>
     `).join('');
+}
+
+let isGanttView = false;
+
+window.toggleProjectView = function() {
+    isGanttView = !isGanttView;
+    const cardView = document.getElementById('projectCards');
+    const ganttView = document.getElementById('ganttChart');
+    const toggleBtn = document.getElementById('toggleGanttView');
+    const emptyState = document.getElementById('projectsEmptyState');
+    
+    if (isGanttView) {
+        cardView.style.display = 'none';
+        ganttView.style.display = 'block';
+        emptyState.style.display = 'none';
+        toggleBtn.innerHTML = '📇 Card View';
+        renderGanttChart(allProjects);
+    } else {
+        cardView.style.display = 'grid';
+        ganttView.style.display = 'none';
+        toggleBtn.innerHTML = '📊 Gantt Chart';
+        displayProjects(allProjects);
+    }
+}
+
+function renderGanttChart(projects) {
+    const container = document.getElementById('ganttChart');
+    
+    // Filter projects with start and end dates
+    const projectsWithDates = projects.filter(p => p.start_date && p.end_date);
+    
+    if (projectsWithDates.length === 0) {
+        container.innerHTML = '<p class="empty-message">No projects with start and end dates to display in Gantt chart.</p>';
+        return;
+    }
+    
+    // Calculate timeline range
+    const dates = projectsWithDates.flatMap(p => [new Date(p.start_date), new Date(p.end_date)]);
+    const minDate = new Date(Math.min(...dates));
+    const maxDate = new Date(Math.max(...dates));
+    
+    // Add padding
+    minDate.setMonth(minDate.getMonth() - 1);
+    maxDate.setMonth(maxDate.getMonth() + 1);
+    
+    const totalDays = Math.ceil((maxDate - minDate) / (1000 * 60 * 60 * 24));
+    
+    // Generate HTML
+    let html = '<div class="gantt-chart">';
+    html += '<div class="gantt-header">';
+    html += '<div class="gantt-project-info"><strong>Project</strong></div>';
+    html += '<div class="gantt-timeline">';
+    
+    // Generate month headers
+    let current = new Date(minDate);
+    while (current <= maxDate) {
+        html += `<div class="gantt-month">${current.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</div>`;
+        current.setMonth(current.getMonth() + 1);
+    }
+    
+    html += '</div></div>';
+    
+    // Generate project rows
+    projectsWithDates.forEach(project => {
+        const startDate = new Date(project.start_date);
+        const endDate = new Date(project.end_date);
+        const startOffset = Math.ceil((startDate - minDate) / (1000 * 60 * 60 * 24));
+        const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+        
+        const leftPercent = (startOffset / totalDays) * 100;
+        const widthPercent = (duration / totalDays) * 100;
+        
+        html += `
+            <div class="gantt-row">
+                <div class="gantt-project-info">
+                    <div class="gantt-project-name">${project.title}</div>
+                    <div class="gantt-client-name">${project.client_name || 'No client'}</div>
+                    <div class="gantt-dates">${formatDate(project.start_date)} - ${formatDate(project.end_date)}</div>
+                </div>
+                <div class="gantt-timeline-area">
+                    <div class="gantt-bar status-${project.status}" 
+                         style="left: ${leftPercent}%; width: ${widthPercent}%"
+                         onclick="viewProject(${project.id})"
+                         title="${project.title} (${project.status})">
+                        ${widthPercent > 10 ? project.title.substring(0, 20) : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function formatDate(dateString) {
+    if (!dateString) return '';
+    return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 function filterProjects() {
@@ -583,6 +694,7 @@ function displayUsers(users) {
         row.innerHTML = `
             <td><strong>${user.username}</strong>${isCurrentUser ? ' (you)' : ''}</td>
             <td>${user.email}</td>
+            <td>${user.client_name ? `<span class="badge badge-info">${user.client_name}</span>` : '-'}</td>
             <td>
                 <select class="role-select" onchange="updateUserRole(${user.id}, this.value)" ${isCurrentUser ? 'disabled' : ''}>
                     <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
@@ -594,6 +706,7 @@ function displayUsers(users) {
             </td>
             <td>${lastLogin}</td>
             <td class="action-btns">
+                <button class="btn-icon" onclick="editUser(${user.id})" title="Edit" ${isCurrentUser ? 'disabled' : ''}>✏️</button>
                 <button class="btn-icon" onclick="toggleUserStatus(${user.id}, ${!user.is_active})" title="${user.is_active ? 'Disable' : 'Enable'}" ${isCurrentUser ? 'disabled' : ''}>
                     ${user.is_active ? '🚫' : '✅'}
                 </button>
@@ -667,6 +780,102 @@ window.deleteUser = async function(userId) {
         }
     } catch (error) {
         console.error('Delete user error:', error);
+    }
+}
+
+window.openUserModal = async function(userId = null) {
+    const modal = document.getElementById('userModal');
+    const form = document.getElementById('userForm');
+    const title = document.getElementById('userModalTitle');
+    
+    form.reset();
+    document.getElementById('userId').value = '';
+    title.textContent = userId ? 'Edit User' : 'Add User';
+    
+    // Populate client dropdown
+    const clientSelect = document.getElementById('userClient');
+    clientSelect.innerHTML = '<option value="">No client link</option>' +
+        allClients.map(c => `<option value="${c.id}">${c.name}${c.company ? ` (${c.company})` : ''}</option>`).join('');
+    
+    // If editing, load user data
+    if (userId) {
+        try {
+            const response = await fetch('/api/auth/users', {
+                headers: { 'Authorization': `Bearer ${authToken}` }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                const user = data.users.find(u => u.id === userId);
+                
+                if (user) {
+                    document.getElementById('userId').value = user.id;
+                    document.getElementById('userUsername').value = user.username;
+                    document.getElementById('userEmail').value = user.email;
+                    document.getElementById('userRole').value = user.role;
+                    document.getElementById('userClient').value = user.client_id || '';
+                    document.getElementById('userActive').checked = user.is_active;
+                    document.getElementById('userPassword').removeAttribute('required');
+                }
+            }
+        } catch (error) {
+            console.error('Load user error:', error);
+        }
+    } else {
+        document.getElementById('userPassword').setAttribute('required', 'required');
+    }
+    
+    modal.classList.add('active');
+}
+
+window.editUser = function(userId) {
+    openUserModal(userId);
+}
+
+window.closeUserModal = function() {
+    document.getElementById('userModal').classList.remove('active');
+}
+
+async function handleUserSubmit(e) {
+    e.preventDefault();
+    
+    const userId = document.getElementById('userId').value;
+    const userData = {
+        username: document.getElementById('userUsername').value,
+        email: document.getElementById('userEmail').value,
+        role: document.getElementById('userRole').value,
+        client_id: parseInt(document.getElementById('userClient').value) || null,
+        is_active: document.getElementById('userActive').checked
+    };
+    
+    const password = document.getElementById('userPassword').value;
+    if (password) {
+        userData.password = password;
+    }
+    
+    try {
+        const url = userId ? `/api/auth/users/${userId}` : '/api/auth/users';
+        const method = userId ? 'PUT' : 'POST';
+        
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(userData)
+        });
+        
+        if (response.ok) {
+            closeUserModal();
+            loadUsers();
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Operation failed');
+        }
+    } catch (error) {
+        console.error('User submit error:', error);
+        alert('Connection error. Please try again.');
     }
 }
 
@@ -756,6 +965,12 @@ function initEventListeners() {
     
     // Project form
     document.getElementById('projectForm').addEventListener('submit', handleProjectSubmit);
+    
+    // User form (Admin only)
+    const userForm = document.getElementById('userForm');
+    if (userForm) {
+        userForm.addEventListener('submit', handleUserSubmit);
+    }
     
     // Login form
     document.getElementById('loginForm').addEventListener('submit', handleLogin);

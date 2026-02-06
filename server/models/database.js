@@ -62,10 +62,12 @@ export async function initializeDatabase() {
             email TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
             role TEXT DEFAULT 'user',
+            client_id INTEGER,
             is_active INTEGER DEFAULT 1,
             last_login DATETIME,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE SET NULL
         )
     `);
     
@@ -317,6 +319,24 @@ async function seedTestData() {
             `, [client.name, client.email, client.company, client.phone, client.status, client.monthly_retainer || null, 1]);
         }
         console.log('👥 Created 5 sample clients');
+        
+        // Create demo users linked to clients
+        const demoPassword = await bcrypt.hash('demo123!', 10);
+        const clientUserMappings = [
+            { username: 'john_acme', email: 'john@acme.com', client_id: 1 },
+            { username: 'alex_techstart', email: 'alex@techstart.io', client_id: 2 },
+            { username: 'mike_greenvalley', email: 'mike@greenvalley.com', client_id: 3 },
+            { username: 'lisa_urban', email: 'lisa@urbandesign.co', client_id: 4 },
+            { username: 'sarah_freelance', email: 'sarah@freelancer.com', client_id: 5 }
+        ];
+        
+        for (const mapping of clientUserMappings) {
+            execute(`
+                INSERT INTO users (username, email, password, role, client_id)
+                VALUES (?, ?, ?, ?, ?)
+            `, [mapping.username, mapping.email, demoPassword, 'user', mapping.client_id]);
+        }
+        console.log('👥 Created demo users for all clients (password: demo123!)');
     }
     
     // Check if we have segments
@@ -374,6 +394,92 @@ async function seedTestData() {
 <li>Industry insights</li>
 </ul>`,
                 category: 'newsletter'
+            },
+            {
+                name: 'Project Completion',
+                subject: 'Your Project is Complete! 🎉',
+                content: `<h1>Congratulations, {{clientName}}!</h1>
+<p>We're thrilled to let you know that your project <strong>{{projectName}}</strong> is now complete!</p>
+<p>You can access your project at: {{projectUrl}}</p>
+<p>Thank you for trusting us with your vision. We look forward to working with you again!</p>
+<p>Best regards,<br>The SFG Team</p>`,
+                category: 'milestone'
+            },
+            {
+                name: 'Invoice Reminder',
+                subject: 'Invoice Reminder - {{invoiceNumber}}',
+                content: `<h2>Invoice Reminder</h2>
+<p>Hi {{clientName}},</p>
+<p>This is a friendly reminder that invoice <strong>{{invoiceNumber}}</strong> is due on {{dueDate}}.</p>
+<p><strong>Amount Due:</strong> {{amount}}</p>
+<p>You can view and pay your invoice here: {{invoiceLink}}</p>
+<p>If you've already made payment, please disregard this message.</p>
+<p>Thank you!<br>SFG Billing Team</p>`,
+                category: 'billing'
+            },
+            {
+                name: 'Meeting Confirmation',
+                subject: 'Meeting Confirmed - {{meetingDate}}',
+                content: `<h2>Meeting Confirmation</h2>
+<p>Hi {{clientName}},</p>
+<p>Your meeting has been confirmed for:</p>
+<ul>
+<li><strong>Date:</strong> {{meetingDate}}</li>
+<li><strong>Time:</strong> {{meetingTime}}</li>
+<li><strong>Duration:</strong> {{duration}}</li>
+<li><strong>Meeting Link:</strong> {{meetingLink}}</li>
+</ul>
+<p>We look forward to speaking with you!</p>`,
+                category: 'meetings'
+            },
+            {
+                name: 'Follow Up',
+                subject: 'Following Up - {{subject}}',
+                content: `<h2>Following Up</h2>
+<p>Hi {{clientName}},</p>
+<p>I wanted to follow up regarding {{subject}}.</p>
+<p>{{message}}</p>
+<p>Please let us know if you have any questions or concerns.</p>
+<p>Best regards,<br>{{senderName}}</p>`,
+                category: 'general'
+            },
+            {
+                name: 'Feedback Request',
+                subject: 'We\'d Love Your Feedback!',
+                content: `<h2>How Did We Do?</h2>
+<p>Hi {{clientName}},</p>
+<p>We hope you're enjoying your new {{projectType}}! Your feedback is incredibly valuable to us.</p>
+<p>Could you take a moment to share your experience?</p>
+<p><a href="{{feedbackLink}}" style="display: inline-block; padding: 12px 24px; background: #3d7a5f; color: white; text-decoration: none; border-radius: 6px;">Leave Feedback</a></p>
+<p>Thank you for your time!</p>`,
+                category: 'feedback'
+            },
+            {
+                name: 'Service Renewal',
+                subject: 'Your Service Renewal is Coming Up',
+                content: `<h2>Service Renewal Notice</h2>
+<p>Hi {{clientName}},</p>
+<p>Your {{serviceName}} subscription will renew on {{renewalDate}}.</p>
+<p><strong>Renewal Amount:</strong> {{amount}}</p>
+<p>If you'd like to make any changes to your service, please let us know before {{renewalDate}}.</p>
+<p>Thank you for your continued trust in Structured For Growth!</p>`,
+                category: 'billing'
+            },
+            {
+                name: 'Security Alert',
+                subject: 'Important: Security Update Required',
+                content: `<h2>Security Update Notice</h2>
+<p>Hi {{clientName}},</p>
+<p>We've identified a security update that needs to be applied to your project.</p>
+<p><strong>What you need to know:</strong></p>
+<ul>
+<li>Update will be completed by: {{completionDate}}</li>
+<li>Estimated downtime: {{downtime}}</li>
+<li>Your site/application will be more secure after this update</li>
+</ul>
+<p>If you have any concerns, please reach out immediately.</p>
+<p>Security Team<br>Structured For Growth</p>`,
+                category: 'urgent'
             }
         ];
         
@@ -383,7 +489,7 @@ async function seedTestData() {
                 VALUES (?, ?, ?, ?, ?)
             `, [tmpl.name, tmpl.subject, tmpl.content, tmpl.category, 1]);
         }
-        console.log('📧 Created default email templates');
+        console.log('📧 Created 10 email templates');
     }
 }
 
