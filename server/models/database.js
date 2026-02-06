@@ -64,6 +64,7 @@ export async function initializeDatabase() {
             role TEXT DEFAULT 'user',
             client_id INTEGER,
             is_active INTEGER DEFAULT 1,
+            is_demo INTEGER DEFAULT 0,
             last_login DATETIME,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -85,6 +86,7 @@ export async function initializeDatabase() {
             contract_start DATE,
             contract_end DATE,
             monthly_retainer DECIMAL(10, 2),
+            is_demo INTEGER DEFAULT 0,
             created_by INTEGER,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -106,6 +108,7 @@ export async function initializeDatabase() {
             start_date DATE,
             end_date DATE,
             completion_date DATE,
+            is_demo INTEGER DEFAULT 0,
             created_by INTEGER,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -127,6 +130,7 @@ export async function initializeDatabase() {
             assigned_to INTEGER,
             due_date DATE,
             completed_at DATETIME,
+            is_demo INTEGER DEFAULT 0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
@@ -144,6 +148,7 @@ export async function initializeDatabase() {
             description TEXT,
             entry_date DATE NOT NULL,
             billable INTEGER DEFAULT 1,
+            is_demo INTEGER DEFAULT 0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
             FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE SET NULL,
@@ -160,6 +165,7 @@ export async function initializeDatabase() {
             subject TEXT NOT NULL,
             message TEXT NOT NULL,
             status TEXT DEFAULT 'new',
+            is_demo INTEGER DEFAULT 0,
             responded_at DATETIME,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
@@ -174,6 +180,7 @@ export async function initializeDatabase() {
             entity_id INTEGER,
             details TEXT,
             ip_address TEXT,
+            is_demo INTEGER DEFAULT 0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id)
         )
@@ -190,6 +197,7 @@ export async function initializeDatabase() {
             content TEXT NOT NULL,
             sent_via TEXT DEFAULT 'email',
             read_at DATETIME,
+            is_demo INTEGER DEFAULT 0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE,
             FOREIGN KEY (user_id) REFERENCES users(id)
@@ -210,6 +218,7 @@ export async function initializeDatabase() {
             click_count INTEGER DEFAULT 0,
             scheduled_at DATETIME,
             sent_at DATETIME,
+            is_demo INTEGER DEFAULT 0,
             created_by INTEGER,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -226,6 +235,7 @@ export async function initializeDatabase() {
             description TEXT,
             filter_rules TEXT,
             client_count INTEGER DEFAULT 0,
+            is_demo INTEGER DEFAULT 0,
             created_by INTEGER,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -243,6 +253,7 @@ export async function initializeDatabase() {
             sent_at DATETIME,
             opened_at DATETIME,
             clicked_at DATETIME,
+            is_demo INTEGER DEFAULT 0,
             FOREIGN KEY (campaign_id) REFERENCES campaigns(id) ON DELETE CASCADE,
             FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
         )
@@ -256,12 +267,35 @@ export async function initializeDatabase() {
             subject TEXT NOT NULL,
             content TEXT NOT NULL,
             category TEXT DEFAULT 'general',
+            is_demo INTEGER DEFAULT 0,
             created_by INTEGER,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (created_by) REFERENCES users(id)
         )
     `);
+
+    // Migration: Add is_demo column to existing tables if missing
+    const tablesToMigrate = [
+        'users', 'clients', 'projects', 'tasks', 'time_entries', 
+        'contact_submissions', 'activity_log', 'messages', 
+        'campaigns', 'segments', 'campaign_recipients', 'email_templates'
+    ];
+    
+    for (const table of tablesToMigrate) {
+        try {
+            // Check if column exists by trying to select it
+            db.exec(`SELECT is_demo FROM ${table} LIMIT 1`);
+        } catch (e) {
+            // Column doesn't exist, add it
+            try {
+                db.run(`ALTER TABLE ${table} ADD COLUMN is_demo INTEGER DEFAULT 0`);
+                console.log(`🔧 Added is_demo column to ${table}`);
+            } catch (alterErr) {
+                // Ignore if already exists or other error
+            }
+        }
+    }
 
     // Seed test data if database is empty
     await seedTestData();

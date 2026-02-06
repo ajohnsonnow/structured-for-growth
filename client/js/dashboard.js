@@ -2045,32 +2045,47 @@ async function loadDemoStats() {
         const data = await response.json();
         
         if (data.success) {
+            const { total, demo, real, totalRecords, demoRecords, realRecords } = data.stats;
             const container = document.getElementById('demoStats');
             if (container) {
                 container.innerHTML = `
-                    <div class="stats-mini-grid">
-                        <div class="stat-mini">👥 <strong>${data.stats.clients}</strong> Clients</div>
-                        <div class="stat-mini">👤 <strong>${data.stats.users}</strong> Users</div>
-                        <div class="stat-mini">📁 <strong>${data.stats.projects}</strong> Projects</div>
-                        <div class="stat-mini">✅ <strong>${data.stats.tasks}</strong> Tasks</div>
-                        <div class="stat-mini">⏱️ <strong>${data.stats.timeEntries}</strong> Time Entries</div>
-                        <div class="stat-mini">💬 <strong>${data.stats.messages}</strong> Messages</div>
-                        <div class="stat-mini">📧 <strong>${data.stats.campaigns}</strong> Campaigns</div>
-                        <div class="stat-mini">📝 <strong>${data.stats.contactSubmissions}</strong> Submissions</div>
+                    <div class="demo-stats-summary">
+                        <div class="summary-box demo-box">
+                            <div class="summary-value">${demoRecords}</div>
+                            <div class="summary-label">Demo Records</div>
+                        </div>
+                        <div class="summary-box real-box">
+                            <div class="summary-value">${realRecords}</div>
+                            <div class="summary-label">Real Records</div>
+                        </div>
+                        <div class="summary-box total-box">
+                            <div class="summary-value">${totalRecords}</div>
+                            <div class="summary-label">Total Records</div>
+                        </div>
                     </div>
-                    <p class="total-records">Total records: <strong>${data.stats.total}</strong></p>
+                    <h4>Breakdown by Category</h4>
+                    <div class="stats-mini-grid">
+                        <div class="stat-mini">👥 <strong>${total.clients}</strong> Clients <span class="demo-tag">(${demo.clients} demo)</span></div>
+                        <div class="stat-mini">👤 <strong>${total.users}</strong> Users <span class="demo-tag">(${demo.users} demo)</span></div>
+                        <div class="stat-mini">📁 <strong>${total.projects}</strong> Projects <span class="demo-tag">(${demo.projects} demo)</span></div>
+                        <div class="stat-mini">✅ <strong>${total.tasks}</strong> Tasks <span class="demo-tag">(${demo.tasks} demo)</span></div>
+                        <div class="stat-mini">⏱️ <strong>${total.timeEntries}</strong> Time Entries <span class="demo-tag">(${demo.timeEntries} demo)</span></div>
+                        <div class="stat-mini">💬 <strong>${total.messages}</strong> Messages <span class="demo-tag">(${demo.messages} demo)</span></div>
+                        <div class="stat-mini">📧 <strong>${total.campaigns}</strong> Campaigns <span class="demo-tag">(${demo.campaigns} demo)</span></div>
+                        <div class="stat-mini">📝 <strong>${total.contactSubmissions}</strong> Submissions <span class="demo-tag">(${demo.contactSubmissions} demo)</span></div>
+                    </div>
                 `;
             }
             
             // Also update DB stats tab
             const dbContainer = document.getElementById('dbStats');
             if (dbContainer) {
-                dbContainer.innerHTML = Object.entries(data.stats)
-                    .filter(([key]) => key !== 'total')
+                dbContainer.innerHTML = Object.entries(total)
                     .map(([key, value]) => `
                         <div class="db-stat-card">
                             <div class="db-stat-value">${value}</div>
                             <div class="db-stat-label">${formatTableName(key)}</div>
+                            <div class="db-stat-demo">${demo[key]} demo / ${real[key]} real</div>
                         </div>
                     `).join('');
             }
@@ -2120,35 +2135,41 @@ async function generateDemoData(clearExisting = false) {
     }
 }
 
-async function clearDemoData() {
-    if (!confirm('⚠️ WARNING: This will DELETE ALL data except your admin account!\n\nAre you absolutely sure?')) return;
-    if (!confirm('Final confirmation: Delete ALL clients, projects, messages, and other data?')) return;
+async function clearDemoData(clearAll = false) {
+    const warningMsg = clearAll 
+        ? '⚠️ WARNING: This will DELETE ALL data except your admin account!\n\nAre you absolutely sure?'
+        : 'This will DELETE only demo data (marked with demo tag).\nYour real client data will be preserved.\n\nContinue?';
+    
+    if (!confirm(warningMsg)) return;
+    
+    if (clearAll && !confirm('Final confirmation: Delete ALL clients, projects, messages, and other data?')) return;
     
     try {
-        showNotification('Clearing demo data...', 'info');
+        showNotification(clearAll ? 'Clearing all data...' : 'Clearing demo data...', 'info');
         
         const response = await fetch('/api/demo/clear', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authToken}`
-            }
+            },
+            body: JSON.stringify({ clearAll })
         });
         
         const data = await response.json();
         
         if (data.success) {
-            showNotification('All demo data cleared', 'success');
+            showNotification(`${data.message} (${data.clearedCount} records)`, 'success');
             loadDemoStats();
             loadDashboard();
             loadClients();
             loadProjects();
         } else {
-            showNotification(data.message || 'Failed to clear demo data', 'error');
+            showNotification(data.message || 'Failed to clear data', 'error');
         }
     } catch (error) {
-        console.error('Clear demo data error:', error);
-        showNotification('Failed to clear demo data', 'error');
+        console.error('Clear data error:', error);
+        showNotification('Failed to clear data', 'error');
     }
 }
 

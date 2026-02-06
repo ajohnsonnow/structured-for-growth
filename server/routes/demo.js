@@ -16,7 +16,7 @@ router.post('/generate', authenticateToken, async (req, res) => {
         triggerAutoBackup('DEMO_DATA_GENERATE', req.user.userId, 'Before demo data generation');
         
         if (clearExisting) {
-            // Clear existing data (except admin user)
+            // Clear existing demo data only
             const tablesToClear = [
                 'campaign_recipients', 'campaigns', 'messages', 'time_entries', 
                 'tasks', 'projects', 'contact_submissions', 'activity_log', 
@@ -24,14 +24,14 @@ router.post('/generate', authenticateToken, async (req, res) => {
             ];
             for (const table of tablesToClear) {
                 try {
-                    execute(`DELETE FROM ${table}`);
+                    execute(`DELETE FROM ${table} WHERE is_demo = 1`);
                 } catch (e) {
-                    results.errors.push(`Failed to clear ${table}: ${e.message}`);
+                    results.errors.push(`Failed to clear demo data from ${table}: ${e.message}`);
                 }
             }
-            // Clear non-admin users and clients
-            execute(`DELETE FROM users WHERE role != 'admin'`);
-            execute(`DELETE FROM clients`);
+            // Clear demo users and demo clients
+            execute(`DELETE FROM users WHERE is_demo = 1`);
+            execute(`DELETE FROM clients WHERE is_demo = 1`);
         }
         
         // 1. Create diverse clients
@@ -52,8 +52,8 @@ router.post('/generate', authenticateToken, async (req, res) => {
         for (const client of clients) {
             try {
                 const result = execute(`
-                    INSERT INTO clients (name, email, company, phone, website, address, status, monthly_retainer, notes, created_by, contract_start)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, date('now', '-' || abs(random() % 365) || ' days'))
+                    INSERT INTO clients (name, email, company, phone, website, address, status, monthly_retainer, notes, is_demo, created_by, contract_start)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, date('now', '-' || abs(random() % 365) || ' days'))
                 `, [client.name, client.email, client.company, client.phone, client.website, client.address, client.status, client.monthly_retainer, client.notes, 1]);
                 clientIds.push(result.lastInsertRowid);
             } catch (e) {
@@ -80,7 +80,7 @@ router.post('/generate', authenticateToken, async (req, res) => {
         let userCount = 0;
         for (const user of clientUsers) {
             try {
-                execute(`INSERT INTO users (username, email, password, role, client_id) VALUES (?, ?, ?, 'user', ?)`,
+                execute(`INSERT INTO users (username, email, password, role, client_id, is_demo) VALUES (?, ?, ?, 'user', ?, 1)`,
                     [user.username, user.email, demoPassword, user.client_id]);
                 userCount++;
             } catch (e) {
@@ -108,8 +108,8 @@ router.post('/generate', authenticateToken, async (req, res) => {
         for (const proj of projects) {
             try {
                 const sql = `
-                    INSERT INTO projects (client_id, title, description, status, priority, budget, hours_estimated, hours_actual, start_date, end_date, completion_date, created_by)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ${proj.start_date || 'NULL'}, ${proj.end_date || 'NULL'}, ${proj.completion_date || 'NULL'}, 1)
+                    INSERT INTO projects (client_id, title, description, status, priority, budget, hours_estimated, hours_actual, start_date, end_date, completion_date, created_by, is_demo)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ${proj.start_date || 'NULL'}, ${proj.end_date || 'NULL'}, ${proj.completion_date || 'NULL'}, 1, 1)
                 `;
                 const result = execute(sql, [proj.client_id, proj.title, proj.description, proj.status, proj.priority, proj.budget, proj.hours_estimated, proj.hours_actual || 0]);
                 projectIds.push(result.lastInsertRowid);
@@ -140,8 +140,8 @@ router.post('/generate', authenticateToken, async (req, res) => {
                 const template = taskTemplates[j % taskTemplates.length];
                 try {
                     execute(`
-                        INSERT INTO tasks (project_id, title, description, status, priority, hours_estimated, due_date)
-                        VALUES (?, ?, ?, ?, ?, ?, date('now', '+' || ? || ' days'))
+                        INSERT INTO tasks (project_id, title, description, status, priority, hours_estimated, due_date, is_demo)
+                        VALUES (?, ?, ?, ?, ?, ?, date('now', '+' || ? || ' days'), 1)
                     `, [projectIds[i], template.title, `Task for project ${i+1}`, template.status, template.priority, template.hours_estimated, (j + 1) * 7]);
                     taskCount++;
                 } catch (e) {
@@ -163,8 +163,8 @@ router.post('/generate', authenticateToken, async (req, res) => {
                         'Code review', 'Bug fixes', 'Documentation', 'Testing'
                     ];
                     execute(`
-                        INSERT INTO time_entries (project_id, user_id, hours, description, entry_date, billable)
-                        VALUES (?, 1, ?, ?, date('now', '-' || ? || ' days'), ?)
+                        INSERT INTO time_entries (project_id, user_id, hours, description, entry_date, billable, is_demo)
+                        VALUES (?, 1, ?, ?, date('now', '-' || ? || ' days'), ?, 1)
                     `, [projectIds[i], hours, descriptions[j % descriptions.length], j * 2, Math.random() > 0.1 ? 1 : 0]);
                     timeEntryCount++;
                 } catch (e) {
@@ -193,8 +193,8 @@ router.post('/generate', authenticateToken, async (req, res) => {
                 const template = messageTemplates[j % messageTemplates.length];
                 try {
                     execute(`
-                        INSERT INTO messages (client_id, user_id, direction, subject, content, created_at)
-                        VALUES (?, 1, ?, ?, ?, datetime('now', '-' || ? || ' hours'))
+                        INSERT INTO messages (client_id, user_id, direction, subject, content, created_at, is_demo)
+                        VALUES (?, 1, ?, ?, ?, datetime('now', '-' || ? || ' hours'), 1)
                     `, [clientIds[i], template.direction, template.subject, template.content, j * 24 + Math.floor(Math.random() * 12)]);
                     messageCount++;
                 } catch (e) {
@@ -222,8 +222,8 @@ router.post('/generate', authenticateToken, async (req, res) => {
             const sub = contactSubmissions[i];
             try {
                 execute(`
-                    INSERT INTO contact_submissions (name, email, company, subject, message, status, created_at)
-                    VALUES (?, ?, ?, ?, ?, ?, datetime('now', '-' || ? || ' days'))
+                    INSERT INTO contact_submissions (name, email, company, subject, message, status, created_at, is_demo)
+                    VALUES (?, ?, ?, ?, ?, ?, datetime('now', '-' || ? || ' days'), 1)
                 `, [sub.name, sub.email, sub.company, sub.subject, sub.message, statuses[i], i * 3]);
                 submissionCount++;
             } catch (e) {
@@ -245,7 +245,7 @@ router.post('/generate', authenticateToken, async (req, res) => {
         let segmentCount = 0;
         for (const seg of segments) {
             try {
-                execute(`INSERT INTO segments (name, description, filter_rules, created_by) VALUES (?, ?, ?, 1)`,
+                execute(`INSERT INTO segments (name, description, filter_rules, created_by, is_demo) VALUES (?, ?, ?, 1, 1)`,
                     [seg.name, seg.description, seg.filter_rules]);
                 segmentCount++;
             } catch (e) {
@@ -267,8 +267,8 @@ router.post('/generate', authenticateToken, async (req, res) => {
         for (const camp of campaigns) {
             try {
                 execute(`
-                    INSERT INTO campaigns (name, subject, content, status, segment_id, sent_count, open_count, click_count, created_by)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)
+                    INSERT INTO campaigns (name, subject, content, status, segment_id, sent_count, open_count, click_count, created_by, is_demo)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, 1)
                 `, [camp.name, camp.subject, camp.content, camp.status, camp.segment_id, 
                     camp.status === 'sent' ? Math.floor(Math.random() * 50) + 10 : 0,
                     camp.status === 'sent' ? Math.floor(Math.random() * 30) + 5 : 0,
@@ -297,7 +297,7 @@ router.post('/generate', authenticateToken, async (req, res) => {
         let templateCount = 0;
         for (const tmpl of emailTemplates) {
             try {
-                execute(`INSERT INTO email_templates (name, subject, content, category, created_by) VALUES (?, ?, ?, ?, 1)`,
+                execute(`INSERT INTO email_templates (name, subject, content, category, created_by, is_demo) VALUES (?, ?, ?, ?, 1, 1)`,
                     [tmpl.name, tmpl.subject, tmpl.content, tmpl.category]);
                 templateCount++;
             } catch (e) {
@@ -323,8 +323,8 @@ router.post('/generate', authenticateToken, async (req, res) => {
             const activity = activities[i % activities.length];
             try {
                 execute(`
-                    INSERT INTO activity_log (user_id, action, entity_type, entity_id, details, created_at)
-                    VALUES (1, ?, ?, ?, ?, datetime('now', '-' || ? || ' hours'))
+                    INSERT INTO activity_log (user_id, action, entity_type, entity_id, details, created_at, is_demo)
+                    VALUES (1, ?, ?, ?, ?, datetime('now', '-' || ? || ' hours'), 1)
                 `, [activity.action, activity.entity_type || null, activity.entity_id || null, activity.details, i * 4]);
                 activityCount++;
             } catch (e) {
@@ -350,7 +350,8 @@ router.post('/generate', authenticateToken, async (req, res) => {
 // Get demo data statistics
 router.get('/stats', authenticateToken, (req, res) => {
     try {
-        const stats = {
+        // Get total counts
+        const total = {
             users: query('SELECT COUNT(*) as count FROM users')[0]?.count || 0,
             clients: query('SELECT COUNT(*) as count FROM clients')[0]?.count || 0,
             projects: query('SELECT COUNT(*) as count FROM projects')[0]?.count || 0,
@@ -364,7 +365,35 @@ router.get('/stats', authenticateToken, (req, res) => {
             activityLog: query('SELECT COUNT(*) as count FROM activity_log')[0]?.count || 0
         };
         
-        stats.total = Object.values(stats).reduce((a, b) => a + b, 0);
+        // Get demo-only counts
+        const demo = {
+            users: query('SELECT COUNT(*) as count FROM users WHERE is_demo = 1')[0]?.count || 0,
+            clients: query('SELECT COUNT(*) as count FROM clients WHERE is_demo = 1')[0]?.count || 0,
+            projects: query('SELECT COUNT(*) as count FROM projects WHERE is_demo = 1')[0]?.count || 0,
+            tasks: query('SELECT COUNT(*) as count FROM tasks WHERE is_demo = 1')[0]?.count || 0,
+            timeEntries: query('SELECT COUNT(*) as count FROM time_entries WHERE is_demo = 1')[0]?.count || 0,
+            messages: query('SELECT COUNT(*) as count FROM messages WHERE is_demo = 1')[0]?.count || 0,
+            campaigns: query('SELECT COUNT(*) as count FROM campaigns WHERE is_demo = 1')[0]?.count || 0,
+            contactSubmissions: query('SELECT COUNT(*) as count FROM contact_submissions WHERE is_demo = 1')[0]?.count || 0,
+            segments: query('SELECT COUNT(*) as count FROM segments WHERE is_demo = 1')[0]?.count || 0,
+            emailTemplates: query('SELECT COUNT(*) as count FROM email_templates WHERE is_demo = 1')[0]?.count || 0,
+            activityLog: query('SELECT COUNT(*) as count FROM activity_log WHERE is_demo = 1')[0]?.count || 0
+        };
+        
+        // Compute real counts
+        const real = {};
+        for (const key of Object.keys(total)) {
+            real[key] = total[key] - demo[key];
+        }
+        
+        const stats = {
+            total,
+            demo,
+            real,
+            totalRecords: Object.values(total).reduce((a, b) => a + b, 0),
+            demoRecords: Object.values(demo).reduce((a, b) => a + b, 0),
+            realRecords: Object.values(real).reduce((a, b) => a + b, 0)
+        };
         
         res.json({ success: true, stats });
     } catch (error) {
@@ -373,32 +402,49 @@ router.get('/stats', authenticateToken, (req, res) => {
     }
 });
 
-// Clear all demo data (keep admin)
+// Clear demo data only (WHERE is_demo = 1)
 router.post('/clear', authenticateToken, async (req, res) => {
     try {
+        const { clearAll } = req.body; // If true, clear everything; otherwise only demo data
+        
         // Create backup first
-        triggerAutoBackup('DEMO_DATA_CLEAR', req.user.userId, 'Before clearing demo data');
+        triggerAutoBackup('DEMO_DATA_CLEAR', req.user.userId, clearAll ? 'Before clearing ALL data' : 'Before clearing demo data');
         
         const tablesToClear = [
             'campaign_recipients', 'campaigns', 'messages', 'time_entries', 
             'tasks', 'projects', 'contact_submissions', 'activity_log', 
-            'email_templates', 'segments'
+            'email_templates', 'segments', 'clients', 'users'
         ];
         
+        let clearedCount = 0;
         for (const table of tablesToClear) {
-            execute(`DELETE FROM ${table}`);
+            if (clearAll) {
+                // Clear everything except admin users
+                if (table === 'users') {
+                    const result = execute(`DELETE FROM ${table} WHERE role != 'admin'`);
+                    clearedCount += result.changes || 0;
+                } else {
+                    const result = execute(`DELETE FROM ${table}`);
+                    clearedCount += result.changes || 0;
+                }
+            } else {
+                // Only clear demo data
+                const result = execute(`DELETE FROM ${table} WHERE is_demo = 1`);
+                clearedCount += result.changes || 0;
+            }
         }
         
-        // Clear non-admin users and all clients
-        execute(`DELETE FROM users WHERE role != 'admin'`);
-        execute(`DELETE FROM clients`);
+        const action = clearAll ? 'ALL_DATA_CLEARED' : 'DEMO_DATA_CLEARED';
+        logActivity(req.user.userId, action, null, null, `Cleared ${clearedCount} records`);
         
-        logActivity(req.user.userId, 'DEMO_DATA_CLEARED', null, null, 'All demo data cleared');
-        
-        res.json({ success: true, message: 'All demo data cleared successfully' });
+        res.json({ 
+            success: true, 
+            message: clearAll ? 'All data cleared successfully' : 'Demo data cleared successfully',
+            clearedCount
+        });
     } catch (error) {
         console.error('Clear demo data error:', error);
-        res.status(500).json({ success: false, message: 'Failed to clear demo data' });
+        res.status(500).json({ success: false, message: 'Failed to clear data: ' + error.message });
     }
 });
 
