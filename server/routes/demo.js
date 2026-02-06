@@ -12,6 +12,9 @@ router.post('/generate', authenticateToken, async (req, res) => {
         const { clearExisting = false } = req.body;
         const results = { created: {}, errors: [] };
         
+        // Demo user password from environment
+        const DEMO_USER_PASSWORD = process.env.DEMO_USER_PASSWORD || 'DemoPass2026!';
+        
         // Create backup before generating demo data
         triggerAutoBackup('DEMO_DATA_GENERATE', req.user.userId, 'Before demo data generation');
         
@@ -63,7 +66,7 @@ router.post('/generate', authenticateToken, async (req, res) => {
         results.created.clients = clientIds.length;
         
         // 2. Create client users
-        const demoPassword = await bcrypt.hash('demo123!', 10);
+        const demoPassword = await bcrypt.hash(DEMO_USER_PASSWORD, 10);
         const clientUsers = [
             { username: 'john_acme', email: 'john@acme.com', client_id: clientIds[0] },
             { username: 'alex_techstart', email: 'alex@techstart.io', client_id: clientIds[1] },

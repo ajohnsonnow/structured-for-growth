@@ -316,6 +316,7 @@ async function seedTestData() {
     const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Anth-Admin';
     const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'Anth@StructuredForGrowth.com';
     const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Secure!813Bowl420!';
+    const DEMO_USER_PASSWORD = process.env.DEMO_USER_PASSWORD || 'DemoPass2026!';
     
     // Check if we have users
     const userCount = query('SELECT COUNT(*) as count FROM users')[0]?.count || 0;
@@ -364,7 +365,7 @@ async function seedTestData() {
         console.log('👥 Created 5 sample clients');
         
         // Create demo users linked to clients
-        const demoPassword = await bcrypt.hash('demo123!', 10);
+        const demoPassword = await bcrypt.hash(DEMO_USER_PASSWORD, 10);
         const clientUserMappings = [
             { username: 'john_acme', email: 'john@acme.com', client_id: 1 },
             { username: 'alex_techstart', email: 'alex@techstart.io', client_id: 2 },
@@ -379,7 +380,7 @@ async function seedTestData() {
                 VALUES (?, ?, ?, ?, ?)
             `, [mapping.username, mapping.email, demoPassword, 'user', mapping.client_id]);
         }
-        console.log('👥 Created demo users for all clients (password: demo123!)');
+        console.log(`👥 Created demo users for all clients (password from DEMO_USER_PASSWORD env)`);
     }
     
     // Check if we have segments
