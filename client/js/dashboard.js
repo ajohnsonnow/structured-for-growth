@@ -204,9 +204,13 @@ function updateActiveProjects() {
 // ============ CLIENTS ============
 
 async function loadClients() {
-    document.querySelector('#clientsTableContainer .loading-spinner').style.display = 'flex';
-    document.getElementById('clientsTable').style.display = 'none';
-    document.getElementById('emptyState').style.display = 'none';
+    const spinner = document.querySelector('#clientsTableContainer .loading-spinner');
+    const table = document.getElementById('clientsTable');
+    const empty = document.getElementById('emptyState');
+    
+    spinner.classList.remove('hidden');
+    table.classList.add('hidden');
+    empty.classList.add('hidden');
     
     try {
         const response = await fetch('/api/clients', {
@@ -223,22 +227,24 @@ async function loadClients() {
     } catch (error) {
         console.error('Load clients error:', error);
     } finally {
-        document.querySelector('#clientsTableContainer .loading-spinner').style.display = 'none';
+        spinner.classList.add('hidden');
     }
 }
 
 function displayClients(clients) {
     const tbody = document.getElementById('clientsTableBody');
+    const table = document.getElementById('clientsTable');
+    const empty = document.getElementById('emptyState');
     tbody.innerHTML = '';
     
     if (clients.length === 0) {
-        document.getElementById('clientsTable').style.display = 'none';
-        document.getElementById('emptyState').style.display = 'block';
+        table.classList.add('hidden');
+        empty.classList.remove('hidden');
         return;
     }
     
-    document.getElementById('clientsTable').style.display = 'block';
-    document.getElementById('emptyState').style.display = 'none';
+    table.classList.remove('hidden');
+    empty.classList.add('hidden');
     
     clients.forEach(client => {
         const row = document.createElement('tr');
@@ -422,11 +428,11 @@ function displayProjects(projects) {
     
     if (projects.length === 0) {
         container.innerHTML = '';
-        emptyState.style.display = 'block';
+        emptyState.classList.remove('hidden');
         return;
     }
     
-    emptyState.style.display = 'none';
+    emptyState.classList.add('hidden');
     
     container.innerHTML = projects.map(project => `
         <div class="project-card" onclick="viewProject(${project.id})">
@@ -463,13 +469,13 @@ window.toggleProjectView = function() {
     
     if (isGanttView) {
         cardView.style.display = 'none';
-        ganttView.style.display = 'block';
-        emptyState.style.display = 'none';
+        ganttView.classList.remove('hidden');
+        emptyState.classList.add('hidden');
         toggleBtn.innerHTML = '📇 Card View';
         renderGanttChart(allProjects);
     } else {
         cardView.style.display = 'grid';
-        ganttView.style.display = 'none';
+        ganttView.classList.add('hidden');
         toggleBtn.innerHTML = '📊 Gantt Chart';
         displayProjects(allProjects);
     }
@@ -1067,10 +1073,10 @@ function showFormMessage(formId, type, message) {
     if (messageDiv) {
         messageDiv.textContent = message;
         messageDiv.className = `form-message ${type}`;
-        messageDiv.style.display = 'block';
+        messageDiv.classList.remove('form-message-hidden');
         
         setTimeout(() => {
-            messageDiv.style.display = 'none';
+            messageDiv.classList.add('form-message-hidden');
         }, 5000);
     }
 }
@@ -1144,7 +1150,11 @@ async function updateUnreadBadge() {
             const badge = document.getElementById('unreadBadge');
             if (badge) {
                 badge.textContent = data.count || 0;
-                badge.style.display = data.count > 0 ? 'inline-flex' : 'none';
+                if (data.count > 0) {
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
             }
         }
     } catch (error) {

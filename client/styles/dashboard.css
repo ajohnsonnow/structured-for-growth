@@ -1370,6 +1370,73 @@ body:has(#loginModal.active) .dashboard-container {
     margin-top: var(--spacing-xs);
 }
 
+/* Utility classes to replace inline styles */
+.hidden {
+    display: none !important;
+}
+
+.mt-sm {
+    margin-top: var(--spacing-sm);
+}
+
+.mt-md {
+    margin-top: var(--spacing-md);
+}
+
+.mt-lg {
+    margin-top: var(--spacing-lg);
+}
+
+.mb-sm {
+    margin-bottom: var(--spacing-sm);
+}
+
+.mb-md {
+    margin-bottom: var(--spacing-md);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.form-message-hidden {
+    display: none;
+    margin-top: var(--spacing-md);
+}
+
+.login-footer {
+    margin-top: var(--spacing-lg);
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.back-link-wrapper {
+    margin-top: var(--spacing-sm);
+    text-align: center;
+}
+
+.back-link {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* Hidden file input */
+.file-input-hidden {
+    display: none;
+}
+
 .total-records {
     margin-top: var(--spacing-md);
     text-align: center;
