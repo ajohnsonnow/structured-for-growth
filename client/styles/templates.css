@@ -967,3 +967,6 @@
     }
     
     .state-actions {
+        flex-direction: column;
+    }
+}
