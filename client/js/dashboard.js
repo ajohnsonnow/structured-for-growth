@@ -2189,6 +2189,10 @@ function loadSystemView() {
     loadDemoStats();
 }
 
+// Expose demo functions globally for onclick handlers
+window.generateDemoData = generateDemoData;
+window.clearDemoData = clearDemoData;
+
 // Close modals on escape key
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
