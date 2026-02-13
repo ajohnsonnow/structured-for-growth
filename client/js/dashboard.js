@@ -1081,6 +1081,49 @@ function showFormMessage(formId, type, message) {
     }
 }
 
+function showNotification(message, type = 'info') {
+    // Create or use existing notification container
+    let container = document.getElementById('notification-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'notification-container';
+        container.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 10000; max-width: 400px;';
+        document.body.appendChild(container);
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.style.cssText = `
+        background: var(--bg-card);
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
+        box-shadow: var(--shadow-lg);
+        animation: slideInRight 0.3s ease-out;
+        color: var(--text-primary);
+    `;
+    
+    // Set border color based on type
+    const colors = {
+        'success': '#5a9d7a',
+        'error': '#d4574f',
+        'warning': '#d4a574',
+        'info': '#3d7a5f'
+    };
+    notification.style.borderColor = colors[type] || colors.info;
+    
+    notification.textContent = message;
+    container.appendChild(notification);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease-in';
+        setTimeout(() => notification.remove(), 300);
+    }, 5000);
+}
+
 function formatCurrency(amount) {
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
