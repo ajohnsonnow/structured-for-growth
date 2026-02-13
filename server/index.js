@@ -16,6 +16,7 @@ import campaignRoutes from './routes/campaigns.js';
 import portalRoutes from './routes/portal.js';
 import backupRoutes from './routes/backup.js';
 import demoRoutes from './routes/demo.js';
+import complianceRoutes from './routes/compliance.js';
 
 // Import database initialization
 import { initializeDatabase } from './models/database.js';
@@ -67,6 +68,7 @@ app.use('/api/campaigns', campaignRoutes);
 app.use('/api/portal', portalRoutes);
 app.use('/api/backup', backupRoutes);
 app.use('/api/demo', demoRoutes);
+app.use('/api/compliance', complianceRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -89,6 +91,10 @@ if (process.env.NODE_ENV === 'production') {
     
     app.get('/portal', (req, res) => {
         res.sendFile(path.join(__dirname, '../dist/portal.html'));
+    });
+    
+    app.get('/compliance', (req, res) => {
+        res.sendFile(path.join(__dirname, '../dist/compliance.html'));
     });
     
     // Catch-all route for main page

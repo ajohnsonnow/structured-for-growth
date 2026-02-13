@@ -1,0 +1,438 @@
+/* ============================================================
+   Compliance Knowledge Base — SFG Integration Styles
+   Extends main.css design system for compliance-specific components
+   ============================================================ */
+
+/* --- Compliance Search --- */
+.compliance-search {
+    max-width: 600px;
+    margin: 0 auto var(--spacing-lg);
+}
+
+/* --- Compliance Tabs --- */
+.compliance-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: var(--spacing-xl);
+    border-bottom: 2px solid var(--border-light);
+    padding-bottom: 0;
+}
+
+.compliance-tab {
+    padding: var(--spacing-xs) var(--spacing-lg);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all var(--transition-fast);
+}
+
+.compliance-tab:hover {
+    color: var(--text-primary);
+}
+
+.compliance-tab.active {
+    color: var(--forest-green-accent);
+    border-bottom-color: var(--forest-green-accent);
+}
+
+.compliance-tab-content {
+    display: none;
+}
+
+.compliance-tab-content.active {
+    display: block;
+}
+
+/* --- Stats Banner --- */
+.compliance-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-md) 0;
+}
+
+.compliance-stat {
+    text-align: center;
+}
+
+.compliance-stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--forest-green-accent);
+}
+
+.compliance-stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- Compliance Grid --- */
+.compliance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+/* --- Compliance Cards --- */
+.compliance-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.compliance-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--forest-green-accent));
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.compliance-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.compliance-card:hover::before {
+    opacity: 1;
+}
+
+.compliance-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.compliance-card-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.compliance-card-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex: 1;
+    margin-bottom: var(--spacing-sm);
+}
+
+.compliance-card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.compliance-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: rgba(61, 122, 95, 0.2);
+    color: var(--forest-green-accent);
+    border: 1px solid rgba(61, 122, 95, 0.3);
+}
+
+.compliance-badge-accent {
+    background: rgba(212, 165, 116, 0.15);
+    color: var(--accent-color);
+    border-color: rgba(212, 165, 116, 0.3);
+}
+
+.compliance-badge-neutral {
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+}
+
+.compliance-card-stats {
+    display: flex;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-xs);
+    border-top: 1px solid var(--border-light);
+    margin-top: auto;
+}
+
+.compliance-card-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.compliance-card-stat-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--forest-green-accent);
+}
+
+.compliance-card-stat-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* --- Category Nav --- */
+.compliance-category-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+}
+
+.cat-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    transition: all var(--transition-fast);
+}
+
+.cat-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+}
+
+.cat-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* --- Cross-Map Matrix --- */
+.compliance-matrix-wrapper {
+    overflow-x: auto;
+}
+
+.compliance-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.compliance-matrix th,
+.compliance-matrix td {
+    padding: 8px 10px;
+    border: 1px solid var(--border-light);
+    text-align: center;
+}
+
+.compliance-matrix th {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    white-space: nowrap;
+}
+
+.compliance-matrix th:first-child,
+.compliance-matrix td:first-child {
+    text-align: left;
+    min-width: 180px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-card);
+}
+
+.cm-yes {
+    background: rgba(126, 201, 155, 0.12);
+    color: var(--forest-green-accent);
+    font-weight: 600;
+}
+
+.cm-no {
+    color: var(--text-muted);
+    opacity: 0.3;
+}
+
+/* --- CTA --- */
+.cta-section {
+    background: radial-gradient(ellipse at 50% 100%, rgba(61, 122, 95, 0.1) 0%, transparent 70%);
+}
+
+.cta-button {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    background: linear-gradient(135deg, var(--primary-color), var(--forest-green-medium));
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
+}
+
+.cta-button:hover {
+    background: linear-gradient(135deg, var(--primary-light), var(--forest-green-accent));
+    box-shadow: var(--glow-green);
+    transform: translateY(-2px);
+    color: var(--text-primary);
+}
+
+/* --- Loading --- */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-2xl);
+    color: var(--text-muted);
+    grid-column: 1 / -1;
+}
+
+.loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border-light);
+    border-top-color: var(--forest-green-accent);
+    border-radius: 50%;
+    animation: compliance-spin 0.8s linear infinite;
+}
+
+@keyframes compliance-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Modal --- */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    justify-content: center;
+    align-items: flex-start;
+    padding: var(--spacing-xl) var(--spacing-md);
+    overflow-y: auto;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-light);
+    position: sticky;
+    top: 0;
+    background: var(--bg-card);
+    z-index: 1;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    line-height: 1;
+}
+
+.modal-close-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: var(--spacing-md);
+}
+
+.modal-body .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.modal-body .data-table th,
+.modal-body .data-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-light);
+    text-align: left;
+}
+
+.modal-body .data-table th {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.modal-body .data-table td {
+    color: var(--text-secondary);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .compliance-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .compliance-tabs {
+        overflow-x: auto;
+    }
+
+    .compliance-tab {
+        font-size: 0.85rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .compliance-stats {
+        gap: var(--spacing-md);
+    }
+
+    .compliance-matrix {
+        font-size: 0.65rem;
+    }
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Knowledge Base — Structured For Growth</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/compliance.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Structured <span class="highlight">For Growth</span></h1>
+                <span class="nav-byline">Agentic Solutions that Scale</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/templates.html" class="nav-link">Templates</a></li>
+                <li><a href="/compliance" class="nav-link active">Compliance</a></li>
+                <li><a href="/portal" class="nav-link nav-highlight">Client Portal</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-small">
+        <div class="container">
+            <h1>Compliance <span class="highlight">Knowledge Base</span></h1>
+            <p class="hero-subtitle">10 global frameworks, 214+ controls, 31 production-ready templates — all codified as machine-readable, OSCAL-aligned compliance data.</p>
+        </div>
+    </section>
+
+    <!-- Search & Filter -->
+    <section class="section" id="compliance-content">
+        <div class="container">
+            <div class="compliance-search">
+                <div class="search-wrapper">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" id="complianceSearch" placeholder="Search frameworks, controls, templates..." class="search-input">
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="compliance-tabs" id="complianceTabs">
+                <button class="compliance-tab active" data-tab="frameworks">Frameworks</button>
+                <button class="compliance-tab" data-tab="templates">Templates</button>
+                <button class="compliance-tab" data-tab="crossmap">Cross-Map</button>
+            </div>
+
+            <!-- Frameworks Tab -->
+            <div class="compliance-tab-content active" id="tab-frameworks">
+                <div class="compliance-stats" id="complianceStats"></div>
+                <div class="compliance-grid" id="frameworksGrid">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <p>Loading compliance frameworks...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Templates Tab -->
+            <div class="compliance-tab-content" id="tab-templates">
+                <div class="compliance-category-nav" id="templateCategories">
+                    <button class="cat-btn active" data-category="all">All</button>
+                    <button class="cat-btn" data-category="policies">Policies</button>
+                    <button class="cat-btn" data-category="application">Application</button>
+                    <button class="cat-btn" data-category="infrastructure">Infrastructure</button>
+                    <button class="cat-btn" data-category="checklists">Checklists</button>
+                </div>
+                <div class="compliance-grid" id="templatesGrid"></div>
+            </div>
+
+            <!-- Cross-Map Tab -->
+            <div class="compliance-tab-content" id="tab-crossmap">
+                <div class="compliance-matrix-wrapper" id="crossmapMatrix">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <p>Loading cross-framework mapping...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section">
+        <div class="container" style="text-align: center;">
+            <h2>Need Help with Compliance?</h2>
+            <p style="color: var(--text-secondary); max-width: 600px; margin: 1rem auto 2rem;">
+                Structured For Growth can help you implement these frameworks, build compliant infrastructure,
+                and prepare for audits. Let's talk.
+            </p>
+            <a href="/#contact" class="cta-button">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Framework Detail Modal -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle">Framework Detail</h3>
+                <button class="modal-close-btn" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Structured For Growth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="/js/compliance.js"></script>
+</body>
+</html>
