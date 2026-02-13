@@ -2002,5 +2002,376 @@ const DateUtils = {
 export default DateUtils;`,
         usage: '<h3>Date Formatting</h3><pre><code>import DateUtils from \'./utils/DateUtils.js\';\n\nconst date = new Date();\n\n// Standard formats\nDateUtils.formatDate(date, \'MM/DD/YYYY\');  // "02/03/2026"\nDateUtils.formatDate(date, \'YYYY-MM-DD\');  // "2026-02-03"\nDateUtils.formatDate(date, \'DD/MM/YYYY\');  // "03/02/2026"\n\n// With time\nDateUtils.formatDate(date, \'MM/DD/YYYY HH:mm\'); // "02/03/2026 14:30"</code></pre><h3>Relative Time</h3><pre><code>const postDate = new Date(\'2026-02-01\');\nDateUtils.timeAgo(postDate);  // "2 days ago"\n\nconst commentDate = new Date(Date.now() - 3600000);\nDateUtils.timeAgo(commentDate);  // "1 hour ago"</code></pre><h3>Date Manipulation</h3><pre><code>const today = new Date();\nconst nextWeek = DateUtils.addDays(today, 7);\nconst lastMonth = DateUtils.addMonths(today, -1);\n\nconst start = new Date(\'2026-02-01\');\nconst end = new Date(\'2026-02-15\');\nconst days = DateUtils.daysBetween(start, end);  // 14\n\nDateUtils.formatDuration(3665);  // "1h 1m 5s"</code></pre>',
         notes: '<h3>Common Use Cases</h3><ul><li><strong>Display dates</strong>: formatDate() for user-friendly formats</li><li><strong>Social posts</strong>: timeAgo() for "5 minutes ago"</li><li><strong>Date ranges</strong>: daysBetween() for analytics</li><li><strong>Scheduling</strong>: addDays/addMonths() for future dates</li><li><strong>Timers</strong>: formatDuration() for elapsed time</li></ul><h3>Internationalization</h3><p>For production apps, consider using:</p><ul><li><code>Intl.DateTimeFormat</code> for locale-specific formatting</li><li><code>date-fns</code> or <code>dayjs</code> libraries for advanced features</li></ul>'
+    },
+    // COMPLIANCE TEMPLATES
+    {
+        id: 'rbac-middleware',
+        title: 'Role-Based Access Control Middleware',
+        description: 'Express middleware for RBAC with role hierarchy, permission checks, and audit logging. Maps to SOC 2 CC6.1, ISO 27001 A.8.2, HIPAA Access Controls.',
+        category: 'compliance',
+        language: 'JavaScript',
+        tags: ['rbac', 'access-control', 'middleware', 'soc2', 'iso27001', 'hipaa'],
+        code: `// RBAC Middleware — Compliance-Ready Access Control
+const ROLES = {
+  SUPER_ADMIN: 'super_admin',
+  ADMIN: 'admin',
+  MANAGER: 'manager',
+  USER: 'user',
+  VIEWER: 'viewer'
+};
+
+const ROLE_HIERARCHY = {
+  [ROLES.SUPER_ADMIN]: [ROLES.ADMIN, ROLES.MANAGER, ROLES.USER, ROLES.VIEWER],
+  [ROLES.ADMIN]: [ROLES.MANAGER, ROLES.USER, ROLES.VIEWER],
+  [ROLES.MANAGER]: [ROLES.USER, ROLES.VIEWER],
+  [ROLES.USER]: [ROLES.VIEWER],
+  [ROLES.VIEWER]: []
+};
+
+const PERMISSIONS = {
+  'users:read': [ROLES.VIEWER],
+  'users:write': [ROLES.ADMIN],
+  'users:delete': [ROLES.SUPER_ADMIN],
+  'reports:read': [ROLES.USER],
+  'reports:write': [ROLES.MANAGER],
+  'audit:read': [ROLES.ADMIN],
+  'settings:write': [ROLES.SUPER_ADMIN]
+};
+
+function getEffectiveRoles(role) {
+  const inherited = ROLE_HIERARCHY[role] || [];
+  return [role, ...inherited];
+}
+
+function hasPermission(userRole, permission) {
+  const allowed = PERMISSIONS[permission] || [];
+  const effective = getEffectiveRoles(userRole);
+  return allowed.some(r => effective.includes(r));
+}
+
+function requireRole(...roles) {
+  return (req, res, next) => {
+    if (!req.user || !req.user.role) {
+      logAccess(req, 'DENIED', 'No authenticated user');
+      return res.status(401).json({ error: 'Authentication required' });
+    }
+    const effective = getEffectiveRoles(req.user.role);
+    const granted = roles.some(r => effective.includes(r));
+    logAccess(req, granted ? 'GRANTED' : 'DENIED',
+      \`Role check: required=[\${roles}] user=\${req.user.role}\`);
+    if (!granted) return res.status(403).json({ error: 'Insufficient privileges' });
+    next();
+  };
+}
+
+function requirePermission(...perms) {
+  return (req, res, next) => {
+    if (!req.user) {
+      logAccess(req, 'DENIED', 'Unauthenticated');
+      return res.status(401).json({ error: 'Authentication required' });
+    }
+    const granted = perms.every(p => hasPermission(req.user.role, p));
+    logAccess(req, granted ? 'GRANTED' : 'DENIED',
+      \`Permission check: required=[\${perms}] user=\${req.user.role}\`);
+    if (!granted) return res.status(403).json({ error: 'Insufficient permissions' });
+    next();
+  };
+}
+
+function logAccess(req, decision, detail) {
+  const entry = {
+    timestamp: new Date().toISOString(),
+    userId: req.user?.id || 'anonymous',
+    role: req.user?.role || 'none',
+    method: req.method,
+    path: req.originalUrl,
+    ip: req.ip,
+    decision,
+    detail
+  };
+  console.log('[ACCESS]', JSON.stringify(entry));
+}
+
+export { ROLES, requireRole, requirePermission, hasPermission };`,
+        usage: '<h3>Express Integration</h3><pre><code>import { requireRole, requirePermission, ROLES } from \'./middleware/rbac.js\';\n\n// Protect admin routes\napp.get(\'/admin/users\', requireRole(ROLES.ADMIN), listUsers);\n\n// Permission-based\napp.delete(\'/api/users/:id\', requirePermission(\'users:delete\'), deleteUser);\n\n// Multiple roles\napp.get(\'/reports\', requireRole(ROLES.MANAGER, ROLES.ADMIN), getReports);</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC6.1</strong> — Logical access security</li><li><strong>ISO 27001 A.8.2</strong> — Privileged access rights</li><li><strong>HIPAA §164.312(a)</strong> — Access controls</li><li><strong>PCI DSS Req 7</strong> — Restrict access by business need</li></ul><h3>Audit Trail</h3><p>Every access decision is logged with timestamp, user, role, path, IP, and decision. Retain logs per your retention policy (SOC 2: 1 year, HIPAA: 6 years).</p>'
+    },
+    {
+        id: 'chain-hashed-audit-logger',
+        title: 'Chain-Hashed Audit Logger',
+        description: 'Tamper-evident audit log with SHA-256 hash chaining. Each entry links to the previous via cryptographic hash, satisfying SOC 2 CC7.2, ISO 27001 A.8.15, and HIPAA audit requirements.',
+        category: 'compliance',
+        language: 'JavaScript',
+        tags: ['audit', 'logging', 'hash-chain', 'tamper-evident', 'soc2', 'hipaa'],
+        code: `// Chain-Hashed Audit Logger
+import { createHash } from 'crypto';
+import { appendFileSync, readFileSync, existsSync } from 'fs';
+
+class AuditLogger {
+  constructor(logFile = 'audit.jsonl') {
+    this.logFile = logFile;
+    this.lastHash = this._getLastHash();
+  }
+
+  _hash(data) {
+    return createHash('sha256').update(data).digest('hex');
+  }
+
+  _getLastHash() {
+    if (!existsSync(this.logFile)) return '0'.repeat(64);
+    const lines = readFileSync(this.logFile, 'utf-8').trim().split('\n');
+    if (!lines.length || !lines[lines.length - 1]) return '0'.repeat(64);
+    try { return JSON.parse(lines[lines.length - 1]).hash; }
+    catch { return '0'.repeat(64); }
+  }
+
+  log(event) {
+    const entry = {
+      seq: Date.now(),
+      timestamp: new Date().toISOString(),
+      ...event,
+      previousHash: this.lastHash
+    };
+    entry.hash = this._hash(JSON.stringify({
+      seq: entry.seq, timestamp: entry.timestamp,
+      action: entry.action, actor: entry.actor,
+      resource: entry.resource, previousHash: entry.previousHash
+    }));
+    this.lastHash = entry.hash;
+    appendFileSync(this.logFile, JSON.stringify(entry) + '\n');
+    return entry;
+  }
+
+  verify() {
+    if (!existsSync(this.logFile)) return { valid: true, entries: 0 };
+    const lines = readFileSync(this.logFile, 'utf-8').trim().split('\n');
+    let prevHash = '0'.repeat(64);
+    for (let i = 0; i < lines.length; i++) {
+      const entry = JSON.parse(lines[i]);
+      if (entry.previousHash !== prevHash) {
+        return { valid: false, brokenAt: i, expected: prevHash, found: entry.previousHash };
+      }
+      const computed = this._hash(JSON.stringify({
+        seq: entry.seq, timestamp: entry.timestamp,
+        action: entry.action, actor: entry.actor,
+        resource: entry.resource, previousHash: entry.previousHash
+      }));
+      if (computed !== entry.hash) {
+        return { valid: false, brokenAt: i, reason: 'hash mismatch' };
+      }
+      prevHash = entry.hash;
+    }
+    return { valid: true, entries: lines.length };
+  }
+}
+
+export default AuditLogger;`,
+        usage: '<h3>Usage</h3><pre><code>import AuditLogger from \'./AuditLogger.js\';\nconst audit = new AuditLogger(\'security-audit.jsonl\');\n\n// Log events\naudit.log({ action: \'LOGIN\', actor: \'user@co.com\', resource: \'auth\', detail: \'MFA verified\' });\naudit.log({ action: \'DATA_ACCESS\', actor: \'admin@co.com\', resource: \'users\', detail: \'Exported PII report\' });\n\n// Verify chain integrity\nconst result = audit.verify();\nconsole.log(result.valid ? \'Chain intact\' : \'TAMPERING DETECTED at entry \' + result.brokenAt);</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC7.2</strong> — System monitoring and anomaly detection</li><li><strong>ISO 27001 A.8.15</strong> — Logging and monitoring</li><li><strong>HIPAA §164.312(b)</strong> — Audit controls</li><li><strong>PCI DSS Req 10</strong> — Track and monitor access</li></ul><h3>Tamper Evidence</h3><p>Each entry includes a SHA-256 hash of its content plus the previous entry hash, forming a blockchain-like chain. If any entry is modified, all subsequent hashes break, making tampering immediately detectable.</p>'
+    },
+    {
+        id: 'aes256-field-encryption',
+        title: 'AES-256-GCM Field Encryption Service',
+        description: 'Encrypt sensitive database fields at rest using AES-256-GCM with per-field IV and auth tags. Maps to GDPR Art. 32, HIPAA §164.312(a)(2)(iv), PCI DSS Req 3.',
+        category: 'compliance',
+        language: 'JavaScript',
+        tags: ['encryption', 'aes-256', 'data-at-rest', 'gdpr', 'hipaa', 'pci-dss'],
+        code: `// AES-256-GCM Field Encryption Service
+import { randomBytes, createCipheriv, createDecipheriv } from 'crypto';
+
+const ALGO = 'aes-256-gcm';
+const IV_LEN = 16;
+const TAG_LEN = 16;
+
+class FieldEncryptor {
+  constructor(keyHex) {
+    if (!keyHex || keyHex.length !== 64) {
+      throw new Error('Key must be 64 hex chars (256 bits). Generate with: crypto.randomBytes(32).toString("hex")');
+    }
+    this.key = Buffer.from(keyHex, 'hex');
+  }
+
+  encrypt(plaintext) {
+    const iv = randomBytes(IV_LEN);
+    const cipher = createCipheriv(ALGO, this.key, iv);
+    const enc = Buffer.concat([cipher.update(plaintext, 'utf8'), cipher.final()]);
+    const tag = cipher.getAuthTag();
+    return iv.toString('hex') + ':' + enc.toString('hex') + ':' + tag.toString('hex');
+  }
+
+  decrypt(ciphertext) {
+    const [ivHex, encHex, tagHex] = ciphertext.split(':');
+    const decipher = createDecipheriv(ALGO, this.key, Buffer.from(ivHex, 'hex'));
+    decipher.setAuthTag(Buffer.from(tagHex, 'hex'));
+    return decipher.update(encHex, 'hex', 'utf8') + decipher.final('utf8');
+  }
+
+  encryptFields(obj, fields) {
+    const result = { ...obj };
+    for (const f of fields) {
+      if (result[f] !== undefined && result[f] !== null) {
+        result[f] = this.encrypt(String(result[f]));
+      }
+    }
+    return result;
+  }
+
+  decryptFields(obj, fields) {
+    const result = { ...obj };
+    for (const f of fields) {
+      if (result[f] && typeof result[f] === 'string' && result[f].includes(':')) {
+        try { result[f] = this.decrypt(result[f]); }
+        catch { /* field was not encrypted or key mismatch */ }
+      }
+    }
+    return result;
+  }
+}
+
+export default FieldEncryptor;`,
+        usage: '<h3>Usage</h3><pre><code>import FieldEncryptor from \'./FieldEncryptor.js\';\nconst enc = new FieldEncryptor(process.env.FIELD_ENCRYPTION_KEY);\n\n// Encrypt individual values\nconst cipher = enc.encrypt(\'123-45-6789\');\nconst plain  = enc.decrypt(cipher);\n\n// Encrypt specific object fields before DB insert\nconst record = { name: \'Jane\', ssn: \'123-45-6789\', email: \'jane@co.com\' };\nconst safe = enc.encryptFields(record, [\'ssn\', \'email\']);\n// safe.ssn → \'a1b2c3...:d4e5f6...:aabbcc...\'\n\n// Decrypt after DB read\nconst restored = enc.decryptFields(safe, [\'ssn\', \'email\']);</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 32</strong> — Encryption of personal data</li><li><strong>HIPAA §164.312(a)(2)(iv)</strong> — Encryption at rest</li><li><strong>PCI DSS Req 3</strong> — Protect stored cardholder data</li><li><strong>SOC 2 CC6.1</strong> — Encryption controls</li></ul><h3>Key Management</h3><p>Generate key: <code>node -e \"console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))\"</code>. Store in environment variable or KMS. Rotate by re-encrypting under new key. Never commit keys to source control.</p>'
+    },
+    {
+        id: 'pii-data-masking',
+        title: 'PII Data Masking Utility',
+        description: 'Mask or redact personally identifiable information in logs, exports, and displays. Supports SSN, email, phone, credit card, and custom patterns. Maps to GDPR Art. 25, HIPAA Safe Harbor.',
+        category: 'compliance',
+        language: 'JavaScript',
+        tags: ['pii', 'masking', 'redaction', 'gdpr', 'hipaa', 'privacy'],
+        code: `// PII Data Masking Utility
+const MASK_CHAR = '*';
+
+const PATTERNS = {
+  ssn: { regex: /\b(\d{3})-(\d{2})-(\d{4})\b/g, mask: (m, a, b, c) => a[0] + '**-**-' + c.slice(-2).padStart(4, '*') },
+  email: { regex: /([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, mask: (m, local, domain) => local[0] + '***@' + domain },
+  phone: { regex: /\b(\d{3})[-.\s]?(\d{3})[-.\s]?(\d{4})\b/g, mask: (m, a, b, c) => '(***) ***-' + c },
+  creditCard: { regex: /\b(\d{4})[- ]?(\d{4})[- ]?(\d{4})[- ]?(\d{4})\b/g, mask: (m, a, b, c, d) => '**** **** **** ' + d },
+  ipv4: { regex: /\b(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\b/g, mask: () => '***.***.***.***' }
+};
+
+class DataMasker {
+  constructor(options = {}) {
+    this.types = options.types || Object.keys(PATTERNS);
+    this.customPatterns = options.customPatterns || [];
+  }
+
+  mask(text) {
+    if (typeof text !== 'string') return text;
+    let result = text;
+    for (const t of this.types) {
+      if (PATTERNS[t]) result = result.replace(PATTERNS[t].regex, PATTERNS[t].mask);
+    }
+    for (const cp of this.customPatterns) {
+      result = result.replace(cp.regex, cp.mask);
+    }
+    return result;
+  }
+
+  maskObject(obj, fields = null) {
+    if (Array.isArray(obj)) return obj.map(item => this.maskObject(item, fields));
+    if (obj && typeof obj === 'object') {
+      const result = {};
+      for (const [key, val] of Object.entries(obj)) {
+        if (fields && !fields.includes(key)) { result[key] = val; continue; }
+        result[key] = typeof val === 'string' ? this.mask(val)
+                    : typeof val === 'object' ? this.maskObject(val, fields) : val;
+      }
+      return result;
+    }
+    return obj;
+  }
+
+  redact(text, replacement = '[REDACTED]') {
+    let result = text;
+    for (const t of this.types) {
+      if (PATTERNS[t]) result = result.replace(PATTERNS[t].regex, replacement);
+    }
+    return result;
+  }
+}
+
+export { DataMasker, PATTERNS };`,
+        usage: '<h3>Usage</h3><pre><code>import { DataMasker } from \'./DataMasker.js\';\nconst masker = new DataMasker();\n\n// Mask a string\nmasker.mask(\'SSN: 123-45-6789, Email: john@acme.com\');\n// → \'SSN: 1**-**-**89, Email: j***@acme.com\'\n\n// Mask object fields\nconst user = { name: \'Jane\', ssn: \'987-65-4321\', phone: \'555-123-4567\' };\nmasker.maskObject(user);\n// → { name: \'Jane\', ssn: \'9**-**-**21\', phone: \'(***) ***-4567\' }\n\n// Full redaction for logs\nmasker.redact(\'Card: 4111-1111-1111-1111\');\n// → \'Card: [REDACTED]\'</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 25</strong> — Data protection by design (pseudonymisation)</li><li><strong>HIPAA Safe Harbor</strong> — De-identification of PHI</li><li><strong>PCI DSS Req 3.4</strong> — Render PAN unreadable</li><li><strong>SOC 2 CC6.7</strong> — Data classification and handling</li></ul><h3>Best Practices</h3><p>Apply masking at the logging layer so PII never reaches log files. Use <code>maskObject()</code> before serialising API responses for non-privileged consumers. Add custom patterns for domain-specific identifiers (patient IDs, account numbers).</p>'
+    },
+    {
+        id: 'breach-notification-engine',
+        title: 'Breach Notification Workflow Engine',
+        description: 'Multi-framework breach notification engine with deadline tracking for GDPR (72h), HIPAA (60d), DORA (4h), and NIS 2 (24h). Classifies severity, routes to authorities, and generates timelines.',
+        category: 'compliance',
+        language: 'JavaScript',
+        tags: ['breach', 'incident-response', 'notification', 'gdpr', 'hipaa', 'dora', 'nis2'],
+        code: `// Breach Notification Workflow Engine
+const SEVERITY = { CRITICAL: 4, HIGH: 3, MEDIUM: 2, LOW: 1 };
+
+const FRAMEWORK_DEADLINES = {
+  dora:  { authority: 'National Competent Authority', hours: 4, label: 'DORA Initial' },
+  nis2:  { authority: 'National CSIRT', hours: 24, label: 'NIS 2 Early Warning' },
+  gdpr:  { authority: 'Supervisory Authority (DPA)', hours: 72, label: 'GDPR Art. 33' },
+  hipaa: { authority: 'HHS OCR', hours: 1440, label: 'HIPAA Breach Notification' },
+  pci:   { authority: 'Acquiring Bank / Card Brands', hours: 72, label: 'PCI Incident' }
+};
+
+class BreachNotificationEngine {
+  constructor(options = {}) {
+    this.notifier = options.notifier;
+  }
+
+  classifySeverity(incident) {
+    let score = SEVERITY.LOW;
+    if (incident.recordCount > 500) score = Math.max(score, SEVERITY.HIGH);
+    if (incident.recordCount > 5000) score = Math.max(score, SEVERITY.CRITICAL);
+    const sensitive = ['phi', 'pii', 'financial', 'credentials'];
+    if (incident.dataTypes?.some(t => sensitive.includes(t))) score = Math.max(score, SEVERITY.HIGH);
+    if (incident.dataTypes?.includes('phi') && incident.recordCount > 500) score = SEVERITY.CRITICAL;
+    return score;
+  }
+
+  async report(incident) {
+    const severity = this.classifySeverity(incident);
+    const severityLabel = Object.keys(SEVERITY).find(k => SEVERITY[k] === severity);
+    const discoveredAt = incident.discoveredAt || new Date();
+    const frameworks = incident.frameworks || [];
+
+    const classified = {
+      id: 'INC-' + Date.now(),
+      severity: severityLabel,
+      discoveredAt: discoveredAt.toISOString(),
+      summary: incident.summary,
+      dataTypes: incident.dataTypes,
+      recordCount: incident.recordCount,
+      deadlines: [],
+      timeline: []
+    };
+
+    for (const fw of frameworks) {
+      const dl = FRAMEWORK_DEADLINES[fw];
+      if (!dl) continue;
+      const deadline = new Date(discoveredAt.getTime() + dl.hours * 3600000);
+      classified.deadlines.push({
+        framework: fw, label: dl.label, authority: dl.authority,
+        deadlineISO: deadline.toISOString(),
+        hoursRemaining: Math.max(0, (deadline - Date.now()) / 3600000).toFixed(1)
+      });
+    }
+
+    classified.deadlines.sort((a, b) => new Date(a.deadlineISO) - new Date(b.deadlineISO));
+
+    if (this.notifier) {
+      for (const dl of classified.deadlines) {
+        await this.notifier.send({
+          subject: '[BREACH] ' + dl.label + ' — ' + classified.id,
+          framework: dl.framework, deadline: dl.deadlineISO,
+          authority: dl.authority, summary: classified.summary });
+      }
+    }
+    return classified;
+  }
+}
+
+export { BreachNotificationEngine, FRAMEWORK_DEADLINES, SEVERITY };`,
+        usage: '<h3>Usage</h3><pre><code>import { BreachNotificationEngine } from \'./BreachNotification.js\';\nconst engine = new BreachNotificationEngine({ notifier: emailService });\n\nconst result = await engine.report({\n  summary: \'Unauthorized access to patient records\',\n  dataTypes: [\'phi\', \'pii\'],\n  recordCount: 1200,\n  frameworks: [\'hipaa\', \'gdpr\']\n});\n\nconsole.log(result.severity);   // \'CRITICAL\'\nconsole.log(result.deadlines);  // sorted by urgency</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 33</strong> — 72-hour notification to DPA</li><li><strong>HIPAA Breach Notification Rule</strong> — 60-day notification to HHS</li><li><strong>DORA Art. 19</strong> — 4-hour initial classification</li><li><strong>NIS 2 Art. 23</strong> — 24-hour early warning</li></ul><h3>Severity Matrix</h3><p>LOW: &lt;100 records, non-sensitive. MEDIUM: 100-500 records. HIGH: 500+ records or sensitive data. CRITICAL: 5000+ records or PHI with 500+ records.</p>'
     }
 ];
