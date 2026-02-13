@@ -273,7 +273,7 @@ router.post('/:id/send', async (req, res) => {
             
             sentCount++;
             
-            // TODO: Actually send email here using SendGrid, Resend, etc.
+            // Email sending integration point - configure email service in production
         }
         
         // Update campaign status

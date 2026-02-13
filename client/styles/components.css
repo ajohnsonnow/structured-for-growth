@@ -243,6 +243,7 @@
     border-radius: var(--radius-md);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    text-align: center;
 }
 
 .badge-primary {
@@ -314,6 +315,7 @@
     border-bottom: 2px solid transparent;
     margin-bottom: -2px;
     transition: all var(--transition-fast);
+    text-align: center;
 }
 
 .tab:hover {
@@ -383,6 +385,7 @@
     cursor: pointer;
     transition: all var(--transition-fast);
     color: var(--text-primary);
+    text-align: center;
 }
 
 .pagination-btn:hover:not(:disabled) {
@@ -443,6 +446,7 @@
     cursor: pointer;
     font-size: 0.75rem;
     transition: background-color var(--transition-fast);
+    text-align: center;
 }
 
 .copy-btn:hover {

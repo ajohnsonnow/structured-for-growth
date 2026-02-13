@@ -1014,12 +1014,14 @@ body:has(#loginModal.active) .dashboard-container {
 .btn-sm {
     padding: 0.35rem 0.75rem;
     font-size: 0.8rem;
+    text-align: center;
 }
 
 .btn-outline {
     background: transparent;
     border: 1px solid var(--border-color);
     color: var(--text-primary);
+    text-align: center;
 }
 
 .btn-outline:hover {
@@ -1459,6 +1461,7 @@ body:has(#loginModal.active) .dashboard-container {
 .btn-large {
     padding: var(--spacing-md) var(--spacing-xl);
     font-size: 1rem;
+    text-align: center;
 }
 
 .demo-info {

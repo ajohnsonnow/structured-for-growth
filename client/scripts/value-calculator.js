@@ -1,8 +1,8 @@
 /**
  * Value Proposition Calculator
  * Real ROI data based on completed projects:
- * - Fernhill Community: $385K-$755K traditional → $11,835 delivered (97%+ savings)
- * - 58,000+ lines of code in 28 hours vs 7-12 months
+ * - Fernhill Community: $385K-$755K traditional → $14,355 delivered (96%+ savings)
+ * - 51,541+ lines of code in 34 hours vs 7-12 months
  */
 
 // Configuration based on REAL Fernhill project data
@@ -50,12 +50,12 @@ const CONFIG = {
             traditionalCostMin: 384915,
             traditionalCostMax: 754591,
             traditionalTimelineMin: '7-12 months',
-            aiCostMin: 11835,
+            aiCostMin: 14355,
             aiCostMax: 15000,
-            aiTimeline: '28 hours (6 days)',
+            aiTimeline: '34 hours (10 days)',
             speedMultiplier: 50,
-            roiMultiplier: 50,
-            savingsPercent: 97
+            roiMultiplier: 40,
+            savingsPercent: 96
         }
     },
     
@@ -63,12 +63,12 @@ const CONFIG = {
     fernhillStats: {
         traditionalCostMin: 384915,
         traditionalCostMax: 754591,
-        actualCost: 11835,
+        actualCost: 14355,
         traditionalTimeWeeks: 40,    // Average 28-50 weeks
-        actualTimeHours: 28,
-        actualTimeDays: 6,
-        linesOfCode: 58000,
-        typescriptFiles: 176,
+        actualTimeHours: 34,
+        actualTimeDays: 10,
+        linesOfCode: 51541,
+        typescriptFiles: 177,
         reactComponents: 100,
         teamReplaced: 9              // Full-Stack, Frontend, Backend, DevOps, UI/UX, Security, QA, PM, Tech Writer
     }

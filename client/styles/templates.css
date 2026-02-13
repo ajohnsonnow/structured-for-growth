@@ -469,6 +469,7 @@
     border-radius: var(--radius-md);
     color: var(--text-secondary);
     cursor: pointer;
+    text-align: center;
 }
 
 .auth-tab.active {
@@ -540,11 +541,12 @@
     border-radius: var(--radius-md);
     font-size: 0.75rem;
     font-weight: 600;
+    text-align: center;
 }
 
-.status-active { background: rgba(16, 185, 129, 0.2); color: #10b981; }
-.status-inactive { background: rgba(107, 114, 128, 0.2); color: #6b7280; }
-.status-pending { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+.status-active { background: rgba(16, 185, 129, 0.2); color: #10b981; text-align: center; }
+.status-inactive { background: rgba(107, 114, 128, 0.2); color: #6b7280; text-align: center; }
+.status-pending { background: rgba(245, 158, 11, 0.2); color: #f59e0b; text-align: center; }
 
 .btn-icon {
     background: none;
@@ -558,12 +560,13 @@
 .badge-time {
     background: linear-gradient(135deg, var(--amber) 0%, var(--earth-brown) 100%);
     color: var(--bg-primary);
+    text-align: center;
 }
 
 /* Button variations */
-.btn-success { background: #10b981; color: white; }
-.btn-danger { background: #ef4444; color: white; }
-.btn-warning { background: #f59e0b; color: white; }
+.btn-success { background: #10b981; color: white; text-align: center; }
+.btn-danger { background: #ef4444; color: white; text-align: center; }
+.btn-warning { background: #f59e0b; color: white; text-align: center; }
 
 /* CRUD Demo Styles */
 .crud-form {

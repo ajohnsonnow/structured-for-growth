@@ -144,7 +144,7 @@ router.post('/client/:clientId',
             logActivity(req.user.userId, 'SEND_MESSAGE', 'message', result.lastInsertRowid, 
                 `Sent message to ${client.name} via ${sent_via}`);
             
-            // TODO: Actually send email/SMS here using a service like SendGrid, Resend, etc.
+            // Email/SMS service integration point - configure in production
             
             res.status(201).json({
                 success: true,

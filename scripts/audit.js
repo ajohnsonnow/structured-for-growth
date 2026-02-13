@@ -238,17 +238,18 @@ function checkBuildIntegrity() {
     // Check critical dependencies
     const pkg = readJSON('package.json');
     if (pkg) {
-      const criticalDeps = {
-        'express': pkg.dependencies,
-        'sql.js': pkg.dependencies,
-        'vite': pkg.devDependencies
-      };
+      const criticalDeps = [
+        { name: 'express', location: 'dependencies' },
+        { name: 'sql.js', location: 'dependencies' },
+        { name: 'vite', location: 'dependencies' }
+      ];
       
-      Object.entries(criticalDeps).forEach(([dep, location]) => {
-        if (location && location[dep]) {
-          report.success(`Critical dependency '${dep}' is listed`);
+      criticalDeps.forEach(({ name, location }) => {
+        const deps = location === 'dependencies' ? pkg.dependencies : pkg.devDependencies;
+        if (deps && deps[name]) {
+          report.success(`Critical dependency '${name}' is listed`);
         } else {
-          report.error(`Critical dependency '${dep}' is missing`);
+          report.error(`Critical dependency '${name}' is missing`);
         }
       });
     }

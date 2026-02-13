@@ -75,6 +75,7 @@
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
+    text-align: center;
 }
 
 .form-message {
@@ -268,6 +269,7 @@
 .btn-venmo {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: var(--spacing-sm);
     background: #008cff;
     color: white;
@@ -276,6 +278,7 @@
     font-weight: 600;
     font-size: 1.1rem;
     transition: all var(--transition-fast);
+    text-align: center;
 }
 
 .btn-venmo:hover {
@@ -519,6 +522,7 @@
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
+    text-align: center;
 }
 
 .badge-success {
