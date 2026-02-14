@@ -898,12 +898,23 @@ section {
    Responsive Design - Mobile-First Breakpoints
    ────────────────────────────────────────────── */
 
-/* Tablet: compact nav spacing (≤1024px) */
+/* Tablet: wrap nav items so they stack naturally (≤1024px) */
 @media (max-width: 1024px) {
-    .nav-menu {
-        gap: var(--spacing-xs);
+    .navbar .container {
+        flex-wrap: wrap;
     }
-    
+
+    .nav-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--spacing-xs);
+        flex: 1 1 100%;
+        order: 3;
+        padding-top: var(--spacing-xs);
+        border-top: 1px solid var(--border-color);
+        margin-top: var(--spacing-xs);
+    }
+
     .nav-link {
         padding: var(--spacing-xs) 0.6rem;
         font-size: 0.9rem;
@@ -916,6 +927,10 @@ section {
 
 /* Mobile: hamburger menu (≤768px) */
 @media (max-width: 768px) {
+    .navbar .container {
+        flex-wrap: nowrap;
+    }
+
     .nav-menu {
         display: none;
         position: fixed;
@@ -926,12 +941,18 @@ section {
         height: 100dvh;
         background: var(--bg-primary);
         flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
         padding: calc(var(--spacing-2xl) + 20px) var(--spacing-lg) var(--spacing-lg);
         box-shadow: var(--shadow-xl);
         border-left: 1px solid var(--border-light);
+        border-top: none;
+        margin-top: 0;
         gap: var(--spacing-xs);
         z-index: 1000;
         overflow-y: auto;
+        order: unset;
+        flex: unset;
         transform: translateX(100%);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
