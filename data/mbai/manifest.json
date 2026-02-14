@@ -1,7 +1,7 @@
 {
   "name": "MBAi Enterprise Methodology",
   "version": "1.0.0",
-  "description": "Built on an MBA in Sustainable Business, a Servant Leadership practice forged through military and federal service, and 35+ years of hands-on technology — integrated through Agentic AI into a unified enterprise operating system.",
+  "description": "Built on an MBA in Sustainable Business, a Servant Leadership practice forged through military service and technical communication leadership, and 35+ years of hands-on technology — integrated through Agentic AI into a unified enterprise operating system.",
   "pillars": [
     {
       "id": "mbai",
@@ -18,7 +18,7 @@
     {
       "id": "servant",
       "name": "Servant Leadership",
-      "description": "Forged through 11 years of military service including two combat deployments, and a decade of federal technical writer-editor leadership — people-first governance built on empathy and accountability.",
+      "description": "Forged through 11 years of military service including two combat deployments, and seven years of technical writer-editor leadership — people-first governance built on empathy and accountability.",
       "color": "#d4a574"
     }
   ],
