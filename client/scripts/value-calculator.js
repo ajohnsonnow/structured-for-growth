@@ -1,8 +1,8 @@
 /**
  * Value Proposition Calculator
  * Real ROI data based on completed projects:
- * - Fernhill Community: $385K-$755K traditional → $14,355 delivered (96%+ savings)
- * - 51,541+ lines of code in 34 hours vs 7-12 months
+ * - Fernhill Community: $381K-$736K traditional → $20,235 delivered (95% savings)
+ * - 62,462 lines of code in 48 hours across 21 sessions vs 7-10 months
  */
 
 // Configuration based on REAL Fernhill project data
@@ -47,29 +47,34 @@ const CONFIG = {
         },
         enterprise: {
             name: 'Enterprise (Fernhill-scale)',
-            traditionalCostMin: 384915,
-            traditionalCostMax: 754591,
-            traditionalTimelineMin: '7-12 months',
-            aiCostMin: 14355,
-            aiCostMax: 15000,
-            aiTimeline: '34 hours (10 days)',
-            speedMultiplier: 50,
-            roiMultiplier: 40,
-            savingsPercent: 96
+            traditionalCostMin: 380875,
+            traditionalCostMax: 735519,
+            traditionalTimelineMin: '7-10 months',
+            aiCostMin: 20235,
+            aiCostMax: 21000,
+            aiTimeline: '48 hours (16 days)',
+            speedMultiplier: 15,
+            roiMultiplier: 36,
+            savingsPercent: 95
         }
     },
     
     // Real Fernhill project benchmarks (for reference)
     fernhillStats: {
-        traditionalCostMin: 384915,
-        traditionalCostMax: 754591,
-        actualCost: 14355,
-        traditionalTimeWeeks: 40,    // Average 28-50 weeks
-        actualTimeHours: 34,
-        actualTimeDays: 10,
-        linesOfCode: 51541,
-        typescriptFiles: 177,
-        reactComponents: 100,
+        traditionalCostMin: 380875,
+        traditionalCostMax: 735519,
+        actualCost: 20235,
+        traditionalTimeWeeks: 34,    // Average 28-40 weeks
+        actualTimeHours: 48,
+        actualTimeDays: 16,
+        actualSessions: 21,
+        gitCommits: 166,
+        linesOfCode: 62462,
+        typescriptFiles: 209,
+        reactComponents: 111,
+        databaseTables: 79,
+        rlsPolicies: 233,
+        sqlMigrations: 49,
         teamReplaced: 9              // Full-Stack, Frontend, Backend, DevOps, UI/UX, Security, QA, PM, Tech Writer
     }
 };
