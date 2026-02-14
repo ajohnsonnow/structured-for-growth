@@ -1,6 +1,6 @@
 {
-  "generated": "2026-02-14T04:02:16.609Z",
-  "version": "1.4.2",
+  "generated": "2026-02-14T04:04:48.464Z",
+  "version": "1.4.3",
   "summary": {
     "totalRoutes": 76,
     "totalPages": 7,
@@ -1363,7 +1363,7 @@
   },
   "pkg": {
     "name": "structured-for-growth-www",
-    "version": "1.4.2",
+    "version": "1.4.3",
     "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
     "nodeEngine": ">=18.0.0",
     "scripts": [
