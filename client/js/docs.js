@@ -13,7 +13,11 @@ let activeTemplateCategory = 'all';
 
 async function init() {
   try {
-    const res = await fetch('/assets/docs-manifest.json');
+    let res = await fetch('/docs-manifest.json');
+    if (!res.ok) {
+      // Fallback for dev server where assets dir is also accessible
+      res = await fetch('/assets/docs-manifest.json');
+    }
     if (!res.ok) throw new Error(`${res.status}`);
     manifest = await res.json();
   } catch (err) {

@@ -91,6 +91,8 @@
     padding: var(--spacing-lg);
     cursor: pointer;
     transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
 }
 
 .template-card:hover {
@@ -117,12 +119,15 @@
     color: var(--text-secondary);
     margin-bottom: var(--spacing-md);
     line-height: 1.6;
+    flex: 1;
 }
 
 .template-card-meta {
     display: flex;
     gap: var(--spacing-xs);
     flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: var(--spacing-sm);
 }
 
 /* Template Detail Modal */

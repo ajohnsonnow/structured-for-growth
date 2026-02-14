@@ -327,6 +327,443 @@ const defaultDemo = {
     init: () => {}
 };
 
+// Build a dynamic code-preview demo from the template's code property
+function buildCodePreviewDemo(template) {
+    const codeSnippet = (template.code || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const tags = (template.tags || []).map(t =>
+        '<span style="display:inline-block;padding:2px 8px;border-radius:var(--radius-sm);font-size:0.7rem;font-weight:600;background:rgba(61,122,95,0.2);color:var(--forest-green-accent);border:1px solid rgba(61,122,95,0.3);">' + t + '</span>'
+    ).join('');
+    return {
+        html: `
+            <div class="demo-code-preview">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--spacing-md);">
+                    <div>
+                        <h4 style="color:var(--text-primary);margin:0;">${template.title}</h4>
+                        <span style="font-size:0.85rem;color:var(--text-muted);">${template.language} · ${template.category}</span>
+                    </div>
+                    <button class="btn btn-secondary" id="copyCodeBtn" style="font-size:0.85rem;">📋 Copy Code</button>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:var(--spacing-md);">${tags}</div>
+                <pre style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:var(--spacing-md);max-height:320px;overflow:auto;font-size:0.82rem;line-height:1.55;color:var(--text-secondary);white-space:pre-wrap;word-break:break-word;"><code>${codeSnippet}</code></pre>
+            </div>
+        `,
+        init: () => {
+            document.getElementById('copyCodeBtn')?.addEventListener('click', () => {
+                navigator.clipboard.writeText(template.code || '').then(() => {
+                    const btn = document.getElementById('copyCodeBtn');
+                    btn.textContent = '✓ Copied!';
+                    btn.style.color = '#10b981';
+                    setTimeout(() => { btn.textContent = '📋 Copy Code'; btn.style.color = ''; }, 2000);
+                });
+            });
+        }
+    };
+}
+
+// ── Enterprise Demo Configs: Compliance ────────────────────
+demoConfigs['rbac-middleware'] = {
+    html: `
+        <div class="demo-rbac">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🔐 RBAC Access Control Simulator</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Test role-based access to protected resources</p>
+            <div style="display:flex;gap:var(--spacing-md);flex-wrap:wrap;margin-bottom:var(--spacing-md);">
+                <div style="flex:1;min-width:200px;">
+                    <label style="display:block;margin-bottom:var(--spacing-xs);color:var(--text-secondary);font-weight:600;">Select Role:</label>
+                    <select id="rbacRole" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
+                        <option value="super_admin">Super Admin</option>
+                        <option value="admin">Admin</option>
+                        <option value="manager">Manager</option>
+                        <option value="user" selected>User</option>
+                        <option value="viewer">Viewer</option>
+                    </select>
+                </div>
+                <div style="flex:1;min-width:200px;">
+                    <label style="display:block;margin-bottom:var(--spacing-xs);color:var(--text-secondary);font-weight:600;">Test Permission:</label>
+                    <select id="rbacPerm" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
+                        <option value="users:read">users:read</option>
+                        <option value="users:write">users:write</option>
+                        <option value="users:delete">users:delete</option>
+                        <option value="reports:read">reports:read</option>
+                        <option value="reports:write">reports:write</option>
+                        <option value="audit:read">audit:read</option>
+                        <option value="settings:write">settings:write</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="rbacCheckBtn">🔍 Check Access</button>
+            <div id="rbacResult" style="margin-top:var(--spacing-md);padding:var(--spacing-md);border-radius:var(--radius-md);background:var(--bg-card);border:1px solid var(--border-light);min-height:80px;">
+                <span style="color:var(--text-muted);">Select a role and permission, then click Check Access</span>
+            </div>
+            <div style="margin-top:var(--spacing-md);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);">
+                <span style="font-size:0.75rem;color:var(--text-muted);">Maps to: SOC 2 CC6.1 · ISO 27001 A.8.2 · HIPAA §164.312(a) · PCI DSS Req 7</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const HIERARCHY = { super_admin: ['admin','manager','user','viewer'], admin: ['manager','user','viewer'], manager: ['user','viewer'], user: ['viewer'], viewer: [] };
+        const PERMS = { 'users:read': ['viewer'], 'users:write': ['admin'], 'users:delete': ['super_admin'], 'reports:read': ['user'], 'reports:write': ['manager'], 'audit:read': ['admin'], 'settings:write': ['super_admin'] };
+        function getEffective(r) { return [r, ...(HIERARCHY[r]||[])]; }
+        function check(role, perm) { return (PERMS[perm]||[]).some(r => getEffective(role).includes(r)); }
+
+        document.getElementById('rbacCheckBtn').addEventListener('click', () => {
+            const role = document.getElementById('rbacRole').value;
+            const perm = document.getElementById('rbacPerm').value;
+            const granted = check(role, perm);
+            const eff = getEffective(role);
+            document.getElementById('rbacResult').innerHTML = granted
+                ? '<div style="color:#10b981;font-weight:600;font-size:1.1rem;">✓ ACCESS GRANTED</div><div style="color:var(--text-secondary);margin-top:var(--spacing-xs);font-size:0.85rem;">Role <strong>' + role + '</strong> has permission <strong>' + perm + '</strong></div><div style="color:var(--text-muted);font-size:0.75rem;margin-top:var(--spacing-xs);">Effective roles: ' + eff.join(', ') + '</div>'
+                : '<div style="color:#ef4444;font-weight:600;font-size:1.1rem;">✗ ACCESS DENIED</div><div style="color:var(--text-secondary);margin-top:var(--spacing-xs);font-size:0.85rem;">Role <strong>' + role + '</strong> lacks permission <strong>' + perm + '</strong></div><div style="color:var(--text-muted);font-size:0.75rem;margin-top:var(--spacing-xs);">Effective roles: ' + eff.join(', ') + '</div>';
+        });
+    }
+};
+
+demoConfigs['chain-hashed-audit-logger'] = {
+    html: `
+        <div class="demo-audit">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">📝 Tamper-Evident Audit Log</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Each entry is hash-chained to the previous — modify one and the chain breaks.</p>
+            <div style="display:flex;gap:var(--spacing-sm);margin-bottom:var(--spacing-md);flex-wrap:wrap;">
+                <input type="text" id="auditAction" placeholder="Action (e.g., USER_LOGIN)" style="flex:1;min-width:150px;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
+                <input type="text" id="auditUser" placeholder="User ID" value="admin@sfg.com" style="flex:1;min-width:150px;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
+                <button class="btn btn-primary" id="auditLogBtn">➕ Log Entry</button>
+            </div>
+            <div id="auditChain" style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:var(--spacing-md);max-height:250px;overflow-y:auto;">
+                <span style="color:var(--text-muted);">No audit entries yet. Log an action above.</span>
+            </div>
+            <div style="margin-top:var(--spacing-sm);display:flex;gap:var(--spacing-sm);">
+                <button class="btn btn-warning" id="auditTamperBtn" style="font-size:0.85rem;">🔓 Simulate Tamper</button>
+                <button class="btn btn-secondary" id="auditVerifyBtn" style="font-size:0.85rem;">🔍 Verify Chain</button>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const entries = [];
+        function simpleHash(str) {
+            let h = 0; for (let i = 0; i < str.length; i++) { h = ((h << 5) - h + str.charCodeAt(i)) | 0; }
+            return Math.abs(h).toString(16).padStart(8, '0');
+        }
+        function render() {
+            if (!entries.length) { document.getElementById('auditChain').innerHTML = '<span style="color:var(--text-muted);">No entries yet.</span>'; return; }
+            document.getElementById('auditChain').innerHTML = entries.map((e, i) =>
+                '<div style="padding:var(--spacing-sm);border-bottom:1px solid var(--border-light);font-size:0.82rem;' + (e.tampered ? 'background:rgba(239,68,68,0.1);' : '') + '">' +
+                '<div style="display:flex;justify-content:space-between;"><strong style="color:var(--text-primary);">#' + (i+1) + ' ' + e.action + '</strong><span style="color:var(--text-muted);">' + e.timestamp + '</span></div>' +
+                '<div style="color:var(--text-secondary);">User: ' + e.userId + '</div>' +
+                '<div style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.7rem;">Hash: ' + e.hash + ' | Prev: ' + e.prevHash + '</div>' +
+                '</div>'
+            ).join('');
+        }
+        document.getElementById('auditLogBtn').addEventListener('click', () => {
+            const action = document.getElementById('auditAction').value.trim() || 'USER_ACTION';
+            const userId = document.getElementById('auditUser').value.trim() || 'anonymous';
+            const prevHash = entries.length ? entries[entries.length-1].hash : '00000000';
+            const ts = new Date().toLocaleTimeString();
+            const hash = simpleHash(prevHash + action + userId + ts);
+            entries.push({ action, userId, timestamp: ts, hash, prevHash, tampered: false });
+            document.getElementById('auditAction').value = '';
+            render();
+        });
+        document.getElementById('auditTamperBtn').addEventListener('click', () => {
+            if (entries.length < 2) { alert('Log at least 2 entries first'); return; }
+            entries[0].action = 'TAMPERED_ACTION';
+            entries[0].tampered = true;
+            render();
+        });
+        document.getElementById('auditVerifyBtn').addEventListener('click', () => {
+            if (!entries.length) return;
+            let valid = true;
+            for (let i = 1; i < entries.length; i++) {
+                const expected = entries[i-1].hash;
+                if (entries[i].prevHash !== expected) { valid = false; break; }
+            }
+            // Also check if any entry was tampered
+            for (const e of entries) { if (e.tampered) { valid = false; break; } }
+            const el = document.getElementById('auditChain');
+            const msg = valid
+                ? '<div style="padding:var(--spacing-sm);background:rgba(16,185,129,0.15);border-radius:var(--radius-md);color:#10b981;font-weight:600;margin-bottom:var(--spacing-sm);">✓ Chain integrity verified — all hashes valid</div>'
+                : '<div style="padding:var(--spacing-sm);background:rgba(239,68,68,0.15);border-radius:var(--radius-md);color:#ef4444;font-weight:600;margin-bottom:var(--spacing-sm);">✗ Chain integrity BROKEN — tampering detected!</div>';
+            el.innerHTML = msg + el.innerHTML;
+        });
+    }
+};
+
+// ── Enterprise Demo Configs: MBAi ──────────────────────────
+demoConfigs['mbai-sbsc'] = {
+    html: `
+        <div class="demo-sbsc">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">📊 Sustainable Balanced Scorecard</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Explore the four strategic perspectives — click to expand details</p>
+            <div id="sbscPerspectives" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-sm);"></div>
+            <div id="sbscDetail" style="margin-top:var(--spacing-md);padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:100px;">
+                <span style="color:var(--text-muted);">Click a perspective above to see objectives, KPIs, and AI vectors.</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const perspectives = [
+            { name: 'Financial', icon: '💰', color: '#d4a574', objectives: [
+                { obj: 'Transition to circular, regenerative models', kpi: '% PaaS revenue > 35%', ai: 'AI dynamic pricing' },
+                { obj: 'Reduce OpEx via ecological efficiency', kpi: '20% energy cost reduction', ai: 'Autonomous energy grid balancing' }
+            ]},
+            { name: 'Customer', icon: '👥', color: '#7ec99b', objectives: [
+                { obj: 'Enhance brand equity via purpose-driven impact', kpi: 'NPS + Trust Index > 75', ai: 'NLP sentiment analysis' },
+                { obj: 'Ethical AI service accessibility', kpi: '100% bias audit pass', ai: 'Automated bias detection' }
+            ]},
+            { name: 'Internal Process', icon: '⚙️', color: '#5a9d7a', objectives: [
+                { obj: 'Zero-waste closed-loop supply chain', kpi: '> 65% material recovery', ai: 'Computer vision reverse logistics' },
+                { obj: 'Operational carbon neutrality', kpi: 'Net-Zero Scope 1 & 2', ai: 'ML route optimization' }
+            ]},
+            { name: 'Learning & Growth', icon: '🌱', color: '#9dbd7e', objectives: [
+                { obj: 'Culture of continuous green innovation', kpi: '10 patents/year', ai: 'AI knowledge management' },
+                { obj: 'Inclusive, psychologically safe environment', kpi: '< 5% voluntary turnover', ai: 'Anonymized inclusion analysis' }
+            ]}
+        ];
+        document.getElementById('sbscPerspectives').innerHTML = perspectives.map((p, i) =>
+            '<div class="sbsc-card" data-idx="' + i + '" style="padding:var(--spacing-md);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);cursor:pointer;transition:all 0.2s;text-align:center;" onmouseover="this.style.borderColor=\'' + p.color + '\'" onmouseout="this.style.borderColor=\'var(--border-light)\'">' +
+            '<div style="font-size:1.8rem;">' + p.icon + '</div>' +
+            '<div style="font-weight:600;color:var(--text-primary);margin-top:var(--spacing-xs);">' + p.name + '</div>' +
+            '<div style="font-size:0.75rem;color:var(--text-muted);">' + p.objectives.length + ' objectives</div></div>'
+        ).join('');
+        document.querySelectorAll('.sbsc-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const p = perspectives[parseInt(card.dataset.idx)];
+                document.getElementById('sbscDetail').innerHTML =
+                    '<h5 style="color:' + p.color + ';margin-bottom:var(--spacing-sm);">' + p.icon + ' ' + p.name + ' Perspective</h5>' +
+                    p.objectives.map(o =>
+                        '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);margin-bottom:var(--spacing-xs);font-size:0.85rem;">' +
+                        '<div style="color:var(--text-primary);font-weight:600;">' + o.obj + '</div>' +
+                        '<div style="display:flex;gap:var(--spacing-md);margin-top:4px;flex-wrap:wrap;">' +
+                        '<span style="color:var(--text-secondary);font-size:0.78rem;">📏 ' + o.kpi + '</span>' +
+                        '<span style="color:var(--text-muted);font-size:0.78rem;">🤖 ' + o.ai + '</span></div></div>'
+                    ).join('');
+            });
+        });
+    }
+};
+
+demoConfigs['mbai-circular-supply-chain'] = {
+    html: `
+        <div class="demo-circular">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">♻️ Circular Supply Chain Workflow</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Six-phase circular loop — click each phase to explore</p>
+            <div id="circularPhases" style="display:flex;flex-wrap:wrap;gap:var(--spacing-xs);justify-content:center;margin-bottom:var(--spacing-md);"></div>
+            <div id="circularDetail" style="padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:120px;">
+                <span style="color:var(--text-muted);">Click a phase to see its details.</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const phases = [
+            { name: 'Regenerative Sourcing', icon: '🌿', action: 'Transition to recycled/regenerative materials', ai: 'AI audits supplier ESG reports', kpi: '% circular procurement spend' },
+            { name: 'Circular Design', icon: '🔩', action: 'Modularity, durability, repairability by design', ai: 'Generative AI material simulation', kpi: 'Product Circularity Index' },
+            { name: 'GreenOps Manufacturing', icon: '🏭', action: 'Zero-waste, renewable-powered production', ai: 'Digital twins optimize energy & waste', kpi: 'Waste diverted from landfill' },
+            { name: 'PaaS Distribution', icon: '📦', action: 'Leasing & subscription over transactional sales', ai: 'AI demand forecasting', kpi: 'Asset utilization rate' },
+            { name: 'Reverse Logistics', icon: '🔄', action: 'Collection hubs & incentivized take-back', ai: 'Intelligent multi-stop routing', kpi: 'Products recovered (volume)' },
+            { name: 'Remanufacturing', icon: '♻️', action: 'Sort, disassemble, triage for reuse/recycle', ai: 'Computer vision component classification', kpi: 'Closed-loop economic value' }
+        ];
+        document.getElementById('circularPhases').innerHTML = phases.map((p, i) =>
+            '<button class="btn btn-secondary circular-phase-btn" data-idx="' + i + '" style="font-size:0.85rem;"> ' + p.icon + ' ' + p.name + '</button>'
+        ).join('');
+        document.querySelectorAll('.circular-phase-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.circular-phase-btn').forEach(b => b.style.background = '');
+                btn.style.background = 'var(--primary-color)';
+                const p = phases[parseInt(btn.dataset.idx)];
+                document.getElementById('circularDetail').innerHTML =
+                    '<h5 style="color:var(--forest-green-accent);margin-bottom:var(--spacing-sm);">' + p.icon + ' Phase: ' + p.name + '</h5>' +
+                    '<div style="display:grid;gap:var(--spacing-sm);">' +
+                    '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">Action:</strong> <span style="color:var(--text-secondary);">' + p.action + '</span></div>' +
+                    '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">🤖 AI Enablement:</strong> <span style="color:var(--text-secondary);">' + p.ai + '</span></div>' +
+                    '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">📏 KPI:</strong> <span style="color:var(--text-secondary);">' + p.kpi + '</span></div></div>';
+            });
+        });
+    }
+};
+
+demoConfigs['mbai-tbl-impact'] = {
+    html: `
+        <div class="demo-tbl">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">📊 Triple Bottom Line P&L</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Profit · People · Planet — compare baseline vs projected impact</p>
+            <div id="tblDimensions" style="display:grid;gap:var(--spacing-sm);"></div>
+        </div>
+    `,
+    init: () => {
+        const dims = [
+            { name: 'Profit', icon: '💰', color: '#d4a574', metrics: [
+                { label: 'CapEx Investment', baseline: '$0', projected: '$1.5M' },
+                { label: 'Fuel Savings', baseline: '$800K/yr', projected: '$350K/yr' }
+            ]},
+            { name: 'Planet', icon: '🌍', color: '#7ec99b', metrics: [
+                { label: 'Scope 1 GHG', baseline: '2,500 MT CO2e', projected: '300 MT CO2e' },
+                { label: 'Carbon Tax Risk', baseline: '$125K liability', projected: '$15K liability' }
+            ]},
+            { name: 'People', icon: '👥', color: '#5a9d7a', metrics: [
+                { label: 'Job Creation', baseline: '0 specialists', projected: '25 high-wage roles' },
+                { label: 'Health & Safety', baseline: 'High exposure', projected: '40% noise reduction' }
+            ]}
+        ];
+        document.getElementById('tblDimensions').innerHTML = dims.map(d =>
+            '<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:var(--spacing-md);">' +
+            '<h5 style="color:' + d.color + ';margin-bottom:var(--spacing-sm);">' + d.icon + ' ' + d.name + '</h5>' +
+            '<table style="width:100%;border-collapse:collapse;font-size:0.85rem;">' +
+            '<thead><tr><th style="text-align:left;padding:4px 8px;color:var(--text-secondary);border-bottom:1px solid var(--border-light);">Metric</th><th style="padding:4px 8px;color:#ef4444;border-bottom:1px solid var(--border-light);">Baseline</th><th style="padding:4px 8px;color:#10b981;border-bottom:1px solid var(--border-light);">Projected</th></tr></thead>' +
+            '<tbody>' + d.metrics.map(m =>
+                '<tr><td style="padding:6px 8px;color:var(--text-primary);">' + m.label + '</td><td style="padding:6px 8px;text-align:center;color:var(--text-muted);">' + m.baseline + '</td><td style="padding:6px 8px;text-align:center;color:var(--forest-green-accent);font-weight:600;">' + m.projected + '</td></tr>'
+            ).join('') + '</tbody></table></div>'
+        ).join('');
+    }
+};
+
+demoConfigs['mbai-marketing-audit'] = {
+    html: `
+        <div class="demo-audit-mkt">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">📋 Purpose-Driven Marketing Audit</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">5-phase audit checklist — mark each phase as you complete the review</p>
+            <div id="mktPhases" style="display:grid;gap:var(--spacing-xs);"></div>
+            <div id="mktProgress" style="margin-top:var(--spacing-md);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);text-align:center;"></div>
+        </div>
+    `,
+    init: () => {
+        const phases = [
+            { name: 'Purpose Alignment & Authenticity', criteria: 'Campaign reflects verified operational capabilities?' },
+            { name: 'Impact Verification & Evidence', criteria: 'All ESG claims substantiated by audit-quality data?' },
+            { name: 'Inclusive & Accessible Storytelling', criteria: 'Culturally competent language, diverse representation?' },
+            { name: 'Ethical Content Personalization', criteria: 'Respectful of privacy; no manipulative triggers?' },
+            { name: 'Continuous Sentiment Analysis', criteria: 'Active monitoring of public reaction post-launch?' }
+        ];
+        const checked = new Array(phases.length).fill(false);
+        function renderMkt() {
+            document.getElementById('mktPhases').innerHTML = phases.map((p, i) =>
+                '<label style="display:flex;gap:var(--spacing-sm);align-items:flex-start;padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);cursor:pointer;' + (checked[i] ? 'border-color:var(--forest-green-accent);' : '') + '">' +
+                '<input type="checkbox" class="mkt-check" data-idx="' + i + '" ' + (checked[i]?'checked':'') + ' style="margin-top:2px;">' +
+                '<div><div style="font-weight:600;color:var(--text-primary);font-size:0.9rem;">' + p.name + '</div><div style="font-size:0.8rem;color:var(--text-secondary);">' + p.criteria + '</div></div></label>'
+            ).join('');
+            const done = checked.filter(Boolean).length;
+            const pct = Math.round(done / phases.length * 100);
+            document.getElementById('mktProgress').innerHTML =
+                '<div style="background:var(--bg-card);border-radius:var(--radius-md);height:8px;overflow:hidden;margin-bottom:var(--spacing-xs);"><div style="height:100%;width:' + pct + '%;background:var(--forest-green-accent);transition:width 0.3s;border-radius:var(--radius-md);"></div></div>' +
+                '<span style="font-size:0.85rem;color:var(--text-secondary);">' + done + '/' + phases.length + ' phases complete (' + pct + '%)</span>';
+            document.querySelectorAll('.mkt-check').forEach(cb => {
+                cb.addEventListener('change', () => { checked[parseInt(cb.dataset.idx)] = cb.checked; renderMkt(); });
+            });
+        }
+        renderMkt();
+    }
+};
+
+demoConfigs['mbai-servant-leadership'] = {
+    html: `
+        <div class="demo-leadership">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🤝 Servant Leadership 1-on-1 Agenda</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">45-minute coaching session — step through each segment</p>
+            <div id="coachingSegments" style="display:grid;gap:var(--spacing-xs);"></div>
+        </div>
+    `,
+    init: () => {
+        const segments = [
+            { name: 'Personal Connection', focus: 'Empathy & Well-being', prompt: 'How are you doing outside work? Stress manageable?', time: '5 min' },
+            { name: 'Priority Alignment', focus: 'Foresight & Vision', prompt: 'Top priorities? How do they align with sustainability goals?', time: '10 min' },
+            { name: 'Obstacle Removal', focus: 'Stewardship & Empowerment', prompt: 'What systemic roadblocks can I remove for you today?', time: '10 min' },
+            { name: 'Retrospective', focus: 'Psychological Safety', prompt: 'Recent win to celebrate? Challenge — what did we learn?', time: '10 min' },
+            { name: 'Growth & Career', focus: 'Commitment to Growth', prompt: 'New skills? Getting enough actionable feedback?', time: '10 min' }
+        ];
+        let activeIdx = -1;
+        function renderCoaching() {
+            document.getElementById('coachingSegments').innerHTML = segments.map((s, i) =>
+                '<div class="coaching-seg" data-idx="' + i + '" style="padding:var(--spacing-md);background:' + (i === activeIdx ? 'var(--bg-tertiary)' : 'var(--bg-card)') + ';border:1px solid ' + (i === activeIdx ? 'var(--forest-green-accent)' : 'var(--border-light)') + ';border-radius:var(--radius-md);cursor:pointer;transition:all 0.2s;">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+                '<strong style="color:var(--text-primary);">' + s.name + '</strong>' +
+                '<span style="font-size:0.75rem;color:var(--text-muted);">⏱ ' + s.time + '</span></div>' +
+                '<div style="font-size:0.8rem;color:var(--forest-green-accent);margin-top:2px;">' + s.focus + '</div>' +
+                (i === activeIdx ? '<div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text-secondary);font-style:italic;">"' + s.prompt + '"</div>' : '') +
+                '</div>'
+            ).join('');
+            document.querySelectorAll('.coaching-seg').forEach(seg => {
+                seg.addEventListener('click', () => { activeIdx = activeIdx === parseInt(seg.dataset.idx) ? -1 : parseInt(seg.dataset.idx); renderCoaching(); });
+            });
+        }
+        renderCoaching();
+    }
+};
+
+demoConfigs['mbai-greenops-sdlc'] = {
+    html: `
+        <div class="demo-sdlc">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🌿 Sustainable SDLC Pipeline</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Track environmental impact across five development phases</p>
+            <div id="sdlcPhases" style="display:flex;gap:2px;margin-bottom:var(--spacing-md);"></div>
+            <div id="sdlcDetail" style="padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:100px;">
+                <span style="color:var(--text-muted);">Click a phase in the pipeline above.</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const phases = [
+            { name: 'Requirements', icon: '📋', action: 'Define scope with sustainability focus', ai: 'AI predicts compute needs', green: 'Cloud lifecycle costs & ESG alignment' },
+            { name: 'Architecture', icon: '🏗️', action: 'Cloud-native, modular design', ai: 'AI assists energy-efficient schema', green: 'Reduced duplication & data center efficiency' },
+            { name: 'Development', icon: '💻', action: 'Clean code, efficient algorithms', ai: 'Copilots optimize for lower CPU/memory', green: 'Code complexity & debt reduction' },
+            { name: 'Testing', icon: '🧪', action: 'Functional + security + environmental', ai: 'ML CI/CD pipelines reduce QA hours', green: 'Server load optimization' },
+            { name: 'Deployment', icon: '🚀', action: 'Continuous monitoring & observability', ai: 'AI detects energy anomalies; auto-scale', green: 'Real-time PUE & carbon per GB' }
+        ];
+        document.getElementById('sdlcPhases').innerHTML = phases.map((p, i) =>
+            '<button class="sdlc-btn" data-idx="' + i + '" style="flex:1;padding:var(--spacing-sm) 4px;background:var(--bg-tertiary);border:1px solid var(--border-light);color:var(--text-primary);cursor:pointer;font-size:0.78rem;text-align:center;' + (i === 0 ? 'border-radius:var(--radius-md) 0 0 var(--radius-md);' : i === phases.length-1 ? 'border-radius:0 var(--radius-md) var(--radius-md) 0;' : '') + '">' + p.icon + '<br>' + p.name + '</button>'
+        ).join('');
+        document.querySelectorAll('.sdlc-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.sdlc-btn').forEach(b => { b.style.background = 'var(--bg-tertiary)'; b.style.borderColor = 'var(--border-light)'; });
+                btn.style.background = 'var(--primary-color)';
+                btn.style.borderColor = 'var(--forest-green-accent)';
+                const p = phases[parseInt(btn.dataset.idx)];
+                document.getElementById('sdlcDetail').innerHTML =
+                    '<h5 style="color:var(--forest-green-accent);margin-bottom:var(--spacing-sm);">' + p.icon + ' ' + p.name + '</h5>' +
+                    '<div style="display:grid;gap:var(--spacing-sm);">' +
+                    '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><span style="font-weight:600;color:var(--text-primary);">📌 Action:</span> <span style="color:var(--text-secondary);">' + p.action + '</span></div>' +
+                    '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><span style="font-weight:600;color:var(--text-primary);">🤖 AI Vector:</span> <span style="color:var(--text-secondary);">' + p.ai + '</span></div>' +
+                    '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><span style="font-weight:600;color:var(--text-primary);">🌿 GreenOps:</span> <span style="color:var(--text-secondary);">' + p.green + '</span></div></div>';
+            });
+        });
+    }
+};
+
+demoConfigs['mbai-grc-ai'] = {
+    html: `
+        <div class="demo-grc">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🏛️ NIST AI RMF — Four Functions</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Govern · Map · Measure · Manage — click to explore each function</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-sm);" id="grcFunctions"></div>
+            <div id="grcDetail" style="margin-top:var(--spacing-md);padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:100px;">
+                <span style="color:var(--text-muted);">Click a function above to explore details.</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const funcs = [
+            { name: 'GOVERN', icon: '🏛️', color: '#d4a574', action: 'Cross-functional oversight; AI policies & risk tolerances', ai: 'AI aggregates regulatory updates (EU AI Act, CSRD)', docs: 'AI Charters → ISO 42001' },
+            { name: 'MAP', icon: '🗺️', color: '#7ec99b', action: 'Document all AI systems, data dependencies, impacts', ai: 'Asset discovery scans data flows & shadow AI', docs: 'Architecture Diagrams → GDPR/SOC 2' },
+            { name: 'MEASURE', icon: '📏', color: '#5a9d7a', action: 'Assess bias, hallucination, security, energy costs', ai: 'Automated Red Teaming & adversarial testing', docs: 'Bias Reports → OSCAL evidence' },
+            { name: 'MANAGE', icon: '🔧', color: '#9dbd7e', action: 'Mitigate risks; continuous monitoring; human-in-the-loop', ai: 'Real-time observability; auto-alerts on anomalies', docs: 'Incident Response → Monitoring dashboards' }
+        ];
+        document.getElementById('grcFunctions').innerHTML = funcs.map((f, i) =>
+            '<div class="grc-card" data-idx="' + i + '" style="padding:var(--spacing-md);background:var(--bg-tertiary);border:2px solid var(--border-light);border-radius:var(--radius-md);cursor:pointer;text-align:center;transition:all 0.2s;">' +
+            '<div style="font-size:1.5rem;">' + f.icon + '</div>' +
+            '<div style="font-weight:700;color:' + f.color + ';font-size:1.1rem;">' + f.name + '</div></div>'
+        ).join('');
+        document.querySelectorAll('.grc-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.grc-card').forEach(c => c.style.borderColor = 'var(--border-light)');
+                const f = funcs[parseInt(card.dataset.idx)];
+                card.style.borderColor = f.color;
+                document.getElementById('grcDetail').innerHTML =
+                    '<h5 style="color:' + f.color + ';margin-bottom:var(--spacing-sm);">' + f.icon + ' ' + f.name + '</h5>' +
+                    '<div style="display:grid;gap:var(--spacing-sm);">' +
+                    '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">📌 Action:</strong> <span style="color:var(--text-secondary);">' + f.action + '</span></div>' +
+                    '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">🤖 AI Enablement:</strong> <span style="color:var(--text-secondary);">' + f.ai + '</span></div>' +
+                    '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">📄 Documentation:</strong> <span style="color:var(--text-secondary);">' + f.docs + '</span></div></div>';
+            });
+        });
+    }
+};
+
 // Form State Manager Demo
 demoConfigs['form-state-manager'] = {
     html: `
@@ -1237,7 +1674,7 @@ function openTemplateModal(template) {
 
 function loadDemo(template) {
     const demoArea = document.getElementById('demoArea');
-    const config = demoConfigs[template.id] || defaultDemo;
+    const config = demoConfigs[template.id] || (template.code ? buildCodePreviewDemo(template) : defaultDemo);
     
     demoArea.innerHTML = config.html;
     
@@ -1283,7 +1720,9 @@ function getCategoryBadgeClass(category) {
         'api': 'primary',
         'ui': 'primary',
         'email': 'warning',
-        'utils': 'success'
+        'utils': 'success',
+        'compliance': 'success',
+        'mbai': 'warning'
     };
     return classes[category] || 'primary';
 }

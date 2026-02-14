@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-14T03:15:48.711Z",
+  "generated": "2026-02-14T04:02:16.609Z",
   "version": "1.4.2",
   "summary": {
     "totalRoutes": 76,
@@ -2113,7 +2113,7 @@
   "styles": [
     {
       "file": "client/styles/compliance.css",
-      "customProperties": 142,
+      "customProperties": 144,
       "selectors": 76
     },
     {
@@ -2148,7 +2148,7 @@
     },
     {
       "file": "client/styles/templates.css",
-      "customProperties": 242,
+      "customProperties": 243,
       "selectors": 161
     }
   ]
