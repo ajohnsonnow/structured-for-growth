@@ -278,7 +278,7 @@ router.get('/messages', authenticateClient, (req, res) => {
         execute(`
             UPDATE messages 
             SET read_at = CURRENT_TIMESTAMP 
-            WHERE client_id = ? AND direction = 'outgoing' AND read_at IS NULL
+            WHERE client_id = ? AND direction = 'outbound' AND read_at IS NULL
         `, [req.clientId]);
         
         res.json({ messages });
@@ -299,7 +299,7 @@ router.post('/messages', authenticateClient, (req, res) => {
         
         const result = execute(`
             INSERT INTO messages (client_id, user_id, direction, subject, content, sent_via)
-            VALUES (?, ?, 'incoming', ?, ?, 'portal')
+            VALUES (?, ?, 'inbound', ?, ?, 'portal')
         `, [req.clientId, req.userId, subject || null, content]);
         
         res.status(201).json({

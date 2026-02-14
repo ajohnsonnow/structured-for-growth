@@ -45,6 +45,64 @@ router.get('/', async (req, res) => {
     }
 });
 
+// ── Named sub-resource GETs (must be registered before /:id) ──
+
+// Get all segments
+router.get('/segments/list', async (req, res) => {
+    try {
+        const segments = query(`
+            SELECT s.*, 
+                (SELECT COUNT(*) FROM clients c WHERE 
+                    (JSON_EXTRACT(s.filter_rules, '$.status') IS NULL OR c.status = JSON_EXTRACT(s.filter_rules, '$.status'))
+                    AND (JSON_EXTRACT(s.filter_rules, '$.has_retainer') IS NULL OR (JSON_EXTRACT(s.filter_rules, '$.has_retainer') = 1 AND c.monthly_retainer > 0))
+                ) as client_count
+            FROM segments s
+            ORDER BY s.name
+        `);
+        
+        res.json({
+            success: true,
+            segments
+        });
+    } catch (error) {
+        console.error('Get segments error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to get segments'
+        });
+    }
+});
+
+// Get all email templates
+router.get('/templates/list', async (req, res) => {
+    const { category } = req.query;
+    
+    try {
+        let sql = 'SELECT * FROM email_templates';
+        const params = [];
+        
+        if (category) {
+            sql += ' WHERE category = ?';
+            params.push(category);
+        }
+        
+        sql += ' ORDER BY name';
+        
+        const templates = query(sql, params);
+        
+        res.json({
+            success: true,
+            templates
+        });
+    } catch (error) {
+        console.error('Get templates error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to get templates'
+        });
+    }
+});
+
 // Get single campaign with recipients
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
@@ -334,32 +392,6 @@ router.delete('/:id', async (req, res) => {
 
 // ============ SEGMENTS ============
 
-// Get all segments
-router.get('/segments/list', async (req, res) => {
-    try {
-        const segments = query(`
-            SELECT s.*, 
-                (SELECT COUNT(*) FROM clients c WHERE 
-                    (JSON_EXTRACT(s.filter_rules, '$.status') IS NULL OR c.status = JSON_EXTRACT(s.filter_rules, '$.status'))
-                    AND (JSON_EXTRACT(s.filter_rules, '$.has_retainer') IS NULL OR (JSON_EXTRACT(s.filter_rules, '$.has_retainer') = 1 AND c.monthly_retainer > 0))
-                ) as client_count
-            FROM segments s
-            ORDER BY s.name
-        `);
-        
-        res.json({
-            success: true,
-            segments
-        });
-    } catch (error) {
-        console.error('Get segments error:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Failed to get segments'
-        });
-    }
-});
-
 // Create segment
 router.post('/segments',
     [
@@ -422,36 +454,6 @@ router.delete('/segments/:id', async (req, res) => {
 });
 
 // ============ EMAIL TEMPLATES ============
-
-// Get all templates
-router.get('/templates/list', async (req, res) => {
-    const { category } = req.query;
-    
-    try {
-        let sql = 'SELECT * FROM email_templates';
-        const params = [];
-        
-        if (category) {
-            sql += ' WHERE category = ?';
-            params.push(category);
-        }
-        
-        sql += ' ORDER BY name';
-        
-        const templates = query(sql, params);
-        
-        res.json({
-            success: true,
-            templates
-        });
-    } catch (error) {
-        console.error('Get templates error:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Failed to get templates'
-        });
-    }
-});
 
 // Create template
 router.post('/templates',

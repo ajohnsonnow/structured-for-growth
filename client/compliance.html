@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compliance Knowledge Base — Structured For Growth</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/components.css">
     <link rel="stylesheet" href="/styles/compliance.css">
@@ -33,7 +34,7 @@
     <section class="hero-small">
         <div class="container">
             <h1>Compliance <span class="highlight">Knowledge Base</span></h1>
-            <p class="hero-subtitle">10 global frameworks, 214+ controls, 31 production-ready templates — all codified as machine-readable, OSCAL-aligned compliance data.</p>
+            <p class="hero-subtitle">10 global frameworks, 214+ controls, 31 templates, OSCAL exports, evidence tracking, and AI-assisted review — compliance fully codified.</p>
         </div>
     </section>
 
@@ -52,6 +53,8 @@
                 <button class="compliance-tab active" data-tab="frameworks">Frameworks</button>
                 <button class="compliance-tab" data-tab="templates">Templates</button>
                 <button class="compliance-tab" data-tab="crossmap">Cross-Map</button>
+                <button class="compliance-tab" data-tab="evidence">Evidence</button>
+                <button class="compliance-tab" data-tab="oscal">OSCAL</button>
             </div>
 
             <!-- Frameworks Tab -->
@@ -86,6 +89,86 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Evidence Tab -->
+            <div class="compliance-tab-content" id="tab-evidence">
+                <div class="evidence-intro" style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">Evidence Collection Dashboard</h3>
+                    <p style="color: var(--text-secondary);">Track evidence requirements across all 10 frameworks. Filter by framework, view collection status, and identify gaps before your next audit.</p>
+                </div>
+                <div class="compliance-category-nav" id="evidenceFilter">
+                    <button class="cat-btn active" data-framework="all">All Frameworks</button>
+                </div>
+                <div class="compliance-grid" id="evidenceGrid">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <p>Loading evidence requirements...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OSCAL Tab -->
+            <div class="compliance-tab-content" id="tab-oscal">
+                <div class="evidence-intro" style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">NIST OSCAL Catalogs</h3>
+                    <p style="color: var(--text-secondary);">Download machine-readable OSCAL (Open Security Controls Assessment Language) catalogs for interoperability with GRC tools, SIEM platforms, and automated audit systems.</p>
+                </div>
+                <div class="compliance-grid" id="oscalGrid">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <p>Loading OSCAL catalogs...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Developer Tools -->
+    <section class="section" style="background: var(--surface-secondary);">
+        <div class="container">
+            <h2 style="text-align:center; margin-bottom: 2rem; color: var(--text-primary);">Developer Tools</h2>
+            <div class="compliance-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                <div class="compliance-card">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧩</div>
+                    <h3 style="color: var(--text-primary);">VS Code Extension</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">IntelliSense, hover context, and diagnostics for compliance control IDs. Autocomplete control references and validate documents in real time.</p>
+                    <ul style="color: var(--text-secondary); font-size: 0.85rem; text-align: left; margin-top: 0.5rem;">
+                        <li>Hover any control ID for details</li>
+                        <li>Autocomplete across 214+ controls</li>
+                        <li>Real-time validation warnings</li>
+                    </ul>
+                </div>
+                <div class="compliance-card">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🤖</div>
+                    <h3 style="color: var(--text-primary);">MCP Server</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Model Context Protocol server providing 7 compliance tools for AI assistants. Query frameworks, lookup controls, and compare requirements from your IDE.</p>
+                    <ul style="color: var(--text-secondary); font-size: 0.85rem; text-align: left; margin-top: 0.5rem;">
+                        <li>7 tools: search, lookup, compare</li>
+                        <li>Works with VS Code Copilot & Claude</li>
+                        <li>Framework resources as context</li>
+                    </ul>
+                </div>
+                <div class="compliance-card">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎫</div>
+                    <h3 style="color: var(--text-primary);">Ticketing Integration</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Auto-create GitHub Issues or Jira tickets for compliance gaps. Scan frameworks, deduplicate, and track remediation across teams.</p>
+                    <ul style="color: var(--text-secondary); font-size: 0.85rem; text-align: left; margin-top: 0.5rem;">
+                        <li>GitHub Issues + Jira support</li>
+                        <li>Severity-based labels</li>
+                        <li>Duplicate detection</li>
+                    </ul>
+                </div>
+                <div class="compliance-card">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧠</div>
+                    <h3 style="color: var(--text-primary);">AI Compliance Review</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">AI-powered code, policy, and IaC template review against compliance requirements. Offline rule-based analysis with optional Claude API deep review.</p>
+                    <ul style="color: var(--text-secondary); font-size: 0.85rem; text-align: left; margin-top: 0.5rem;">
+                        <li>Code, policy, & IaC modes</li>
+                        <li>12 security pattern checks (offline)</li>
+                        <li>AI remediation suggestions</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -114,10 +197,12 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Structured For Growth. All rights reserved.</p>
+            <p>&copy; 2026 Structured For Growth. All rights reserved.</p>
         </div>
     </footer>
 
     <script type="module" src="/js/compliance.js"></script>
+    <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
+            async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

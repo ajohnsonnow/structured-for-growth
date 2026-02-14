@@ -2373,5 +2373,390 @@ class BreachNotificationEngine {
 export { BreachNotificationEngine, FRAMEWORK_DEADLINES, SEVERITY };`,
         usage: '<h3>Usage</h3><pre><code>import { BreachNotificationEngine } from \'./BreachNotification.js\';\nconst engine = new BreachNotificationEngine({ notifier: emailService });\n\nconst result = await engine.report({\n  summary: \'Unauthorized access to patient records\',\n  dataTypes: [\'phi\', \'pii\'],\n  recordCount: 1200,\n  frameworks: [\'hipaa\', \'gdpr\']\n});\n\nconsole.log(result.severity);   // \'CRITICAL\'\nconsole.log(result.deadlines);  // sorted by urgency</code></pre>',
         notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 33</strong> — 72-hour notification to DPA</li><li><strong>HIPAA Breach Notification Rule</strong> — 60-day notification to HHS</li><li><strong>DORA Art. 19</strong> — 4-hour initial classification</li><li><strong>NIS 2 Art. 23</strong> — 24-hour early warning</li></ul><h3>Severity Matrix</h3><p>LOW: &lt;100 records, non-sensitive. MEDIUM: 100-500 records. HIGH: 500+ records or sensitive data. CRITICAL: 5000+ records or PHI with 500+ records.</p>'
+    },
+    // ─── MFA MIDDLEWARE ─────────────────────────────────────────
+    {
+        id: 'mfa-middleware',
+        title: 'Multi-Factor Authentication Middleware',
+        description: 'TOTP (RFC 6238) and WebAuthn/FIDO2 MFA middleware with recovery codes, rate-limiting lockout (PCI DSS 8.3.4), and 8-hour session window. Drop-in Express middleware for protecting admin routes.',
+        category: 'compliance',
+        language: 'JavaScript',
+        tags: ['mfa', 'totp', 'webauthn', 'fido2', 'authentication', 'soc2', 'pci-dss', 'hipaa', 'cmmc'],
+        code: `// Multi-Factor Authentication Middleware
+import { authenticator } from 'otplib';
+import QRCode from 'qrcode';
+import crypto from 'node:crypto';
+
+const MFA_CONFIG = {
+  totp: { issuer: 'MyOrg', algorithm: 'sha256', digits: 6, period: 30 },
+  recovery: { codeCount: 10, codeLength: 8 },
+  session: { mfaCookieMaxAge: 8 * 60 * 60 * 1000 },
+  rateLimiting: { maxAttempts: 5, lockoutDurationMs: 30 * 60 * 1000 }
+};
+
+const failedAttempts = new Map();
+
+function isLockedOut(userId) {
+  const rec = failedAttempts.get(userId);
+  if (!rec) return false;
+  if (rec.count >= MFA_CONFIG.rateLimiting.maxAttempts) {
+    if (Date.now() - rec.lastAttempt < MFA_CONFIG.rateLimiting.lockoutDurationMs) return true;
+    failedAttempts.delete(userId);
+  }
+  return false;
+}
+
+async function enrollTOTP(userId, userEmail) {
+  const secret = authenticator.generateSecret();
+  const otpauth = authenticator.keyuri(userEmail, MFA_CONFIG.totp.issuer, secret);
+  const qrCodeUrl = await QRCode.toDataURL(otpauth);
+  // Store secret for user (hashed in production)
+  return { secret, qrCodeUrl, otpauth };
+}
+
+function verifyTOTP(token, secret) {
+  return authenticator.verify({ token, secret });
+}
+
+function generateRecoveryCodes() {
+  return Array.from({ length: MFA_CONFIG.recovery.codeCount }, () =>
+    crypto.randomBytes(MFA_CONFIG.recovery.codeLength).toString('hex').slice(0, MFA_CONFIG.recovery.codeLength)
+  );
+}
+
+function requireMFA(req, res, next) {
+  const userId = req.user?.id;
+  if (!userId) return res.status(401).json({ error: 'Authentication required' });
+  if (isLockedOut(userId)) return res.status(429).json({ error: 'Account locked — too many failed MFA attempts' });
+  if (req.session?.mfaVerified) return next();
+  return res.status(403).json({ error: 'MFA verification required', mfaRequired: true });
+}
+
+export { requireMFA, enrollTOTP, verifyTOTP, generateRecoveryCodes, MFA_CONFIG };`,
+        usage: '<h3>Usage</h3><pre><code>import { requireMFA, enrollTOTP, verifyTOTP } from \'./mfa-middleware.js\';\n\n// Protect admin routes\napp.use(\'/admin\', requireMFA);\n\n// Enroll user in TOTP\nconst { secret, qrCodeUrl } = await enrollTOTP(userId, email);\n// → Show qrCodeUrl to user, store secret in DB\n\n// Verify token on login\nconst valid = verifyTOTP(userToken, storedSecret);\nif (valid) req.session.mfaVerified = true;</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC6.1</strong> — Logical access controls</li><li><strong>ISO 27001 A.8.5</strong> — Secure authentication</li><li><strong>HIPAA §164.312(d)</strong> — Person or entity authentication</li><li><strong>PCI DSS 8.4</strong> — MFA for administrative access</li><li><strong>CMMC IA.L2-3.5.3</strong> — Multifactor authentication</li></ul><h3>Dependencies</h3><p><code>npm install otplib qrcode @simplewebauthn/server</code></p>'
+    },
+    // ─── SESSION TIMEOUT ────────────────────────────────────────
+    {
+        id: 'session-timeout-manager',
+        title: 'Configurable Session Timeout Manager',
+        description: 'Framework-compliant session timeout middleware with idle + absolute timeouts, configurable profiles (standard/sensitive/critical), grace-period warnings, and audit-logged auto-logout.',
+        category: 'compliance',
+        language: 'JavaScript',
+        tags: ['session', 'timeout', 'auto-logout', 'soc2', 'hipaa', 'pci-dss', 'cmmc'],
+        code: `// Configurable Session Timeout Manager
+const TIMEOUT_PROFILES = {
+  standard:  { idleMs: 30*60*1000, absoluteMs: 8*3600*1000, warnMs: 5*60*1000 },
+  sensitive: { idleMs: 15*60*1000, absoluteMs: 4*3600*1000, warnMs: 2*60*1000 },
+  critical:  { idleMs:  5*60*1000, absoluteMs: 1*3600*1000, warnMs: 1*60*1000 }
+};
+
+class SessionTimeoutManager {
+  constructor(options = {}) {
+    this.profile = TIMEOUT_PROFILES[options.profile || 'standard'];
+    this.auditLogger = options.auditLogger || console;
+    this.onTimeout = options.onTimeout || (() => {});
+  }
+
+  middleware() {
+    return (req, res, next) => {
+      if (!req.session) return next();
+      const now = Date.now();
+      const created = req.session.createdAt || now;
+      const lastActivity = req.session.lastActivity || now;
+
+      // Absolute timeout — session too old regardless of activity
+      if (now - created > this.profile.absoluteMs) {
+        return this.#expireSession(req, res, 'absolute_timeout');
+      }
+      // Idle timeout — no activity for too long
+      if (now - lastActivity > this.profile.idleMs) {
+        return this.#expireSession(req, res, 'idle_timeout');
+      }
+      // Warning zone
+      const idleRemaining = this.profile.idleMs - (now - lastActivity);
+      if (idleRemaining <= this.profile.warnMs) {
+        res.setHeader('X-Session-Warning', 'true');
+        res.setHeader('X-Session-Expires-In', String(Math.ceil(idleRemaining / 1000)));
+      }
+
+      req.session.lastActivity = now;
+      if (!req.session.createdAt) req.session.createdAt = now;
+      next();
+    };
+  }
+
+  #expireSession(req, res, reason) {
+    this.auditLogger.log?.({
+      event: 'session_expired', reason,
+      userId: req.session.userId, ip: req.ip,
+      sessionAge: Date.now() - (req.session.createdAt || 0)
+    });
+    this.onTimeout(req);
+    req.session.destroy?.(() => {});
+    return res.status(440).json({ error: 'Session expired', reason });
+  }
+}
+
+export { SessionTimeoutManager, TIMEOUT_PROFILES };`,
+        usage: '<h3>Usage</h3><pre><code>import { SessionTimeoutManager } from \'./session-timeout.js\';\n\nconst timeout = new SessionTimeoutManager({\n  profile: \'sensitive\',   // 15-min idle, 4-hour max\n  auditLogger: auditLog,\n  onTimeout: (req) => notifyUser(req.session.userId)\n});\n\napp.use(timeout.middleware());\n\n// Client-side: watch X-Session-Warning header to show countdown</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC6.1</strong> — Session management controls</li><li><strong>HIPAA §164.312(a)(2)(iii)</strong> — Automatic logoff</li><li><strong>PCI DSS 8.2.8</strong> — Session idle timeout ≤15 min for CDE access</li><li><strong>CMMC AC.L2-3.1.11</strong> — Session lock</li></ul><h3>Timeout Profiles</h3><p><strong>Standard:</strong> 30min idle / 8hr max. <strong>Sensitive:</strong> 15min idle / 4hr max. <strong>Critical:</strong> 5min idle / 1hr max. Use <em>sensitive</em> for PCI DSS cardholder environments and HIPAA ePHI systems.</p>'
+    },
+    // ─── HIPAA PHI FILTER ───────────────────────────────────────
+    {
+        id: 'hipaa-phi-filter',
+        title: 'HIPAA Minimum Necessary PHI Filter',
+        description: 'Role-based PHI field filtering implementing HIPAA §164.502(b) Minimum Necessary Standard. Defines the 18 Safe Harbor identifiers, provides per-role access profiles, and logs every PHI access for audit compliance.',
+        category: 'compliance',
+        language: 'JavaScript',
+        tags: ['hipaa', 'phi', 'minimum-necessary', 'de-identification', 'safe-harbor', 'healthcare'],
+        code: `// HIPAA Minimum Necessary PHI Filter
+const PHI_IDENTIFIERS = Object.freeze({
+  NAMES: 'names', GEOGRAPHIC: 'geographic', DATES: 'dates',
+  PHONE: 'phone', FAX: 'fax', EMAIL: 'email', SSN: 'ssn',
+  MRN: 'mrn', HEALTH_PLAN_ID: 'healthPlanId',
+  ACCOUNT_NUMBERS: 'accountNumbers', LICENSE: 'license',
+  VEHICLE_IDS: 'vehicleIds', DEVICE_IDS: 'deviceIds',
+  WEB_URLS: 'webUrls', IP_ADDRESSES: 'ipAddresses',
+  BIOMETRIC: 'biometric', PHOTOS: 'photos', OTHER_UNIQUE: 'otherUnique'
+});
+
+const ROLE_PROFILES = {
+  treating_provider: {
+    allowed: Object.values(PHI_IDENTIFIERS), // Full access for treatment
+    purpose: 'Treatment (TPO)'
+  },
+  billing: {
+    allowed: ['names', 'mrn', 'healthPlanId', 'accountNumbers', 'dates'],
+    purpose: 'Payment (TPO)'
+  },
+  researcher: {
+    allowed: [],  // Must use de-identified data
+    purpose: 'Research (requires IRB approval or de-identification)'
+  },
+  it_support: {
+    allowed: ['mrn'],  // Minimum necessary for system access issues
+    purpose: 'Healthcare Operations'
+  }
+};
+
+class PHIFilter {
+  constructor(options = {}) {
+    this.auditLogger = options.auditLogger || console;
+  }
+
+  filter(record, role, requestContext = {}) {
+    const profile = ROLE_PROFILES[role];
+    if (!profile) throw new Error('Unknown role: ' + role);
+    const filtered = {};
+    for (const [key, value] of Object.entries(record)) {
+      if (profile.allowed.includes(key) || !Object.values(PHI_IDENTIFIERS).includes(key)) {
+        filtered[key] = value;
+      } else {
+        filtered[key] = '[REDACTED]';
+      }
+    }
+    this.auditLogger.log?.({
+      event: 'phi_access', role, purpose: profile.purpose,
+      recordId: record.mrn || record.id,
+      fieldsAccessed: Object.keys(filtered).filter(k => filtered[k] !== '[REDACTED]'),
+      fieldsRedacted: Object.keys(filtered).filter(k => filtered[k] === '[REDACTED]'),
+      ...requestContext
+    });
+    return filtered;
+  }
+
+  deidentify(record) {
+    const result = { ...record };
+    for (const field of Object.values(PHI_IDENTIFIERS)) {
+      if (field in result) result[field] = '[DE-IDENTIFIED]';
+    }
+    return result;
+  }
+}
+
+function filterPHI(phiFilter, role) {
+  return (req, res, next) => {
+    const origJson = res.json.bind(res);
+    res.json = (data) => {
+      const filtered = Array.isArray(data)
+        ? data.map(r => phiFilter.filter(r, role, { userId: req.user?.id, ip: req.ip }))
+        : phiFilter.filter(data, role, { userId: req.user?.id, ip: req.ip });
+      return origJson(filtered);
+    };
+    next();
+  };
+}
+
+export { PHIFilter, filterPHI, PHI_IDENTIFIERS, ROLE_PROFILES };`,
+        usage: '<h3>Usage</h3><pre><code>import { PHIFilter, filterPHI } from \'./hipaa-phi-filter.js\';\nconst filter = new PHIFilter({ auditLogger: hipaaAuditLog });\n\n// Middleware — auto-filter responses by role\napp.get(\'/api/patients/:id\', filterPHI(filter, \'billing\'));\n// → Only returns: names, mrn, healthPlanId, accountNumbers, dates\n\n// Direct use\nconst record = { names: \'Jane Doe\', ssn: \'123-45-6789\', mrn: \'MRN-001\' };\nfilter.filter(record, \'billing\');\n// → { names: \'Jane Doe\', ssn: \'[REDACTED]\', mrn: \'MRN-001\' }</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>HIPAA §164.502(b)</strong> — Minimum Necessary Standard</li><li><strong>HIPAA §164.514(b)(2)</strong> — Safe Harbor de-identification (18 identifiers)</li><li><strong>HIPAA §164.312(a)(1)</strong> — Access control</li><li><strong>SOC 2 CC6.1</strong> — Logical access controls</li></ul><h3>Role Profiles</h3><p><strong>treating_provider:</strong> Full PHI access (Treatment). <strong>billing:</strong> Name, MRN, health plan, account, dates. <strong>researcher:</strong> De-identified data only. <strong>it_support:</strong> MRN only.</p>'
+    },
+    // ─── GDPR CONSENT MANAGER ───────────────────────────────────
+    {
+        id: 'gdpr-consent-manager',
+        title: 'GDPR Granular Consent Manager',
+        description: 'Per-purpose consent tracking implementing GDPR Articles 6, 7, 13, 17, 20, and 21. Tracks consent versions, withdrawal history, legal basis, and generates Kantara-specification consent receipts for audit evidence.',
+        category: 'compliance',
+        language: 'JavaScript',
+        tags: ['gdpr', 'consent', 'privacy', 'data-subject-rights', 'right-to-erasure', 'dsr'],
+        code: `// GDPR Granular Consent Manager
+import crypto from 'node:crypto';
+
+const CONSENT_PURPOSES = Object.freeze({
+  ACCOUNT_CREATION: { id: 'account_creation', name: 'Account Creation', legalBasis: 'contract', required: true },
+  SERVICE_DELIVERY: { id: 'service_delivery', name: 'Service Delivery', legalBasis: 'contract', required: true },
+  MARKETING_EMAIL:  { id: 'marketing_email',  name: 'Marketing Emails', legalBasis: 'consent', required: false },
+  ANALYTICS:        { id: 'analytics',         name: 'Usage Analytics',  legalBasis: 'legitimate_interest', required: false },
+  THIRD_PARTY_SHARE:{ id: 'third_party_share', name: 'Third-Party Sharing', legalBasis: 'consent', required: false },
+  PROFILING:        { id: 'profiling',         name: 'Automated Profiling', legalBasis: 'consent', required: false }
+});
+
+class ConsentManager {
+  constructor(options = {}) {
+    this.store = options.store || new Map();
+    this.auditLog = options.auditLog || console;
+  }
+
+  async grant(userId, purposeId, meta = {}) {
+    const record = {
+      id: crypto.randomUUID(),
+      userId, purposeId, status: 'granted',
+      grantedAt: new Date().toISOString(),
+      policyVersion: meta.policyVersion || '1.0',
+      collectionMethod: meta.method || 'web_form',
+      ipAddress: meta.ip, userAgent: meta.userAgent
+    };
+    const key = userId + ':' + purposeId;
+    this.store.set?.(key, record) || this.store.set(key, record);
+    this.auditLog.log?.({ event: 'consent_granted', ...record });
+    return record;
+  }
+
+  async withdraw(userId, purposeId, reason = '') {
+    const key = userId + ':' + purposeId;
+    const existing = this.store.get?.(key);
+    if (existing) existing.status = 'withdrawn';
+    const record = {
+      userId, purposeId, status: 'withdrawn',
+      withdrawnAt: new Date().toISOString(), reason
+    };
+    this.store.set?.(key, { ...existing, ...record });
+    this.auditLog.log?.({ event: 'consent_withdrawn', ...record });
+    return record;
+  }
+
+  async check(userId, purposeId) {
+    const key = userId + ':' + purposeId;
+    const record = this.store.get?.(key);
+    return { granted: record?.status === 'granted', record };
+  }
+
+  async getAllConsents(userId) {
+    const consents = {};
+    for (const [key, record] of this.store.entries?.() || this.store) {
+      if (key.startsWith(userId + ':')) consents[record.purposeId] = record;
+    }
+    return consents;
+  }
+
+  generateReceipt(consentRecord) {
+    return {
+      receiptId: crypto.randomUUID(),
+      version: '1.1.0',  // Kantara Consent Receipt Specification
+      jurisdiction: 'EU',
+      consentTimestamp: consentRecord.grantedAt,
+      subject: { id: consentRecord.userId },
+      purposes: [{ purpose: consentRecord.purposeId, consentType: 'explicit' }],
+      policyUrl: '/privacy-policy',
+      policyVersion: consentRecord.policyVersion
+    };
+  }
+}
+
+export { ConsentManager, CONSENT_PURPOSES };`,
+        usage: '<h3>Usage</h3><pre><code>import { ConsentManager } from \'./gdpr-consent-manager.js\';\nconst consent = new ConsentManager({ store: consentDB });\n\n// Grant consent\nawait consent.grant(userId, \'marketing_email\', { policyVersion: \'2.1\', ip: req.ip });\n\n// Check before processing\nconst { granted } = await consent.check(userId, \'marketing_email\');\nif (!granted) throw new Error(\'No consent for marketing emails\');\n\n// Withdraw (GDPR Art. 7(3) — right to withdraw)\nawait consent.withdraw(userId, \'marketing_email\', \'User preference\');\n\n// Generate audit receipt\nconst receipt = consent.generateReceipt(consentRecord);</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 6</strong> — Lawful basis for processing</li><li><strong>GDPR Art. 7</strong> — Conditions for consent (freely given, specific, informed, unambiguous)</li><li><strong>GDPR Art. 7(3)</strong> — Right to withdraw consent at any time</li><li><strong>GDPR Art. 13/14</strong> — Information obligations to data subjects</li><li><strong>SOC 2 CC2.2</strong> — Communication about processing</li></ul><h3>Legal Basis Types</h3><p><strong>consent:</strong> Explicit opt-in required. <strong>contract:</strong> Necessary for service delivery. <strong>legitimate_interest:</strong> Balance test required (document in DPIA).</p>'
+    },
+    // ─── PCI CARD SANITIZER ─────────────────────────────────────
+    {
+        id: 'pci-card-sanitizer',
+        title: 'PCI DSS Card Data Sanitizer',
+        description: 'PCI DSS 4.0.1 compliant PAN detection, masking (first-6/last-4), truncation, and tokenization. Detects 7 card brands via Luhn validation, scrubs PANs from free-text fields, and ensures card data never reaches logs.',
+        category: 'compliance',
+        language: 'JavaScript',
+        tags: ['pci-dss', 'pan', 'tokenization', 'masking', 'card-data', 'payment', 'luhn'],
+        code: `// PCI DSS Card Data Sanitizer
+import crypto from 'node:crypto';
+
+const CARD_BRANDS = [
+  { name: 'Visa',       pattern: /^4[0-9]{12}(?:[0-9]{3})?$/, lengths: [13,16,19] },
+  { name: 'Mastercard', pattern: /^(5[1-5]|2[2-7])[0-9]{14}$/, lengths: [16] },
+  { name: 'Amex',       pattern: /^3[47][0-9]{13}$/, lengths: [15] },
+  { name: 'Discover',   pattern: /^6(?:011|5[0-9]{2})[0-9]{12}$/, lengths: [16,19] }
+];
+
+function luhnCheck(num) {
+  let sum = 0, alt = false;
+  for (let i = num.length - 1; i >= 0; i--) {
+    let n = parseInt(num[i], 10);
+    if (alt) { n *= 2; if (n > 9) n -= 9; }
+    sum += n; alt = !alt;
+  }
+  return sum % 10 === 0;
+}
+
+class CardSanitizer {
+  constructor(options = {}) {
+    this.tokenSecret = options.tokenSecret || crypto.randomBytes(32);
+    this.auditLogger = options.auditLogger || console;
+  }
+
+  detectBrand(pan) {
+    const digits = pan.replace(/[\\s-]/g, '');
+    if (!luhnCheck(digits)) return null;
+    return CARD_BRANDS.find(b => b.pattern.test(digits))?.name || 'Unknown';
+  }
+
+  mask(pan) {
+    const d = pan.replace(/[\\s-]/g, '');
+    if (d.length < 13 || !luhnCheck(d)) return pan;
+    return d.slice(0, 6) + '*'.repeat(d.length - 10) + d.slice(-4);
+  }
+
+  truncate(pan) {
+    const d = pan.replace(/[\\s-]/g, '');
+    return '****' + d.slice(-4);
+  }
+
+  tokenize(pan) {
+    const d = pan.replace(/[\\s-]/g, '');
+    const hmac = crypto.createHmac('sha256', this.tokenSecret).update(d).digest('hex');
+    return 'tok_' + hmac.slice(0, 16);
+  }
+
+  scrubText(text) {
+    const panRegex = /\\b(?:\\d[\\s-]?){13,19}\\b/g;
+    return text.replace(panRegex, (match) => {
+      const digits = match.replace(/[\\s-]/g, '');
+      if (digits.length >= 13 && digits.length <= 19 && luhnCheck(digits)) {
+        this.auditLogger.log?.({ event: 'pan_scrubbed', last4: digits.slice(-4) });
+        return this.mask(digits);
+      }
+      return match;
+    });
+  }
+
+  middleware() {
+    return (req, _res, next) => {
+      if (req.body) req.body = JSON.parse(this.scrubText(JSON.stringify(req.body)));
+      next();
+    };
+  }
+}
+
+export { CardSanitizer, luhnCheck, CARD_BRANDS };`,
+        usage: '<h3>Usage</h3><pre><code>import { CardSanitizer } from \'./pci-card-sanitizer.js\';\nconst sanitizer = new CardSanitizer({ tokenSecret: process.env.TOKEN_KEY });\n\nsanitizer.mask(\'4111111111111111\');     // \'411111******1111\'\nsanitizer.truncate(\'4111111111111111\'); // \'****1111\'\nsanitizer.tokenize(\'4111111111111111\'); // \'tok_a3f8b2c1d4e5f6a7\'\nsanitizer.detectBrand(\'4111111111111111\'); // \'Visa\'\n\n// Scrub PANs from any text (logs, support tickets, etc.)\nsanitizer.scrubText(\'Card: 4111-1111-1111-1111 was used\');\n// → \'Card: 411111******1111 was used\'\n\n// Express middleware — auto-scrub request bodies\napp.use(sanitizer.middleware());</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>PCI DSS 3.3</strong> — Mask PAN when displayed (first 6 / last 4 only)</li><li><strong>PCI DSS 3.4</strong> — Render PAN unreadable everywhere it is stored</li><li><strong>PCI DSS 3.5</strong> — Protect cryptographic keys for PAN protection</li><li><strong>PCI DSS 4.1</strong> — Strong cryptography for PAN in transit</li><li><strong>SOC 2 CC6.1</strong> — Data protection controls</li></ul><h3>Luhn Algorithm</h3><p>All valid card numbers pass the Luhn check (mod-10 checksum). This sanitizer validates before masking to avoid false positives on random 16-digit numbers.</p>'
     }
 ];

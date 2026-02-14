@@ -1,6 +1,6 @@
 {
   "name": "structured-for-growth-www",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
   "main": "server/index.js",
   "type": "module",

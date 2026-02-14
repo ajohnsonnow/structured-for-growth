@@ -1,13 +1,13 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import { query, execute, logActivity } from '../models/database.js';
-import { authenticateToken } from '../middleware/auth.js';
+import { authenticateToken, requireRole } from '../middleware/auth.js';
 import { triggerAutoBackup } from './backup.js';
 
 const router = express.Router();
 
 // Generate comprehensive demo data
-router.post('/generate', authenticateToken, async (req, res) => {
+router.post('/generate', authenticateToken, requireRole('admin'), async (req, res) => {
     try {
         const { clearExisting = false } = req.body;
         const results = { created: {}, errors: [] };
@@ -406,7 +406,7 @@ router.get('/stats', authenticateToken, (req, res) => {
 });
 
 // Clear demo data only (WHERE is_demo = 1)
-router.post('/clear', authenticateToken, async (req, res) => {
+router.post('/clear', authenticateToken, requireRole('admin'), async (req, res) => {
     try {
         const { clearAll } = req.body; // If true, clear everything; otherwise only demo data
         

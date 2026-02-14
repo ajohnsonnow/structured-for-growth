@@ -60,6 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupModal();
   loadFrameworks();
   loadCrossMap();
+  loadEvidence();
+  loadOSCAL();
   renderTemplates(COMPLIANCE_TEMPLATES);
 });
 
@@ -297,4 +299,101 @@ function setupModal() {
   if (closeBtn) closeBtn.addEventListener('click', () => overlay?.classList.remove('active'));
   if (overlay) overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('active'); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay?.classList.remove('active'); });
+}
+
+// ── Evidence Dashboard ─────────────────────────────────────
+let evidenceData = [];
+
+async function loadEvidence() {
+  const grid = document.getElementById('evidenceGrid');
+  const filterNav = document.getElementById('evidenceFilter');
+  if (!grid) return;
+
+  try {
+    const res = await fetch('/api/compliance/evidence');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    evidenceData = data.evidence || [];
+
+    // Populate framework filter buttons
+    const fwIds = [...new Set(evidenceData.map(e => e.frameworkId))].sort();
+    if (filterNav) {
+      const buttons = fwIds.map(id => {
+        const name = evidenceData.find(e => e.frameworkId === id)?.frameworkName || id;
+        return `<button class="cat-btn" data-framework="${id}">${name}</button>`;
+      }).join('');
+      filterNav.innerHTML = `<button class="cat-btn active" data-framework="all">All Frameworks</button>${buttons}`;
+
+      filterNav.addEventListener('click', e => {
+        const btn = e.target.closest('.cat-btn');
+        if (!btn) return;
+        filterNav.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const fw = btn.dataset.framework;
+        const filtered = fw === 'all' ? evidenceData : evidenceData.filter(ev => ev.frameworkId === fw);
+        renderEvidence(filtered);
+      });
+    }
+
+    renderEvidence(evidenceData);
+  } catch {
+    grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;grid-column:1/-1;">Evidence data requires the API server.</p>';
+  }
+}
+
+function renderEvidence(list) {
+  const grid = document.getElementById('evidenceGrid');
+  if (!grid) return;
+  if (!list.length) {
+    grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;grid-column:1/-1;">No evidence items match your filter.</p>';
+    return;
+  }
+
+  grid.innerHTML = list.map(ev => `
+    <div class="compliance-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <span class="compliance-card-title" style="font-size:0.85rem;">${ev.controlId}</span>
+        <span class="compliance-badge">${ev.frameworkName}</span>
+      </div>
+      <div class="compliance-card-subtitle">${ev.controlName}</div>
+      <div class="compliance-card-desc" style="font-size:0.8rem;">${ev.domain}</div>
+      <div style="margin-top:0.5rem;">
+        ${ev.evidenceRequired.map(e => `<div style="font-size:0.75rem;color:var(--text-secondary);padding:2px 0;">☐ ${e}</div>`).join('')}
+      </div>
+      <div style="margin-top:0.5rem;">
+        <span class="compliance-badge-neutral" style="font-size:0.65rem;">${ev.automationCapability}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── OSCAL Catalogs ─────────────────────────────────────────
+async function loadOSCAL() {
+  const grid = document.getElementById('oscalGrid');
+  if (!grid) return;
+
+  try {
+    const res = await fetch('/api/compliance/oscal');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const catalogs = data.catalogs || [];
+
+    grid.innerHTML = catalogs.map(cat => `
+      <div class="compliance-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span class="compliance-card-title">${cat.id.toUpperCase()}</span>
+          <span style="font-size:1.3rem;">📄</span>
+        </div>
+        <div class="compliance-card-desc">NIST OSCAL 1.1.2 catalog for ${cat.id}. Machine-readable JSON format compatible with GRC tools and SIEM platforms.</div>
+        <div style="margin-top:0.75rem;">
+          <a href="${cat.downloadUrl}" target="_blank" class="compliance-badge-accent" 
+             style="padding:4px 12px;border-radius:var(--radius-sm);font-size:0.75rem;text-decoration:none;cursor:pointer;">
+            ⬇ Download JSON
+          </a>
+        </div>
+      </div>
+    `).join('');
+  } catch {
+    grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;grid-column:1/-1;">OSCAL data requires the API server.</p>';
+  }
 }
