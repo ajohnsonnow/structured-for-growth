@@ -159,12 +159,13 @@ function setupModal() {
   const closeBtn = document.getElementById('mbaiModalClose');
   if (!modal || !closeBtn) return;
 
-  closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+  const closeModal = () => { modal.classList.remove('active'); document.body.style.overflow = ''; };
+  closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', e => {
-    if (e.target === modal) modal.classList.remove('active');
+    if (e.target === modal) closeModal();
   });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') modal.classList.remove('active');
+    if (e.key === 'Escape') closeModal();
   });
 }
 
@@ -186,6 +187,7 @@ function openModal(tpl) {
   bodyEl.innerHTML = renderTemplateBody(tpl);
 
   modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 
 // ── Template-Specific Renderers ────────────────────────────

@@ -215,6 +215,7 @@ function showFrameworkModal(fw) {
   `;
 
   document.getElementById('detailModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 
 // ── Template Categories ────────────────────────────────────
@@ -296,9 +297,10 @@ function renderCrossMap(mappings) {
 function setupModal() {
   const overlay = document.getElementById('detailModal');
   const closeBtn = document.getElementById('modalClose');
-  if (closeBtn) closeBtn.addEventListener('click', () => overlay?.classList.remove('active'));
-  if (overlay) overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('active'); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay?.classList.remove('active'); });
+  const closeModal = () => { overlay?.classList.remove('active'); document.body.style.overflow = ''; };
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (overlay) overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 }
 
 // ── Evidence Dashboard ─────────────────────────────────────

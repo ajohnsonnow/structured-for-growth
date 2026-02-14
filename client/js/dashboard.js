@@ -337,10 +337,12 @@ window.openClientModal = function(clientId = null) {
     }
     
     modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 window.closeModal = function() {
     document.getElementById('clientModal').classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 async function handleClientSubmit(e) {
@@ -642,10 +644,12 @@ window.openProjectModal = function(projectId = null) {
     }
     
     modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 window.closeProjectModal = function() {
     document.getElementById('projectModal').classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 async function handleProjectSubmit(e) {
@@ -859,6 +863,7 @@ window.openUserModal = async function(userId = null) {
     }
     
     modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 window.editUser = function(userId) {
@@ -867,6 +872,7 @@ window.editUser = function(userId) {
 
 window.closeUserModal = function() {
     document.getElementById('userModal').classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 async function handleUserSubmit(e) {
@@ -1092,6 +1098,7 @@ function showLoginModal() {
 
 window.closeRegisterModal = function() {
     document.getElementById('registerModal').classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 function showFormMessage(formId, type, message) {
@@ -1364,10 +1371,12 @@ window.openMessageModal = function() {
         allClients.map(c => `<option value="${c.id}">${c.name}${c.company ? ` (${c.company})` : ''}</option>`).join('');
     
     modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 window.closeMessageModal = function() {
     document.getElementById('messageModal').classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 async function handleMessageSubmit(e) {
@@ -1581,10 +1590,12 @@ window.openCampaignModal = function(campaignId = null) {
     }
     
     modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 window.closeCampaignModal = function() {
     document.getElementById('campaignModal').classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 window.saveCampaignAsDraft = async function() {
@@ -1730,10 +1741,12 @@ window.openSegmentModal = function(segmentId = null) {
     }
     
     modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 window.closeSegmentModal = function() {
     document.getElementById('segmentModal').classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 async function handleSegmentSubmit(e) {
@@ -1819,10 +1832,12 @@ window.openTemplateModal = function(templateId = null) {
     }
     
     modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 window.closeTemplateModal = function() {
     document.getElementById('templateModal').classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 async function handleTemplateSubmit(e) {
@@ -2282,6 +2297,7 @@ document.addEventListener('keydown', (e) => {
         closeSegmentModal();
         closeTemplateModal();
         closeMessageModal();
+        document.body.style.overflow = '';
     }
 });
 
@@ -2290,6 +2306,7 @@ document.querySelectorAll('.modal').forEach(modal => {
     modal.addEventListener('click', (e) => {
         if (e.target === modal && modal.id !== 'loginModal') {
             modal.classList.remove('active');
+            document.body.style.overflow = '';
         }
     });
 });
