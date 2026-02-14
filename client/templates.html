@@ -10,21 +10,24 @@
     <link rel="stylesheet" href="/styles/templates.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
             <div class="nav-brand">
-                <h1>Structured <span class="highlight">For Growth</span></h1>
+                <a href="/"><h1>Structured <span class="highlight">For Growth</span></h1></a>
+                <span class="nav-byline">Agentic Solutions that Scale</span>
             </div>
-            <ul class="nav-menu">
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/templates.html" class="nav-link active">Templates</a></li>
-                <li><a href="/compliance" class="nav-link">Compliance</a></li>
-                <li><a href="/mbai" class="nav-link">MBAi</a></li>
-                <li><a href="/docs" class="nav-link">Docs</a></li>
-                <li><a href="/portal" class="nav-link nav-highlight">Client Portal</a></li>
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li role="none"><a href="/" class="nav-link" role="menuitem">Home</a></li>
+                <li role="none"><a href="/templates.html" class="nav-link active" role="menuitem">Templates</a></li>
+                <li role="none"><a href="/compliance" class="nav-link" role="menuitem">Compliance</a></li>
+                <li role="none"><a href="/mbai" class="nav-link" role="menuitem">MBAi</a></li>
+                <li role="none"><a href="/docs" class="nav-link" role="menuitem">Docs</a></li>
+                <li role="none"><a href="/portal" class="nav-link nav-highlight" role="menuitem">Client Portal</a></li>
             </ul>
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -33,7 +36,7 @@
     </nav>
 
     <!-- Hero -->
-    <section class="hero-small">
+    <section id="main-content" class="hero-small">
         <div class="container">
             <h1>Template Library</h1>
             <p>Reusable code patterns and components for rapid development</p>

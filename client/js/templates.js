@@ -1,5 +1,6 @@
 // Templates Page JavaScript
 import { templates } from './templateData.js';
+import { initNavigation } from './modules/navigation.js';
 
 let currentCategory = 'all';
 let currentTemplate = null;
@@ -1510,6 +1511,7 @@ function showFieldError(form, fieldName, message) {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+    initNavigation();
     initTemplates();
     setupEventListeners();
     handleHashNavigation();

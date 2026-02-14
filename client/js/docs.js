@@ -4,6 +4,8 @@
  * a searchable, tabbed documentation experience.
  */
 
+import { initNavigation } from './modules/navigation.js';
+
 let manifest = null;
 let activeTab = 'overview';
 let activeApiModule = 'all';
@@ -316,4 +318,7 @@ function clearSearch() {
 
 /* ── Go ──────────────────────────────────────── */
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  initNavigation();
+  init();
+});
