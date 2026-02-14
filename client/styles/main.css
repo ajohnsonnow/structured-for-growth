@@ -223,6 +223,10 @@ img {
     box-shadow: var(--shadow-sm);
     text-decoration: none;
     text-align: center;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .nav-link.nav-highlight:hover {
