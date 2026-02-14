@@ -1,0 +1,52 @@
+{
+  "id": "sustainable-sdlc",
+  "title": "Sustainable SDLC, GreenOps, and Content Engineering Workflow",
+  "version": "1.0.0",
+  "category": "information-technology",
+  "icon": "🌿",
+  "description": "A five-phase SDLC embedding GreenOps, energy-efficient coding, and modular Content Engineering principles. Measures environmental impact alongside traditional software quality metrics.",
+  "methodology": "MBAi + GreenOps + Content Engineering + Servant Leadership",
+  "frameworks": ["NIST AI RMF", "ISO 14001", "ISO 42001"],
+  "phases": [
+    {
+      "id": "sdlc-01",
+      "name": "Requirements & Strategy",
+      "action": "Define project scope with explicit focus on long-term sustainability, minimizing unnecessary features, and establishing structured content models and metadata taxonomies upfront.",
+      "aiVector": "AI tools analyze requirements against historical data to predict computational resource needs and flag redundant features.",
+      "greenOpsMetric": "Estimated cloud compute lifecycle costs; alignment with enterprise ESG goals",
+      "servantLeadership": "Facilitating deep collaboration between business stakeholders and engineering to ensure realistic and meaningful expectations."
+    },
+    {
+      "id": "sdlc-02",
+      "name": "Architecture & Design",
+      "action": "Adopt cloud-native, modular architectures (microservices, serverless) that scale dynamically. Design content to be format-free and modular for automatic reuse across channels.",
+      "aiVector": "Generative AI assists in architecting energy-efficient database schemas and optimal API routing structures.",
+      "greenOpsMetric": "Reduction in duplicated content assets; projected data center energy efficiency",
+      "servantLeadership": "Removing bureaucratic roadblocks; providing architects with autonomy and time to design resilient systems."
+    },
+    {
+      "id": "sdlc-03",
+      "name": "Development & Green Coding",
+      "action": "Write clean, maintainable code using efficient algorithms. Implement component-based authoring to eliminate structural waste.",
+      "aiVector": "AI coding assistants (Copilots) provide real-time suggestions to optimize algorithms for lower CPU/memory consumption.",
+      "greenOpsMetric": "Code complexity scores; reduction in technical debt and processing latency",
+      "servantLeadership": "Cultivating a culture where developers can admit coding errors and collaborate on refactoring without blame."
+    },
+    {
+      "id": "sdlc-04",
+      "name": "Testing & QA",
+      "action": "Conduct rigorous testing for functionality, security (DevSecOps), and environmental performance, ensuring the application does not trigger unnecessary server loads.",
+      "aiVector": "Automated ML pipelines run CI/CD tests, minimizing manual QA hours.",
+      "greenOpsMetric": "Server load optimization during testing cycles; critical bugs resolved pre-launch",
+      "servantLeadership": "Acting as a shield against external pressure, ensuring the team is not forced to skip vital testing phases."
+    },
+    {
+      "id": "sdlc-05",
+      "name": "Deployment & Observability",
+      "action": "Deploy and initiate continuous monitoring of system performance, user engagement, and cloud resource consumption.",
+      "aiVector": "AI-driven observability tools detect anomalies in server energy usage and automatically scale down idle infrastructure (FinOps/GreenOps).",
+      "greenOpsMetric": "Real-time Power Usage Effectiveness (PUE); carbon emissions per GB of data processed",
+      "servantLeadership": "Celebrating team successes publicly; conducting blameless retrospectives to identify systemic improvements."
+    }
+  ]
+}

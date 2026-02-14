@@ -1,0 +1,104 @@
+{
+  "id": "iso42001",
+  "name": "ISO 42001",
+  "fullName": "ISO/IEC 42001:2023 — Information Technology — Artificial Intelligence Management System",
+  "version": "2023",
+  "governingBody": "International Organization for Standardization (ISO) / International Electrotechnical Commission (IEC)",
+  "jurisdiction": "Global",
+  "primaryAudience": ["AI Developers", "AI Solution Providers", "Enterprises Deploying AI", "AI Governance Teams", "Cloud AI Service Providers"],
+  "description": "ISO 42001 is the world's first international certifiable management system standard for Artificial Intelligence. It provides a structured framework for organizations to manage AI responsibly, addressing the unique challenges of AI such as transparency, explainability, fairness, and the ethical use of data. It follows the ISO High-Level Structure (HLS), making it integrable with ISO 27001 and ISO 9001. Annex A contains 38 controls across the AI lifecycle.",
+  "certificationDetails": {
+    "type": "certification",
+    "reportTypes": ["Stage 1 Audit Report", "Stage 2 Audit Report", "Surveillance Audit Report", "Management Review"],
+    "assessor": "Accredited certification body auditors",
+    "typicalCost": "$15,000 - $100,000+ (depends on AI system scope)",
+    "auditCycle": "3-year certification cycle with annual surveillance audits",
+    "certificationBody": "ISO-accredited certification bodies (e.g., BSI, SGS, TÜV, Bureau Veritas)"
+  },
+  "lifecycle": [
+    { "phase": 1, "name": "Context and Scope Definition", "description": "Understand organizational context. Define AIMS scope. Identify AI stakeholders and interested parties.", "typicalDuration": "4-6 weeks", "keyActivities": ["Define AIMS scope", "Identify interested parties", "Understand regulatory landscape", "Define AI system inventory"] },
+    { "phase": 2, "name": "AI Policy and Risk Assessment", "description": "Establish AI policy. Conduct AI-specific risk assessment including ethical, societal, and technical risks.", "typicalDuration": "6-8 weeks", "keyActivities": ["Create AI policy", "Conduct AI risk assessment", "AI impact assessment", "Determine Annex A controls"] },
+    { "phase": 3, "name": "AIMS Implementation", "description": "Implement controls from Annex A. Build AI lifecycle management processes. Train personnel.", "typicalDuration": "12-24 weeks", "keyActivities": ["Implement Annex A controls", "Define AI lifecycle processes", "Deploy monitoring", "Train workforce"] },
+    { "phase": 4, "name": "Certification Audit", "description": "Engage certification body. Undergo Stage 1 (documentation review) and Stage 2 (implementation audit).", "typicalDuration": "4-8 weeks", "keyActivities": ["Internal audit", "Management review", "Stage 1 audit", "Stage 2 audit", "Corrective actions"] },
+    { "phase": 5, "name": "Continuous Improvement", "description": "Maintain AIMS through surveillance audits, continuous monitoring, and ongoing improvement.", "typicalDuration": "Ongoing", "keyActivities": ["Annual surveillance audits", "Continuous improvement", "Management reviews", "Recertification at 3 years"] }
+  ],
+  "domains": [
+    {
+      "id": "ai-policy-governance",
+      "name": "AI Policies and Governance (Annex A.2-A.4)",
+      "description": "Establish AI-specific policies, organizational structures, and resource allocation for responsible AI management.",
+      "required": true,
+      "controlCount": 6,
+      "controls": [
+        { "id": "ISO42001-A.2.1", "name": "AI Policy", "description": "Establish an AI policy that includes commitment to responsible AI development and use.", "implementationType": "required", "category": "Policy", "mappings": { "nist-ai-rmf": ["GOV-1"], "iso27001": ["A.5.1"], "soc2": ["CC5.3"] }, "implementationGuidance": "Develop AI policy covering responsible development, fairness, transparency, and accountability. Align with organizational values. Communicate to all stakeholders.", "evidenceRequired": ["AI policy document", "Management approval", "Communication records"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.2.2", "name": "AI Policy Objectives", "description": "Define measurable objectives for the AI policy and plan to achieve them.", "implementationType": "required", "category": "Policy", "mappings": { "nist-ai-rmf": ["GOV-1"], "iso27001": ["A.5.1"] }, "implementationGuidance": "Set measurable AI policy objectives. Define KPIs for responsible AI. Plan activities to achieve objectives.", "evidenceRequired": ["AI policy objectives", "KPI definitions", "Achievement plans"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.3.1", "name": "Internal Organization for AI", "description": "Establish roles, responsibilities, and authorities for AI management system.", "implementationType": "required", "category": "Governance", "mappings": { "nist-ai-rmf": ["GOV-1", "GOV-5"], "soc2": ["CC1.2", "CC1.3"] }, "implementationGuidance": "Define AI governance structure. Assign AI system ownership. Establish AI ethics review board. Define accountability chains.", "evidenceRequired": ["AI governance chart", "Role descriptions", "Ethics board charter", "RACI matrix"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.3.2", "name": "Management Responsibility", "description": "Top management shall demonstrate leadership and commitment to the AI management system.", "implementationType": "required", "category": "Leadership", "mappings": { "nist-ai-rmf": ["GOV-1"], "iso27001": ["Clause 5"] }, "implementationGuidance": "Ensure management commitment. Allocate resources. Integrate AI risk into business strategy. Conduct management reviews.", "evidenceRequired": ["Management commitment statement", "Resource allocation", "Management review minutes"], "automationCapability": "manual" },
+        { "id": "ISO42001-A.4.1", "name": "Resources for AI Management", "description": "Determine and provide resources needed for the establishment, implementation, maintenance, and continual improvement of the AIMS.", "implementationType": "required", "category": "Resources", "mappings": { "nist-ai-rmf": ["GOV-3"], "iso27001": ["Clause 7.1"] }, "implementationGuidance": "Budget for AI management. Allocate skilled personnel. Provide infrastructure and tools. Ensure ongoing resource availability.", "evidenceRequired": ["Resource allocation plans", "Budget documentation", "Skills inventory"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.4.2", "name": "AI Competence and Awareness", "description": "Ensure persons involved in AI system development and operation are competent and aware of their responsibilities.", "implementationType": "required", "category": "Competency", "mappings": { "nist-ai-rmf": ["GOV-3", "GOV-4"], "iso27001": ["A.6.3"] }, "implementationGuidance": "Identify AI competency requirements. Provide training programs. Assess competence regularly. Maintain training records.", "evidenceRequired": ["Competency framework", "Training records", "Competency assessments"], "automationCapability": "full" }
+      ]
+    },
+    {
+      "id": "ai-system-lifecycle",
+      "name": "AI System Lifecycle (Annex A.5-A.8)",
+      "description": "Controls covering the full AI system lifecycle from planning through operation, including data management and responsible development.",
+      "required": true,
+      "controlCount": 10,
+      "controls": [
+        { "id": "ISO42001-A.5.1", "name": "AI System Impact Assessment", "description": "Assess the potential impacts of AI systems on individuals, groups, and society before deployment.", "implementationType": "required", "category": "Impact Assessment", "mappings": { "nist-ai-rmf": ["MAP-3", "MAP-4"], "gdpr": ["DPIA"] }, "implementationGuidance": "Conduct AI impact assessments before deployment. Assess risks to rights, safety, and well-being. Evaluate societal impacts. Document and review.", "evidenceRequired": ["AI impact assessment reports", "Risk-benefit analysis", "Societal impact documentation"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.5.2", "name": "AI System Risk Assessment", "description": "Conduct risk assessment specific to AI systems, considering AI-unique risks like bias, hallucination, and unintended behaviors.", "implementationType": "required", "category": "Risk Assessment", "mappings": { "nist-ai-rmf": ["MAP-4", "MAP-5"], "soc2": ["CC3.2"], "iso27001": ["Clause 6.1"] }, "implementationGuidance": "Assess AI-specific risks: bias, fairness, transparency, robustness, security, privacy. Rate likelihood and severity. Document risk treatment decisions.", "evidenceRequired": ["AI risk assessment report", "Risk register", "Treatment plans"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.6.1", "name": "AI System Planning and Design", "description": "Plan and design AI systems with responsible AI principles integrated from the beginning.", "implementationType": "required", "category": "Development", "mappings": { "nist-ai-rmf": ["MAP-1", "MAP-2"], "gdpr": ["Privacy by Design"] }, "implementationGuidance": "Integrate responsible AI principles into system design. Document design decisions. Apply responsible-by-design patterns. Consider stakeholder needs.", "evidenceRequired": ["Design documentation", "Responsible AI design decisions", "Stakeholder requirements"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.6.2", "name": "Data for AI Systems", "description": "Ensure data used for AI systems is appropriate, of sufficient quality, and managed responsibly throughout the AI lifecycle.", "implementationType": "required", "category": "Data Management", "mappings": { "nist-ai-rmf": ["MAP-1"], "gdpr": ["GDPR-5.1c", "GDPR-5.1d"], "iso27001": ["A.5.12"] }, "implementationGuidance": "Implement data governance for AI. Ensure data quality. Address data bias. Maintain data provenance. Implement data versioning.", "evidenceRequired": ["Data governance policy", "Data quality reports", "Bias assessment of training data", "Data provenance records"], "automationCapability": "full" },
+        { "id": "ISO42001-A.6.3", "name": "AI Model Development and Verification", "description": "Develop and verify AI models using appropriate techniques, ensuring they perform as intended.", "implementationType": "required", "category": "Development", "mappings": { "nist-ai-rmf": ["MEA-1", "MEA-2"], "soc2": ["CC8.1"] }, "implementationGuidance": "Implement model development best practices. Conduct model validation and verification. Test for edge cases. Document model architecture and decisions.", "evidenceRequired": ["Model documentation", "Validation results", "Verification testing", "Architecture documentation"], "automationCapability": "full" },
+        { "id": "ISO42001-A.7.1", "name": "AI System Documentation", "description": "Document AI systems sufficiently to enable appropriate understanding, use, and oversight.", "implementationType": "required", "category": "Documentation", "mappings": { "nist-ai-rmf": ["MAP-1"], "iso27001": ["A.5.37"] }, "implementationGuidance": "Create comprehensive AI system documentation. Include model cards, data sheets, and API documentation. Maintain version history.", "evidenceRequired": ["Model cards", "Data sheets", "API documentation", "Version history"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.7.2", "name": "AI Transparency and Explainability", "description": "Ensure AI system outputs and decisions can be understood by stakeholders to the degree necessary.", "implementationType": "required", "category": "Transparency", "mappings": { "nist-ai-rmf": ["MEA-2"], "gdpr": ["GDPR-15"] }, "implementationGuidance": "Implement explainability techniques (SHAP, LIME). Provide transparency reports. Enable human review of AI decisions. Document model limitations.", "evidenceRequired": ["Explainability implementation", "Transparency reports", "Human review procedures", "Limitation documentation"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.7.3", "name": "AI Fairness and Bias Management", "description": "Identify and mitigate bias in AI systems to ensure fair outcomes across different groups.", "implementationType": "required", "category": "Fairness", "mappings": { "nist-ai-rmf": ["MEA-1", "MEA-2"], "gdpr": ["GDPR-5.1a"] }, "implementationGuidance": "Implement bias detection tools. Test across demographic groups. Apply fairness constraints. Monitor for emerging bias in production.", "evidenceRequired": ["Bias assessment reports", "Fairness metrics", "Mitigation actions", "Ongoing monitoring results"], "automationCapability": "full" },
+        { "id": "ISO42001-A.8.1", "name": "AI System Deployment", "description": "Deploy AI systems with appropriate controls, monitoring, and rollback capabilities.", "implementationType": "required", "category": "Operations", "mappings": { "nist-ai-rmf": ["MAN-2", "MAN-3"], "soc2": ["CC8.1"] }, "implementationGuidance": "Implement staged deployment (canary, blue-green). Deploy monitoring. Enable rollback. Define go/no-go criteria. Communications plan.", "evidenceRequired": ["Deployment procedures", "Monitoring configurations", "Rollback procedures", "Go/no-go criteria"], "automationCapability": "full" },
+        { "id": "ISO42001-A.8.2", "name": "AI System Monitoring and Review", "description": "Monitor AI system performance, accuracy, and impacts in production. Conduct regular reviews.", "implementationType": "required", "category": "Monitoring", "mappings": { "nist-ai-rmf": ["MAN-3", "MEA-3"], "soc2": ["CC4.1", "CC4.2"] }, "implementationGuidance": "Monitor model performance metrics. Detect data and concept drift. Track fairness metrics. Schedule regular reviews. Implement alerting.", "evidenceRequired": ["Monitoring dashboards", "Performance reports", "Drift detection", "Review records", "Alert configurations"], "automationCapability": "full" }
+      ]
+    },
+    {
+      "id": "ai-performance-improvement",
+      "name": "Performance Evaluation and Improvement (Annex A.9-A.10)",
+      "description": "Evaluate AIMS performance and drive continual improvement in AI risk management.",
+      "required": true,
+      "controlCount": 4,
+      "controls": [
+        { "id": "ISO42001-A.9.1", "name": "AI Management System Internal Audit", "description": "Conduct internal audits of the AIMS at planned intervals to ensure conformity and effectiveness.", "implementationType": "required", "category": "Audit", "mappings": { "iso27001": ["Clause 9.2"], "soc2": ["CC4.1"] }, "implementationGuidance": "Plan and conduct internal audits. Use qualified auditors. Report findings. Track corrective actions. Audit all AIMS processes.", "evidenceRequired": ["Audit plans", "Audit reports", "Corrective action records", "Auditor qualifications"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.9.2", "name": "Management Review", "description": "Top management shall review the AI management system at planned intervals to ensure its continuing suitability, adequacy, and effectiveness.", "implementationType": "required", "category": "Management Review", "mappings": { "iso27001": ["Clause 9.3"], "soc2": ["CC1.5"] }, "implementationGuidance": "Conduct management reviews (at least annually). Review audit results, performance metrics, risk changes, and improvement opportunities. Issue management review minutes.", "evidenceRequired": ["Management review minutes", "Performance metrics summaries", "Action items and follow-ups"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.10.1", "name": "Nonconformity and Corrective Action", "description": "React to nonconformities, evaluate causes, and take corrective action to prevent recurrence.", "implementationType": "required", "category": "Corrective Action", "mappings": { "iso27001": ["Clause 10.1"], "soc2": ["CC4.2"] }, "implementationGuidance": "Define nonconformity management process. Conduct root cause analysis. Implement corrective actions. Monitor effectiveness. Prevent recurrence.", "evidenceRequired": ["Nonconformity records", "Root cause analyses", "Corrective action evidence", "Effectiveness verification"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.10.2", "name": "Continual Improvement", "description": "Continually improve the suitability, adequacy, and effectiveness of the AI management system.", "implementationType": "required", "category": "Improvement", "mappings": { "iso27001": ["Clause 10.2"], "nist-ai-rmf": ["MAN-4"] }, "implementationGuidance": "Establish improvement processes. Use PDCA cycles. Incorporate lessons learned. Benchmark against industry best practices. Track improvement initiatives.", "evidenceRequired": ["Improvement plans", "Initiative tracking", "Lessons learned records", "Benchmark results"], "automationCapability": "partial" }
+      ]
+    },
+    {
+      "id": "third-party-relationships",
+      "name": "Third-Party Relationships (Annex A.10)",
+      "description": "Manage risks from third-party AI components, models, and services used within AI systems.",
+      "required": true,
+      "controlCount": 2,
+      "controls": [
+        { "id": "ISO42001-A.10.3", "name": "Third-Party AI Component Assessment", "description": "Assess and manage risks from third-party AI components, including pre-trained models, APIs, and data sources.", "implementationType": "required", "category": "Third-Party Risk", "mappings": { "nist-ai-rmf": ["GOV-6"], "soc2": ["CC9.2"], "iso27001": ["A.5.19", "A.5.21"] }, "implementationGuidance": "Evaluate third-party AI components before use. Assess model provenance. Test for bias and quality. Monitor third-party updates.", "evidenceRequired": ["Third-party AI assessment records", "Provenance documentation", "Quality testing results", "Monitoring records"], "automationCapability": "partial" },
+        { "id": "ISO42001-A.10.4", "name": "Third-Party AI Service Agreements", "description": "Ensure agreements with AI service providers address AI-specific risks, responsibilities, and requirements.", "implementationType": "required", "category": "Contract Management", "mappings": { "nist-ai-rmf": ["GOV-6"], "soc2": ["CC9.2"], "iso27001": ["A.5.20"] }, "implementationGuidance": "Include AI-specific clauses in contracts. Define model update notification. Require transparency. Address liability for AI outputs.", "evidenceRequired": ["Contract templates with AI clauses", "Signed agreements", "AI-specific SLAs"], "automationCapability": "partial" }
+      ]
+    }
+  ],
+  "requiredDocumentation": [
+    "AI Management System Policy",
+    "AI System Inventory/Registry",
+    "AI Impact Assessments",
+    "AI Risk Assessment Reports",
+    "Statement of Applicability (SoA)",
+    "AI System Documentation (Model Cards, Data Sheets)",
+    "Bias and Fairness Assessment Reports",
+    "Internal Audit Reports",
+    "Management Review Minutes",
+    "Corrective Action Records",
+    "Continual Improvement Plans"
+  ],
+  "relatedFrameworks": ["nist-ai-rmf", "iso27001", "gdpr"],
+  "tags": ["artificial-intelligence", "management-system", "certifiable", "global", "ai-governance", "responsible-ai"],
+  "resources": [
+    { "title": "ISO/IEC 42001:2023", "url": "https://www.iso.org/standard/81230.html", "type": "official" },
+    { "title": "ISO AI Standards", "url": "https://www.iso.org/committee/6794475.html", "type": "official" }
+  ]
+}

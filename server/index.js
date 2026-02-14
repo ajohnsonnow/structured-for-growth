@@ -17,6 +17,7 @@ import portalRoutes from './routes/portal.js';
 import backupRoutes from './routes/backup.js';
 import demoRoutes from './routes/demo.js';
 import complianceRoutes from './routes/compliance.js';
+import mbaiRoutes from './routes/mbai.js';
 
 // Import database initialization
 import { initializeDatabase } from './models/database.js';
@@ -69,6 +70,7 @@ app.use('/api/portal', portalRoutes);
 app.use('/api/backup', backupRoutes);
 app.use('/api/demo', demoRoutes);
 app.use('/api/compliance', complianceRoutes);
+app.use('/api/mbai', mbaiRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -99,6 +101,10 @@ if (process.env.NODE_ENV === 'production') {
     
     app.get('/docs', (req, res) => {
         res.sendFile(path.join(__dirname, '../dist/docs.html'));
+    });
+
+    app.get('/mbai', (req, res) => {
+        res.sendFile(path.join(__dirname, '../dist/mbai.html'));
     });
     
     // Catch-all route for main page

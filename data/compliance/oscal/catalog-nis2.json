@@ -1,0 +1,1225 @@
+{
+  "catalog": {
+    "uuid": "d39fcf24-303c-5f23-a103-9bd757a52b73",
+    "metadata": {
+      "title": "Network and Information Security Directive 2 (EU Directive 2022/2555)",
+      "last-modified": "2026-02-13T19:30:32.145Z",
+      "version": "2022 (transposition deadline October 17, 2024)",
+      "oscal-version": "1.1.2",
+      "props": [
+        {
+          "name": "framework-id",
+          "value": "nis2"
+        },
+        {
+          "name": "governing-body",
+          "value": "European Parliament and Council of the European Union"
+        },
+        {
+          "name": "jurisdiction",
+          "value": "European Union"
+        },
+        {
+          "name": "certification-type",
+          "value": "regulatory-compliance"
+        }
+      ],
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Catalog Publisher"
+        },
+        {
+          "id": "assessor",
+          "title": "Compliance Assessor"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "02f44a2d-c090-5f73-b9b8-f1d8e27b25c5",
+          "type": "organization",
+          "name": "European Parliament and Council of the European Union"
+        }
+      ],
+      "remarks": "NIS 2 dramatically expands the scope of EU cybersecurity regulation from the original NIS Directive. It covers 18 critical sectors, introduces management liability, and mandates specific cybersecurity risk management measures (Article 21). It establishes a multi-million euro fine regime modeled on GDPR."
+    },
+    "groups": [
+      {
+        "id": "article-21-measures",
+        "title": "Cybersecurity Risk Management Measures (Article 21)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "10"
+          }
+        ],
+        "controls": [
+          {
+            "id": "nis2-21.2a",
+            "title": "Risk Analysis and Information System Security Policies",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-21.2a_stmt",
+                "name": "statement",
+                "prose": "Implement policies on risk analysis and information system security."
+              },
+              {
+                "id": "nis2-21.2a_guide",
+                "name": "guidance",
+                "prose": "Develop comprehensive information security policies. Conduct regular risk analyses. Document security objectives. Review and update policies annually."
+              },
+              {
+                "id": "nis2-21.2a_evidence",
+                "name": "evidence",
+                "prose": "Information security policy; Risk analysis reports; Policy review records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.7"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: DORA-5"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.GV-1"
+              }
+            ]
+          },
+          {
+            "id": "nis2-21.2b",
+            "title": "Incident Handling",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Incident Response"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-21.2b_stmt",
+                "name": "statement",
+                "prose": "Implement procedures for incident handling, including detection, response, analysis, and reporting."
+              },
+              {
+                "id": "nis2-21.2b_guide",
+                "name": "guidance",
+                "prose": "Establish incident management process. Define escalation paths. Implement 24/7 monitoring. Prepare incident notification procedures (24h early warning, 72h notification, 1 month final report)."
+              },
+              {
+                "id": "nis2-21.2b_evidence",
+                "name": "evidence",
+                "prose": "Incident response plan; Escalation procedures; Notification templates; Incident logs"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.3"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.4"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.24"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.25"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.26"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: DORA-17"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RS.RP-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RS.AN-1"
+              }
+            ]
+          },
+          {
+            "id": "nis2-21.2c",
+            "title": "Business Continuity and Crisis Management",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Business Continuity"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-21.2c_stmt",
+                "name": "statement",
+                "prose": "Ensure business continuity and crisis management, including backup management, disaster recovery, and crisis management."
+              },
+              {
+                "id": "nis2-21.2c_guide",
+                "name": "guidance",
+                "prose": "Develop BCP and DRP. Implement backup and restoration. Define RTO/RPO. Establish crisis management team. Test plans annually."
+              },
+              {
+                "id": "nis2-21.2c_evidence",
+                "name": "evidence",
+                "prose": "BCP; DRP; Backup procedures; Crisis management structure; Test results"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: A1.2"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: A1.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.29"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.30"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: DORA-9"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: DORA-10"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Contingency Plan"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RC.RP-1"
+              }
+            ]
+          },
+          {
+            "id": "nis2-21.2d",
+            "title": "Supply Chain Security",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Supply Chain"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-21.2d_stmt",
+                "name": "statement",
+                "prose": "Ensure supply chain security including security-related aspects between each entity and its direct suppliers or service providers."
+              },
+              {
+                "id": "nis2-21.2d_guide",
+                "name": "guidance",
+                "prose": "Assess supplier security practices. Include security requirements in contracts. Monitor supplier risks. Audit critical suppliers."
+              },
+              {
+                "id": "nis2-21.2d_evidence",
+                "name": "evidence",
+                "prose": "Supplier risk assessments; Security contract clauses; Supplier monitoring records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC9.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.19"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.20"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.21"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: DORA-28"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.SC-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.SC-2"
+              }
+            ]
+          },
+          {
+            "id": "nis2-21.2e",
+            "title": "Security in Network and Information Systems Acquisition",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Secure Development"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-21.2e_stmt",
+                "name": "statement",
+                "prose": "Ensure security in network and information systems acquisition, development, and maintenance, including vulnerability handling and disclosure."
+              },
+              {
+                "id": "nis2-21.2e_guide",
+                "name": "guidance",
+                "prose": "Integrate security into SDLC. Implement vulnerability management. Define vulnerability disclosure policy. Conduct security testing."
+              },
+              {
+                "id": "nis2-21.2e_evidence",
+                "name": "evidence",
+                "prose": "SDLC security procedures; Vulnerability management process; Disclosure policy; Testing records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC8.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.25"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.28"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 6"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-2"
+              }
+            ]
+          },
+          {
+            "id": "nis2-21.2f",
+            "title": "Cybersecurity Risk Management Effectiveness Assessment",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Assessment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-21.2f_stmt",
+                "name": "statement",
+                "prose": "Implement policies and procedures to assess the effectiveness of cybersecurity risk management measures."
+              },
+              {
+                "id": "nis2-21.2f_guide",
+                "name": "guidance",
+                "prose": "Conduct regular security audits. Perform penetration testing. Measure control effectiveness with KPIs. Report to management."
+              },
+              {
+                "id": "nis2-21.2f_evidence",
+                "name": "evidence",
+                "prose": "Audit reports; Penetration test results; KPI dashboards; Management reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC4.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.35"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.36"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: DORA-24"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-8"
+              }
+            ]
+          },
+          {
+            "id": "nis2-21.2g",
+            "title": "Basic Cyber Hygiene and Cybersecurity Training",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Training"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-21.2g_stmt",
+                "name": "statement",
+                "prose": "Implement basic cyber hygiene practices and provide cybersecurity training."
+              },
+              {
+                "id": "nis2-21.2g_guide",
+                "name": "guidance",
+                "prose": "Implement patch management, password policies, least privilege. Conduct regular security awareness training. Train management body on cyber risks."
+              },
+              {
+                "id": "nis2-21.2g_evidence",
+                "name": "evidence",
+                "prose": "Cyber hygiene policies; Training records; Management training evidence; Phishing simulation results"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC2.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.6.3"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Security Awareness Training"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 12"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AT-1"
+              }
+            ]
+          },
+          {
+            "id": "nis2-21.2h",
+            "title": "Cryptography and Encryption Policies",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Cryptography"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-21.2h_stmt",
+                "name": "statement",
+                "prose": "Implement policies and procedures regarding the use of cryptography and, where appropriate, encryption."
+              },
+              {
+                "id": "nis2-21.2h_guide",
+                "name": "guidance",
+                "prose": "Develop cryptography policy. Implement encryption at rest (AES-256) and in transit (TLS 1.2+). Establish key management procedures."
+              },
+              {
+                "id": "nis2-21.2h_evidence",
+                "name": "evidence",
+                "prose": "Cryptography policy; Encryption configurations; Key management procedures; Certificate inventory"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Encryption and Decryption"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 3"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 4"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: GDPR-32a"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-2"
+              }
+            ]
+          },
+          {
+            "id": "nis2-21.2i",
+            "title": "Human Resources Security and Access Control",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-21.2i_stmt",
+                "name": "statement",
+                "prose": "Implement human resources security, access control policies, and asset management."
+              },
+              {
+                "id": "nis2-21.2i_guide",
+                "name": "guidance",
+                "prose": "Implement RBAC with least privilege. Background checks for critical roles. Onboard/offboard procedures. MFA for critical systems."
+              },
+              {
+                "id": "nis2-21.2i_evidence",
+                "name": "evidence",
+                "prose": "Access control policy; RBAC configurations; Onboarding/offboarding procedures; Background check policy"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.2"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.15"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.6.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.6.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.2"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-4"
+              }
+            ]
+          },
+          {
+            "id": "nis2-21.2j",
+            "title": "Multi-Factor Authentication and Secure Communications",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Authentication"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-21.2j_stmt",
+                "name": "statement",
+                "prose": "Use of multi-factor authentication or continuous authentication, secured voice, video, and text communications."
+              },
+              {
+                "id": "nis2-21.2j_guide",
+                "name": "guidance",
+                "prose": "Deploy MFA across all critical systems. Implement secured emergency communication. Use encrypted channels for sensitive communications."
+              },
+              {
+                "id": "nis2-21.2j_evidence",
+                "name": "evidence",
+                "prose": "MFA deployment evidence; Secure communication tools; Emergency communication procedures"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.5"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Person or Entity Authentication"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#cmmc",
+                "rel": "related",
+                "text": "cmmc: IA.L2-3.5.3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-7"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "incident-reporting",
+        "title": "Incident Reporting (Article 23)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "3"
+          }
+        ],
+        "controls": [
+          {
+            "id": "nis2-23.1",
+            "title": "Early Warning (24 hours)",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Incident Reporting"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-23.1_stmt",
+                "name": "statement",
+                "prose": "Submit an early warning to the CSIRT or competent authority within 24 hours of becoming aware of a significant incident."
+              },
+              {
+                "id": "nis2-23.1_guide",
+                "name": "guidance",
+                "prose": "Establish 24-hour early warning procedures. Define what constitutes 'significant'. Prepare early warning template. Establish 24/7 reporting capability."
+              },
+              {
+                "id": "nis2-23.1_evidence",
+                "name": "evidence",
+                "prose": "Early warning procedure; Template; Contact details for CSIRT; 24/7 capability evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: DORA-19"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: GDPR-33"
+              }
+            ]
+          },
+          {
+            "id": "nis2-23.2",
+            "title": "Incident Notification (72 hours)",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Incident Reporting"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-23.2_stmt",
+                "name": "statement",
+                "prose": "Submit a detailed incident notification within 72 hours of becoming aware of a significant incident."
+              },
+              {
+                "id": "nis2-23.2_guide",
+                "name": "guidance",
+                "prose": "Prepare detailed notification template. Include impact assessment, root cause (if known), and mitigation measures. Update early warning with details."
+              },
+              {
+                "id": "nis2-23.2_evidence",
+                "name": "evidence",
+                "prose": "Notification template; Historical notifications; Impact assessment methodology"
+              }
+            ],
+            "links": [
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: DORA-19"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: GDPR-33"
+              }
+            ]
+          },
+          {
+            "id": "nis2-23.3",
+            "title": "Final Report (1 month)",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Incident Reporting"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-23.3_stmt",
+                "name": "statement",
+                "prose": "Submit a final report within one month of the incident notification, including root cause analysis and mitigation measures."
+              },
+              {
+                "id": "nis2-23.3_guide",
+                "name": "guidance",
+                "prose": "Conduct root cause analysis. Document lessons learned. Describe remediation measures taken and planned. Include cross-border impact assessment."
+              },
+              {
+                "id": "nis2-23.3_evidence",
+                "name": "evidence",
+                "prose": "Final report template; Root cause analysis; Remediation plan; Lessons learned documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: DORA-19"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "governance",
+        "title": "Governance and Accountability (Article 20)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "2"
+          }
+        ],
+        "controls": [
+          {
+            "id": "nis2-20.1",
+            "title": "Management Body Approval",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Governance"
+              },
+              {
+                "name": "automation-capability",
+                "value": "manual"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-20.1_stmt",
+                "name": "statement",
+                "prose": "Management bodies shall approve and oversee the implementation of cybersecurity risk management measures."
+              },
+              {
+                "id": "nis2-20.1_guide",
+                "name": "guidance",
+                "prose": "Ensure board/management formally approves cybersecurity strategy. Document approval. Assign accountability. Include in governance reporting."
+              },
+              {
+                "id": "nis2-20.1_evidence",
+                "name": "evidence",
+                "prose": "Board approval records; Governance structure documentation; Accountability assignments"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.2"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.1"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: DORA-5"
+              }
+            ]
+          },
+          {
+            "id": "nis2-20.2",
+            "title": "Management Cybersecurity Training",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Training"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "nis2-20.2_stmt",
+                "name": "statement",
+                "prose": "Members of the management body shall follow cybersecurity training to gain sufficient knowledge and skills."
+              },
+              {
+                "id": "nis2-20.2_guide",
+                "name": "guidance",
+                "prose": "Provide regular cybersecurity training to all management body members. Cover risk landscape, regulatory obligations, and incident procedures."
+              },
+              {
+                "id": "nis2-20.2_evidence",
+                "name": "evidence",
+                "prose": "Management training records; Training content/curriculum; Attendance records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC2.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.6.3"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "400eabc5-5651-56b8-978e-beea2fdace03",
+          "title": "Related Framework: dora",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-dora.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "f834b0f2-c310-5a40-b85a-95d8be946ef8",
+          "title": "Related Framework: gdpr",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-gdpr.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "647f69da-0e1d-5304-97c6-c2058bc58aa0",
+          "title": "Related Framework: iso27001",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-iso27001.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "c6b5e848-268c-5a88-9742-59eb249604e9",
+          "title": "Related Framework: nist-csf",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-nist-csf.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "57ed209f-5d5e-5a48-a9b8-bbf01b43654d",
+          "title": "Information System Security Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "ef77d561-6aab-5ac6-8def-22ae4cc072bf",
+          "title": "Risk Analysis Reports",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "2a2b8b1b-8e57-5b7d-ba48-9f9fa8a13bf6",
+          "title": "Incident Response Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "c673e197-43b9-58c1-83c8-731e433ec402",
+          "title": "Business Continuity Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "69bb1d86-cf55-5c87-a727-42d91c84ae06",
+          "title": "Supply Chain Security Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "597d0445-6715-5257-ba2f-c466503bf778",
+          "title": "Vulnerability Management Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "d88632f1-75fc-5559-95a2-0d7a5d985d3e",
+          "title": "Cryptography and Encryption Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "5c2dcb58-dc7e-5bc3-98e1-3e4d5cb3b3dd",
+          "title": "Access Control Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "c0898a29-04db-5eb7-9315-62c8a73b31df",
+          "title": "Training Records",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "bed302b3-e639-50b3-997a-4a0b33942914",
+          "title": "Entity Registration with National Authority",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

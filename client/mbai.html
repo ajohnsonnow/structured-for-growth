@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBAi Methodology — Structured For Growth</title>
+    <meta name="description" content="MBAi Paradigm Integration: Sustainable Business, Servant Leadership, and Agentic AI operationalized across every enterprise function.">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/mbai.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Structured <span class="highlight">For Growth</span></h1>
+                <span class="nav-byline">Agentic Solutions that Scale</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/templates.html" class="nav-link">Templates</a></li>
+                <li><a href="/compliance" class="nav-link">Compliance</a></li>
+                <li><a href="/mbai" class="nav-link active">MBAi</a></li>
+                <li><a href="/docs" class="nav-link">Docs</a></li>
+                <li><a href="/portal" class="nav-link nav-highlight">Client Portal</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-small mbai-hero">
+        <div class="container">
+            <h1>MBAi <span class="highlight">Methodology</span></h1>
+            <p class="hero-subtitle">Master of Business Administration in AI — integrating Sustainable Business, Servant Leadership, and Agentic AI into a unified enterprise operating system.</p>
+        </div>
+    </section>
+
+    <!-- Three Pillars -->
+    <section class="section mbai-pillars-section">
+        <div class="container">
+            <div class="mbai-pillars">
+                <div class="mbai-pillar" data-pillar="mbai">
+                    <div class="pillar-icon">🤖</div>
+                    <h3>MBAi Paradigm</h3>
+                    <p>Strategic integration of computational data science and agentic AI with core business administration.</p>
+                </div>
+                <div class="mbai-pillar" data-pillar="sustainable">
+                    <div class="pillar-icon">🌍</div>
+                    <h3>Sustainable Business</h3>
+                    <p>ESG-driven operations, circular economy, Triple Bottom Line accounting, and regenerative practices.</p>
+                </div>
+                <div class="mbai-pillar" data-pillar="servant">
+                    <div class="pillar-icon">🤝</div>
+                    <h3>Servant Leadership</h3>
+                    <p>People-first governance prioritizing empathy, psychological safety, and holistic human development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Banner -->
+    <section class="mbai-stats-banner">
+        <div class="container">
+            <div class="mbai-stats" id="mbaiStats">
+                <div class="mbai-stat">
+                    <span class="stat-number" id="templateCount">—</span>
+                    <span class="stat-label">Templates</span>
+                </div>
+                <div class="mbai-stat">
+                    <span class="stat-number" id="categoryCount">—</span>
+                    <span class="stat-label">Business Functions</span>
+                </div>
+                <div class="mbai-stat">
+                    <span class="stat-number" id="frameworkCount">—</span>
+                    <span class="stat-label">Frameworks Mapped</span>
+                </div>
+                <div class="mbai-stat">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Core Pillars</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Tabs + Template Content -->
+    <section class="section mbai-content-section" id="mbai-content">
+        <div class="container">
+            <h2 class="section-title">Enterprise Function <span class="highlight">Templates</span></h2>
+            <p class="section-subtitle">Each template maps MBAi automation, sustainability KPIs, and servant leadership practices to real operational workflows.</p>
+
+            <!-- Category Navigation -->
+            <div class="mbai-tabs" id="mbaiTabs">
+                <button class="mbai-tab active" data-category="all">All</button>
+            </div>
+
+            <!-- Search -->
+            <div class="mbai-search">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="mbaiSearch" placeholder="Search MBAi templates..." class="search-input">
+                </div>
+            </div>
+
+            <!-- Templates Grid -->
+            <div class="mbai-grid" id="mbaiGrid">
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>Loading MBAi templates...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Template Detail Modal -->
+    <div id="mbaiModal" class="modal">
+        <div class="modal-content modal-large mbai-modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 id="mbaiModalTitle"></h2>
+                    <p id="mbaiModalDesc" class="template-modal-desc"></p>
+                </div>
+                <button class="modal-close" id="mbaiModalClose">&times;</button>
+            </div>
+            <div class="mbai-modal-meta" id="mbaiModalMeta"></div>
+            <div class="mbai-modal-body" id="mbaiModalBody"></div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/mbai.js"></script>
+    <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
+            async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

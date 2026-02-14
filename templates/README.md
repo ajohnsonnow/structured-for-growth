@@ -72,6 +72,23 @@ Helper functions and common operations.
 - File operations
 - Error handling
 
+### Compliance
+Enterprise compliance engineering templates.
+- GRC policy frameworks (SOC 2, ISO 27001, HIPAA, GDPR, PCI DSS, CMMC, DORA, NIS2, NIST AI RMF, ISO 42001)
+- OSCAL catalog generation
+- Evidence tracking & audit matrices
+- AI-assisted compliance review tools
+
+### MBAi
+Business methodology templates integrating AI, sustainability, and servant leadership.
+- Sustainable Balanced Scorecard (SBSC)
+- Circular Supply Chain Workflow
+- Triple Bottom Line (TBL) Impact Model
+- Purpose-Driven Marketing Audit
+- Servant Leadership Coaching & Rubrics
+- Sustainable SDLC & GreenOps
+- AI Governance & ESG Compliance (NIST AI RMF)
+
 ## 🚀 Quick Start
 
 ### Using Templates in Your Project
@@ -93,7 +110,7 @@ When you create something reusable, add it to the library:
     id: 'unique-identifier',
     title: 'Descriptive Title',
     description: 'What this template does',
-    category: 'forms|auth|database|api|ui|email|utils',
+    category: 'forms|auth|database|api|ui|email|utils|compliance|mbai',
     language: 'JavaScript',
     tags: ['relevant', 'tags'],
     code: `

@@ -1,0 +1,1098 @@
+{
+  "catalog": {
+    "uuid": "85fab076-e695-5b1b-af44-3e56993aa0e6",
+    "metadata": {
+      "title": "Payment Card Industry Data Security Standard",
+      "last-modified": "2026-02-13T19:30:32.146Z",
+      "version": "4.0.1",
+      "oscal-version": "1.1.2",
+      "props": [
+        {
+          "name": "framework-id",
+          "value": "pci-dss"
+        },
+        {
+          "name": "governing-body",
+          "value": "PCI Security Standards Council"
+        },
+        {
+          "name": "jurisdiction",
+          "value": "Global"
+        },
+        {
+          "name": "certification-type",
+          "value": "attestation"
+        }
+      ],
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Catalog Publisher"
+        },
+        {
+          "id": "assessor",
+          "title": "Compliance Assessor"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "9b39ae82-f19a-501d-9b5d-9ad0ca5eee99",
+          "type": "organization",
+          "name": "PCI Security Standards Council"
+        }
+      ],
+      "remarks": "PCI DSS provides a rigorous technical and operational baseline for protecting Cardholder Data (CHD) and Sensitive Authentication Data (SAD). Version 4.0.1 emphasizes continuous security, risk-based customization via the Customized Approach, and robust authentication. It applies to any entity that stores, processes, or transmits payment card information."
+    },
+    "groups": [
+      {
+        "id": "network-security",
+        "title": "Build and Maintain a Secure Network and Systems",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "2"
+          }
+        ],
+        "controls": [
+          {
+            "id": "pci-1",
+            "title": "Install and Maintain Network Security Controls",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Network Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-1_stmt",
+                "name": "statement",
+                "prose": "Install and maintain network security controls to restrict traffic to and from the Cardholder Data Environment (CDE)."
+              },
+              {
+                "id": "pci-1_guide",
+                "name": "guidance",
+                "prose": "Deploy firewalls between CDE and untrusted networks. Implement network segmentation. Restrict inbound/outbound traffic to business-necessary flows. Review firewall rules semi-annually."
+              },
+              {
+                "id": "pci-1_evidence",
+                "name": "evidence",
+                "prose": "Firewall rules; Network diagrams; Segmentation testing results; Rule review records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.6"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.20"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.21"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-5"
+              }
+            ]
+          },
+          {
+            "id": "pci-2",
+            "title": "Apply Secure Configurations to All System Components",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Configuration Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-2_stmt",
+                "name": "statement",
+                "prose": "Eliminate vendor-supplied defaults and apply secure baseline configurations to all system components."
+              },
+              {
+                "id": "pci-2_guide",
+                "name": "guidance",
+                "prose": "Change all vendor defaults. Apply CIS benchmarks. Document secure configurations. Harden all systems before deployment."
+              },
+              {
+                "id": "pci-2_evidence",
+                "name": "evidence",
+                "prose": "Baseline configurations; CIS benchmark compliance reports; Default credential removal evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC5.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.9"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "data-protection",
+        "title": "Protect Account Data",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "2"
+          }
+        ],
+        "controls": [
+          {
+            "id": "pci-3",
+            "title": "Protect Stored Account Data",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Data Protection"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-3_stmt",
+                "name": "statement",
+                "prose": "Protect stored account data using strong cryptography. PAN must be rendered unreadable anywhere it is stored."
+              },
+              {
+                "id": "pci-3_guide",
+                "name": "guidance",
+                "prose": "Encrypt PAN using AES-256. Implement tokenization where possible. Never store SAD after authorization. Implement key management procedures."
+              },
+              {
+                "id": "pci-3_evidence",
+                "name": "evidence",
+                "prose": "Encryption configurations; Tokenization implementation; Key management procedures; SAD disposal evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: C1.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.11"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Encryption and Decryption"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Pseudonymization and Encryption"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-1"
+              }
+            ]
+          },
+          {
+            "id": "pci-4",
+            "title": "Protect Cardholder Data with Strong Cryptography During Transmission",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Transmission Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-4_stmt",
+                "name": "statement",
+                "prose": "Protect cardholder data with strong cryptography when transmitted over open, public networks."
+              },
+              {
+                "id": "pci-4_guide",
+                "name": "guidance",
+                "prose": "Enforce TLS 1.2+ (prefer TLS 1.3). Disable deprecated protocols. Never send PAN via unencrypted email. Validate certificates."
+              },
+              {
+                "id": "pci-4_evidence",
+                "name": "evidence",
+                "prose": "TLS configurations; SSL scan results; Certificate inventory; Deprecated protocol removal"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Encryption in Transit"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Pseudonymization and Encryption"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vulnerability-management",
+        "title": "Maintain a Vulnerability Management Program",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "2"
+          }
+        ],
+        "controls": [
+          {
+            "id": "pci-5",
+            "title": "Protect All Systems and Networks from Malicious Software",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Malware Protection"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-5_stmt",
+                "name": "statement",
+                "prose": "Deploy, maintain, and regularly update anti-malware software across all systems commonly affected."
+              },
+              {
+                "id": "pci-5_guide",
+                "name": "guidance",
+                "prose": "Deploy antimalware on all systems. Enable automatic updates. Perform periodic scans. Alert on detections."
+              },
+              {
+                "id": "pci-5_evidence",
+                "name": "evidence",
+                "prose": "Antimalware deployment reports; Update status; Scan logs; Detection records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.8"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.7"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Protective Software"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-4"
+              }
+            ]
+          },
+          {
+            "id": "pci-6",
+            "title": "Develop and Maintain Secure Systems and Software",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Secure Development"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-6_stmt",
+                "name": "statement",
+                "prose": "Develop secure software by integrating security into the SDLC. Apply critical patches promptly."
+              },
+              {
+                "id": "pci-6_guide",
+                "name": "guidance",
+                "prose": "Follow secure coding standards (OWASP). Conduct code reviews. Integrate SAST/DAST. Patch critical vulnerabilities within 30 days. Train developers."
+              },
+              {
+                "id": "pci-6_evidence",
+                "name": "evidence",
+                "prose": "Secure coding policy; Code review records; SAST/DAST results; Patch management records; Developer training"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC8.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.25"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.28"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "access-control",
+        "title": "Implement Strong Access Control Measures",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "3"
+          }
+        ],
+        "controls": [
+          {
+            "id": "pci-7",
+            "title": "Restrict Access to System Components and Cardholder Data by Business Need to Know",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-7_stmt",
+                "name": "statement",
+                "prose": "Restrict access strictly by business need-to-know principles."
+              },
+              {
+                "id": "pci-7_guide",
+                "name": "guidance",
+                "prose": "Implement RBAC with least privilege. Define access based on job function. Review access quarterly. Remove access upon role change."
+              },
+              {
+                "id": "pci-7_evidence",
+                "name": "evidence",
+                "prose": "RBAC configuration; Access matrices; Quarterly review records; Role change access updates"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.15"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.3"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Access Control"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Access Controls TOM"
+              },
+              {
+                "href": "#cmmc",
+                "rel": "related",
+                "text": "cmmc: AC.L2-3.1.1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-4"
+              }
+            ]
+          },
+          {
+            "id": "pci-8",
+            "title": "Identify Users and Authenticate Access to System Components",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Authentication"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-8_stmt",
+                "name": "statement",
+                "prose": "Assign unique user IDs. Implement MFA for all access to the CDE."
+              },
+              {
+                "id": "pci-8_guide",
+                "name": "guidance",
+                "prose": "Assign unique IDs to all users. Enforce MFA for CDE access. Implement strong password policies (12+ characters). Lock accounts after failed attempts."
+              },
+              {
+                "id": "pci-8_evidence",
+                "name": "evidence",
+                "prose": "User ID inventory; MFA deployment evidence; Password policy configuration; Account lockout settings"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.5"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Unique User ID"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Person/Entity Verification"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Access Controls TOM"
+              },
+              {
+                "href": "#cmmc",
+                "rel": "related",
+                "text": "cmmc: IA.L2-3.5.3"
+              },
+              {
+                "href": "#nis2",
+                "rel": "related",
+                "text": "nis2: Article 21(2)(j)"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-7"
+              }
+            ]
+          },
+          {
+            "id": "pci-9",
+            "title": "Restrict Physical Access to Cardholder Data",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Physical Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-9_stmt",
+                "name": "statement",
+                "prose": "Restrict, log, and monitor physical access to facilities containing cardholder data environments."
+              },
+              {
+                "id": "pci-9_guide",
+                "name": "guidance",
+                "prose": "Implement badge access for sensitive areas. Maintain visitor logs. Deploy surveillance cameras. Restrict media access."
+              },
+              {
+                "id": "pci-9_evidence",
+                "name": "evidence",
+                "prose": "Physical access controls; Visitor logs; Surveillance systems; Media access controls"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.7.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.7.4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "monitoring-testing",
+        "title": "Regularly Monitor and Test Networks",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "2"
+          }
+        ],
+        "controls": [
+          {
+            "id": "pci-10",
+            "title": "Log and Monitor All Access to System Components and Cardholder Data",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Logging"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-10_stmt",
+                "name": "statement",
+                "prose": "Implement extensive logging mechanisms to track and monitor all access."
+              },
+              {
+                "id": "pci-10_guide",
+                "name": "guidance",
+                "prose": "Log all access to CHD. Include timestamps, user IDs, event types. Centralize logs in SIEM. Review daily. Retain for 12 months (3 months immediately available)."
+              },
+              {
+                "id": "pci-10_evidence",
+                "name": "evidence",
+                "prose": "Logging configurations; SIEM setup; Log review procedures; Retention policy; Sample logs"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.2"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC4.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.15"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Audit Controls"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.AE-3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.PT-1"
+              }
+            ]
+          },
+          {
+            "id": "pci-11",
+            "title": "Test Security of Systems and Networks Regularly",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Security Testing"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-11_stmt",
+                "name": "statement",
+                "prose": "Test security through quarterly vulnerability scans, penetration testing, and wireless access point monitoring."
+              },
+              {
+                "id": "pci-11_guide",
+                "name": "guidance",
+                "prose": "Conduct quarterly ASV scans (external). Perform internal scans after significant changes. Annual penetration test. Wireless scanning quarterly."
+              },
+              {
+                "id": "pci-11_evidence",
+                "name": "evidence",
+                "prose": "ASV scan reports; Internal scan reports; Penetration test reports; Wireless scan results"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC4.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.8"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Regular Testing and Assessment"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-8"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "security-policy",
+        "title": "Maintain an Information Security Policy",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "1"
+          }
+        ],
+        "controls": [
+          {
+            "id": "pci-12",
+            "title": "Support Information Security with Organizational Policies and Programs",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Policy"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pci-12_stmt",
+                "name": "statement",
+                "prose": "Create, maintain, and disseminate a comprehensive organizational information security policy reviewed annually."
+              },
+              {
+                "id": "pci-12_guide",
+                "name": "guidance",
+                "prose": "Develop comprehensive infosec policy. Review annually. Include incident response plan. Define acceptable use. Train all personnel."
+              },
+              {
+                "id": "pci-12_evidence",
+                "name": "evidence",
+                "prose": "Information security policy; Annual review records; Training records; Acceptable use policy"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC5.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.1"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Security Management Process"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.GV-1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "c0a260c6-e000-5fa4-a8ca-3e74907aa800",
+          "title": "Related Framework: soc2",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-soc2.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "647f69da-0e1d-5304-97c6-c2058bc58aa0",
+          "title": "Related Framework: iso27001",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-iso27001.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "400eabc5-5651-56b8-978e-beea2fdace03",
+          "title": "Related Framework: dora",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-dora.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "2c109681-7852-5771-bd03-6248e315dc52",
+          "title": "Related Framework: hipaa",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-hipaa.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "f834b0f2-c310-5a40-b85a-95d8be946ef8",
+          "title": "Related Framework: gdpr",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-gdpr.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "13b399b7-97ce-5f98-bd2c-7f47a6a4fefe",
+          "title": "Information Security Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "e0d7987f-5065-56be-b347-15076a7695cd",
+          "title": "Network Diagrams",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "94078cf0-8117-5f13-a7f8-0c395f8772bb",
+          "title": "Data Flow Diagrams",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "940a701b-8c67-51e0-84e3-a36ebc5457fa",
+          "title": "Firewall Rule Documentation",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "29098a25-ba88-5bbd-b701-f5f05d3e78ea",
+          "title": "Encryption Key Management Procedures",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "8f3f7cae-7552-5645-85be-a2352ccba987",
+          "title": "Vulnerability Management Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "1a386f39-65d0-55a7-b7be-c14987e38bde",
+          "title": "Incident Response Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "b5838b16-8dad-50ab-ae97-b6f638d0f2b9",
+          "title": "Security Awareness Training Materials",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "7072e798-c956-58eb-a72a-0ca362a838dd",
+          "title": "Report on Compliance (ROC) or SAQ",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "d3406a9e-ddd4-5d5f-a316-4882fd8e4c11",
+          "title": "Compensating Controls Worksheet (CCW) if applicable",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

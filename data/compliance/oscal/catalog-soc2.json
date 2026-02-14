@@ -1,0 +1,2757 @@
+{
+  "catalog": {
+    "uuid": "4eb77c38-9dc1-5ad7-9b32-b0d82b29a643",
+    "metadata": {
+      "title": "System and Organization Controls 2",
+      "last-modified": "2026-02-13T19:30:32.147Z",
+      "version": "2017 (TSC 2017)",
+      "oscal-version": "1.1.2",
+      "props": [
+        {
+          "name": "framework-id",
+          "value": "soc2"
+        },
+        {
+          "name": "governing-body",
+          "value": "AICPA"
+        },
+        {
+          "name": "jurisdiction",
+          "value": "North America (Global adoption)"
+        },
+        {
+          "name": "certification-type",
+          "value": "attestation"
+        }
+      ],
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Catalog Publisher"
+        },
+        {
+          "id": "assessor",
+          "title": "Compliance Assessor"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "7faf3b4a-92c7-53ca-80dc-dc3cad8fc5b3",
+          "type": "organization",
+          "name": "AICPA"
+        }
+      ],
+      "remarks": "SOC 2 is the prevailing compliance standard for technology service providers, SaaS platforms, and cloud-native organizations. Developed by the American Institute of Certified Public Accountants (AICPA), it evaluates an organization's information systems against the Trust Services Criteria (TSC). Unlike prescriptive frameworks, SOC 2 is principles-based — it evaluates whether controls effectively protect systems, giving flexibility to design controls that fit operational maturity."
+    },
+    "groups": [
+      {
+        "id": "security",
+        "title": "Security (Common Criteria)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "33"
+          }
+        ],
+        "controls": [
+          {
+            "id": "cc1.1",
+            "title": "COSO Principle 1: Integrity and Ethical Values",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Control Environment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc1.1_stmt",
+                "name": "statement",
+                "prose": "The entity demonstrates a commitment to integrity and ethical values through the development of a code of conduct, communication of expected standards, and enforcement of compliance."
+              },
+              {
+                "id": "cc1.1_guide",
+                "name": "guidance",
+                "prose": "Establish and communicate a code of conduct. Implement whistleblower channels. Require annual ethics training for all employees."
+              },
+              {
+                "id": "cc1.1_evidence",
+                "name": "evidence",
+                "prose": "Code of conduct document; Training completion records; Ethics hotline reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.GV-1"
+              },
+              {
+                "href": "#cis",
+                "rel": "related",
+                "text": "cis: CIS 17"
+              }
+            ]
+          },
+          {
+            "id": "cc1.2",
+            "title": "COSO Principle 2: Board Independence",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Control Environment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "manual"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc1.2_stmt",
+                "name": "statement",
+                "prose": "The board of directors demonstrates independence from management and exercises oversight of the development and performance of internal controls."
+              },
+              {
+                "id": "cc1.2_guide",
+                "name": "guidance",
+                "prose": "Document board oversight activities. Maintain meeting minutes showing security governance discussions."
+              },
+              {
+                "id": "cc1.2_evidence",
+                "name": "evidence",
+                "prose": "Board meeting minutes; Governance charter; Independent director documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.GV-1"
+              }
+            ]
+          },
+          {
+            "id": "cc1.3",
+            "title": "COSO Principle 3: Management Structure",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Control Environment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "manual"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc1.3_stmt",
+                "name": "statement",
+                "prose": "Management establishes, with board oversight, structures, reporting lines, and appropriate authorities and responsibilities in the pursuit of objectives."
+              },
+              {
+                "id": "cc1.3_guide",
+                "name": "guidance",
+                "prose": "Define organizational chart with security reporting lines. Assign CISO or equivalent role with clear authority."
+              },
+              {
+                "id": "cc1.3_evidence",
+                "name": "evidence",
+                "prose": "Org chart; Role descriptions; RACI matrix for security"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.GV-2"
+              }
+            ]
+          },
+          {
+            "id": "cc1.4",
+            "title": "COSO Principle 4: Commitment to Competence",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Control Environment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc1.4_stmt",
+                "name": "statement",
+                "prose": "The entity demonstrates a commitment to attract, develop, and retain competent individuals in alignment with objectives."
+              },
+              {
+                "id": "cc1.4_guide",
+                "name": "guidance",
+                "prose": "Implement security awareness training programs. Include security competence in job descriptions and performance evaluations."
+              },
+              {
+                "id": "cc1.4_evidence",
+                "name": "evidence",
+                "prose": "Training records; Job descriptions; Performance review templates"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.6.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.6.2"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AT-1"
+              }
+            ]
+          },
+          {
+            "id": "cc1.5",
+            "title": "COSO Principle 5: Accountability",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Control Environment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc1.5_stmt",
+                "name": "statement",
+                "prose": "The entity holds individuals accountable for their internal control responsibilities in the pursuit of objectives."
+              },
+              {
+                "id": "cc1.5_guide",
+                "name": "guidance",
+                "prose": "Assign control owners for each security domain. Track control effectiveness with documented accountability measures."
+              },
+              {
+                "id": "cc1.5_evidence",
+                "name": "evidence",
+                "prose": "Control ownership matrix; Accountability policy; Disciplinary records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.6.4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.GV-2"
+              }
+            ]
+          },
+          {
+            "id": "cc2.1",
+            "title": "Information Quality for Internal Control",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Communication and Information"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc2.1_stmt",
+                "name": "statement",
+                "prose": "The entity obtains or generates and uses relevant, quality information to support the functioning of internal controls."
+              },
+              {
+                "id": "cc2.1_guide",
+                "name": "guidance",
+                "prose": "Implement a centralized GRC platform to aggregate control status. Ensure data quality through validation and reconciliation."
+              },
+              {
+                "id": "cc2.1_evidence",
+                "name": "evidence",
+                "prose": "GRC platform screenshots; Data validation procedures"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-1"
+              }
+            ]
+          },
+          {
+            "id": "cc2.2",
+            "title": "Internal Communication of Security Objectives",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Communication and Information"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc2.2_stmt",
+                "name": "statement",
+                "prose": "The entity internally communicates information, including objectives and responsibilities for internal control, necessary to support the functioning of internal control."
+              },
+              {
+                "id": "cc2.2_guide",
+                "name": "guidance",
+                "prose": "Distribute security policies to all employees. Conduct regular security awareness communications. Maintain an internal security wiki."
+              },
+              {
+                "id": "cc2.2_evidence",
+                "name": "evidence",
+                "prose": "Policy distribution receipts; Security newsletter archives; Intranet security page"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.6.3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AT-1"
+              }
+            ]
+          },
+          {
+            "id": "cc2.3",
+            "title": "External Communication",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Communication and Information"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc2.3_stmt",
+                "name": "statement",
+                "prose": "The entity communicates with external parties regarding matters affecting the functioning of internal control."
+              },
+              {
+                "id": "cc2.3_guide",
+                "name": "guidance",
+                "prose": "Maintain a public security page. Establish vulnerability disclosure and incident notification processes. Publish SOC 2 report summaries to customers."
+              },
+              {
+                "id": "cc2.3_evidence",
+                "name": "evidence",
+                "prose": "Security page URL; Vulnerability disclosure policy; Customer notification templates"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.5"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.6"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RS.CO-2"
+              }
+            ]
+          },
+          {
+            "id": "cc3.1",
+            "title": "Risk Assessment Objectives",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Assessment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc3.1_stmt",
+                "name": "statement",
+                "prose": "The entity specifies objectives with sufficient clarity to enable the identification and assessment of risks relating to objectives."
+              },
+              {
+                "id": "cc3.1_guide",
+                "name": "guidance",
+                "prose": "Document risk appetite statement. Define security objectives aligned with business goals. Establish risk assessment methodology."
+              },
+              {
+                "id": "cc3.1_evidence",
+                "name": "evidence",
+                "prose": "Risk appetite statement; Security objectives document; Risk framework documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.7"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-2"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 12"
+              }
+            ]
+          },
+          {
+            "id": "cc3.2",
+            "title": "Risk Identification and Analysis",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Assessment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc3.2_stmt",
+                "name": "statement",
+                "prose": "The entity identifies risks to the achievement of its objectives across the entity and analyzes risks as a basis for determining how the risks should be managed."
+              },
+              {
+                "id": "cc3.2_guide",
+                "name": "guidance",
+                "prose": "Conduct annual risk assessments. Maintain a risk register. Perform threat modeling for new features and infrastructure changes."
+              },
+              {
+                "id": "cc3.2_evidence",
+                "name": "evidence",
+                "prose": "Risk register; Risk assessment reports; Threat modeling artifacts"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.7"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.8"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-4"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Risk Analysis"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 6"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 12"
+              }
+            ]
+          },
+          {
+            "id": "cc3.3",
+            "title": "Fraud Risk Assessment",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Assessment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc3.3_stmt",
+                "name": "statement",
+                "prose": "The entity considers the potential for fraud in assessing risks to the achievement of objectives."
+              },
+              {
+                "id": "cc3.3_guide",
+                "name": "guidance",
+                "prose": "Include fraud risk scenarios in risk assessments. Monitor for anomalous access patterns and financial transactions."
+              },
+              {
+                "id": "cc3.3_evidence",
+                "name": "evidence",
+                "prose": "Fraud risk assessment; Anomaly detection configurations"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.7"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-3"
+              }
+            ]
+          },
+          {
+            "id": "cc3.4",
+            "title": "Change Risk Assessment",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Assessment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc3.4_stmt",
+                "name": "statement",
+                "prose": "The entity identifies and assesses changes that could significantly impact the system of internal control."
+              },
+              {
+                "id": "cc3.4_guide",
+                "name": "guidance",
+                "prose": "Implement change management processes that include security impact assessments. Require security review for infrastructure and application changes."
+              },
+              {
+                "id": "cc3.4_evidence",
+                "name": "evidence",
+                "prose": "Change management records; Security review approvals; Impact assessment forms"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.32"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-6"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 6"
+              }
+            ]
+          },
+          {
+            "id": "cc4.1",
+            "title": "Monitoring Control Design and Effectiveness",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Monitoring Activities"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc4.1_stmt",
+                "name": "statement",
+                "prose": "The entity selects, develops, and performs ongoing and/or separate evaluations to ascertain whether the components of internal control are present and functioning."
+              },
+              {
+                "id": "cc4.1_guide",
+                "name": "guidance",
+                "prose": "Deploy automated compliance monitoring tools. Conduct periodic internal audits. Track control effectiveness through dashboards."
+              },
+              {
+                "id": "cc4.1_evidence",
+                "name": "evidence",
+                "prose": "Monitoring tool configurations; Internal audit reports; Control effectiveness dashboards"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.35"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.36"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-7"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 10"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 11"
+              }
+            ]
+          },
+          {
+            "id": "cc4.2",
+            "title": "Evaluation and Communication of Deficiencies",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Monitoring Activities"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc4.2_stmt",
+                "name": "statement",
+                "prose": "The entity evaluates and communicates internal control deficiencies in a timely manner to those parties responsible for taking corrective action."
+              },
+              {
+                "id": "cc4.2_guide",
+                "name": "guidance",
+                "prose": "Establish exception reporting and remediation tracking processes. Communicate deficiencies to control owners and management within defined SLAs."
+              },
+              {
+                "id": "cc4.2_evidence",
+                "name": "evidence",
+                "prose": "Exception reports; Remediation tracking tickets; Management communication records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.36"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RS.CO-3"
+              }
+            ]
+          },
+          {
+            "id": "cc5.1",
+            "title": "Selection and Development of Controls",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Control Activities"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc5.1_stmt",
+                "name": "statement",
+                "prose": "The entity selects and develops control activities that contribute to the mitigation of risks to the achievement of objectives to acceptable levels."
+              },
+              {
+                "id": "cc5.1_guide",
+                "name": "guidance",
+                "prose": "Design controls based on risk assessment results. Document control objectives and testing procedures. Map controls to specific risks."
+              },
+              {
+                "id": "cc5.1_evidence",
+                "name": "evidence",
+                "prose": "Control design documentation; Risk-to-control mapping; Control testing procedures"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-1"
+              }
+            ]
+          },
+          {
+            "id": "cc5.2",
+            "title": "Technology General Controls",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Control Activities"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc5.2_stmt",
+                "name": "statement",
+                "prose": "The entity also selects and develops general control activities over technology to support the achievement of objectives."
+              },
+              {
+                "id": "cc5.2_guide",
+                "name": "guidance",
+                "prose": "Implement IT general controls including access management, change management, and operations controls across all production systems."
+              },
+              {
+                "id": "cc5.2_evidence",
+                "name": "evidence",
+                "prose": "ITGC documentation; Access review reports; Change management logs"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.9"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.MA-1"
+              }
+            ]
+          },
+          {
+            "id": "cc5.3",
+            "title": "Policy Deployment",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Control Activities"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc5.3_stmt",
+                "name": "statement",
+                "prose": "The entity deploys control activities through policies that establish what is expected and procedures that put policies into action."
+              },
+              {
+                "id": "cc5.3_guide",
+                "name": "guidance",
+                "prose": "Maintain a comprehensive policy library. Version control all policies using Git. Require annual review and update. Track employee acknowledgment."
+              },
+              {
+                "id": "cc5.3_evidence",
+                "name": "evidence",
+                "prose": "Policy library; Version history; Acknowledgment records; Annual review dates"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.GV-1"
+              }
+            ]
+          },
+          {
+            "id": "cc6.1",
+            "title": "Logical and Physical Access Controls",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Logical and Physical Access"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc6.1_stmt",
+                "name": "statement",
+                "prose": "The entity implements logical access security software, infrastructure, and architectures over protected information assets to protect them from security events."
+              },
+              {
+                "id": "cc6.1_guide",
+                "name": "guidance",
+                "prose": "Implement role-based access control (RBAC). Enforce MFA for all production systems. Use SSO where possible. Conduct quarterly access reviews."
+              },
+              {
+                "id": "cc6.1_evidence",
+                "name": "evidence",
+                "prose": "Access control lists; MFA configuration; User provisioning logs; Access review reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.3"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Access Control - Unique User ID"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Person/Entity Verification"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Access Controls TOM"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#cmmc",
+                "rel": "related",
+                "text": "cmmc: AC.L2-3.1.1"
+              },
+              {
+                "href": "#nis2",
+                "rel": "related",
+                "text": "nis2: Article 21(2)(j)"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-3"
+              }
+            ]
+          },
+          {
+            "id": "cc6.2",
+            "title": "User Registration and Authorization",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Logical and Physical Access"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc6.2_stmt",
+                "name": "statement",
+                "prose": "Prior to issuing system credentials and granting system access, the entity registers and authorizes new users whose access is restricted to authorized personnel."
+              },
+              {
+                "id": "cc6.2_guide",
+                "name": "guidance",
+                "prose": "Implement formal user provisioning and deprovisioning workflows. Require manager approval for access requests. Auto-deprovision on termination."
+              },
+              {
+                "id": "cc6.2_evidence",
+                "name": "evidence",
+                "prose": "Provisioning workflow logs; Approval records; Deprovisioning evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.15"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.16"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.18"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Access Control - Unique User ID"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-1"
+              }
+            ]
+          },
+          {
+            "id": "cc6.3",
+            "title": "Role-Based Access and Least Privilege",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Logical and Physical Access"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc6.3_stmt",
+                "name": "statement",
+                "prose": "The entity authorizes, modifies, or removes access to data, software, functions, and other protected information assets based on roles, responsibilities, or the system design."
+              },
+              {
+                "id": "cc6.3_guide",
+                "name": "guidance",
+                "prose": "Implement least-privilege access controls. Use RBAC with predefined roles. Conduct quarterly entitlement reviews. Remove excessive permissions."
+              },
+              {
+                "id": "cc6.3_evidence",
+                "name": "evidence",
+                "prose": "RBAC configuration; Role definitions; Quarterly access review reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.15"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.18"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.2"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Access Control"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#cmmc",
+                "rel": "related",
+                "text": "cmmc: AC.L2-3.1.5"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-4"
+              }
+            ]
+          },
+          {
+            "id": "cc6.6",
+            "title": "System Boundary Protection",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Logical and Physical Access"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc6.6_stmt",
+                "name": "statement",
+                "prose": "The entity implements logical access security measures to protect against threats from sources outside its system boundaries."
+              },
+              {
+                "id": "cc6.6_guide",
+                "name": "guidance",
+                "prose": "Deploy firewalls, WAFs, and intrusion detection/prevention systems. Segment networks. Manage ingress and egress points."
+              },
+              {
+                "id": "cc6.6_evidence",
+                "name": "evidence",
+                "prose": "Firewall rules; Network architecture diagrams; IDS/IPS configurations"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.20"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.21"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-5"
+              }
+            ]
+          },
+          {
+            "id": "cc6.7",
+            "title": "Restriction of Data Transmission",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Logical and Physical Access"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc6.7_stmt",
+                "name": "statement",
+                "prose": "The entity restricts the transmission, movement, and removal of information to authorized internal and external users and processes."
+              },
+              {
+                "id": "cc6.7_guide",
+                "name": "guidance",
+                "prose": "Enforce TLS 1.2+ for all data in transit. Implement DLP controls. Restrict USB and removable media. Monitor data exfiltration."
+              },
+              {
+                "id": "cc6.7_evidence",
+                "name": "evidence",
+                "prose": "TLS configuration; DLP policy; Data transfer logs"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.14"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Transmission Security - Encryption in Transit"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Cryptographic Controls TOM"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-2"
+              }
+            ]
+          },
+          {
+            "id": "cc6.8",
+            "title": "Unauthorized Software Prevention",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Logical and Physical Access"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc6.8_stmt",
+                "name": "statement",
+                "prose": "The entity implements controls to prevent or detect and act upon the introduction of unauthorized or malicious software."
+              },
+              {
+                "id": "cc6.8_guide",
+                "name": "guidance",
+                "prose": "Deploy endpoint protection on all workstations. Implement application whitelisting. Scan dependencies for known vulnerabilities."
+              },
+              {
+                "id": "cc6.8_evidence",
+                "name": "evidence",
+                "prose": "Endpoint protection deployment status; Application whitelist; Dependency scan reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.7"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 5"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-4"
+              }
+            ]
+          },
+          {
+            "id": "cc7.1",
+            "title": "Detection of Security Events",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "System Operations"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc7.1_stmt",
+                "name": "statement",
+                "prose": "To meet its objectives, the entity uses detection and monitoring procedures to identify anomalies that are indicative of security events."
+              },
+              {
+                "id": "cc7.1_guide",
+                "name": "guidance",
+                "prose": "Implement SIEM or centralized log management. Define detection rules for critical events. Monitor for unauthorized access attempts."
+              },
+              {
+                "id": "cc7.1_evidence",
+                "name": "evidence",
+                "prose": "SIEM configuration; Detection rule library; Alert notification configurations"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.15"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.16"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Audit Controls - Hardware/Software Logging"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 10"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.AE-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-1"
+              }
+            ]
+          },
+          {
+            "id": "cc7.2",
+            "title": "Security Event Monitoring",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "System Operations"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc7.2_stmt",
+                "name": "statement",
+                "prose": "The entity monitors system components and the operation of those components for anomalies indicative of malicious acts, natural disasters, and errors."
+              },
+              {
+                "id": "cc7.2_guide",
+                "name": "guidance",
+                "prose": "Enable comprehensive application and infrastructure logging. Use automated alerts for critical thresholds. Implement 24/7 monitoring for production systems."
+              },
+              {
+                "id": "cc7.2_evidence",
+                "name": "evidence",
+                "prose": "Monitoring dashboards; Alert configurations; On-call schedules"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.15"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.16"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 10"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 11"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-3"
+              }
+            ]
+          },
+          {
+            "id": "cc7.3",
+            "title": "Security Incident Evaluation",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "System Operations"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc7.3_stmt",
+                "name": "statement",
+                "prose": "The entity evaluates identified security events to determine whether controls have been compromised and whether incident response is required."
+              },
+              {
+                "id": "cc7.3_guide",
+                "name": "guidance",
+                "prose": "Define incident severity classification. Implement triage procedures. Document evaluation criteria. Escalate based on severity."
+              },
+              {
+                "id": "cc7.3_evidence",
+                "name": "evidence",
+                "prose": "Incident classification matrix; Triage procedures; Incident evaluation logs"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.24"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.25"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Breach Notification"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 12"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RS.AN-1"
+              }
+            ]
+          },
+          {
+            "id": "cc7.4",
+            "title": "Security Incident Response",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "System Operations"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc7.4_stmt",
+                "name": "statement",
+                "prose": "The entity responds to identified security incidents by executing a defined incident response program to understand, contain, remediate, and communicate security incidents."
+              },
+              {
+                "id": "cc7.4_guide",
+                "name": "guidance",
+                "prose": "Develop and test incident response plan. Define communication protocols. Conduct tabletop exercises annually. Integrate with breach notification requirements."
+              },
+              {
+                "id": "cc7.4_evidence",
+                "name": "evidence",
+                "prose": "Incident response plan; Tabletop exercise reports; Post-incident reviews; Communication logs"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.24"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.25"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.26"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Breach Notification Rule"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Breach Notification (72-hour)"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 12"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: Incident Reporting"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RS.RP-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RS.CO-1"
+              }
+            ]
+          },
+          {
+            "id": "cc7.5",
+            "title": "Incident Recovery",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "System Operations"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc7.5_stmt",
+                "name": "statement",
+                "prose": "The entity identifies, develops, and implements activities to recover from identified security incidents."
+              },
+              {
+                "id": "cc7.5_guide",
+                "name": "guidance",
+                "prose": "Define recovery procedures. Maintain backup and restoration capabilities. Test disaster recovery plans. Document lessons learned."
+              },
+              {
+                "id": "cc7.5_evidence",
+                "name": "evidence",
+                "prose": "Recovery procedures; Backup test results; DR test reports; Lessons learned documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.26"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.29"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: ICT Risk Management"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RC.RP-1"
+              }
+            ]
+          },
+          {
+            "id": "cc8.1",
+            "title": "Change Management Controls",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Change Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc8.1_stmt",
+                "name": "statement",
+                "prose": "The entity authorizes, designs, develops or acquires, configures, documents, tests, approves, and implements changes to infrastructure, data, software, and procedures."
+              },
+              {
+                "id": "cc8.1_guide",
+                "name": "guidance",
+                "prose": "Implement formal change management with approval workflows. Require peer review for all code changes. Maintain change logs. Track emergency changes separately."
+              },
+              {
+                "id": "cc8.1_evidence",
+                "name": "evidence",
+                "prose": "Change management policy; PR/MR approval records; Change logs; Emergency change records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.32"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 6"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-3"
+              }
+            ]
+          },
+          {
+            "id": "cc9.1",
+            "title": "Risk Mitigation",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Mitigation"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc9.1_stmt",
+                "name": "statement",
+                "prose": "The entity identifies, selects, and develops risk mitigation activities for risks arising from potential business disruptions."
+              },
+              {
+                "id": "cc9.1_guide",
+                "name": "guidance",
+                "prose": "Implement business continuity plans. Maintain insurance for cyber risks. Define risk acceptance criteria. Track risk treatment plans."
+              },
+              {
+                "id": "cc9.1_evidence",
+                "name": "evidence",
+                "prose": "Business continuity plan; Risk treatment plans; Insurance documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.29"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.30"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: ICT Risk Management"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RM-1"
+              }
+            ]
+          },
+          {
+            "id": "cc9.2",
+            "title": "Vendor and Third-Party Risk Management",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Mitigation"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "cc9.2_stmt",
+                "name": "statement",
+                "prose": "The entity assesses and manages risks associated with vendors and business partners."
+              },
+              {
+                "id": "cc9.2_guide",
+                "name": "guidance",
+                "prose": "Maintain a vendor inventory. Assess vendor security posture. Require SOC 2 or ISO 27001 from critical vendors. Review vendor risk annually."
+              },
+              {
+                "id": "cc9.2_evidence",
+                "name": "evidence",
+                "prose": "Vendor inventory; Vendor risk assessments; Vendor SOC reports; Contract security requirements"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.19"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.20"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.21"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: Third-Party Risk Management"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.SC-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "availability",
+        "title": "Availability",
+        "props": [
+          {
+            "name": "required",
+            "value": "false"
+          },
+          {
+            "name": "control-count",
+            "value": "3"
+          }
+        ],
+        "controls": [
+          {
+            "id": "a1.1",
+            "title": "Capacity Planning",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Availability"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a1.1_stmt",
+                "name": "statement",
+                "prose": "The entity maintains, monitors, and evaluates current processing capacity and use of system components to manage capacity demand."
+              },
+              {
+                "id": "a1.1_guide",
+                "name": "guidance",
+                "prose": "Implement auto-scaling. Monitor resource utilization. Set capacity thresholds and alerts. Plan for peak demand."
+              },
+              {
+                "id": "a1.1_evidence",
+                "name": "evidence",
+                "prose": "Capacity planning documentation; Auto-scaling configurations; Resource utilization reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.6"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-4"
+              }
+            ]
+          },
+          {
+            "id": "a1.2",
+            "title": "Environmental Protections and Recovery",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Availability"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a1.2_stmt",
+                "name": "statement",
+                "prose": "The entity authorizes, designs, develops or acquires, implements, operates, approves, maintains, and monitors environmental protections to meet availability commitments."
+              },
+              {
+                "id": "a1.2_guide",
+                "name": "guidance",
+                "prose": "Implement disaster recovery plans. Deploy across multiple availability zones. Test backup restoration regularly. Define and meet RTO/RPO targets."
+              },
+              {
+                "id": "a1.2_evidence",
+                "name": "evidence",
+                "prose": "DR plan; Backup test results; Multi-AZ deployment evidence; RTO/RPO documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.29"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.30"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.7.5"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Emergency Access Procedure"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: ICT Risk Management"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-9"
+              }
+            ]
+          },
+          {
+            "id": "a1.3",
+            "title": "Recovery Testing",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Availability"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a1.3_stmt",
+                "name": "statement",
+                "prose": "The entity tests recovery plan procedures supporting system recovery to meet its objectives."
+              },
+              {
+                "id": "a1.3_guide",
+                "name": "guidance",
+                "prose": "Conduct annual DR drills. Test backup restoration. Document test results and remediate gaps. Simulate failover scenarios."
+              },
+              {
+                "id": "a1.3_evidence",
+                "name": "evidence",
+                "prose": "DR drill reports; Backup restoration test results; Failover test documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.30"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: TLPT"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-10"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "processing-integrity",
+        "title": "Processing Integrity",
+        "props": [
+          {
+            "name": "required",
+            "value": "false"
+          },
+          {
+            "name": "control-count",
+            "value": "3"
+          }
+        ],
+        "controls": [
+          {
+            "id": "pi1.1",
+            "title": "Processing Accuracy and Completeness",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Processing Integrity"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pi1.1_stmt",
+                "name": "statement",
+                "prose": "The entity implements policies and procedures over system processing to ensure processing is complete, valid, accurate, timely, and authorized."
+              },
+              {
+                "id": "pi1.1_guide",
+                "name": "guidance",
+                "prose": "Implement input validation. Use checksums and reconciliation for data processing. Log all data transformations. Implement idempotency for critical operations."
+              },
+              {
+                "id": "pi1.1_evidence",
+                "name": "evidence",
+                "prose": "Input validation rules; Reconciliation reports; Processing logs"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.33"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 6"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-6"
+              }
+            ]
+          },
+          {
+            "id": "pi1.2",
+            "title": "Processing Error Handling",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Processing Integrity"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pi1.2_stmt",
+                "name": "statement",
+                "prose": "The entity implements policies and procedures to detect processing errors and take corrective action to ensure data integrity."
+              },
+              {
+                "id": "pi1.2_guide",
+                "name": "guidance",
+                "prose": "Implement error handling and retry mechanisms. Alert on processing failures. Maintain error logs with root cause analysis."
+              },
+              {
+                "id": "pi1.2_evidence",
+                "name": "evidence",
+                "prose": "Error handling procedures; Error log samples; Corrective action records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.33"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.AE-3"
+              }
+            ]
+          },
+          {
+            "id": "pi1.3",
+            "title": "Processing Inputs and Outputs",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Processing Integrity"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "pi1.3_stmt",
+                "name": "statement",
+                "prose": "The entity implements policies and procedures over system inputs to ensure inputs are processed completely and accurately and outputs are distributed only to intended recipients."
+              },
+              {
+                "id": "pi1.3_guide",
+                "name": "guidance",
+                "prose": "Validate all API inputs. Sanitize outputs. Restrict data distribution to authorized recipients. Implement data flow controls."
+              },
+              {
+                "id": "pi1.3_evidence",
+                "name": "evidence",
+                "prose": "Input validation configurations; Output distribution controls; Data flow diagrams"
+              }
+            ],
+            "links": [
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 6"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-6"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "confidentiality",
+        "title": "Confidentiality",
+        "props": [
+          {
+            "name": "required",
+            "value": "false"
+          },
+          {
+            "name": "control-count",
+            "value": "3"
+          }
+        ],
+        "controls": [
+          {
+            "id": "c1.1",
+            "title": "Identification of Confidential Information",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Confidentiality"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "c1.1_stmt",
+                "name": "statement",
+                "prose": "The entity identifies and maintains confidential information to meet the entity's objectives related to confidentiality."
+              },
+              {
+                "id": "c1.1_guide",
+                "name": "guidance",
+                "prose": "Implement data classification scheme (Public, Internal, Confidential, Restricted). Label and tag data accordingly. Train employees on classification."
+              },
+              {
+                "id": "c1.1_evidence",
+                "name": "evidence",
+                "prose": "Data classification policy; Classification labels in use; Training records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.12"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.13"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Data Minimization"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-5"
+              }
+            ]
+          },
+          {
+            "id": "c1.2",
+            "title": "Disposal of Confidential Information",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Confidentiality"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "c1.2_stmt",
+                "name": "statement",
+                "prose": "The entity disposes of confidential information to meet the entity's objectives related to confidentiality."
+              },
+              {
+                "id": "c1.2_guide",
+                "name": "guidance",
+                "prose": "Define data retention schedules. Implement automated data purging. Securely wipe storage media. Document disposal procedures."
+              },
+              {
+                "id": "c1.2_evidence",
+                "name": "evidence",
+                "prose": "Data retention policy; Disposal records; Media sanitization certificates"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.7.10"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.10"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Storage Limitation"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Right to Erasure"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-6"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "title": "Privacy",
+        "props": [
+          {
+            "name": "required",
+            "value": "false"
+          },
+          {
+            "name": "control-count",
+            "value": "3"
+          }
+        ],
+        "controls": [
+          {
+            "id": "p1.1",
+            "title": "Privacy Notice and Consent",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Privacy"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "p1.1_stmt",
+                "name": "statement",
+                "prose": "The entity provides notice to data subjects about its privacy practices and obtains consent, where required."
+              },
+              {
+                "id": "p1.1_guide",
+                "name": "guidance",
+                "prose": "Publish clear privacy policy. Implement consent management. Provide opt-out mechanisms. Document lawful basis for processing."
+              },
+              {
+                "id": "p1.1_evidence",
+                "name": "evidence",
+                "prose": "Privacy policy; Consent management platform; Opt-out mechanism documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Lawful Basis"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Consent"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Notice of Privacy Practices"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-1"
+              }
+            ]
+          },
+          {
+            "id": "p4.1",
+            "title": "Data Subject Access Requests",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Privacy"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "p4.1_stmt",
+                "name": "statement",
+                "prose": "The entity implements a process for data subjects to request access to, modification of, or deletion of their personal information."
+              },
+              {
+                "id": "p4.1_guide",
+                "name": "guidance",
+                "prose": "Build DSAR workflow. Respond within regulatory timeframes (30 days GDPR). Automate data export and deletion where possible."
+              },
+              {
+                "id": "p4.1_evidence",
+                "name": "evidence",
+                "prose": "DSAR procedures; Response logs; Deletion confirmation records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Right to Access"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Right to Erasure"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Right to Rectification"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-1"
+              }
+            ]
+          },
+          {
+            "id": "p6.1",
+            "title": "Data Quality and Minimization",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "conditional"
+              },
+              {
+                "name": "category",
+                "value": "Privacy"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "p6.1_stmt",
+                "name": "statement",
+                "prose": "The entity collects only the personal information necessary and maintains the quality of personal data."
+              },
+              {
+                "id": "p6.1_guide",
+                "name": "guidance",
+                "prose": "Audit data collection points. Remove unnecessary data fields. Validate data accuracy. Implement data quality checks."
+              },
+              {
+                "id": "p6.1_evidence",
+                "name": "evidence",
+                "prose": "Data inventory; Collection point audit; Data minimization review"
+              }
+            ],
+            "links": [
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Data Minimization"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Purpose Limitation"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-5"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "647f69da-0e1d-5304-97c6-c2058bc58aa0",
+          "title": "Related Framework: iso27001",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-iso27001.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "c6b5e848-268c-5a88-9742-59eb249604e9",
+          "title": "Related Framework: nist-csf",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-nist-csf.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "89f2a3cd-5949-56a5-8f53-58378bc3ac25",
+          "title": "Related Framework: cis",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-cis.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "849aa76d-0015-5c8f-8162-d3f70d8084b9",
+          "title": "Related Framework: cmmc",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-cmmc.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "2c109681-7852-5771-bd03-6248e315dc52",
+          "title": "Related Framework: hipaa",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-hipaa.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "a0e00bef-c0b1-537e-a4a6-b83815d839d7",
+          "title": "Management Assertion",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "d48a2753-02d4-5f26-b5f2-be152fba18d3",
+          "title": "System Description",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "31d89527-8224-5f1b-b223-fdeba9533792",
+          "title": "Control Matrix",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "66d98d3c-ea21-5309-a20b-a5450f6aad48",
+          "title": "Risk Assessment Report",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "cebd5872-c0b7-5841-a082-673dfad361bb",
+          "title": "Information Security Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "71b61627-af02-59b0-8f39-b005ad9c1480",
+          "title": "Access Control Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "350e5d4c-2f2c-5c43-af8b-b72f3a40f9ec",
+          "title": "Change Management Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "017c0c2e-3bf2-57f9-8768-e8594485cfa8",
+          "title": "Incident Response Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "a4ee6938-912a-5671-a509-722ca2895776",
+          "title": "Business Continuity Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "359abb8e-eb12-5421-8032-68a098b0d697",
+          "title": "Vendor Management Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

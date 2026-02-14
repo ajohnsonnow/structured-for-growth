@@ -1,0 +1,89 @@
+{
+  "id": "tbl-impact-model",
+  "title": "Triple Bottom Line (TBL) Integrated P&L and Impact ROI",
+  "version": "1.0.0",
+  "category": "finance",
+  "icon": "💰",
+  "description": "Expands the traditional P&L to encompass Profit, People, and Planet dimensions. Includes a strategic initiative example (Fleet Electrification & Community Workforce Development) with full AI/data engineering enablement and servant leadership rationale.",
+  "methodology": "MBAi + TBL Accounting + Servant Leadership",
+  "frameworks": ["CSRD", "ISSB", "NIST AI RMF (Measure)"],
+  "initiative": "Fleet Electrification and Community Workforce Development",
+  "dimensions": [
+    {
+      "name": "Profit (Economic)",
+      "metrics": [
+        {
+          "id": "profit-01",
+          "metric": "Capital Expenditure (CapEx) & Implementation Cost",
+          "baseline": "$0",
+          "projected": "$1,500,000",
+          "aiEnablement": "Predictive AI modeling total cost of ownership (TCO) including software licensing, charging infrastructure, and maintenance",
+          "servantLeadership": "Approving upfront investments to secure long-term sustainability, resisting short-term earnings pressure"
+        },
+        {
+          "id": "profit-02",
+          "metric": "Operational Expenditure (OpEx) / Fuel & Maintenance Savings",
+          "baseline": "$800,000/Year (Fossil Fuels)",
+          "projected": "$350,000/Year (Electricity)",
+          "aiEnablement": "AI algorithms optimizing charging schedules based on variable grid pricing and fleet utilization patterns",
+          "servantLeadership": "Transparently documenting cost reductions to justify further investments in sustainable infrastructure"
+        }
+      ]
+    },
+    {
+      "name": "Planet (Environmental)",
+      "metrics": [
+        {
+          "id": "planet-01",
+          "metric": "Scope 1 GHG Emissions Output",
+          "baseline": "2,500 MT CO2e/Year",
+          "projected": "300 MT CO2e/Year",
+          "aiEnablement": "IoT sensors feeding real-time telematics data into AI platform for automated, continuous carbon footprint reporting",
+          "servantLeadership": "Recognizing ethical responsibility to mitigate climate contribution; exceeding minimum regulatory compliance"
+        },
+        {
+          "id": "planet-02",
+          "metric": "Avoided Carbon Taxation / Regulatory Risk Exposure",
+          "baseline": "$125,000 Projected Liability",
+          "projected": "$15,000 Projected Liability",
+          "aiEnablement": "NLP agents continuously monitoring global ESG legislation to forecast future tax exposures",
+          "servantLeadership": "Proactively shielding enterprise and stakeholders from foreseeable environmental financial risks"
+        }
+      ]
+    },
+    {
+      "name": "People (Social)",
+      "metrics": [
+        {
+          "id": "people-01",
+          "metric": "Local Job Creation and Technical Upskilling",
+          "baseline": "0 Specialized Technicians",
+          "projected": "25 High-wage technical roles created",
+          "aiEnablement": "AI platforms identifying internal skills gaps and generating personalized learning pathways for transitioning mechanics",
+          "servantLeadership": "Committing to retraining existing workforce rather than outsourcing; fostering economic resilience in local community"
+        },
+        {
+          "id": "people-02",
+          "metric": "Employee Health, Safety, and Well-being",
+          "baseline": "High noise and particulate exposure",
+          "projected": "Elimination of exhaust particulates; 40% noise reduction",
+          "aiEnablement": "Wearable IoT devices anonymously tracking environmental exposure levels for workplace safety improvements",
+          "servantLeadership": "Prioritizing physical and psychological well-being of frontline workers above operational speed"
+        }
+      ]
+    },
+    {
+      "name": "Integrated Output",
+      "metrics": [
+        {
+          "id": "integrated-01",
+          "metric": "Net Present Value (NPV) & Holistic Impact Score",
+          "baseline": "N/A",
+          "projected": "High Positive",
+          "aiEnablement": "Automated dashboards aggregating TBL metrics for real-time, executive-level visibility into holistic ROI",
+          "servantLeadership": "Synthesizing multi-dimensional data to ensure decisions generate mutual gains for shareholders, society, and the biosphere"
+        }
+      ]
+    }
+  ]
+}

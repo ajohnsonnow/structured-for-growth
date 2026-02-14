@@ -1,0 +1,1209 @@
+{
+  "catalog": {
+    "uuid": "af97a190-741f-58ab-8ee2-674f83b52475",
+    "metadata": {
+      "title": "NIST Artificial Intelligence Risk Management Framework 1.0",
+      "last-modified": "2026-02-13T19:30:32.145Z",
+      "version": "1.0 (January 2023)",
+      "oscal-version": "1.1.2",
+      "props": [
+        {
+          "name": "framework-id",
+          "value": "nist-ai-rmf"
+        },
+        {
+          "name": "governing-body",
+          "value": "National Institute of Standards and Technology (NIST)"
+        },
+        {
+          "name": "jurisdiction",
+          "value": "United States (Voluntary — Global Influence)"
+        },
+        {
+          "name": "certification-type",
+          "value": "voluntary-framework"
+        }
+      ],
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Catalog Publisher"
+        },
+        {
+          "id": "assessor",
+          "title": "Compliance Assessor"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "e3db1fd3-6865-5cea-b47f-3816c51962f0",
+          "type": "organization",
+          "name": "National Institute of Standards and Technology (NIST)"
+        }
+      ],
+      "remarks": "The NIST AI RMF provides a voluntary framework for managing risks associated with AI systems throughout their lifecycle. It promotes trustworthy AI by addressing validity, reliability, safety, security, explainability, privacy, fairness, and accountability. The framework uses four core functions: Govern, Map, Measure, and Manage. It is technology-agnostic and applicable to all AI system types."
+    },
+    "groups": [
+      {
+        "id": "govern",
+        "title": "GOVERN",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "6"
+          }
+        ],
+        "controls": [
+          {
+            "id": "gov-1",
+            "title": "Policies for Trustworthy AI",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Governance"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gov-1_stmt",
+                "name": "statement",
+                "prose": "Policies, processes, procedures, and practices across the organization related to the mapping, measuring, and managing of AI risks are in place, transparent, and implemented effectively."
+              },
+              {
+                "id": "gov-1_guide",
+                "name": "guidance",
+                "prose": "Develop AI ethics policy. Define acceptable AI use cases. Establish AI risk management policies. Integrate with existing governance structures."
+              },
+              {
+                "id": "gov-1_evidence",
+                "name": "evidence",
+                "prose": "AI policy documentation; Governance structure; Policy distribution records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.2 AI Policy"
+              },
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.3 Internal Organization"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC5.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.GV-1"
+              }
+            ]
+          },
+          {
+            "id": "gov-2",
+            "title": "Organizational AI Risk Tolerance",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Appetite"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gov-2_stmt",
+                "name": "statement",
+                "prose": "Organizational AI risk tolerance is determined and clearly communicated."
+              },
+              {
+                "id": "gov-2_guide",
+                "name": "guidance",
+                "prose": "Define risk tolerance levels for different AI use cases. Communicate thresholds. Align AI risk appetite with organizational risk appetite."
+              },
+              {
+                "id": "gov-2_evidence",
+                "name": "evidence",
+                "prose": "Risk tolerance documentation; Communication records; Alignment evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.4 Resources"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RM-1"
+              }
+            ]
+          },
+          {
+            "id": "gov-3",
+            "title": "Workforce Diversity and AI Competency",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Workforce"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gov-3_stmt",
+                "name": "statement",
+                "prose": "Workforce diversity, equity, inclusion, and accessibility processes are prioritized in the mapping, measuring, and managing of AI risks."
+              },
+              {
+                "id": "gov-3_guide",
+                "name": "guidance",
+                "prose": "Build diverse AI teams. Invest in AI competency training. Include diverse perspectives in AI risk assessment. Address representation gaps."
+              },
+              {
+                "id": "gov-3_evidence",
+                "name": "evidence",
+                "prose": "Diversity metrics; Training programs; Inclusive design practices"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.4 Resources"
+              },
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.6 Planning"
+              }
+            ]
+          },
+          {
+            "id": "gov-4",
+            "title": "Organizational Practices for AI Risk",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Culture"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gov-4_stmt",
+                "name": "statement",
+                "prose": "Organizational practices are in place to foster a critical thinking mindset by personnel working with AI systems."
+              },
+              {
+                "id": "gov-4_guide",
+                "name": "guidance",
+                "prose": "Foster AI risk awareness culture. Encourage responsible AI practices. Support ethical reporting mechanisms. Provide ongoing education."
+              },
+              {
+                "id": "gov-4_evidence",
+                "name": "evidence",
+                "prose": "Culture initiatives; Training records; Reporting mechanisms"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.7 Support"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC2.2"
+              }
+            ]
+          },
+          {
+            "id": "gov-5",
+            "title": "Ongoing Monitoring Processes",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Stakeholder Engagement"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gov-5_stmt",
+                "name": "statement",
+                "prose": "Processes are in place for robust engagement with relevant AI actors."
+              },
+              {
+                "id": "gov-5_guide",
+                "name": "guidance",
+                "prose": "Identify all relevant AI stakeholders. Establish engagement mechanisms. Collect and incorporate feedback. Maintain stakeholder communication."
+              },
+              {
+                "id": "gov-5_evidence",
+                "name": "evidence",
+                "prose": "Stakeholder mapping; Engagement records; Feedback incorporation evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.3 Internal Organization"
+              }
+            ]
+          },
+          {
+            "id": "gov-6",
+            "title": "Policies Addressing AI Risks in Third-Party Systems",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Third-Party Risk"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gov-6_stmt",
+                "name": "statement",
+                "prose": "Policies and procedures are in place to address AI risks from third-party entities, including value chain and supply chain."
+              },
+              {
+                "id": "gov-6_guide",
+                "name": "guidance",
+                "prose": "Assess AI risks from third-party AI models and services. Include AI clauses in vendor contracts. Monitor third-party AI systems."
+              },
+              {
+                "id": "gov-6_evidence",
+                "name": "evidence",
+                "prose": "Third-party AI risk policy; Vendor AI assessments; Contract AI clauses"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.10 Third-Party Relationships"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC9.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.19"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "map",
+        "title": "MAP",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "5"
+          }
+        ],
+        "controls": [
+          {
+            "id": "map-1",
+            "title": "Intended Purpose and Context",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Context Mapping"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "map-1_stmt",
+                "name": "statement",
+                "prose": "Context is established and understood for the AI system's intended purpose, deployment setting, and users."
+              },
+              {
+                "id": "map-1_guide",
+                "name": "guidance",
+                "prose": "Document AI system purpose. Define deployment context. Identify users and affected communities. Analyze intended vs. possible use cases."
+              },
+              {
+                "id": "map-1_evidence",
+                "name": "evidence",
+                "prose": "System purpose documentation; Context analysis; User identification; Use case documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.6 Planning"
+              }
+            ]
+          },
+          {
+            "id": "map-2",
+            "title": "Categorization of AI System",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Classification"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "map-2_stmt",
+                "name": "statement",
+                "prose": "Categorization of the AI system is performed to inform risk identification and management."
+              },
+              {
+                "id": "map-2_guide",
+                "name": "guidance",
+                "prose": "Classify AI system risk level. Determine if high-risk per applicable regulations. Categorize by type (generative, predictive, autonomous)."
+              },
+              {
+                "id": "map-2_evidence",
+                "name": "evidence",
+                "prose": "Risk categorization; Regulatory classification; System type documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.6 Planning"
+              },
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.5 Leadership"
+              }
+            ]
+          },
+          {
+            "id": "map-3",
+            "title": "AI Benefits and Costs",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Impact Assessment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "map-3_stmt",
+                "name": "statement",
+                "prose": "Benefits and costs of AI system deployment are assessed, including societal impact considerations."
+              },
+              {
+                "id": "map-3_guide",
+                "name": "guidance",
+                "prose": "Assess direct and indirect benefits. Evaluate potential costs including societal impacts. Compare AI vs. non-AI approaches."
+              },
+              {
+                "id": "map-3_evidence",
+                "name": "evidence",
+                "prose": "Benefit-cost analysis; Societal impact assessment; Alternative analysis"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.6 Planning"
+              }
+            ]
+          },
+          {
+            "id": "map-4",
+            "title": "Risks and Impacts of AI System",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Identification"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "map-4_stmt",
+                "name": "statement",
+                "prose": "Risks and potential impacts are identified based on the AI system's context, known limitations, and deployment environment."
+              },
+              {
+                "id": "map-4_guide",
+                "name": "guidance",
+                "prose": "Identify potential harms to people. Assess misuse potential. Evaluate impact on rights and civil liberties. Document known limitations."
+              },
+              {
+                "id": "map-4_evidence",
+                "name": "evidence",
+                "prose": "Risk identification records; Impact assessment; Limitation documentation; Misuse analysis"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.6 Planning"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.2"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-1"
+              }
+            ]
+          },
+          {
+            "id": "map-5",
+            "title": "Likelihood and Magnitude of Risks",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Analysis"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "map-5_stmt",
+                "name": "statement",
+                "prose": "Risk likelihood and magnitude are assessed for identified AI risks, stakeholders, and communities."
+              },
+              {
+                "id": "map-5_guide",
+                "name": "guidance",
+                "prose": "Quantify risk likelihood. Assess potential magnitude of impacts. Prioritize risks. Document risk scenarios."
+              },
+              {
+                "id": "map-5_evidence",
+                "name": "evidence",
+                "prose": "Risk scoring methodology; Risk priority matrix; Scenario documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.6 Planning"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "measure",
+        "title": "MEASURE",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "4"
+          }
+        ],
+        "controls": [
+          {
+            "id": "mea-1",
+            "title": "Appropriate AI Risk Metrics",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Metrics"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "mea-1_stmt",
+                "name": "statement",
+                "prose": "Appropriate methods and metrics are identified and applied to assess and monitor AI risks."
+              },
+              {
+                "id": "mea-1_guide",
+                "name": "guidance",
+                "prose": "Define metrics for fairness, bias, accuracy, robustness. Implement automated measurement. Establish baselines and thresholds."
+              },
+              {
+                "id": "mea-1_evidence",
+                "name": "evidence",
+                "prose": "Metrics definitions; Measurement tools; Baseline documentation; Threshold configurations"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.9 Performance Evaluation"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC4.1"
+              }
+            ]
+          },
+          {
+            "id": "mea-2",
+            "title": "Trustworthiness Characteristics Assessment",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Trustworthiness"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "mea-2_stmt",
+                "name": "statement",
+                "prose": "AI system trustworthiness characteristics (validity, reliability, fairness, safety, security, privacy, explainability) are evaluated."
+              },
+              {
+                "id": "mea-2_guide",
+                "name": "guidance",
+                "prose": "Evaluate each trustworthiness characteristic. Test for bias across demographic groups. Assess model robustness. Evaluate explainability of outputs."
+              },
+              {
+                "id": "mea-2_evidence",
+                "name": "evidence",
+                "prose": "Trustworthiness evaluation reports; Bias testing results; Robustness assessments; Explainability documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.6 Planning"
+              },
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.8 Operations"
+              }
+            ]
+          },
+          {
+            "id": "mea-3",
+            "title": "AI Risk Tracking Mechanisms",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Monitoring"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "mea-3_stmt",
+                "name": "statement",
+                "prose": "Mechanisms for tracking identified AI risks over time are in place."
+              },
+              {
+                "id": "mea-3_guide",
+                "name": "guidance",
+                "prose": "Implement AI model monitoring dashboards. Track model performance drift. Monitor fairness metrics over time. Alert on metric degradation."
+              },
+              {
+                "id": "mea-3_evidence",
+                "name": "evidence",
+                "prose": "Monitoring dashboards; Drift detection evidence; Alert configurations; Historical metrics"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.9 Performance Evaluation"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC4.2"
+              }
+            ]
+          },
+          {
+            "id": "mea-4",
+            "title": "AI System Feedback Mechanisms",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Feedback"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "mea-4_stmt",
+                "name": "statement",
+                "prose": "Feedback about efficacy of measurement approaches is collected and AI system performance is assessed."
+              },
+              {
+                "id": "mea-4_guide",
+                "name": "guidance",
+                "prose": "Establish user feedback channels. Collect performance feedback. Assess measurement tool effectiveness. Iterate on metrics."
+              },
+              {
+                "id": "mea-4_evidence",
+                "name": "evidence",
+                "prose": "Feedback collection mechanisms; User feedback records; Measurement review records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.9 Performance Evaluation"
+              },
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.10 Improvement"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "manage",
+        "title": "MANAGE",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "4"
+          }
+        ],
+        "controls": [
+          {
+            "id": "man-1",
+            "title": "AI Risk Prioritization and Response",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Response"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "man-1_stmt",
+                "name": "statement",
+                "prose": "AI risks based on assessments are prioritized, responded to, and managed."
+              },
+              {
+                "id": "man-1_guide",
+                "name": "guidance",
+                "prose": "Prioritize AI risks. Develop response plans. Implement mitigations. Track remediation progress."
+              },
+              {
+                "id": "man-1_evidence",
+                "name": "evidence",
+                "prose": "Risk prioritization records; Response plans; Mitigation implementations; Progress tracking"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.6 Planning"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC9.1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RM-1"
+              }
+            ]
+          },
+          {
+            "id": "man-2",
+            "title": "Risk Treatment Plans",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Treatment"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "man-2_stmt",
+                "name": "statement",
+                "prose": "Plans for minimizing, monitoring, and managing AI system risks are implemented and inform system operation and updates."
+              },
+              {
+                "id": "man-2_guide",
+                "name": "guidance",
+                "prose": "Develop risk treatment plans for each significant risk. Monitor treatment effectiveness. Update plans as risks evolve."
+              },
+              {
+                "id": "man-2_evidence",
+                "name": "evidence",
+                "prose": "Risk treatment plans; Monitoring records; Plan updates"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.6 Planning"
+              },
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.8 Operations"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.2"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC9.1"
+              }
+            ]
+          },
+          {
+            "id": "man-3",
+            "title": "Post-Deployment AI Risk Monitoring",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Ongoing Monitoring"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "man-3_stmt",
+                "name": "statement",
+                "prose": "AI risks and benefits from third-party resources are regularly monitored, and appropriate actions are taken."
+              },
+              {
+                "id": "man-3_guide",
+                "name": "guidance",
+                "prose": "Monitor AI systems in production. Track performance metrics. Detect and respond to adverse events. Maintain incident logs."
+              },
+              {
+                "id": "man-3_evidence",
+                "name": "evidence",
+                "prose": "Production monitoring evidence; Performance metrics; Incident response records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.9 Performance Evaluation"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC4.2"
+              }
+            ]
+          },
+          {
+            "id": "man-4",
+            "title": "Risk Management of AI Decommissioning",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Decommissioning"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "man-4_stmt",
+                "name": "statement",
+                "prose": "Risks and benefits are routinely assessed. AI system decommissioning is handled in a responsible manner."
+              },
+              {
+                "id": "man-4_guide",
+                "name": "guidance",
+                "prose": "Define AI system end-of-life criteria. Implement responsible decommissioning procedures. Handle data and model disposal. Document decommissioning decisions."
+              },
+              {
+                "id": "man-4_evidence",
+                "name": "evidence",
+                "prose": "Decommissioning policy; Data disposal records; Decision documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.8 Operations"
+              },
+              {
+                "href": "#iso42001",
+                "rel": "related",
+                "text": "iso42001: A.10 Improvement"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "72ba32cc-e1cb-59cc-8ed4-6ac5a20b18c6",
+          "title": "Related Framework: iso42001",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-iso42001.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "c6b5e848-268c-5a88-9742-59eb249604e9",
+          "title": "Related Framework: nist-csf",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-nist-csf.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "f834b0f2-c310-5a40-b85a-95d8be946ef8",
+          "title": "Related Framework: gdpr",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-gdpr.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "647f69da-0e1d-5304-97c6-c2058bc58aa0",
+          "title": "Related Framework: iso27001",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-iso27001.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "067ca3b8-9e1e-54ef-b70d-f757a3c1797a",
+          "title": "AI Risk Management Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "eba2b80a-63a9-5b68-9f7b-123c71ad239e",
+          "title": "AI System Inventory/Registry",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "078e7eb1-fcac-51fd-b08e-c2c907ed16f4",
+          "title": "AI Risk Assessment Reports",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "d770904b-1eda-59ee-ad7b-597e189dcee5",
+          "title": "AI Impact Assessments",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "40ea232e-a467-5f09-a58c-0e39def47eff",
+          "title": "Trustworthiness Evaluation Reports",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "7a583ebf-0aff-54af-8825-ac7ac49e7bef",
+          "title": "Bias and Fairness Testing Results",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "d7a9cfa7-4cba-55c4-87e4-06ecea7e3687",
+          "title": "AI Model Monitoring Dashboards",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "f08a28b6-caa3-5ac7-8a15-46fa6abe4a08",
+          "title": "Stakeholder Engagement Records",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "a73c359c-728c-5747-b2d4-1a658699fe65",
+          "title": "AI Incident Response Procedures",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "e6d3dd46-c506-5819-bbbe-3ecedbc9c2e9",
+          "title": "AI Decommissioning Procedures",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

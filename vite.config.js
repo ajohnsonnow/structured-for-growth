@@ -19,6 +19,7 @@ export default defineConfig({
         templates: resolve(__dirname, 'client/templates.html'),
         portal: resolve(__dirname, 'client/portal.html'),
         compliance: resolve(__dirname, 'client/compliance.html'),
+        mbai: resolve(__dirname, 'client/mbai.html'),
         docs: resolve(__dirname, 'client/docs.html'),
       },
     },

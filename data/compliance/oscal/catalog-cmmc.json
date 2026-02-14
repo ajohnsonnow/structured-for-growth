@@ -1,0 +1,1273 @@
+{
+  "catalog": {
+    "uuid": "3c920171-d90a-5740-9c75-7c55bcdc9b96",
+    "metadata": {
+      "title": "Cybersecurity Maturity Model Certification 2.0",
+      "last-modified": "2026-02-13T19:30:32.137Z",
+      "version": "2.0 (Final Rule December 2024)",
+      "oscal-version": "1.1.2",
+      "props": [
+        {
+          "name": "framework-id",
+          "value": "cmmc"
+        },
+        {
+          "name": "governing-body",
+          "value": "U.S. Department of Defense (DoD)"
+        },
+        {
+          "name": "jurisdiction",
+          "value": "United States"
+        },
+        {
+          "name": "certification-type",
+          "value": "certification"
+        }
+      ],
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Catalog Publisher"
+        },
+        {
+          "id": "assessor",
+          "title": "Compliance Assessor"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "80b7e785-5c6d-55e5-9b58-8b471b454069",
+          "type": "organization",
+          "name": "U.S. Department of Defense (DoD)"
+        }
+      ],
+      "remarks": "CMMC 2.0 ensures that Defense Industrial Base (DIB) companies implement cybersecurity practices to protect Controlled Unclassified Information (CUI) and Federal Contract Information (FCI). It aligns directly with NIST SP 800-171 requirements and adds third-party certification for Level 2 contractors. CMMC is a pass/fail requirement for DoD contracts."
+    },
+    "groups": [
+      {
+        "id": "access-control",
+        "title": "Access Control (AC)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "5"
+          }
+        ],
+        "controls": [
+          {
+            "id": "ac.l2-3.1.1",
+            "title": "Authorized Access Control",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ac.l2-3.1.1_stmt",
+                "name": "statement",
+                "prose": "Limit information system access to authorized users, processes acting on behalf of authorized users, or devices."
+              },
+              {
+                "id": "ac.l2-3.1.1_guide",
+                "name": "guidance",
+                "prose": "Implement access control lists. Enforce need-to-know. Use directory services for centralized access management. Remove access upon separation."
+              },
+              {
+                "id": "ac.l2-3.1.1_evidence",
+                "name": "evidence",
+                "prose": "Access control policy; ACL configurations; Account management procedures"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.15"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.2"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Access Control"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#nis2",
+                "rel": "related",
+                "text": "nis2: NIS2-21.2i"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: AC-2"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-1"
+              }
+            ]
+          },
+          {
+            "id": "ac.l2-3.1.2",
+            "title": "Transaction and Function Control",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ac.l2-3.1.2_stmt",
+                "name": "statement",
+                "prose": "Limit information system access to the types of transactions and functions that authorized users are permitted to execute."
+              },
+              {
+                "id": "ac.l2-3.1.2_guide",
+                "name": "guidance",
+                "prose": "Implement RBAC. Define function-level permissions. Enforce least privilege for all transactions."
+              },
+              {
+                "id": "ac.l2-3.1.2_evidence",
+                "name": "evidence",
+                "prose": "RBAC matrix; Permission configurations; Least privilege evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.3"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: AC-3"
+              }
+            ]
+          },
+          {
+            "id": "ac.l2-3.1.5",
+            "title": "Least Privilege",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ac.l2-3.1.5_stmt",
+                "name": "statement",
+                "prose": "Employ the principle of least privilege, including for specific security functions and privileged accounts."
+              },
+              {
+                "id": "ac.l2-3.1.5_guide",
+                "name": "guidance",
+                "prose": "Restrict admin access. Use separate admin accounts. Implement just-in-time access. Audit privileged access regularly."
+              },
+              {
+                "id": "ac.l2-3.1.5_evidence",
+                "name": "evidence",
+                "prose": "Privilege access inventory; Separation of admin accounts; JIT access logs; Audit records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.2"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: AC-6"
+              }
+            ]
+          },
+          {
+            "id": "ac.l2-3.1.7",
+            "title": "Privileged Function Prevention",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ac.l2-3.1.7_stmt",
+                "name": "statement",
+                "prose": "Prevent non-privileged users from executing privileged functions and audit the execution of such functions."
+              },
+              {
+                "id": "ac.l2-3.1.7_guide",
+                "name": "guidance",
+                "prose": "Enforce separation between privileged and non-privileged operations. Audit all privileged function executions. Alert on anomalies."
+              },
+              {
+                "id": "ac.l2-3.1.7_evidence",
+                "name": "evidence",
+                "prose": "Privileged function audit logs; Separation enforcement evidence; Alerting configurations"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.2"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: AC-6(9)"
+              }
+            ]
+          },
+          {
+            "id": "ac.l2-3.1.12",
+            "title": "Remote Access Control",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Remote Access"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ac.l2-3.1.12_stmt",
+                "name": "statement",
+                "prose": "Monitor and control remote access sessions."
+              },
+              {
+                "id": "ac.l2-3.1.12_guide",
+                "name": "guidance",
+                "prose": "Implement VPN with MFA. Monitor remote sessions. Log remote access. Restrict remote access to authorized users only."
+              },
+              {
+                "id": "ac.l2-3.1.12_evidence",
+                "name": "evidence",
+                "prose": "VPN configurations; Remote access policy; Session monitoring evidence; MFA for remote access"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.6"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.1"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: AC-17"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "identification-authentication",
+        "title": "Identification and Authentication (IA)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "4"
+          }
+        ],
+        "controls": [
+          {
+            "id": "ia.l2-3.5.1",
+            "title": "Identification",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Identification"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ia.l2-3.5.1_stmt",
+                "name": "statement",
+                "prose": "Identify information system users, processes acting on behalf of users, or devices."
+              },
+              {
+                "id": "ia.l2-3.5.1_guide",
+                "name": "guidance",
+                "prose": "Assign unique identifiers to all users and devices. Implement device certificates. Prohibit shared accounts."
+              },
+              {
+                "id": "ia.l2-3.5.1_evidence",
+                "name": "evidence",
+                "prose": "User account inventory; Device identification; No shared accounts evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.5"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Unique User ID"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: IA-2"
+              }
+            ]
+          },
+          {
+            "id": "ia.l2-3.5.3",
+            "title": "Multi-Factor Authentication",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Authentication"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ia.l2-3.5.3_stmt",
+                "name": "statement",
+                "prose": "Use multifactor authentication for local and network access to privileged accounts and for network access to non-privileged accounts."
+              },
+              {
+                "id": "ia.l2-3.5.3_guide",
+                "name": "guidance",
+                "prose": "Deploy MFA for all privileged access. Deploy MFA for network access to non-privileged accounts. Use phishing-resistant methods (FIDO2) where possible."
+              },
+              {
+                "id": "ia.l2-3.5.3_evidence",
+                "name": "evidence",
+                "prose": "MFA deployment report; MFA policy; Coverage report showing all required accounts"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.5"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Person or Entity Authentication"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#nis2",
+                "rel": "related",
+                "text": "nis2: NIS2-21.2j"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: IA-2(1)"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: IA-2(2)"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-7"
+              }
+            ]
+          },
+          {
+            "id": "ia.l2-3.5.7",
+            "title": "Password Complexity",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Authentication"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ia.l2-3.5.7_stmt",
+                "name": "statement",
+                "prose": "Enforce a minimum password complexity and change of characters when new passwords are created."
+              },
+              {
+                "id": "ia.l2-3.5.7_guide",
+                "name": "guidance",
+                "prose": "Enforce minimum 14 characters. Require complexity (upper, lower, numbers, special). Screen against breach databases. Implement password managers."
+              },
+              {
+                "id": "ia.l2-3.5.7_evidence",
+                "name": "evidence",
+                "prose": "Password policy; Enforcement configurations; Breach database screening"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: IA-5(1)"
+              }
+            ]
+          },
+          {
+            "id": "ia.l2-3.5.10",
+            "title": "Cryptographically-Protected Passwords",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Authentication"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ia.l2-3.5.10_stmt",
+                "name": "statement",
+                "prose": "Store and transmit only cryptographically-protected passwords."
+              },
+              {
+                "id": "ia.l2-3.5.10_guide",
+                "name": "guidance",
+                "prose": "Hash passwords with bcrypt, scrypt, or Argon2. Never store plaintext. Transmit over TLS only. Implement proper salting."
+              },
+              {
+                "id": "ia.l2-3.5.10_evidence",
+                "name": "evidence",
+                "prose": "Password storage implementation; Hashing algorithm documentation; No plaintext evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: IA-5(1)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "audit-accountability",
+        "title": "Audit and Accountability (AU)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "4"
+          }
+        ],
+        "controls": [
+          {
+            "id": "au.l2-3.3.1",
+            "title": "System Auditing",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Audit Logging"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "au.l2-3.3.1_stmt",
+                "name": "statement",
+                "prose": "Create and retain system audit logs and records to the extent needed to enable monitoring, analysis, investigation, and reporting."
+              },
+              {
+                "id": "au.l2-3.3.1_guide",
+                "name": "guidance",
+                "prose": "Log authentication events, access to CUI, administrative actions, and system changes. Include timestamp, source, user, event type, outcome."
+              },
+              {
+                "id": "au.l2-3.3.1_evidence",
+                "name": "evidence",
+                "prose": "Audit log configurations; Log samples; Retention policy"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.15"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Audit Controls"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 10"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: AU-2"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: AU-3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.AE-3"
+              }
+            ]
+          },
+          {
+            "id": "au.l2-3.3.2",
+            "title": "Actionable Audit",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Accountability"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "au.l2-3.3.2_stmt",
+                "name": "statement",
+                "prose": "Ensure that the actions of individual system users can be uniquely traced to those users so they can be held accountable."
+              },
+              {
+                "id": "au.l2-3.3.2_guide",
+                "name": "guidance",
+                "prose": "Map all audit events to individual users. Prohibit shared accounts. Implement non-repudiation. Enable forensic investigation."
+              },
+              {
+                "id": "au.l2-3.3.2_evidence",
+                "name": "evidence",
+                "prose": "User-to-action mapping; Non-repudiation evidence; Investigation capability"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.15"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 10"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: AU-6"
+              }
+            ]
+          },
+          {
+            "id": "au.l2-3.3.4",
+            "title": "Audit Failure Alerting",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Monitoring"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "au.l2-3.3.4_stmt",
+                "name": "statement",
+                "prose": "Alert in the event of an audit logging process failure."
+              },
+              {
+                "id": "au.l2-3.3.4_guide",
+                "name": "guidance",
+                "prose": "Monitor audit logging processes. Alert on failures. Implement redundant logging. Escalate audit failures as high-severity events."
+              },
+              {
+                "id": "au.l2-3.3.4_evidence",
+                "name": "evidence",
+                "prose": "Alert configurations; Failure response procedures; Historical alert records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.15"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: AU-5"
+              }
+            ]
+          },
+          {
+            "id": "au.l2-3.3.8",
+            "title": "Audit Protection",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Log Protection"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "au.l2-3.3.8_stmt",
+                "name": "statement",
+                "prose": "Protect audit information and audit logging tools from unauthorized access, modification, and deletion."
+              },
+              {
+                "id": "au.l2-3.3.8_guide",
+                "name": "guidance",
+                "prose": "Restrict access to audit logs to authorized personnel. Implement log integrity checks. Use WORM storage. Forward to tamper-proof SIEM."
+              },
+              {
+                "id": "au.l2-3.3.8_evidence",
+                "name": "evidence",
+                "prose": "Log access restrictions; Integrity verification; WORM or immutable storage evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.15"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 10"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: AU-9"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "system-communications",
+        "title": "System and Communications Protection (SC)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "3"
+          }
+        ],
+        "controls": [
+          {
+            "id": "sc.l2-3.13.1",
+            "title": "Boundary Protection",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Network Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "sc.l2-3.13.1_stmt",
+                "name": "statement",
+                "prose": "Monitor, control, and protect organizational communications at external and key internal boundaries."
+              },
+              {
+                "id": "sc.l2-3.13.1_guide",
+                "name": "guidance",
+                "prose": "Deploy firewalls at all boundaries. Implement DMZ for public-facing services. Segment CUI environments. Monitor boundary traffic."
+              },
+              {
+                "id": "sc.l2-3.13.1_evidence",
+                "name": "evidence",
+                "prose": "Firewall configurations; Network segmentation evidence; DMZ architecture; Boundary monitoring"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.6"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.20"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 1"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: SC-7"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-5"
+              }
+            ]
+          },
+          {
+            "id": "sc.l2-3.13.8",
+            "title": "CUI Encryption in Transit",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Transmission Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "sc.l2-3.13.8_stmt",
+                "name": "statement",
+                "prose": "Implement cryptographic mechanisms to prevent unauthorized disclosure of CUI during transmission."
+              },
+              {
+                "id": "sc.l2-3.13.8_guide",
+                "name": "guidance",
+                "prose": "Enforce TLS 1.2+ for all CUI transmission. Use VPN for network-level encryption. Disable deprecated protocols (SSLv3, TLS 1.0/1.1)."
+              },
+              {
+                "id": "sc.l2-3.13.8_evidence",
+                "name": "evidence",
+                "prose": "TLS configuration; VPN encryption settings; Deprecated protocol removal; Certificate management"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Encryption in Transit"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 4"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: SC-8"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-2"
+              }
+            ]
+          },
+          {
+            "id": "sc.l2-3.13.11",
+            "title": "CUI Encryption at Rest",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Data Protection"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "sc.l2-3.13.11_stmt",
+                "name": "statement",
+                "prose": "Employ FIPS-validated cryptography when used to protect the confidentiality of CUI."
+              },
+              {
+                "id": "sc.l2-3.13.11_guide",
+                "name": "guidance",
+                "prose": "Use FIPS 140-2 validated cryptographic modules. Encrypt all CUI at rest. Implement key management per NIST SP 800-57."
+              },
+              {
+                "id": "sc.l2-3.13.11_evidence",
+                "name": "evidence",
+                "prose": "FIPS validation certificates; Encryption configurations; Key management procedures"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: C1.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Encryption and Decryption"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 3"
+              },
+              {
+                "href": "#nist-800-53",
+                "rel": "related",
+                "text": "nist-800-53: SC-28"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "1539ebd9-63a1-5376-9d63-644ea6475220",
+          "title": "Related Framework: nist-800-171",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-nist-800-171.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "a08c1105-586d-5574-9e8e-0315bd6d8c11",
+          "title": "Related Framework: nist-800-53",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-nist-800-53.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "647f69da-0e1d-5304-97c6-c2058bc58aa0",
+          "title": "Related Framework: iso27001",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-iso27001.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "c0a260c6-e000-5fa4-a8ca-3e74907aa800",
+          "title": "Related Framework: soc2",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-soc2.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "3a2b50a6-c595-5deb-8ee4-ee0b312bb4f4",
+          "title": "System Security Plan (SSP)",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "2d94f014-060b-5da7-bd61-4c54d3d6f7dc",
+          "title": "Plan of Action & Milestones (POA&M)",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "7711073e-5906-5780-9d31-013c2c4b7703",
+          "title": "Network Diagrams",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "55cab274-0d30-5022-afb3-50d2c38b87e0",
+          "title": "Data Flow Diagrams",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "b6bf0faf-cc06-55fc-b8f7-a0eb969a3e18",
+          "title": "Access Control Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "ac27ed75-3dee-578d-8bf6-877624be19c3",
+          "title": "Incident Response Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "fac5dba0-c7a6-5542-8f9a-b696d50934da",
+          "title": "Configuration Management Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "6f026c9d-1cff-5595-8676-d172419c6eb5",
+          "title": "Risk Assessment Report",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "8a4efe0a-43ff-5f44-b52a-864b59f43b30",
+          "title": "Security Awareness Training Records",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "e45d3b5a-4bad-5593-bf16-f50915377a79",
+          "title": "Continuous Monitoring Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

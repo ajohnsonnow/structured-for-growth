@@ -1,0 +1,109 @@
+{
+  "id": "cmmc",
+  "name": "CMMC",
+  "fullName": "Cybersecurity Maturity Model Certification 2.0",
+  "version": "2.0 (Final Rule December 2024)",
+  "governingBody": "U.S. Department of Defense (DoD)",
+  "jurisdiction": "United States",
+  "primaryAudience": ["Defense Industrial Base (DIB) Contractors", "DoD Subcontractors", "Manufacturers", "IT Service Providers to DoD", "Government Contractors"],
+  "description": "CMMC 2.0 ensures that Defense Industrial Base (DIB) companies implement cybersecurity practices to protect Controlled Unclassified Information (CUI) and Federal Contract Information (FCI). It aligns directly with NIST SP 800-171 requirements and adds third-party certification for Level 2 contractors. CMMC is a pass/fail requirement for DoD contracts.",
+  "certificationDetails": {
+    "type": "certification",
+    "reportTypes": ["CMMC Assessment Report", "Plan of Action & Milestones (POA&M)", "System Security Plan (SSP)"],
+    "assessor": "Level 1: Self-assessment; Level 2: C3PAO (CMMC Third-Party Assessment Organization); Level 3: DIBCAC (Government-led)",
+    "typicalCost": "$5,000 - $150,000+ (depends on level and scope)",
+    "auditCycle": "Triennial assessment with annual affirmation",
+    "certificationBody": "Cyber AB (CMMC Accreditation Body)"
+  },
+  "lifecycle": [
+    { "phase": 1, "name": "Scoping and Gap Assessment", "description": "Define CUI/FCI boundaries. Identify which CMMC level is required. Perform gap assessment against controls.", "typicalDuration": "4-6 weeks", "keyActivities": ["Identify CUI/FCI data flows", "Determine required CMMC level", "Define assessment scope", "Conduct gap analysis against NIST 800-171"] },
+    { "phase": 2, "name": "SSP and POA&M Development", "description": "Develop System Security Plan (SSP) documenting security architecture and controls. Create POA&M for open items.", "typicalDuration": "4-8 weeks", "keyActivities": ["Write SSP", "Document control implementations", "Create POA&M for gaps", "Define milestones and timelines"] },
+    { "phase": 3, "name": "Control Implementation", "description": "Implement all required controls. Evidence collection. Staff training. Process documentation.", "typicalDuration": "8-24 weeks", "keyActivities": ["Implement technical controls", "Deploy security tools", "Train staff", "Collect evidence artifacts"] },
+    { "phase": 4, "name": "Assessment and Certification", "description": "Engage C3PAO (Level 2) or DIBCAC (Level 3) for formal assessment. Achieve certification.", "typicalDuration": "4-12 weeks", "keyActivities": ["Pre-assessment readiness review", "Formal assessment by C3PAO/DIBCAC", "Address findings", "Receive certification"] },
+    { "phase": 5, "name": "Continuous Compliance", "description": "Maintain certification through continuous monitoring, annual affirmations, and triennial reassessment.", "typicalDuration": "Ongoing", "keyActivities": ["Continuous monitoring", "Annual affirmation to DoD", "POA&M closeout", "Triennial reassessment preparation"] }
+  ],
+  "domains": [
+    {
+      "id": "access-control",
+      "name": "Access Control (AC)",
+      "description": "Limit system access to authorized users, processes, and devices.",
+      "required": true,
+      "controlCount": 5,
+      "controls": [
+        { "id": "AC.L2-3.1.1", "name": "Authorized Access Control", "description": "Limit information system access to authorized users, processes acting on behalf of authorized users, or devices.", "implementationType": "required", "category": "Access Control", "mappings": { "soc2": ["CC6.1"], "iso27001": ["A.5.15", "A.8.2"], "hipaa": ["Access Control"], "pci-dss": ["Req 7"], "nis2": ["NIS2-21.2i"], "nist-800-53": ["AC-2"], "nist-csf": ["PR.AC-1"] }, "implementationGuidance": "Implement access control lists. Enforce need-to-know. Use directory services for centralized access management. Remove access upon separation.", "evidenceRequired": ["Access control policy", "ACL configurations", "Account management procedures"], "automationCapability": "full", "codePatterns": ["rbac-middleware"] },
+        { "id": "AC.L2-3.1.2", "name": "Transaction and Function Control", "description": "Limit information system access to the types of transactions and functions that authorized users are permitted to execute.", "implementationType": "required", "category": "Access Control", "mappings": { "soc2": ["CC6.3"], "iso27001": ["A.8.2", "A.8.3"], "pci-dss": ["Req 7"], "nist-800-53": ["AC-3"] }, "implementationGuidance": "Implement RBAC. Define function-level permissions. Enforce least privilege for all transactions.", "evidenceRequired": ["RBAC matrix", "Permission configurations", "Least privilege evidence"], "automationCapability": "full", "codePatterns": ["rbac-middleware"] },
+        { "id": "AC.L2-3.1.5", "name": "Least Privilege", "description": "Employ the principle of least privilege, including for specific security functions and privileged accounts.", "implementationType": "required", "category": "Access Control", "mappings": { "soc2": ["CC6.3"], "iso27001": ["A.8.2"], "pci-dss": ["Req 7"], "nist-800-53": ["AC-6"] }, "implementationGuidance": "Restrict admin access. Use separate admin accounts. Implement just-in-time access. Audit privileged access regularly.", "evidenceRequired": ["Privilege access inventory", "Separation of admin accounts", "JIT access logs", "Audit records"], "automationCapability": "full" },
+        { "id": "AC.L2-3.1.7", "name": "Privileged Function Prevention", "description": "Prevent non-privileged users from executing privileged functions and audit the execution of such functions.", "implementationType": "required", "category": "Access Control", "mappings": { "soc2": ["CC6.1"], "iso27001": ["A.8.2"], "nist-800-53": ["AC-6(9)"] }, "implementationGuidance": "Enforce separation between privileged and non-privileged operations. Audit all privileged function executions. Alert on anomalies.", "evidenceRequired": ["Privileged function audit logs", "Separation enforcement evidence", "Alerting configurations"], "automationCapability": "full", "codePatterns": ["audit-logger"] },
+        { "id": "AC.L2-3.1.12", "name": "Remote Access Control", "description": "Monitor and control remote access sessions.", "implementationType": "required", "category": "Remote Access", "mappings": { "soc2": ["CC6.1", "CC6.6"], "iso27001": ["A.8.1"], "nist-800-53": ["AC-17"] }, "implementationGuidance": "Implement VPN with MFA. Monitor remote sessions. Log remote access. Restrict remote access to authorized users only.", "evidenceRequired": ["VPN configurations", "Remote access policy", "Session monitoring evidence", "MFA for remote access"], "automationCapability": "full" }
+      ]
+    },
+    {
+      "id": "identification-authentication",
+      "name": "Identification and Authentication (IA)",
+      "description": "Identify and authenticate users, processes, and devices.",
+      "required": true,
+      "controlCount": 4,
+      "controls": [
+        { "id": "IA.L2-3.5.1", "name": "Identification", "description": "Identify information system users, processes acting on behalf of users, or devices.", "implementationType": "required", "category": "Identification", "mappings": { "soc2": ["CC6.1"], "iso27001": ["A.8.5"], "hipaa": ["Unique User ID"], "pci-dss": ["Req 8"], "nist-800-53": ["IA-2"] }, "implementationGuidance": "Assign unique identifiers to all users and devices. Implement device certificates. Prohibit shared accounts.", "evidenceRequired": ["User account inventory", "Device identification", "No shared accounts evidence"], "automationCapability": "full" },
+        { "id": "IA.L2-3.5.3", "name": "Multi-Factor Authentication", "description": "Use multifactor authentication for local and network access to privileged accounts and for network access to non-privileged accounts.", "implementationType": "required", "category": "Authentication", "mappings": { "soc2": ["CC6.1"], "iso27001": ["A.8.5"], "hipaa": ["Person or Entity Authentication"], "pci-dss": ["Req 8"], "nis2": ["NIS2-21.2j"], "nist-800-53": ["IA-2(1)", "IA-2(2)"], "nist-csf": ["PR.AC-7"] }, "implementationGuidance": "Deploy MFA for all privileged access. Deploy MFA for network access to non-privileged accounts. Use phishing-resistant methods (FIDO2) where possible.", "evidenceRequired": ["MFA deployment report", "MFA policy", "Coverage report showing all required accounts"], "automationCapability": "full", "codePatterns": ["auth-mfa-middleware"] },
+        { "id": "IA.L2-3.5.7", "name": "Password Complexity", "description": "Enforce a minimum password complexity and change of characters when new passwords are created.", "implementationType": "required", "category": "Authentication", "mappings": { "soc2": ["CC6.1"], "pci-dss": ["Req 8"], "nist-800-53": ["IA-5(1)"] }, "implementationGuidance": "Enforce minimum 14 characters. Require complexity (upper, lower, numbers, special). Screen against breach databases. Implement password managers.", "evidenceRequired": ["Password policy", "Enforcement configurations", "Breach database screening"], "automationCapability": "full" },
+        { "id": "IA.L2-3.5.10", "name": "Cryptographically-Protected Passwords", "description": "Store and transmit only cryptographically-protected passwords.", "implementationType": "required", "category": "Authentication", "mappings": { "soc2": ["CC6.7"], "iso27001": ["A.8.24"], "nist-800-53": ["IA-5(1)"] }, "implementationGuidance": "Hash passwords with bcrypt, scrypt, or Argon2. Never store plaintext. Transmit over TLS only. Implement proper salting.", "evidenceRequired": ["Password storage implementation", "Hashing algorithm documentation", "No plaintext evidence"], "automationCapability": "full" }
+      ]
+    },
+    {
+      "id": "audit-accountability",
+      "name": "Audit and Accountability (AU)",
+      "description": "Create, protect, and retain audit records. Enable monitoring, analysis, investigation, and reporting.",
+      "required": true,
+      "controlCount": 4,
+      "controls": [
+        { "id": "AU.L2-3.3.1", "name": "System Auditing", "description": "Create and retain system audit logs and records to the extent needed to enable monitoring, analysis, investigation, and reporting.", "implementationType": "required", "category": "Audit Logging", "mappings": { "soc2": ["CC7.1", "CC7.2"], "iso27001": ["A.8.15"], "hipaa": ["Audit Controls"], "pci-dss": ["Req 10"], "nist-800-53": ["AU-2", "AU-3"], "nist-csf": ["DE.AE-3"] }, "implementationGuidance": "Log authentication events, access to CUI, administrative actions, and system changes. Include timestamp, source, user, event type, outcome.", "evidenceRequired": ["Audit log configurations", "Log samples", "Retention policy"], "automationCapability": "full", "codePatterns": ["audit-logger"] },
+        { "id": "AU.L2-3.3.2", "name": "Actionable Audit", "description": "Ensure that the actions of individual system users can be uniquely traced to those users so they can be held accountable.", "implementationType": "required", "category": "Accountability", "mappings": { "soc2": ["CC7.2"], "iso27001": ["A.8.15"], "pci-dss": ["Req 10"], "nist-800-53": ["AU-6"] }, "implementationGuidance": "Map all audit events to individual users. Prohibit shared accounts. Implement non-repudiation. Enable forensic investigation.", "evidenceRequired": ["User-to-action mapping", "Non-repudiation evidence", "Investigation capability"], "automationCapability": "full" },
+        { "id": "AU.L2-3.3.4", "name": "Audit Failure Alerting", "description": "Alert in the event of an audit logging process failure.", "implementationType": "required", "category": "Monitoring", "mappings": { "soc2": ["CC7.1"], "iso27001": ["A.8.15"], "nist-800-53": ["AU-5"] }, "implementationGuidance": "Monitor audit logging processes. Alert on failures. Implement redundant logging. Escalate audit failures as high-severity events.", "evidenceRequired": ["Alert configurations", "Failure response procedures", "Historical alert records"], "automationCapability": "full" },
+        { "id": "AU.L2-3.3.8", "name": "Audit Protection", "description": "Protect audit information and audit logging tools from unauthorized access, modification, and deletion.", "implementationType": "required", "category": "Log Protection", "mappings": { "soc2": ["CC7.1"], "iso27001": ["A.8.15"], "pci-dss": ["Req 10"], "nist-800-53": ["AU-9"] }, "implementationGuidance": "Restrict access to audit logs to authorized personnel. Implement log integrity checks. Use WORM storage. Forward to tamper-proof SIEM.", "evidenceRequired": ["Log access restrictions", "Integrity verification", "WORM or immutable storage evidence"], "automationCapability": "full" }
+      ]
+    },
+    {
+      "id": "system-communications",
+      "name": "System and Communications Protection (SC)",
+      "description": "Monitor, control, and protect communications at system boundaries.",
+      "required": true,
+      "controlCount": 3,
+      "controls": [
+        { "id": "SC.L2-3.13.1", "name": "Boundary Protection", "description": "Monitor, control, and protect organizational communications at external and key internal boundaries.", "implementationType": "required", "category": "Network Security", "mappings": { "soc2": ["CC6.6"], "iso27001": ["A.8.20"], "pci-dss": ["Req 1"], "nist-800-53": ["SC-7"], "nist-csf": ["PR.AC-5"] }, "implementationGuidance": "Deploy firewalls at all boundaries. Implement DMZ for public-facing services. Segment CUI environments. Monitor boundary traffic.", "evidenceRequired": ["Firewall configurations", "Network segmentation evidence", "DMZ architecture", "Boundary monitoring"], "automationCapability": "full" },
+        { "id": "SC.L2-3.13.8", "name": "CUI Encryption in Transit", "description": "Implement cryptographic mechanisms to prevent unauthorized disclosure of CUI during transmission.", "implementationType": "required", "category": "Transmission Security", "mappings": { "soc2": ["CC6.7"], "iso27001": ["A.8.24"], "hipaa": ["Encryption in Transit"], "pci-dss": ["Req 4"], "nist-800-53": ["SC-8"], "nist-csf": ["PR.DS-2"] }, "implementationGuidance": "Enforce TLS 1.2+ for all CUI transmission. Use VPN for network-level encryption. Disable deprecated protocols (SSLv3, TLS 1.0/1.1).", "evidenceRequired": ["TLS configuration", "VPN encryption settings", "Deprecated protocol removal", "Certificate management"], "automationCapability": "full" },
+        { "id": "SC.L2-3.13.11", "name": "CUI Encryption at Rest", "description": "Employ FIPS-validated cryptography when used to protect the confidentiality of CUI.", "implementationType": "required", "category": "Data Protection", "mappings": { "soc2": ["CC6.7", "C1.1"], "iso27001": ["A.8.24"], "hipaa": ["Encryption and Decryption"], "pci-dss": ["Req 3"], "nist-800-53": ["SC-28"], "nist-csf": ["PR.DS-1"] }, "implementationGuidance": "Use FIPS 140-2 validated cryptographic modules. Encrypt all CUI at rest. Implement key management per NIST SP 800-57.", "evidenceRequired": ["FIPS validation certificates", "Encryption configurations", "Key management procedures"], "automationCapability": "full", "codePatterns": ["encryption-at-rest"] }
+      ]
+    }
+  ],
+  "levels": [
+    { "level": 1, "name": "Foundational", "controls": 15, "assessment": "Annual self-assessment with affirmation", "scope": "FCI protection", "nistAlignment": "Basic safeguarding (FAR 52.204-21)" },
+    { "level": 2, "name": "Advanced", "controls": 110, "assessment": "Triennial C3PAO assessment", "scope": "CUI protection", "nistAlignment": "Full NIST SP 800-171 Rev 2 (110 controls)" },
+    { "level": 3, "name": "Expert", "controls": 134, "assessment": "Triennial DIBCAC (Government) assessment", "scope": "CUI with enhanced protection", "nistAlignment": "NIST SP 800-171 + subset of SP 800-172" }
+  ],
+  "requiredDocumentation": [
+    "System Security Plan (SSP)",
+    "Plan of Action & Milestones (POA&M)",
+    "Network Diagrams",
+    "Data Flow Diagrams",
+    "Access Control Policy",
+    "Incident Response Plan",
+    "Configuration Management Plan",
+    "Risk Assessment Report",
+    "Security Awareness Training Records",
+    "Continuous Monitoring Plan"
+  ],
+  "breachNotification": {
+    "required": true,
+    "timeframe": "72 hours to DoD via DIBNet portal",
+    "notifyAuthority": "DoD Cyber Crime Center (DC3)",
+    "notifyIndividuals": false,
+    "threshold": "Any cyber incident affecting DoD information or the covered contractor information system"
+  },
+  "relatedFrameworks": ["nist-800-171", "nist-800-53", "iso27001", "soc2"],
+  "tags": ["defense", "government", "cui", "fci", "united-states", "dib"],
+  "resources": [
+    { "title": "CMMC Official Site", "url": "https://dodcio.defense.gov/CMMC/", "type": "official" },
+    { "title": "Cyber AB (Accreditation Body)", "url": "https://cyberab.org/", "type": "official" }
+  ]
+}

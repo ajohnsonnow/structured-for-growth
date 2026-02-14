@@ -1,0 +1,1290 @@
+{
+  "catalog": {
+    "uuid": "aefca357-1e57-58f3-9e89-b6c4d511c93d",
+    "metadata": {
+      "title": "General Data Protection Regulation (EU) 2016/679",
+      "last-modified": "2026-02-13T19:30:32.140Z",
+      "version": "2016 (effective May 25, 2018)",
+      "oscal-version": "1.1.2",
+      "props": [
+        {
+          "name": "framework-id",
+          "value": "gdpr"
+        },
+        {
+          "name": "governing-body",
+          "value": "European Parliament and Council of the European Union"
+        },
+        {
+          "name": "jurisdiction",
+          "value": "European Union (Extraterritorial)"
+        },
+        {
+          "name": "certification-type",
+          "value": "self-assessment"
+        }
+      ],
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Catalog Publisher"
+        },
+        {
+          "id": "assessor",
+          "title": "Compliance Assessor"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "02f44a2d-c090-5f73-b9b8-f1d8e27b25c5",
+          "type": "organization",
+          "name": "European Parliament and Council of the European Union"
+        }
+      ],
+      "remarks": "The GDPR enforces rigorous data privacy laws across the EU, applying extraterritorially to any global organization processing personal data of EU residents. It champions 'Privacy by Design and by Default,' mandating that data protection is integrated into software from inception. It uses a risk-based approach rather than prescriptive technology mandates."
+    },
+    "groups": [
+      {
+        "id": "data-processing-principles",
+        "title": "Data Processing Principles (Articles 5-11)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "7"
+          }
+        ],
+        "controls": [
+          {
+            "id": "gdpr-5.1a",
+            "title": "Lawfulness, Fairness, and Transparency",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Processing Principles"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-5.1a_stmt",
+                "name": "statement",
+                "prose": "Personal data shall be processed lawfully, fairly and in a transparent manner in relation to the data subject."
+              },
+              {
+                "id": "gdpr-5.1a_guide",
+                "name": "guidance",
+                "prose": "Document lawful basis for each processing activity. Provide clear privacy notices. Ensure transparency in all data collection."
+              },
+              {
+                "id": "gdpr-5.1a_evidence",
+                "name": "evidence",
+                "prose": "Privacy policy; Lawful basis documentation; Privacy notices"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: P1.1"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Notice of Privacy Practices"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-5.1b",
+            "title": "Purpose Limitation",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Processing Principles"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-5.1b_stmt",
+                "name": "statement",
+                "prose": "Data shall be collected for specified, explicit and legitimate purposes and not further processed in a manner incompatible with those purposes."
+              },
+              {
+                "id": "gdpr-5.1b_guide",
+                "name": "guidance",
+                "prose": "Document purpose for each data collection. Prevent function creep. Implement technical controls to restrict data use to stated purposes."
+              },
+              {
+                "id": "gdpr-5.1b_evidence",
+                "name": "evidence",
+                "prose": "Purpose documentation; Processing register; Technical use restrictions"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: P6.1"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-5.1c",
+            "title": "Data Minimization",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Processing Principles"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-5.1c_stmt",
+                "name": "statement",
+                "prose": "Data shall be adequate, relevant and limited to what is necessary in relation to the purposes for which they are processed."
+              },
+              {
+                "id": "gdpr-5.1c_guide",
+                "name": "guidance",
+                "prose": "Audit data collection forms. Remove unnecessary fields. Validate that only essential data is collected in APIs."
+              },
+              {
+                "id": "gdpr-5.1c_evidence",
+                "name": "evidence",
+                "prose": "Data minimization review; Form field audits; API payload reviews"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: P6.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.12"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-5.1d",
+            "title": "Accuracy",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Processing Principles"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-5.1d_stmt",
+                "name": "statement",
+                "prose": "Data shall be accurate and, where necessary, kept up to date."
+              },
+              {
+                "id": "gdpr-5.1d_guide",
+                "name": "guidance",
+                "prose": "Implement data quality checks. Provide self-service profile updates. Validate data inputs."
+              },
+              {
+                "id": "gdpr-5.1d_evidence",
+                "name": "evidence",
+                "prose": "Data quality procedures; Update mechanisms; Validation rules"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: PI1.1"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-5.1e",
+            "title": "Storage Limitation",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Processing Principles"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-5.1e_stmt",
+                "name": "statement",
+                "prose": "Data shall be kept in a form which permits identification of data subjects for no longer than is necessary."
+              },
+              {
+                "id": "gdpr-5.1e_guide",
+                "name": "guidance",
+                "prose": "Define retention periods per data category. Implement automated deletion. Archive or anonymize data past retention period."
+              },
+              {
+                "id": "gdpr-5.1e_evidence",
+                "name": "evidence",
+                "prose": "Retention schedule; Automated deletion evidence; Anonymization procedures"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: C1.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.10"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-5.1f",
+            "title": "Integrity and Confidentiality",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Processing Principles"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-5.1f_stmt",
+                "name": "statement",
+                "prose": "Data shall be processed with appropriate security measures, including protection against unauthorized or unlawful processing and against accidental loss."
+              },
+              {
+                "id": "gdpr-5.1f_guide",
+                "name": "guidance",
+                "prose": "Implement encryption at rest and in transit. Deploy access controls. Conduct regular security assessments."
+              },
+              {
+                "id": "gdpr-5.1f_evidence",
+                "name": "evidence",
+                "prose": "Encryption configurations; Access control evidence; Security assessment reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Encryption and Decryption"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-5.2",
+            "title": "Accountability",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Processing Principles"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-5.2_stmt",
+                "name": "statement",
+                "prose": "The controller shall be responsible for and able to demonstrate compliance with the data processing principles."
+              },
+              {
+                "id": "gdpr-5.2_guide",
+                "name": "guidance",
+                "prose": "Maintain comprehensive documentation. Conduct regular audits. Appoint DPO where required. Demonstrate compliance proactively."
+              },
+              {
+                "id": "gdpr-5.2_evidence",
+                "name": "evidence",
+                "prose": "RoPA; DPO appointment (if applicable); Compliance audit reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.5"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "data-subject-rights",
+        "title": "Data Subject Rights (Articles 12-23)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "8"
+          }
+        ],
+        "controls": [
+          {
+            "id": "gdpr-15",
+            "title": "Right of Access",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Data Subject Rights"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-15_stmt",
+                "name": "statement",
+                "prose": "Data subjects have the right to obtain confirmation of processing and access to their personal data."
+              },
+              {
+                "id": "gdpr-15_guide",
+                "name": "guidance",
+                "prose": "Build data export functionality. Implement DSAR workflow. Respond within 30 days. Verify requester identity."
+              },
+              {
+                "id": "gdpr-15_evidence",
+                "name": "evidence",
+                "prose": "DSAR procedure; Response logs; Data export capabilities"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: P4.1"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-16",
+            "title": "Right to Rectification",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Data Subject Rights"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-16_stmt",
+                "name": "statement",
+                "prose": "Data subjects have the right to have inaccurate personal data rectified."
+              },
+              {
+                "id": "gdpr-16_guide",
+                "name": "guidance",
+                "prose": "Provide self-service data editing. Process rectification requests within 30 days. Notify third parties of corrections."
+              },
+              {
+                "id": "gdpr-16_evidence",
+                "name": "evidence",
+                "prose": "Rectification procedures; Self-service editing capabilities"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: P4.1"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-17",
+            "title": "Right to Erasure (Right to be Forgotten)",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Data Subject Rights"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-17_stmt",
+                "name": "statement",
+                "prose": "Data subjects have the right to have their personal data erased under certain conditions."
+              },
+              {
+                "id": "gdpr-17_guide",
+                "name": "guidance",
+                "prose": "Implement data deletion workflows. Handle cascading deletes across systems. Document legal grounds for retention when erasure is refused."
+              },
+              {
+                "id": "gdpr-17_evidence",
+                "name": "evidence",
+                "prose": "Deletion procedures; Deletion confirmation records; Retention justification documents"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: P4.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: C1.2"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-20",
+            "title": "Right to Data Portability",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Data Subject Rights"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-20_stmt",
+                "name": "statement",
+                "prose": "Data subjects have the right to receive their personal data in a structured, commonly used, machine-readable format."
+              },
+              {
+                "id": "gdpr-20_guide",
+                "name": "guidance",
+                "prose": "Build data export in JSON/CSV. Provide API for machine-readable data transfer. Ensure interoperability."
+              },
+              {
+                "id": "gdpr-20_evidence",
+                "name": "evidence",
+                "prose": "Export functionality; Supported formats documentation"
+              }
+            ],
+            "links": []
+          }
+        ]
+      },
+      {
+        "id": "security-of-processing",
+        "title": "Security of Processing — TOMs (Article 32)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "5"
+          }
+        ],
+        "controls": [
+          {
+            "id": "gdpr-32a",
+            "title": "Pseudonymization and Encryption",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Cryptographic Controls"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-32a_stmt",
+                "name": "statement",
+                "prose": "Implement pseudonymization and encryption of personal data to minimize breach impact."
+              },
+              {
+                "id": "gdpr-32a_guide",
+                "name": "guidance",
+                "prose": "Implement AES-256 encryption at rest. Enforce TLS 1.2+ in transit. Use pseudonymization for analytics data. Tokenize PII where possible."
+              },
+              {
+                "id": "gdpr-32a_evidence",
+                "name": "evidence",
+                "prose": "Encryption configurations; Pseudonymization implementation; Tokenization evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.11"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Encryption and Decryption"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 3"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 4"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-32b",
+            "title": "Confidentiality, Integrity, Availability, Resilience",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Controls"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-32b_stmt",
+                "name": "statement",
+                "prose": "Ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services."
+              },
+              {
+                "id": "gdpr-32b_guide",
+                "name": "guidance",
+                "prose": "Implement MFA, RBAC, and strict password policies. Deploy across multiple availability zones. Implement DDoS protection."
+              },
+              {
+                "id": "gdpr-32b_evidence",
+                "name": "evidence",
+                "prose": "MFA enrollment; RBAC configurations; HA architecture documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: A1.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.5"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Access Control"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-32c",
+            "title": "Restore Availability and Access",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Availability and Resilience"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-32c_stmt",
+                "name": "statement",
+                "prose": "Implement ability to restore the availability and access to personal data in a timely manner in the event of a physical or technical incident."
+              },
+              {
+                "id": "gdpr-32c_guide",
+                "name": "guidance",
+                "prose": "Implement backup and disaster recovery. Define RTO/RPO. Test restoration procedures regularly. Deploy multi-region backup."
+              },
+              {
+                "id": "gdpr-32c_evidence",
+                "name": "evidence",
+                "prose": "Backup procedures; DR plan; Restoration test results; RTO/RPO documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: A1.2"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: A1.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.29"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.30"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: ICT Risk Management"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-32d",
+            "title": "Regular Testing and Assessment",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Continuous Evaluation"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-32d_stmt",
+                "name": "statement",
+                "prose": "Implement a process for regularly testing, assessing and evaluating the effectiveness of technical and organizational measures."
+              },
+              {
+                "id": "gdpr-32d_guide",
+                "name": "guidance",
+                "prose": "Conduct quarterly vulnerability scans. Perform annual penetration testing. Review security controls effectiveness. Implement continuous monitoring."
+              },
+              {
+                "id": "gdpr-32d_evidence",
+                "name": "evidence",
+                "prose": "Vulnerability scan reports; Penetration test reports; Control effectiveness reviews"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC4.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.8"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 11"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-32e",
+            "title": "Protective Software and Threat Detection",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Protective Software"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-32e_stmt",
+                "name": "statement",
+                "prose": "Deploy advanced antivirus, antimalware, and real-time threat detection tools."
+              },
+              {
+                "id": "gdpr-32e_guide",
+                "name": "guidance",
+                "prose": "Deploy EDR on all endpoints. Enable real-time threat detection. Implement SIEM for centralized monitoring."
+              },
+              {
+                "id": "gdpr-32e_evidence",
+                "name": "evidence",
+                "prose": "EDR deployment status; SIEM configurations; Threat detection capabilities"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.8"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.7"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 5"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "breach-notification",
+        "title": "Breach Notification (Articles 33-34)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "2"
+          }
+        ],
+        "controls": [
+          {
+            "id": "gdpr-33",
+            "title": "Notification to Supervisory Authority",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Breach Notification"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-33_stmt",
+                "name": "statement",
+                "prose": "In case of a personal data breach, the controller shall notify the competent supervisory authority within 72 hours of becoming aware of it."
+              },
+              {
+                "id": "gdpr-33_guide",
+                "name": "guidance",
+                "prose": "Develop breach notification procedures. Define 72-hour notification workflow. Prepare template notifications. Establish breach assessment criteria."
+              },
+              {
+                "id": "gdpr-33_evidence",
+                "name": "evidence",
+                "prose": "Breach notification procedure; Notification templates; Contact lists for DPAs"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.4"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.24"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Breach Notification Rule"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: Incident Reporting"
+              }
+            ]
+          },
+          {
+            "id": "gdpr-34",
+            "title": "Communication to Data Subject",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Breach Notification"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-34_stmt",
+                "name": "statement",
+                "prose": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the breach to the data subject without undue delay."
+              },
+              {
+                "id": "gdpr-34_guide",
+                "name": "guidance",
+                "prose": "Prepare data subject notification templates. Define high-risk assessment criteria. Implement mass notification capability."
+              },
+              {
+                "id": "gdpr-34_evidence",
+                "name": "evidence",
+                "prose": "Notification templates; High-risk assessment criteria; Mass notification system"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.4"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Breach Notification Rule"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "international-transfers",
+        "title": "International Data Transfers (Chapter V)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "2"
+          }
+        ],
+        "controls": [
+          {
+            "id": "gdpr-44",
+            "title": "Transfer Mechanisms",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Cross-Border Transfers"
+              },
+              {
+                "name": "automation-capability",
+                "value": "manual"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-44_stmt",
+                "name": "statement",
+                "prose": "Transfers of personal data to third countries shall only take place if appropriate safeguards are provided."
+              },
+              {
+                "id": "gdpr-44_guide",
+                "name": "guidance",
+                "prose": "Use Standard Contractual Clauses (SCCs) or adequacy decisions. Conduct Transfer Impact Assessments (TIAs). Document data transfer mechanisms."
+              },
+              {
+                "id": "gdpr-44_evidence",
+                "name": "evidence",
+                "prose": "SCCs or adequacy decision evidence; Transfer Impact Assessments; Data flow maps showing cross-border transfers"
+              }
+            ],
+            "links": []
+          },
+          {
+            "id": "gdpr-28",
+            "title": "Data Processing Agreements",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Processor Obligations"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "gdpr-28_stmt",
+                "name": "statement",
+                "prose": "Processing by a processor shall be governed by a contract or legal act that sets out the subject-matter, duration, nature, and purpose of the processing."
+              },
+              {
+                "id": "gdpr-28_guide",
+                "name": "guidance",
+                "prose": "Execute DPAs with all data processors. Include sub-processor requirements. Define security obligations. Require breach notification."
+              },
+              {
+                "id": "gdpr-28_evidence",
+                "name": "evidence",
+                "prose": "DPA inventory; Signed DPAs; Sub-processor lists"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC9.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.19"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: BAAs"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "2c109681-7852-5771-bd03-6248e315dc52",
+          "title": "Related Framework: hipaa",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-hipaa.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "647f69da-0e1d-5304-97c6-c2058bc58aa0",
+          "title": "Related Framework: iso27001",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-iso27001.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "ad47a7d6-fa10-579f-a4df-10682020403b",
+          "title": "Related Framework: nis2",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-nis2.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "901de5a8-6ace-56de-b4ad-39bda9befcff",
+          "title": "Related Framework: pci-dss",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-pci-dss.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "93653c1a-96fe-59ea-b8c9-ab3dcb728fa6",
+          "title": "Record of Processing Activities (RoPA)",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "34d0f96e-22d2-5cc3-b7ac-9e1e25190a6c",
+          "title": "Privacy Policy / Privacy Notice",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "9279077a-34f0-5610-89ce-be4d043fcef4",
+          "title": "Data Protection Impact Assessments (DPIAs)",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "52cc80b0-6635-56ef-ba80-03ea06c963a0",
+          "title": "Data Processing Agreements (DPAs)",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "75678bf0-d6e6-5ca2-ac35-d4e3882abed2",
+          "title": "Consent Records",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "73d76053-0331-5392-9ec8-f966d23f95c0",
+          "title": "DSAR Procedures and Response Logs",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "e4cca30b-8163-5478-8ea3-75d3287cc6f0",
+          "title": "Breach Notification Procedures",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "2f51aadd-7c60-558f-912f-e87c445f624f",
+          "title": "Data Retention Schedule",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "1d12233a-c49f-5d1a-b627-b315d19204e2",
+          "title": "Transfer Impact Assessments (TIAs)",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "48fc5f3d-862b-51e0-897c-8f09062c9891",
+          "title": "DPO Appointment Documentation (if required)",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

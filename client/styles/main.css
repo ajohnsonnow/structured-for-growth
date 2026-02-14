@@ -538,6 +538,99 @@ section {
     margin: 0;
 }
 
+/* MBAi Methodology Section */
+.methodology {
+    background-color: var(--bg-secondary);
+}
+
+.methodology-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.methodology-grid > * {
+    flex: 0 1 calc(33.333% - var(--spacing-lg));
+    min-width: 280px;
+    max-width: 400px;
+}
+
+.methodology-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    text-align: left;
+    transition: all var(--transition-base);
+}
+
+.methodology-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.methodology-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.methodology-card h3 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+}
+
+.methodology-card p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+}
+
+.methodology-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.methodology-highlights li {
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) 0;
+    padding-left: 1.5em;
+    position: relative;
+    font-size: 0.9rem;
+}
+
+.methodology-highlights li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.methodology-templates {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.methodology-templates h3 {
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.methodology-templates p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+}
+
 /* Templates Section */
 .templates {
     background-color: var(--bg-secondary);
@@ -761,6 +854,7 @@ section {
     }
 
     .services-grid > *,
+    .methodology-grid > *,
     .template-categories > * {
         flex: 1 1 100%;
         max-width: 100%;

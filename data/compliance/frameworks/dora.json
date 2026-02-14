@@ -1,0 +1,116 @@
+{
+  "id": "dora",
+  "name": "DORA",
+  "fullName": "Digital Operational Resilience Act (EU Regulation 2022/2554)",
+  "version": "2022 (effective January 17, 2025)",
+  "governingBody": "European Parliament and Council of the European Union",
+  "jurisdiction": "European Union",
+  "primaryAudience": ["Banks", "Insurance Companies", "Investment Firms", "Crypto-Asset Service Providers", "ICT Third-Party Providers", "FinTech"],
+  "description": "DORA harmonizes ICT risk management rules across the EU financial sector, ensuring all participants can withstand, respond to, and recover from ICT-related disruptions and threats. It explicitly covers third-party ICT providers and mandates resilience testing including TLPT. DORA fills a critical gap by moving beyond traditional financial risk to address operational technology risk.",
+  "certificationDetails": {
+    "type": "regulatory-compliance",
+    "reportTypes": ["ICT Risk Management Framework Report", "Incident Report", "Resilience Testing Report", "Third-Party Risk Report"],
+    "assessor": "National competent authorities (NCAs) and European Supervisory Authorities (ESAs)",
+    "typicalCost": "$50,000 - $500,000+ (depends on entity size)",
+    "auditCycle": "Ongoing compliance; supervisory reviews",
+    "certificationBody": "EBA, ESMA, EIOPA (European Supervisory Authorities)"
+  },
+  "lifecycle": [
+    { "phase": 1, "name": "ICT Risk Assessment", "description": "Identify, classify, and document all ICT-supported business functions and assess ICT risk for each.", "typicalDuration": "6-12 weeks", "keyActivities": ["ICT asset inventory", "Business function mapping", "ICT risk identification", "Tolerance setting"] },
+    { "phase": 2, "name": "Framework Implementation", "description": "Implement ICT risk management framework, incident management procedures, and resilience testing program.", "typicalDuration": "12-24 weeks", "keyActivities": ["Deploy ICT controls", "Build incident management", "Design resilience tests", "Implement continuous monitoring"] },
+    { "phase": 3, "name": "Third-Party Management", "description": "Assess and manage ICT third-party risks. Establish contractual arrangements. Create register of ICT providers.", "typicalDuration": "8-16 weeks", "keyActivities": ["Third-party risk assessments", "Contract review", "Provider register creation", "Exit strategy development"] },
+    { "phase": 4, "name": "Ongoing Operations", "description": "Conduct regular resilience testing, manage incidents, report to authorities, and continuously improve.", "typicalDuration": "Ongoing", "keyActivities": ["Annual basic testing", "TLPT every 3 years", "Incident reporting", "Information sharing"] }
+  ],
+  "domains": [
+    {
+      "id": "ict-risk-management",
+      "name": "ICT Risk Management (Articles 5-16)",
+      "description": "Comprehensive framework for identifying, protecting against, detecting, responding to, and recovering from ICT risks.",
+      "required": true,
+      "controlCount": 8,
+      "controls": [
+        { "id": "DORA-5", "name": "ICT Risk Management Framework", "description": "Establish and maintain a sound, comprehensive, and well-documented ICT risk management framework as part of the overall risk management system.", "implementationType": "required", "category": "Governance", "mappings": { "soc2": ["CC3.1"], "iso27001": ["A.5.1"], "nis2": ["NIS2-21.2a"], "nist-csf": ["ID.GV-1"] }, "implementationGuidance": "Document comprehensive ICT risk management framework. Assign management body responsibility. Review and update annually. Define risk appetite.", "evidenceRequired": ["ICT risk management framework document", "Management body approval", "Annual review records"], "automationCapability": "partial" },
+        { "id": "DORA-6", "name": "ICT Systems Identification", "description": "Identify, classify, and adequately document all ICT-supported business functions, information assets, and ICT assets.", "implementationType": "required", "category": "Asset Management", "mappings": { "soc2": ["CC3.2"], "iso27001": ["A.5.9", "A.5.12"], "nist-csf": ["ID.AM-1", "ID.AM-2"] }, "implementationGuidance": "Maintain comprehensive ICT asset inventory. Classify systems by criticality. Document interdependencies. Map ICT assets to business functions.", "evidenceRequired": ["ICT asset register", "Classification scheme", "Dependency maps", "Business function mapping"], "automationCapability": "full" },
+        { "id": "DORA-7", "name": "ICT Protection and Prevention", "description": "Implement ICT security policies, procedures, protocols and tools to ensure the resilience, continuity and availability of ICT systems.", "implementationType": "required", "category": "Protection", "mappings": { "soc2": ["CC6.1", "CC6.6", "CC6.7"], "iso27001": ["A.8.5", "A.8.9", "A.8.24"], "pci-dss": ["Req 1", "Req 2", "Req 6"], "nist-csf": ["PR.AC-1", "PR.DS-1"] }, "implementationGuidance": "Deploy strong access controls, encryption, patch management, and network security. Implement change management procedures.", "evidenceRequired": ["ICT security policies", "Access control configurations", "Encryption evidence", "Patch management records"], "automationCapability": "full", "codePatterns": ["auth-mfa-middleware", "encryption-at-rest"] },
+        { "id": "DORA-8", "name": "ICT Detection", "description": "Establish mechanisms to promptly detect anomalous activities, including ICT network performance issues and ICT-related incidents.", "implementationType": "required", "category": "Detection", "mappings": { "soc2": ["CC7.1", "CC7.2"], "iso27001": ["A.8.16"], "pci-dss": ["Req 10"], "nist-csf": ["DE.AE-1", "DE.CM-1"] }, "implementationGuidance": "Deploy SIEM and monitoring tools. Implement anomaly detection. Define detection thresholds. Enable real-time alerting.", "evidenceRequired": ["SIEM configuration", "Alert rules", "Monitoring dashboards", "Detection capability assessment"], "automationCapability": "full", "codePatterns": ["audit-logger"] },
+        { "id": "DORA-9", "name": "ICT Response and Recovery", "description": "Put in place a comprehensive ICT business continuity policy with response and recovery strategies.", "implementationType": "required", "category": "Business Continuity", "mappings": { "soc2": ["A1.2", "A1.3"], "iso27001": ["A.5.29", "A.5.30"], "hipaa": ["AS-CP-1"], "nist-csf": ["RC.RP-1"] }, "implementationGuidance": "Develop ICT business continuity and disaster recovery plans. Define RTO/RPO. Implement backup and restoration procedures. Test annually.", "evidenceRequired": ["BCP and DRP", "RTO/RPO definitions", "Backup procedures", "Test results"], "automationCapability": "partial" },
+        { "id": "DORA-10", "name": "Backup Policies and Procedures", "description": "Implement backup policies and restoration procedures ensuring data can be restored with minimum downtime.", "implementationType": "required", "category": "Data Protection", "mappings": { "soc2": ["A1.2"], "iso27001": ["A.8.13"], "hipaa": ["AS-CP-1"], "nist-csf": ["PR.IP-4"] }, "implementationGuidance": "Implement automated backups. Store offsite/multi-region. Test restoration regularly. Encrypt backups.", "evidenceRequired": ["Backup policies", "Backup configurations", "Restoration test results", "Offsite storage evidence"], "automationCapability": "full" },
+        { "id": "DORA-11", "name": "Learning and Evolving", "description": "Gather knowledge from ICT incidents and share lessons learned to improve the risk management framework.", "implementationType": "required", "category": "Continuous Improvement", "mappings": { "soc2": ["CC7.5"], "iso27001": ["A.5.27"], "nist-csf": ["RS.IM-1"] }, "implementationGuidance": "Conduct post-incident reviews. Document lessons learned. Update risk management framework based on findings. Share intelligence.", "evidenceRequired": ["Post-incident review records", "Lessons learned documentation", "Framework update records"], "automationCapability": "partial" },
+        { "id": "DORA-12", "name": "Communication", "description": "Implement communication plans for responsible disclosure of ICT incidents and vulnerabilities.", "implementationType": "required", "category": "Communication", "mappings": { "soc2": ["CC2.3"], "iso27001": ["A.5.5"] }, "implementationGuidance": "Define internal and external communication procedures. Establish crisis communication templates. Train spokespersons.", "evidenceRequired": ["Communication plans", "Crisis templates", "Spokesperson training records"], "automationCapability": "partial" }
+      ]
+    },
+    {
+      "id": "incident-management",
+      "name": "ICT-Related Incident Management (Articles 17-23)",
+      "description": "Processes for detecting, managing, classifying, and reporting ICT-related incidents.",
+      "required": true,
+      "controlCount": 4,
+      "controls": [
+        { "id": "DORA-17", "name": "ICT Incident Management Process", "description": "Establish and implement an ICT-related incident management process to detect, manage, and notify ICT-related incidents.", "implementationType": "required", "category": "Incident Management", "mappings": { "soc2": ["CC7.3", "CC7.4"], "iso27001": ["A.5.24", "A.5.25"], "nist-csf": ["RS.RP-1"] }, "implementationGuidance": "Implement incident management framework. Define severity levels. Establish escalation procedures. Automate incident ticketing.", "evidenceRequired": ["Incident management procedures", "Severity classification scheme", "Escalation matrix", "Incident log"], "automationCapability": "partial", "codePatterns": ["breach-notification"] },
+        { "id": "DORA-18", "name": "Classification of ICT Incidents", "description": "Classify ICT incidents based on defined criteria including impact, duration, geographic spread, and criticality of affected services.", "implementationType": "required", "category": "Incident Classification", "mappings": { "soc2": ["CC7.3"], "iso27001": ["A.5.25"] }, "implementationGuidance": "Define classification criteria. Implement automated classification. Tag incidents by severity, impact, and affected systems.", "evidenceRequired": ["Classification criteria", "Classified incident records", "Impact assessment templates"], "automationCapability": "full" },
+        { "id": "DORA-19", "name": "Major Incident Reporting", "description": "Report major ICT-related incidents to the relevant competent authority. Initial notification within 4 hours of classification.", "implementationType": "required", "category": "Incident Reporting", "mappings": { "soc2": ["CC7.4"], "gdpr": ["GDPR-33"], "nis2": ["NIS2-23.1"], "nist-csf": ["RS.CO-2"] }, "implementationGuidance": "Establish reporting workflows. Prepare template reports. Define 4-hour initial notification, 72-hour intermediate, 1-month final report timelines.", "evidenceRequired": ["Reporting procedures", "Report templates", "Historical reports", "Reporting timeline evidence"], "automationCapability": "partial", "codePatterns": ["breach-notification"] },
+        { "id": "DORA-20", "name": "Voluntary Notification of Significant Cyber Threats", "description": "Financial entities may voluntarily notify competent authorities of significant cyber threats they deem relevant.", "implementationType": "addressable", "category": "Threat Intelligence", "mappings": { "nist-csf": ["RS.CO-5"] }, "implementationGuidance": "Establish voluntary reporting procedures. Participate in information-sharing arrangements. Define thresholds for voluntary reporting.", "evidenceRequired": ["Voluntary reporting procedures", "Threat intelligence sharing records"], "automationCapability": "partial" }
+      ]
+    },
+    {
+      "id": "resilience-testing",
+      "name": "Digital Operational Resilience Testing (Articles 24-27)",
+      "description": "Testing digital operational resilience of ICT systems to identify weaknesses.",
+      "required": true,
+      "controlCount": 3,
+      "controls": [
+        { "id": "DORA-24", "name": "General Resilience Testing Requirements", "description": "Establish, maintain, and review a digital operational resilience testing programme.", "implementationType": "required", "category": "Resilience Testing", "mappings": { "soc2": ["CC4.1"], "iso27001": ["A.8.8"], "pci-dss": ["Req 11"], "nist-csf": ["DE.CM-8"] }, "implementationGuidance": "Develop resilience testing program. Include vulnerability scanning, penetration testing, scenario-based testing. Test at least annually.", "evidenceRequired": ["Testing program", "Test schedules", "Test results", "Remediation plans"], "automationCapability": "full" },
+        { "id": "DORA-25", "name": "Testing of ICT Tools and Systems", "description": "Perform testing including vulnerability assessments, open source analyses, network security assessments, source code reviews.", "implementationType": "required", "category": "Security Testing", "mappings": { "soc2": ["CC4.1"], "iso27001": ["A.8.8", "A.8.28"], "pci-dss": ["Req 6", "Req 11"] }, "implementationGuidance": "Conduct vulnerability scans quarterly. Perform source code reviews. Analyze dependencies. Test network security.", "evidenceRequired": ["Vulnerability scan reports", "Source code review records", "Dependency analysis", "Network assessment results"], "automationCapability": "full" },
+        { "id": "DORA-26", "name": "Threat-Led Penetration Testing (TLPT)", "description": "Significant financial entities shall carry out advanced Threat-Led Penetration Testing at least every 3 years.", "implementationType": "required", "category": "Advanced Testing", "mappings": { "pci-dss": ["Req 11"], "nist-csf": ["DE.CM-8"] }, "implementationGuidance": "Engage qualified TLPT providers. Follow TIBER-EU framework. Test critical business functions. Include third-party providers in scope.", "evidenceRequired": ["TLPT reports", "Provider qualifications", "Remediation evidence", "Management approval"], "automationCapability": "partial" }
+      ]
+    },
+    {
+      "id": "third-party-risk",
+      "name": "ICT Third-Party Risk Management (Articles 28-44)",
+      "description": "Managing risk from ICT third-party service providers.",
+      "required": true,
+      "controlCount": 4,
+      "controls": [
+        { "id": "DORA-28", "name": "General Principles for ICT Third-Party Risk", "description": "Manage ICT third-party risk as an integral part of ICT risk. Maintain a register of all ICT third-party arrangements.", "implementationType": "required", "category": "Third-Party Governance", "mappings": { "soc2": ["CC9.2"], "iso27001": ["A.5.19", "A.5.20"], "nist-csf": ["ID.SC-1"] }, "implementationGuidance": "Maintain ICT third-party register. Conduct pre-contract risk assessments. Define concentration risk policies. Report register to regulators.", "evidenceRequired": ["ICT third-party register", "Risk assessment records", "Concentration risk analysis"], "automationCapability": "partial" },
+        { "id": "DORA-30", "name": "Key Contractual Provisions", "description": "Contractual arrangements for ICT services shall include specific provisions covering SLAs, data location, audit rights, and exit strategies.", "implementationType": "required", "category": "Contract Management", "mappings": { "soc2": ["CC9.2"], "iso27001": ["A.5.20"] }, "implementationGuidance": "Include required DORA clauses in contracts. Define SLAs. Specify data locations. Ensure audit rights. Create exit strategies.", "evidenceRequired": ["Contract templates with DORA clauses", "SLA documentation", "Data location registers", "Exit strategy plans"], "automationCapability": "partial" },
+        { "id": "DORA-31", "name": "Concentration Risk Assessment", "description": "Assess and manage concentration risk arising from dependence on specific ICT third-party providers.", "implementationType": "required", "category": "Concentration Risk", "mappings": { "soc2": ["CC9.2"], "nist-csf": ["ID.SC-2"] }, "implementationGuidance": "Map critical function dependencies. Identify concentration risks. Develop alternative or contingency plans for critical providers.", "evidenceRequired": ["Concentration risk assessment", "Critical provider mapping", "Contingency plans"], "automationCapability": "partial" },
+        { "id": "DORA-33", "name": "Oversight of Critical ICT Providers", "description": "Critical ICT third-party providers are subject to direct oversight by the Lead Overseer designated by the ESAs.", "implementationType": "required", "category": "Regulatory Oversight", "mappings": {}, "implementationGuidance": "Identify if providers are designated as critical. Ensure providers cooperate with Lead Overseer. Include oversight provisions in contracts.", "evidenceRequired": ["Critical provider identification", "Oversight cooperation evidence", "Regulatory correspondence"], "automationCapability": "manual" }
+      ]
+    },
+    {
+      "id": "information-sharing",
+      "name": "Information Sharing (Article 45)",
+      "description": "Arrangements for exchanging cyber threat information and intelligence.",
+      "required": false,
+      "controlCount": 1,
+      "controls": [
+        { "id": "DORA-45", "name": "Information Sharing Arrangements", "description": "Financial entities may exchange cyber threat information and intelligence, including indicators of compromise.", "implementationType": "addressable", "category": "Threat Intelligence", "mappings": { "nist-csf": ["RS.CO-5"] }, "implementationGuidance": "Participate in financial sector ISACs. Share IOCs with trusted communities. Consume threat intelligence feeds.", "evidenceRequired": ["ISAC membership", "Sharing agreements", "IOC exchange records"], "automationCapability": "partial" }
+      ]
+    }
+  ],
+  "requiredDocumentation": [
+    "ICT Risk Management Framework",
+    "ICT Asset Register",
+    "ICT Business Continuity Plan",
+    "Incident Management Procedures",
+    "Incident Reporting Templates",
+    "Digital Operational Resilience Testing Programme",
+    "ICT Third-Party Register",
+    "Concentration Risk Assessment",
+    "Exit Strategy Plans",
+    "Information Sharing Agreements"
+  ],
+  "breachNotification": {
+    "required": true,
+    "timeframe": "4 hours initial notification after classification as major; 72 hours intermediate; 1 month final",
+    "notifyAuthority": "Relevant national competent authority (NCA)",
+    "notifyIndividuals": false,
+    "threshold": "Major ICT-related incidents as defined by classification criteria"
+  },
+  "relatedFrameworks": ["nis2", "gdpr", "iso27001", "pci-dss"],
+  "tags": ["financial-services", "operational-resilience", "eu", "ict-risk", "third-party-risk"],
+  "resources": [
+    { "title": "DORA Regulation Text", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32022R2554", "type": "official" },
+    { "title": "ESAs DORA Resources", "url": "https://www.eba.europa.eu/regulation-and-policy/digital-operational-resilience", "type": "official" }
+  ]
+}

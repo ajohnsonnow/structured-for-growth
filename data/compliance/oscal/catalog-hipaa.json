@@ -1,0 +1,1191 @@
+{
+  "catalog": {
+    "uuid": "fa9e4e0d-0b5e-5378-9067-3cca49fe42f4",
+    "metadata": {
+      "title": "Health Insurance Portability and Accountability Act — Security Rule",
+      "last-modified": "2026-02-13T19:30:32.141Z",
+      "version": "2013 Omnibus Rule (Updated)",
+      "oscal-version": "1.1.2",
+      "props": [
+        {
+          "name": "framework-id",
+          "value": "hipaa"
+        },
+        {
+          "name": "governing-body",
+          "value": "U.S. Department of Health and Human Services (HHS)"
+        },
+        {
+          "name": "jurisdiction",
+          "value": "United States"
+        },
+        {
+          "name": "certification-type",
+          "value": "self-assessment"
+        }
+      ],
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Catalog Publisher"
+        },
+        {
+          "id": "assessor",
+          "title": "Compliance Assessor"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "91fc569d-b036-5b67-8fa7-48b6d2f573c8",
+          "type": "organization",
+          "name": "U.S. Department of Health and Human Services (HHS)"
+        }
+      ],
+      "remarks": "HIPAA establishes the definitive federal standard for protecting sensitive patient data. The Security Rule establishes national standards for protecting electronic Protected Health Information (ePHI). Covered Entities and Business Associates must implement Administrative, Physical, and Technical Safeguards. Specifications are designated as Required (R) or Addressable (A) — addressable does NOT mean optional."
+    },
+    "groups": [
+      {
+        "id": "technical-safeguards",
+        "title": "Technical Safeguards (§164.312)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "9"
+          }
+        ],
+        "controls": [
+          {
+            "id": "ts-ac-1",
+            "title": "Unique User Identification",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ts-ac-1_stmt",
+                "name": "statement",
+                "prose": "Assign a unique name and/or number for identifying and tracking user identity."
+              },
+              {
+                "id": "ts-ac-1_guide",
+                "name": "guidance",
+                "prose": "Implement unique user IDs for all system users. Prohibit shared accounts. Map all actions to individual users through audit trails."
+              },
+              {
+                "id": "ts-ac-1_evidence",
+                "name": "evidence",
+                "prose": "User account inventory; No shared accounts evidence; Audit trail samples"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.15"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.5"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-1"
+              }
+            ]
+          },
+          {
+            "id": "ts-ac-2",
+            "title": "Emergency Access Procedure",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ts-ac-2_stmt",
+                "name": "statement",
+                "prose": "Establish and implement highly privileged, audited procedures for obtaining access to ePHI during an emergency."
+              },
+              {
+                "id": "ts-ac-2_guide",
+                "name": "guidance",
+                "prose": "Define break-glass procedures. Implement emergency access accounts with enhanced auditing. Test procedures annually."
+              },
+              {
+                "id": "ts-ac-2_evidence",
+                "name": "evidence",
+                "prose": "Emergency access procedures; Break-glass account configurations; Emergency access test records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: A1.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.29"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-1"
+              }
+            ]
+          },
+          {
+            "id": "ts-ac-3",
+            "title": "Automatic Logoff",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "addressable"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ts-ac-3_stmt",
+                "name": "statement",
+                "prose": "Implement electronic procedures that terminate sessions after a predetermined period of inactivity."
+              },
+              {
+                "id": "ts-ac-3_guide",
+                "name": "guidance",
+                "prose": "Configure session timeouts for all applications handling ePHI. Set idle timeout to 15 minutes max. Force re-authentication after timeout."
+              },
+              {
+                "id": "ts-ac-3_evidence",
+                "name": "evidence",
+                "prose": "Session timeout configurations; Application settings screenshots"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.1"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-7"
+              }
+            ]
+          },
+          {
+            "id": "ts-ac-4",
+            "title": "Encryption and Decryption (at Rest)",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "addressable"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ts-ac-4_stmt",
+                "name": "statement",
+                "prose": "Implement a mechanism to encrypt and decrypt ePHI stored in databases and storage systems."
+              },
+              {
+                "id": "ts-ac-4_guide",
+                "name": "guidance",
+                "prose": "Encrypt all ePHI at rest using AES-256. Implement key management procedures. Encrypt database columns containing ePHI."
+              },
+              {
+                "id": "ts-ac-4_evidence",
+                "name": "evidence",
+                "prose": "Encryption configurations; Key management procedures; Database encryption evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Cryptographic Controls TOM"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-1"
+              }
+            ]
+          },
+          {
+            "id": "ts-au-1",
+            "title": "Audit Controls — Hardware/Software Logging",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Audit Controls"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ts-au-1_stmt",
+                "name": "statement",
+                "prose": "Implement hardware, software, and/or procedural mechanisms that record and examine activity in systems containing or using ePHI."
+              },
+              {
+                "id": "ts-au-1_guide",
+                "name": "guidance",
+                "prose": "Log all access to ePHI. Record login attempts, data access, modifications, and deletions. Centralize logs in SIEM. Retain for 6+ years."
+              },
+              {
+                "id": "ts-au-1_evidence",
+                "name": "evidence",
+                "prose": "Logging configurations; Log retention policy; SIEM setup documentation; Sample audit logs"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.15"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 10"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.AE-3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.PT-1"
+              }
+            ]
+          },
+          {
+            "id": "ts-in-1",
+            "title": "Mechanism to Authenticate ePHI",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "addressable"
+              },
+              {
+                "name": "category",
+                "value": "Integrity"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ts-in-1_stmt",
+                "name": "statement",
+                "prose": "Implement electronic mechanisms to corroborate that ePHI has not been altered or destroyed in an unauthorized manner."
+              },
+              {
+                "id": "ts-in-1_guide",
+                "name": "guidance",
+                "prose": "Implement checksums or digital signatures for ePHI. Use database integrity checks. Validate data integrity through reconciliation."
+              },
+              {
+                "id": "ts-in-1_evidence",
+                "name": "evidence",
+                "prose": "Integrity check mechanisms; Checksum validation logs; Reconciliation reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: PI1.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.11"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-6"
+              }
+            ]
+          },
+          {
+            "id": "ts-pe-1",
+            "title": "Person or Entity Authentication",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Authentication"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ts-pe-1_stmt",
+                "name": "statement",
+                "prose": "Implement procedures to verify the identity of a person or entity seeking access to ePHI, including multi-factor authentication."
+              },
+              {
+                "id": "ts-pe-1_guide",
+                "name": "guidance",
+                "prose": "Implement MFA for all systems containing ePHI. Verify user identity before granting access. Use strong authentication methods."
+              },
+              {
+                "id": "ts-pe-1_evidence",
+                "name": "evidence",
+                "prose": "MFA configurations; Authentication policies; MFA enrollment reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.5"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#cmmc",
+                "rel": "related",
+                "text": "cmmc: IA.L2-3.5.3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-7"
+              }
+            ]
+          },
+          {
+            "id": "ts-tx-1",
+            "title": "Transmission Integrity Controls",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "addressable"
+              },
+              {
+                "name": "category",
+                "value": "Transmission Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ts-tx-1_stmt",
+                "name": "statement",
+                "prose": "Implement security measures to ensure that electronically transmitted ePHI is not improperly modified without detection."
+              },
+              {
+                "id": "ts-tx-1_guide",
+                "name": "guidance",
+                "prose": "Use TLS 1.2+ for all ePHI in transit. Implement message integrity checks (HMAC). Validate data integrity at endpoints."
+              },
+              {
+                "id": "ts-tx-1_evidence",
+                "name": "evidence",
+                "prose": "TLS configuration evidence; Certificate inventory; Integrity check implementations"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-2"
+              }
+            ]
+          },
+          {
+            "id": "ts-tx-2",
+            "title": "Encryption in Transit",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "addressable"
+              },
+              {
+                "name": "category",
+                "value": "Transmission Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "ts-tx-2_stmt",
+                "name": "statement",
+                "prose": "Implement a mechanism to encrypt ePHI whenever it is transmitted over electronic communications networks, especially public networks."
+              },
+              {
+                "id": "ts-tx-2_guide",
+                "name": "guidance",
+                "prose": "Enforce TLS 1.2+ for all API endpoints. Use IPsec for VPN connections. Encrypt email containing ePHI. Disable deprecated protocols."
+              },
+              {
+                "id": "ts-tx-2_evidence",
+                "name": "evidence",
+                "prose": "TLS version configurations; SSL scan results; VPN encryption settings"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.8.24"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Cryptographic Controls TOM"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "administrative-safeguards",
+        "title": "Administrative Safeguards (§164.308)",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "9"
+          }
+        ],
+        "controls": [
+          {
+            "id": "as-rm-1",
+            "title": "Security Management Process — Risk Analysis",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "as-rm-1_stmt",
+                "name": "statement",
+                "prose": "Conduct an accurate and thorough assessment of the potential risks and vulnerabilities to the confidentiality, integrity, and availability of ePHI."
+              },
+              {
+                "id": "as-rm-1_guide",
+                "name": "guidance",
+                "prose": "Conduct comprehensive risk analysis covering all ePHI. Document threats, vulnerabilities, likelihood, and impact. Update annually."
+              },
+              {
+                "id": "as-rm-1_evidence",
+                "name": "evidence",
+                "prose": "Risk analysis report; Asset inventory; Threat assessment; Updated annually"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.7"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-1"
+              }
+            ]
+          },
+          {
+            "id": "as-rm-2",
+            "title": "Security Management Process — Risk Management",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Risk Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "as-rm-2_stmt",
+                "name": "statement",
+                "prose": "Implement security measures sufficient to reduce risks and vulnerabilities to a reasonable and appropriate level."
+              },
+              {
+                "id": "as-rm-2_guide",
+                "name": "guidance",
+                "prose": "Develop risk management plan. Implement controls based on risk analysis findings. Track remediation of identified risks."
+              },
+              {
+                "id": "as-rm-2_evidence",
+                "name": "evidence",
+                "prose": "Risk management plan; Control implementation evidence; Remediation tracking"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC9.1"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.29"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RM-1"
+              }
+            ]
+          },
+          {
+            "id": "as-ws-1",
+            "title": "Workforce Security — Authorization and Supervision",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "addressable"
+              },
+              {
+                "name": "category",
+                "value": "Workforce Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "as-ws-1_stmt",
+                "name": "statement",
+                "prose": "Implement procedures for the authorization and/or supervision of workforce members who work with ePHI."
+              },
+              {
+                "id": "as-ws-1_guide",
+                "name": "guidance",
+                "prose": "Implement role-based access. Authorize workforce members before granting ePHI access. Supervise access for new employees."
+              },
+              {
+                "id": "as-ws-1_evidence",
+                "name": "evidence",
+                "prose": "Authorization procedures; Role definitions; Supervision records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.2"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.15"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-1"
+              }
+            ]
+          },
+          {
+            "id": "as-sa-1",
+            "title": "Security Awareness and Training",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Training"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "as-sa-1_stmt",
+                "name": "statement",
+                "prose": "Implement a security awareness and training program for all workforce members."
+              },
+              {
+                "id": "as-sa-1_guide",
+                "name": "guidance",
+                "prose": "Conduct annual HIPAA security training. Include phishing awareness. Track completion. Provide role-specific training for IT staff."
+              },
+              {
+                "id": "as-sa-1_evidence",
+                "name": "evidence",
+                "prose": "Training program; Completion records; Training materials"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC2.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.6.3"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 12"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AT-1"
+              }
+            ]
+          },
+          {
+            "id": "as-ir-1",
+            "title": "Security Incident Procedures",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Incident Response"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "as-ir-1_stmt",
+                "name": "statement",
+                "prose": "Implement policies and procedures to address security incidents. Identify and respond to suspected or known security incidents."
+              },
+              {
+                "id": "as-ir-1_guide",
+                "name": "guidance",
+                "prose": "Develop incident response plan. Define incident classification. Establish communication channels. Test with tabletop exercises."
+              },
+              {
+                "id": "as-ir-1_evidence",
+                "name": "evidence",
+                "prose": "Incident response plan; Incident log; Tabletop exercise records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.3"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.4"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.24"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 12"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RS.RP-1"
+              }
+            ]
+          },
+          {
+            "id": "as-cp-1",
+            "title": "Contingency Plan",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Business Continuity"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "as-cp-1_stmt",
+                "name": "statement",
+                "prose": "Establish and implement policies and procedures for responding to an emergency or other occurrence that damages systems containing ePHI."
+              },
+              {
+                "id": "as-cp-1_guide",
+                "name": "guidance",
+                "prose": "Develop disaster recovery and business continuity plans. Implement data backup. Test restoration procedures. Define RTO/RPO."
+              },
+              {
+                "id": "as-cp-1_evidence",
+                "name": "evidence",
+                "prose": "Contingency plan; Backup procedures; Test results; RTO/RPO documentation"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: A1.2"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: A1.3"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.29"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.30"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: ICT Risk Management"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-9"
+              }
+            ]
+          },
+          {
+            "id": "as-ba-1",
+            "title": "Business Associate Contracts",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Third-Party Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "as-ba-1_stmt",
+                "name": "statement",
+                "prose": "Document satisfactory assurances from business associates that they will appropriately safeguard ePHI through Business Associate Agreements."
+              },
+              {
+                "id": "as-ba-1_guide",
+                "name": "guidance",
+                "prose": "Execute BAAs with all vendors handling ePHI. Include breach notification requirements. Require security program attestation."
+              },
+              {
+                "id": "as-ba-1_evidence",
+                "name": "evidence",
+                "prose": "BAA inventory; Signed BAAs; Vendor security assessments"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC9.2"
+              },
+              {
+                "href": "#iso27001",
+                "rel": "related",
+                "text": "iso27001: A.5.19"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.SC-1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "c0a260c6-e000-5fa4-a8ca-3e74907aa800",
+          "title": "Related Framework: soc2",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-soc2.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "f834b0f2-c310-5a40-b85a-95d8be946ef8",
+          "title": "Related Framework: gdpr",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-gdpr.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "c6b5e848-268c-5a88-9742-59eb249604e9",
+          "title": "Related Framework: nist-csf",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-nist-csf.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "647f69da-0e1d-5304-97c6-c2058bc58aa0",
+          "title": "Related Framework: iso27001",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-iso27001.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "2a026624-7951-581d-9ae9-3899be7fcdf3",
+          "title": "Risk Analysis Report",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "346c9f5e-e2ce-523b-9bb8-beef0e113f6a",
+          "title": "Risk Management Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "6e9c42a9-a09f-5035-a6b5-3f08f743c314",
+          "title": "HIPAA Security Policies and Procedures",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "22b5f799-dbdc-5a0e-bead-3bcbe3d97915",
+          "title": "Business Associate Agreements (BAAs)",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "45f03b61-f34a-56b8-a0ca-8e3c1855dbfc",
+          "title": "Workforce Training Records",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "c757b631-73bf-5b9c-b888-a7fd051af716",
+          "title": "Incident Response Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "171262de-dbca-5e71-80ab-a684bc2bc47d",
+          "title": "Contingency/Disaster Recovery Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "fe98d342-374a-51a2-96f8-b0f232095d79",
+          "title": "Access Management Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "d1333149-5a74-5791-863c-c00277b7048e",
+          "title": "Password Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "b3d26103-8e6a-5175-a44f-a749e338de42",
+          "title": "Encryption Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

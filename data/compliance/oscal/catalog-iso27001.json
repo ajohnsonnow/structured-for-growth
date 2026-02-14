@@ -1,0 +1,2066 @@
+{
+  "catalog": {
+    "uuid": "a9d5d8b2-f863-531d-80bf-d9e253c61857",
+    "metadata": {
+      "title": "ISO/IEC 27001:2022 — Information Security Management Systems",
+      "last-modified": "2026-02-13T19:30:32.142Z",
+      "version": "2022",
+      "oscal-version": "1.1.2",
+      "props": [
+        {
+          "name": "framework-id",
+          "value": "iso27001"
+        },
+        {
+          "name": "governing-body",
+          "value": "ISO/IEC"
+        },
+        {
+          "name": "jurisdiction",
+          "value": "Global"
+        },
+        {
+          "name": "certification-type",
+          "value": "certification"
+        }
+      ],
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Catalog Publisher"
+        },
+        {
+          "id": "assessor",
+          "title": "Compliance Assessor"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "8a145350-0480-51b1-a387-d1445cb06606",
+          "type": "organization",
+          "name": "ISO/IEC"
+        }
+      ],
+      "remarks": "ISO/IEC 27001 is the international gold standard for establishing, implementing, maintaining, and continually improving an Information Security Management System (ISMS). It requires a systemic approach to managing sensitive company information through continuous risk assessment and risk treatment. The 2022 revision consolidated 114 controls into 93 across 4 domains."
+    },
+    "groups": [
+      {
+        "id": "a5-organizational",
+        "title": "A.5: Organizational Controls",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "37"
+          }
+        ],
+        "controls": [
+          {
+            "id": "a.5.1",
+            "title": "Policies for Information Security",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Governance"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.5.1_stmt",
+                "name": "statement",
+                "prose": "Information security policy and topic-specific policies shall be defined, approved by management, published, communicated to and acknowledged by relevant personnel and relevant interested parties, and reviewed at planned intervals or if significant changes occur."
+              },
+              {
+                "id": "a.5.1_guide",
+                "name": "guidance",
+                "prose": "Create a master information security policy with topic-specific sub-policies. Store in Git for version control. Require annual review and employee acknowledgment."
+              },
+              {
+                "id": "a.5.1_evidence",
+                "name": "evidence",
+                "prose": "Information security policy; Sub-policy library; Acknowledgment records; Review dates"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC5.3"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 12"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.GV-1"
+              }
+            ]
+          },
+          {
+            "id": "a.5.2",
+            "title": "Information Security Roles and Responsibilities",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Governance"
+              },
+              {
+                "name": "automation-capability",
+                "value": "manual"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.5.2_stmt",
+                "name": "statement",
+                "prose": "Information security roles and responsibilities shall be defined and allocated."
+              },
+              {
+                "id": "a.5.2_guide",
+                "name": "guidance",
+                "prose": "Define RACI matrix for security responsibilities. Appoint CISO or equivalent. Document roles in job descriptions."
+              },
+              {
+                "id": "a.5.2_evidence",
+                "name": "evidence",
+                "prose": "RACI matrix; Role descriptions; Org chart"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.3"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.5"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.GV-2"
+              }
+            ]
+          },
+          {
+            "id": "a.5.3",
+            "title": "Segregation of Duties",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Governance"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.5.3_stmt",
+                "name": "statement",
+                "prose": "Conflicting duties and conflicting areas of responsibility shall be segregated."
+              },
+              {
+                "id": "a.5.3_guide",
+                "name": "guidance",
+                "prose": "Identify conflicting duties (e.g., developer vs deployer). Implement separation in CI/CD pipelines. Document segregation matrix."
+              },
+              {
+                "id": "a.5.3_evidence",
+                "name": "evidence",
+                "prose": "Segregation matrix; CI/CD access controls; Role conflict analysis"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.3"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-4"
+              }
+            ]
+          },
+          {
+            "id": "a.5.7",
+            "title": "Threat Intelligence",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Governance"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.5.7_stmt",
+                "name": "statement",
+                "prose": "Information relating to information security threats shall be collected and analysed to produce threat intelligence."
+              },
+              {
+                "id": "a.5.7_guide",
+                "name": "guidance",
+                "prose": "Subscribe to threat intelligence feeds. Monitor CVE databases. Integrate threat intel into risk assessment process."
+              },
+              {
+                "id": "a.5.7_evidence",
+                "name": "evidence",
+                "prose": "Threat intelligence subscriptions; Threat analysis reports; CVE monitoring configurations"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.2"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-2"
+              }
+            ]
+          },
+          {
+            "id": "a.5.8",
+            "title": "Information Security in Project Management",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Governance"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.5.8_stmt",
+                "name": "statement",
+                "prose": "Information security shall be integrated into project management."
+              },
+              {
+                "id": "a.5.8_guide",
+                "name": "guidance",
+                "prose": "Include security review gates in project lifecycle. Require threat modeling for new features. Add security acceptance criteria to user stories."
+              },
+              {
+                "id": "a.5.8_evidence",
+                "name": "evidence",
+                "prose": "Security review gate documentation; Threat model artifacts; Security-related user stories"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-2"
+              }
+            ]
+          },
+          {
+            "id": "a.5.12",
+            "title": "Classification of Information",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Information Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.5.12_stmt",
+                "name": "statement",
+                "prose": "Information shall be classified according to the information security needs of the organization based on confidentiality, integrity, availability and relevant interested party requirements."
+              },
+              {
+                "id": "a.5.12_guide",
+                "name": "guidance",
+                "prose": "Define classification levels (Public, Internal, Confidential, Restricted). Apply labels to data stores and documents."
+              },
+              {
+                "id": "a.5.12_evidence",
+                "name": "evidence",
+                "prose": "Classification policy; Data inventory with classifications; Labeling evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: C1.1"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Data Classification"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.AM-5"
+              }
+            ]
+          },
+          {
+            "id": "a.5.15",
+            "title": "Access Control",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.5.15_stmt",
+                "name": "statement",
+                "prose": "Rules to control physical and logical access to information and other associated assets shall be established and implemented based on business and information security requirements."
+              },
+              {
+                "id": "a.5.15_guide",
+                "name": "guidance",
+                "prose": "Implement RBAC. Enforce least privilege. Conduct quarterly access reviews. Use SSO where feasible."
+              },
+              {
+                "id": "a.5.15_evidence",
+                "name": "evidence",
+                "prose": "Access control policy; RBAC configurations; Access review reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.3"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Access Control"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-1"
+              }
+            ]
+          },
+          {
+            "id": "a.5.19",
+            "title": "Information Security in Supplier Relationships",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Supplier Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.5.19_stmt",
+                "name": "statement",
+                "prose": "Processes and procedures shall be defined and implemented to manage the information security risks associated with the use of supplier's products or services."
+              },
+              {
+                "id": "a.5.19_guide",
+                "name": "guidance",
+                "prose": "Maintain vendor inventory. Assess vendor security posture. Include security requirements in contracts. Review vendor risk annually."
+              },
+              {
+                "id": "a.5.19_evidence",
+                "name": "evidence",
+                "prose": "Vendor inventory; Vendor assessments; Contract security clauses"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC9.2"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: TPRM"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.SC-1"
+              }
+            ]
+          },
+          {
+            "id": "a.5.24",
+            "title": "Information Security Incident Management Planning and Preparation",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Incident Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.5.24_stmt",
+                "name": "statement",
+                "prose": "The organization shall plan and prepare for managing information security incidents by defining, establishing and communicating information security incident management processes, roles and responsibilities."
+              },
+              {
+                "id": "a.5.24_guide",
+                "name": "guidance",
+                "prose": "Develop incident response plan with clear roles. Define severity levels. Establish communication protocols. Test annually."
+              },
+              {
+                "id": "a.5.24_evidence",
+                "name": "evidence",
+                "prose": "Incident response plan; Contact lists; Severity matrix; Tabletop exercise reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.3"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.4"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Breach Notification"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Breach Notification"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 12"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RS.RP-1"
+              }
+            ]
+          },
+          {
+            "id": "a.5.29",
+            "title": "Information Security During Disruption",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Business Continuity"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.5.29_stmt",
+                "name": "statement",
+                "prose": "The organization shall plan how to maintain information security at an appropriate level during disruption."
+              },
+              {
+                "id": "a.5.29_guide",
+                "name": "guidance",
+                "prose": "Include information security in business continuity plans. Define security procedures for crisis situations. Test failover security."
+              },
+              {
+                "id": "a.5.29_evidence",
+                "name": "evidence",
+                "prose": "BCP with security provisions; Crisis security procedures; Failover test results"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC9.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: A1.2"
+              },
+              {
+                "href": "#dora",
+                "rel": "related",
+                "text": "dora: ICT Risk Management"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-9"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "a6-people",
+        "title": "A.6: People Controls",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "8"
+          }
+        ],
+        "controls": [
+          {
+            "id": "a.6.1",
+            "title": "Screening",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Personnel Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.6.1_stmt",
+                "name": "statement",
+                "prose": "Background verification checks on all candidates to become personnel shall be carried out prior to joining the organization and on an ongoing basis."
+              },
+              {
+                "id": "a.6.1_guide",
+                "name": "guidance",
+                "prose": "Conduct background checks for all new hires. Implement ongoing screening for sensitive roles."
+              },
+              {
+                "id": "a.6.1_evidence",
+                "name": "evidence",
+                "prose": "Background check policy; Screening records; Third-party screening vendor contract"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-11"
+              }
+            ]
+          },
+          {
+            "id": "a.6.2",
+            "title": "Terms and Conditions of Employment",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Personnel Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "manual"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.6.2_stmt",
+                "name": "statement",
+                "prose": "Employment contractual agreements shall state the personnel's and the organization's responsibilities for information security."
+              },
+              {
+                "id": "a.6.2_guide",
+                "name": "guidance",
+                "prose": "Include security obligations in employment contracts. Define NDA requirements. Specify acceptable use terms."
+              },
+              {
+                "id": "a.6.2_evidence",
+                "name": "evidence",
+                "prose": "Employment contract templates; NDA templates; Signed agreements"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-11"
+              }
+            ]
+          },
+          {
+            "id": "a.6.3",
+            "title": "Information Security Awareness, Education and Training",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Personnel Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.6.3_stmt",
+                "name": "statement",
+                "prose": "Personnel of the organization and relevant interested parties shall receive appropriate information security awareness education and training."
+              },
+              {
+                "id": "a.6.3_guide",
+                "name": "guidance",
+                "prose": "Implement annual security awareness training. Conduct phishing simulations. Provide role-specific training for developers and admins."
+              },
+              {
+                "id": "a.6.3_evidence",
+                "name": "evidence",
+                "prose": "Training program; Completion records; Phishing simulation results"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC2.2"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Security Awareness Training"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 12"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AT-1"
+              }
+            ]
+          },
+          {
+            "id": "a.6.4",
+            "title": "Disciplinary Process",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Personnel Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "manual"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.6.4_stmt",
+                "name": "statement",
+                "prose": "A disciplinary process shall be formalized and communicated to take actions against personnel who have committed an information security policy violation."
+              },
+              {
+                "id": "a.6.4_guide",
+                "name": "guidance",
+                "prose": "Define graduated disciplinary process for security violations. Document and communicate consequences."
+              },
+              {
+                "id": "a.6.4_evidence",
+                "name": "evidence",
+                "prose": "Disciplinary policy; Violation tracking records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC1.5"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-11"
+              }
+            ]
+          },
+          {
+            "id": "a.6.5",
+            "title": "Responsibilities After Termination or Change of Employment",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Personnel Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.6.5_stmt",
+                "name": "statement",
+                "prose": "Information security responsibilities and duties that remain valid after termination or change of employment shall be defined, enforced and communicated."
+              },
+              {
+                "id": "a.6.5_guide",
+                "name": "guidance",
+                "prose": "Define offboarding procedures. Revoke access immediately on termination. Enforce post-employment obligations."
+              },
+              {
+                "id": "a.6.5_evidence",
+                "name": "evidence",
+                "prose": "Offboarding checklist; Access revocation logs; Post-employment agreement"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.2"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-1"
+              }
+            ]
+          },
+          {
+            "id": "a.6.8",
+            "title": "Information Security Event Reporting",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Personnel Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.6.8_stmt",
+                "name": "statement",
+                "prose": "The organization shall provide a mechanism for personnel to report observed or suspected information security events through appropriate channels in a timely manner."
+              },
+              {
+                "id": "a.6.8_guide",
+                "name": "guidance",
+                "prose": "Provide clear reporting channels (email, ticketing, hotline). Train staff on what constitutes a security event. Mandate timely reporting."
+              },
+              {
+                "id": "a.6.8_evidence",
+                "name": "evidence",
+                "prose": "Reporting channel documentation; Incident report samples; Training materials"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.AE-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "a7-physical",
+        "title": "A.7: Physical Controls",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "14"
+          }
+        ],
+        "controls": [
+          {
+            "id": "a.7.1",
+            "title": "Physical Security Perimeters",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Physical Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.7.1_stmt",
+                "name": "statement",
+                "prose": "Security perimeters shall be defined and used to protect areas that contain information and other associated assets."
+              },
+              {
+                "id": "a.7.1_guide",
+                "name": "guidance",
+                "prose": "Define physical security zones. Implement badge access. Deploy surveillance cameras. Maintain visitor logs."
+              },
+              {
+                "id": "a.7.1_evidence",
+                "name": "evidence",
+                "prose": "Physical security policy; Access control configurations; Surveillance footage samples; Visitor logs"
+              }
+            ],
+            "links": [
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 9"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-2"
+              }
+            ]
+          },
+          {
+            "id": "a.7.4",
+            "title": "Physical Security Monitoring",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Physical Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.7.4_stmt",
+                "name": "statement",
+                "prose": "Premises shall be continuously monitored for unauthorized physical access."
+              },
+              {
+                "id": "a.7.4_guide",
+                "name": "guidance",
+                "prose": "Install CCTV systems. Implement intrusion detection sensors. Monitor 24/7. Retain footage per policy."
+              },
+              {
+                "id": "a.7.4_evidence",
+                "name": "evidence",
+                "prose": "CCTV configurations; Monitoring procedures; Retention policy"
+              }
+            ],
+            "links": [
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 9"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-2"
+              }
+            ]
+          },
+          {
+            "id": "a.7.10",
+            "title": "Storage Media",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Physical Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "partial"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.7.10_stmt",
+                "name": "statement",
+                "prose": "Storage media shall be managed through their life cycle of acquisition, use, transportation and disposal in accordance with the organization's classification scheme."
+              },
+              {
+                "id": "a.7.10_guide",
+                "name": "guidance",
+                "prose": "Track all storage media. Implement secure disposal procedures. Encrypt portable media. Log media movements."
+              },
+              {
+                "id": "a.7.10_evidence",
+                "name": "evidence",
+                "prose": "Media inventory; Disposal certificates; Encryption configurations"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: C1.2"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 3"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 9"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "a8-technological",
+        "title": "A.8: Technological Controls",
+        "props": [
+          {
+            "name": "required",
+            "value": "true"
+          },
+          {
+            "name": "control-count",
+            "value": "34"
+          }
+        ],
+        "controls": [
+          {
+            "id": "a.8.1",
+            "title": "User Endpoint Devices",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Endpoint Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.1_stmt",
+                "name": "statement",
+                "prose": "Information stored on, processed by or accessible via user endpoint devices shall be protected."
+              },
+              {
+                "id": "a.8.1_guide",
+                "name": "guidance",
+                "prose": "Deploy MDM/endpoint protection. Enforce full-disk encryption. Require screen lock. Push OS and application updates."
+              },
+              {
+                "id": "a.8.1_evidence",
+                "name": "evidence",
+                "prose": "MDM deployment status; Encryption verification; Patch compliance reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.8"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-3"
+              }
+            ]
+          },
+          {
+            "id": "a.8.2",
+            "title": "Privileged Access Rights",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.2_stmt",
+                "name": "statement",
+                "prose": "The allocation and use of privileged access rights shall be restricted and managed."
+              },
+              {
+                "id": "a.8.2_guide",
+                "name": "guidance",
+                "prose": "Implement PAM (Privileged Access Management). Use just-in-time admin access. Log all privileged operations. Review quarterly."
+              },
+              {
+                "id": "a.8.2_evidence",
+                "name": "evidence",
+                "prose": "PAM configurations; Privileged access logs; Quarterly review reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.3"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Access Control"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#cmmc",
+                "rel": "related",
+                "text": "cmmc: AC.L2-3.1.5"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-4"
+              }
+            ]
+          },
+          {
+            "id": "a.8.3",
+            "title": "Information Access Restriction",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Access Control"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.3_stmt",
+                "name": "statement",
+                "prose": "Access to information and other associated assets shall be restricted in accordance with the established topic-specific policy on access control."
+              },
+              {
+                "id": "a.8.3_guide",
+                "name": "guidance",
+                "prose": "Implement data-level access controls. Restrict API endpoints by role. Enforce need-to-know access to databases."
+              },
+              {
+                "id": "a.8.3_evidence",
+                "name": "evidence",
+                "prose": "Access control configurations; API authorization rules; Database permission sets"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Access Control"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 7"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-4"
+              }
+            ]
+          },
+          {
+            "id": "a.8.5",
+            "title": "Secure Authentication",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Authentication"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.5_stmt",
+                "name": "statement",
+                "prose": "Secure authentication technologies and procedures shall be established and implemented based on information access restrictions and the topic-specific policy on access control."
+              },
+              {
+                "id": "a.8.5_guide",
+                "name": "guidance",
+                "prose": "Enforce MFA for all systems. Use strong password policies. Implement SSO. Prohibit default credentials."
+              },
+              {
+                "id": "a.8.5_evidence",
+                "name": "evidence",
+                "prose": "MFA enrollment reports; Password policy configuration; SSO configurations"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.1"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Person/Entity Verification"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 8"
+              },
+              {
+                "href": "#cmmc",
+                "rel": "related",
+                "text": "cmmc: IA.L2-3.5.3"
+              },
+              {
+                "href": "#nis2",
+                "rel": "related",
+                "text": "nis2: Article 21(2)(j)"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-7"
+              }
+            ]
+          },
+          {
+            "id": "a.8.7",
+            "title": "Protection Against Malware",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Threat Protection"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.7_stmt",
+                "name": "statement",
+                "prose": "Protection against malware shall be implemented and supported by appropriate user awareness."
+              },
+              {
+                "id": "a.8.7_guide",
+                "name": "guidance",
+                "prose": "Deploy EDR/antimalware on all endpoints. Enable real-time scanning. Update signatures automatically. Alert on detections."
+              },
+              {
+                "id": "a.8.7_evidence",
+                "name": "evidence",
+                "prose": "EDR deployment status; Update configuration; Detection alert samples"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.8"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 5"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.CM-4"
+              }
+            ]
+          },
+          {
+            "id": "a.8.8",
+            "title": "Management of Technical Vulnerabilities",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Vulnerability Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.8_stmt",
+                "name": "statement",
+                "prose": "Information about technical vulnerabilities of information systems in use shall be obtained, the organization's exposure to such vulnerabilities shall be evaluated and appropriate measures shall be taken."
+              },
+              {
+                "id": "a.8.8_guide",
+                "name": "guidance",
+                "prose": "Conduct regular vulnerability scans. Prioritize by CVSS score. Remediate critical/high within SLA. Track in ticketing system."
+              },
+              {
+                "id": "a.8.8_evidence",
+                "name": "evidence",
+                "prose": "Vulnerability scan reports; Remediation SLA policy; Patching records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC3.2"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 6"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 11"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: ID.RA-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: RS.MI-3"
+              }
+            ]
+          },
+          {
+            "id": "a.8.9",
+            "title": "Configuration Management",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Configuration Management"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.9_stmt",
+                "name": "statement",
+                "prose": "Configurations, including security configurations, of hardware, software, services and networks shall be established, documented, implemented, monitored and reviewed."
+              },
+              {
+                "id": "a.8.9_guide",
+                "name": "guidance",
+                "prose": "Define secure baselines using CIS benchmarks. Implement configuration management (Ansible, Terraform). Monitor for config drift."
+              },
+              {
+                "id": "a.8.9_evidence",
+                "name": "evidence",
+                "prose": "Baseline configurations; IaC templates; Drift detection reports"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC5.2"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC8.1"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 2"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-1"
+              }
+            ]
+          },
+          {
+            "id": "a.8.11",
+            "title": "Data Masking",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Data Protection"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.11_stmt",
+                "name": "statement",
+                "prose": "Data masking shall be used in accordance with the organization's topic-specific policy on access control and other related topic-specific policies, and business requirements, taking applicable legislation into consideration."
+              },
+              {
+                "id": "a.8.11_guide",
+                "name": "guidance",
+                "prose": "Implement dynamic data masking for non-production environments. Mask PII in logs. Use tokenization for sensitive data."
+              },
+              {
+                "id": "a.8.11_evidence",
+                "name": "evidence",
+                "prose": "Data masking configurations; Non-production data policies; Log redaction evidence"
+              }
+            ],
+            "links": [
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Mechanism to Authenticate ePHI"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Pseudonymization"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-5"
+              }
+            ]
+          },
+          {
+            "id": "a.8.15",
+            "title": "Logging",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Logging & Monitoring"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.15_stmt",
+                "name": "statement",
+                "prose": "Logs that record activities, exceptions, faults and other relevant events shall be produced, stored, protected and analysed."
+              },
+              {
+                "id": "a.8.15_guide",
+                "name": "guidance",
+                "prose": "Implement centralized logging (ELK, Splunk, CloudWatch). Log authentication events, access changes, and admin actions. Protect log integrity."
+              },
+              {
+                "id": "a.8.15_evidence",
+                "name": "evidence",
+                "prose": "Logging architecture; Log retention policy; Log integrity controls; Sample log queries"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.1"
+              },
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC7.2"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Audit Controls"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 10"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: DE.AE-3"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.PT-1"
+              }
+            ]
+          },
+          {
+            "id": "a.8.20",
+            "title": "Networks Security",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Network Security"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.20_stmt",
+                "name": "statement",
+                "prose": "Networks and network devices shall be secured, managed and controlled to protect information in systems and applications."
+              },
+              {
+                "id": "a.8.20_guide",
+                "name": "guidance",
+                "prose": "Implement network segmentation. Deploy firewalls and WAFs. Monitor network traffic. Restrict management access."
+              },
+              {
+                "id": "a.8.20_evidence",
+                "name": "evidence",
+                "prose": "Network architecture diagram; Firewall rules; WAF configurations; Network monitoring tools"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.6"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.AC-5"
+              }
+            ]
+          },
+          {
+            "id": "a.8.24",
+            "title": "Use of Cryptography",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Cryptography"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.24_stmt",
+                "name": "statement",
+                "prose": "Rules for the effective use of cryptography, including cryptographic key management, shall be defined and implemented."
+              },
+              {
+                "id": "a.8.24_guide",
+                "name": "guidance",
+                "prose": "Enforce AES-256 for data at rest. Require TLS 1.2+ for data in transit. Implement key management procedures. Rotate keys per policy."
+              },
+              {
+                "id": "a.8.24_evidence",
+                "name": "evidence",
+                "prose": "Cryptography policy; Encryption configurations; Key management procedures; Certificate inventory"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC6.7"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Encryption and Decryption"
+              },
+              {
+                "href": "#hipaa",
+                "rel": "related",
+                "text": "hipaa: Encryption in Transit"
+              },
+              {
+                "href": "#gdpr",
+                "rel": "related",
+                "text": "gdpr: Cryptographic Controls TOM"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 3"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 4"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-1"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.DS-2"
+              }
+            ]
+          },
+          {
+            "id": "a.8.25",
+            "title": "Secure Development Life Cycle",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Secure Development"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.25_stmt",
+                "name": "statement",
+                "prose": "Rules for the secure development of software and systems shall be established and applied."
+              },
+              {
+                "id": "a.8.25_guide",
+                "name": "guidance",
+                "prose": "Integrate SAST/DAST into CI/CD pipelines. Require peer code review. Conduct threat modeling. Train developers on secure coding."
+              },
+              {
+                "id": "a.8.25_evidence",
+                "name": "evidence",
+                "prose": "SDLC security policy; CI/CD pipeline configurations; SAST/DAST scan results; Code review records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#soc2",
+                "rel": "related",
+                "text": "soc2: CC8.1"
+              },
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 6"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-2"
+              }
+            ]
+          },
+          {
+            "id": "a.8.28",
+            "title": "Secure Coding",
+            "props": [
+              {
+                "name": "implementation-type",
+                "value": "required"
+              },
+              {
+                "name": "category",
+                "value": "Secure Development"
+              },
+              {
+                "name": "automation-capability",
+                "value": "full"
+              }
+            ],
+            "parts": [
+              {
+                "id": "a.8.28_stmt",
+                "name": "statement",
+                "prose": "Secure coding principles shall be applied to software development."
+              },
+              {
+                "id": "a.8.28_guide",
+                "name": "guidance",
+                "prose": "Follow OWASP guidelines. Implement input validation, output encoding, parameterized queries. Use security linters."
+              },
+              {
+                "id": "a.8.28_evidence",
+                "name": "evidence",
+                "prose": "Secure coding standards; Linter configurations; Developer training records"
+              }
+            ],
+            "links": [
+              {
+                "href": "#pci-dss",
+                "rel": "related",
+                "text": "pci-dss: Req 6"
+              },
+              {
+                "href": "#nist-csf",
+                "rel": "related",
+                "text": "nist-csf: PR.IP-2"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "c0a260c6-e000-5fa4-a8ca-3e74907aa800",
+          "title": "Related Framework: soc2",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-soc2.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "72ba32cc-e1cb-59cc-8ed4-6ac5a20b18c6",
+          "title": "Related Framework: iso42001",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-iso42001.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "c6b5e848-268c-5a88-9742-59eb249604e9",
+          "title": "Related Framework: nist-csf",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-nist-csf.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "849aa76d-0015-5c8f-8162-d3f70d8084b9",
+          "title": "Related Framework: cmmc",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-cmmc.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "ad47a7d6-fa10-579f-a4df-10682020403b",
+          "title": "Related Framework: nis2",
+          "props": [
+            {
+              "name": "type",
+              "value": "related-framework"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "./catalog-nis2.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "9694e64a-4cf2-5762-bd1b-d8ecf2d41882",
+          "title": "Information Security Policy",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "41f3b9aa-4213-5a40-91c6-05647b18d443",
+          "title": "ISMS Scope Document",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "8ccd83a3-e7de-5937-8130-43be2a80b9a2",
+          "title": "Risk Assessment Methodology",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "fc0ad324-239d-5bc8-af5d-0d107b208095",
+          "title": "Risk Assessment Report",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "942d375f-e705-5d44-a6dc-7dce954102fd",
+          "title": "Risk Treatment Plan",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "9ca7edb9-02ff-5e63-8f00-53a384161425",
+          "title": "Statement of Applicability (SoA)",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "f1720080-1308-5e4b-98ed-f0a591c1488b",
+          "title": "Internal Audit Reports",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "1eb78f64-ea78-533e-84e6-49154c4fabab",
+          "title": "Management Review Minutes",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "0668603f-001b-5a19-b518-3ffe33ffc65f",
+          "title": "Corrective Action Records",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        },
+        {
+          "uuid": "e8f38999-b41c-52d4-804e-75da347b3a8a",
+          "title": "Asset Inventory",
+          "props": [
+            {
+              "name": "type",
+              "value": "required-documentation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

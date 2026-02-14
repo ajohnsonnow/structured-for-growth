@@ -1,0 +1,66 @@
+{
+  "id": "servant-leadership-coaching",
+  "title": "Servant Leadership 1-on-1 Coaching Agenda",
+  "version": "1.0.0",
+  "category": "human-resources",
+  "icon": "🤝",
+  "description": "A structured 45-minute coaching agenda where the direct report owns the meeting. Designed to operationalize empathy, psychological safety, and human growth in every conversation — augmented by AI coaching assistants.",
+  "methodology": "MBAi + Sustainable HR + Servant Leadership",
+  "frameworks": ["NIST AI RMF (Fairness)"],
+  "frequency": "Weekly/Bi-Weekly",
+  "duration": "45 Minutes",
+  "primaryOwner": "Direct Report",
+  "segments": [
+    {
+      "id": "seg-01",
+      "name": "Personal Connection & Well-being",
+      "focus": "Empathy, Healing, and Work-Life Balance",
+      "prompts": [
+        "How are you doing outside of work?",
+        "Are your current stress levels manageable?",
+        "How can we better support your well-being this week?"
+      ],
+      "aiSupport": "AI agents silently track working hours across digital tools to alert the manager of potential systemic burnout risks prior to the meeting."
+    },
+    {
+      "id": "seg-02",
+      "name": "Priority Alignment & Focus",
+      "focus": "Foresight and Organizational Vision",
+      "prompts": [
+        "What are your top priorities this week?",
+        "How do you see these tasks aligning with our broader sustainability and business goals?"
+      ],
+      "aiSupport": "Platform dashboards automatically visualize the connection between employee tasks and macro Sustainable Balanced Scorecard KPIs."
+    },
+    {
+      "id": "seg-03",
+      "name": "Obstacle Removal",
+      "focus": "Stewardship and Empowerment",
+      "prompts": [
+        "What systemic roadblocks are slowing you down?",
+        "What resources, approvals, or cross-departmental friction can I remove for you today?"
+      ],
+      "aiSupport": "NLP agents summarize recent project blockers from ticketing systems (e.g., Jira) to provide the manager with context on operational hurdles."
+    },
+    {
+      "id": "seg-04",
+      "name": "Retrospective & Accountability",
+      "focus": "Psychological Safety and Trust",
+      "prompts": [
+        "What is a recent win we can celebrate?",
+        "What is a recent challenge you faced, and what did we learn from how it was handled?"
+      ],
+      "aiSupport": "Maintaining a secure, encrypted log of coaching conversations within the platform for continuity and follow-through on commitments."
+    },
+    {
+      "id": "seg-05",
+      "name": "Growth, Feedback, & Career",
+      "focus": "Commitment to the Growth of People",
+      "prompts": [
+        "What new skills are you interested in acquiring?",
+        "Do you feel you are receiving enough actionable feedback from me to advance your career?"
+      ],
+      "aiSupport": "AI suggests personalized training modules or mentorship connections based on the employee's expressed career aspirations."
+    }
+  ]
+}

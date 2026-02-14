@@ -1,0 +1,58 @@
+{
+  "id": "servant-leadership-rubric",
+  "title": "Servant Leadership Performance Evaluation Rubric",
+  "version": "1.0.0",
+  "category": "human-resources",
+  "icon": "📊",
+  "description": "A four-level rubric (1-Developing to 4-Exemplary) evaluating leaders on empowerment, psychological safety, human growth, inclusive leadership, and ethical stewardship — the five pillars of servant leadership.",
+  "methodology": "MBAi + Sustainable HR + Servant Leadership",
+  "frameworks": ["NIST AI RMF (Fairness)", "ISO 42001"],
+  "scoringSystem": "1 (Developing) — 2 (Competent) — 3 (Proficient) — 4 (Exemplary)",
+  "competencies": [
+    {
+      "id": "comp-01",
+      "name": "Empowerment & Delegation",
+      "developing": "Retains most decision-making authority; delegates only routine tasks with frequent check-ins; struggles to trust team members with significant responsibilities.",
+      "competent": "Delegates defined tasks and provides direction; beginning to trust team judgment on day-to-day decisions; supports team members when they take initiative.",
+      "proficient": "Delegates tasks with clear guidelines; provides necessary resources; avoids micromanaging daily execution.",
+      "exemplary": "Actively sponsors team members for advanced roles; pushes decision-making authority to the lowest capable level; champions team successes publicly.",
+      "evidenceSource": "360-degree feedback surveys; project delivery autonomy metrics"
+    },
+    {
+      "id": "comp-02",
+      "name": "Psychological Safety & Trust",
+      "developing": "Reacts defensively to criticism or dissent; team members hesitate to share ideas or admit mistakes; blame is assigned when errors occur.",
+      "competent": "Generally receptive to feedback; beginning to model vulnerability by acknowledging own learning areas; team members feel comfortable raising most concerns.",
+      "proficient": "Acknowledges personal mistakes openly; creates an environment where staff feel safe to voice concerns or dissenting opinions.",
+      "exemplary": "Institutionalizes a 'blameless' post-mortem culture; actively rewards employees who challenge the status quo to drive sustainable innovation.",
+      "evidenceSource": "Turnover rates; frequency of employee-initiated process improvements"
+    },
+    {
+      "id": "comp-03",
+      "name": "Commitment to Human Growth",
+      "developing": "Focuses primarily on task completion; development conversations are infrequent or limited to mandatory reviews; little awareness of individual career aspirations.",
+      "competent": "Conducts regular development conversations; identifies basic training needs; supports employees attending relevant courses and workshops.",
+      "proficient": "Facilitates access to necessary training; aligns individual career trajectories with organizational objectives.",
+      "exemplary": "Serves as a dedicated mentor; willing to sacrifice short-term team productivity to allow employees to pursue high-value, cross-functional learning.",
+      "evidenceSource": "Internal mobility rates; completion rates of advanced training programs"
+    },
+    {
+      "id": "comp-04",
+      "name": "Inclusive Leadership",
+      "developing": "Limited awareness of personal biases; team discussions are dominated by a few voices; diversity and inclusion are not actively considered in decision-making.",
+      "competent": "Shows growing awareness of bias and privilege; makes intentional efforts to include quieter voices in meetings; participates in DEI learning opportunities.",
+      "proficient": "Demonstrates awareness of implicit biases; ensures diverse voices are solicited and heard during team meetings.",
+      "exemplary": "Systematically dismantles systemic barriers to equity within their department; leads initiatives fostering deep, authentic community belonging.",
+      "evidenceSource": "Employee Belonging Index scores; diversity metrics within the managed team"
+    },
+    {
+      "id": "comp-05",
+      "name": "Ethical Stewardship & Sustainability",
+      "developing": "Sustainability and ethics are considered only when externally mandated; decisions prioritize short-term gains without evaluating broader impact.",
+      "competent": "Considers ESG implications when prompted; beginning to incorporate sustainability criteria into routine decisions; supports organizational ethics policies.",
+      "proficient": "Consistently makes decisions aligned with ESG goals and ethical guidelines.",
+      "exemplary": "Acts as the moral compass of the unit; refuses profitable initiatives if they violate ecological boundaries, human rights, or ethical AI frameworks.",
+      "evidenceSource": "Adherence to TBL P&L; results of internal compliance audits"
+    }
+  ]
+}

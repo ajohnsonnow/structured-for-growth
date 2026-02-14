@@ -1,0 +1,85 @@
+{
+  "id": "hipaa",
+  "name": "HIPAA",
+  "fullName": "Health Insurance Portability and Accountability Act — Security Rule",
+  "version": "2013 Omnibus Rule (Updated)",
+  "governingBody": "U.S. Department of Health and Human Services (HHS)",
+  "jurisdiction": "United States",
+  "primaryAudience": ["Healthcare Providers", "Health Insurers", "Healthcare Clearinghouses", "Business Associates", "HealthTech SaaS"],
+  "description": "HIPAA establishes the definitive federal standard for protecting sensitive patient data. The Security Rule establishes national standards for protecting electronic Protected Health Information (ePHI). Covered Entities and Business Associates must implement Administrative, Physical, and Technical Safeguards. Specifications are designated as Required (R) or Addressable (A) — addressable does NOT mean optional.",
+  "certificationDetails": {
+    "type": "self-assessment",
+    "reportTypes": ["Risk Assessment", "Self-Assessment", "OCR Audit"],
+    "assessor": "Self-assessment with optional third-party audit",
+    "typicalCost": "$10,000 - $50,000+ (assessment and remediation)",
+    "auditCycle": "Ongoing (OCR audits are random/complaint-driven)",
+    "certificationBody": "HHS Office for Civil Rights (OCR)"
+  },
+  "lifecycle": [
+    { "phase": 1, "name": "Risk Analysis", "description": "Conduct a thorough risk analysis to identify threats and vulnerabilities to ePHI across all systems.", "typicalDuration": "4-8 weeks", "keyActivities": ["Inventory ePHI data flows", "Identify threats to ePHI", "Assess vulnerability likelihood and impact", "Document risk levels"] },
+    { "phase": 2, "name": "Risk Management & Safeguard Implementation", "description": "Implement Administrative, Physical, and Technical Safeguards to reduce identified risks to an acceptable level.", "typicalDuration": "8-16 weeks", "keyActivities": ["Implement technical safeguards", "Deploy access controls", "Configure encryption", "Implement audit logging", "Execute BAAs with vendors"] },
+    { "phase": 3, "name": "Policy and Procedure Development", "description": "Develop and document all required HIPAA policies and procedures.", "typicalDuration": "4-6 weeks", "keyActivities": ["Write required policies", "Train workforce members", "Document procedures", "Distribute and acknowledge"] },
+    { "phase": 4, "name": "Ongoing Compliance", "description": "Conduct periodic risk assessments, train employees, and maintain documentation.", "typicalDuration": "Ongoing", "keyActivities": ["Annual risk reassessment", "Annual workforce training", "Policy review and updates", "Breach preparedness testing"] }
+  ],
+  "domains": [
+    {
+      "id": "technical-safeguards",
+      "name": "Technical Safeguards (§164.312)",
+      "description": "Technologies and policies that protect ePHI and govern access to it. The primary focal point for software engineering teams.",
+      "required": true,
+      "controlCount": 9,
+      "controls": [
+        { "id": "TS-AC-1", "name": "Unique User Identification", "description": "Assign a unique name and/or number for identifying and tracking user identity.", "implementationType": "required", "category": "Access Control", "mappings": { "soc2": ["CC6.1", "CC6.2"], "iso27001": ["A.5.15", "A.8.5"], "pci-dss": ["Req 8"], "nist-csf": ["PR.AC-1"] }, "implementationGuidance": "Implement unique user IDs for all system users. Prohibit shared accounts. Map all actions to individual users through audit trails.", "evidenceRequired": ["User account inventory", "No shared accounts evidence", "Audit trail samples"], "automationCapability": "full", "codePatterns": ["auth-mfa-middleware"] },
+        { "id": "TS-AC-2", "name": "Emergency Access Procedure", "description": "Establish and implement highly privileged, audited procedures for obtaining access to ePHI during an emergency.", "implementationType": "required", "category": "Access Control", "mappings": { "soc2": ["A1.2"], "iso27001": ["A.5.29"], "nist-csf": ["PR.AC-1"] }, "implementationGuidance": "Define break-glass procedures. Implement emergency access accounts with enhanced auditing. Test procedures annually.", "evidenceRequired": ["Emergency access procedures", "Break-glass account configurations", "Emergency access test records"], "automationCapability": "partial" },
+        { "id": "TS-AC-3", "name": "Automatic Logoff", "description": "Implement electronic procedures that terminate sessions after a predetermined period of inactivity.", "implementationType": "addressable", "category": "Access Control", "mappings": { "soc2": ["CC6.1"], "iso27001": ["A.8.1"], "pci-dss": ["Req 8"], "nist-csf": ["PR.AC-7"] }, "implementationGuidance": "Configure session timeouts for all applications handling ePHI. Set idle timeout to 15 minutes max. Force re-authentication after timeout.", "evidenceRequired": ["Session timeout configurations", "Application settings screenshots"], "automationCapability": "full", "codePatterns": ["session-timeout"] },
+        { "id": "TS-AC-4", "name": "Encryption and Decryption (at Rest)", "description": "Implement a mechanism to encrypt and decrypt ePHI stored in databases and storage systems.", "implementationType": "addressable", "category": "Access Control", "mappings": { "soc2": ["CC6.7"], "iso27001": ["A.8.24"], "gdpr": ["Cryptographic Controls TOM"], "pci-dss": ["Req 3"], "nist-csf": ["PR.DS-1"] }, "implementationGuidance": "Encrypt all ePHI at rest using AES-256. Implement key management procedures. Encrypt database columns containing ePHI.", "evidenceRequired": ["Encryption configurations", "Key management procedures", "Database encryption evidence"], "automationCapability": "full", "codePatterns": ["encryption-at-rest"] },
+        { "id": "TS-AU-1", "name": "Audit Controls — Hardware/Software Logging", "description": "Implement hardware, software, and/or procedural mechanisms that record and examine activity in systems containing or using ePHI.", "implementationType": "required", "category": "Audit Controls", "mappings": { "soc2": ["CC7.1", "CC7.2"], "iso27001": ["A.8.15"], "pci-dss": ["Req 10"], "nist-csf": ["DE.AE-3", "PR.PT-1"] }, "implementationGuidance": "Log all access to ePHI. Record login attempts, data access, modifications, and deletions. Centralize logs in SIEM. Retain for 6+ years.", "evidenceRequired": ["Logging configurations", "Log retention policy", "SIEM setup documentation", "Sample audit logs"], "automationCapability": "full", "codePatterns": ["audit-logger"] },
+        { "id": "TS-IN-1", "name": "Mechanism to Authenticate ePHI", "description": "Implement electronic mechanisms to corroborate that ePHI has not been altered or destroyed in an unauthorized manner.", "implementationType": "addressable", "category": "Integrity", "mappings": { "soc2": ["PI1.1"], "iso27001": ["A.8.11"], "nist-csf": ["PR.DS-6"] }, "implementationGuidance": "Implement checksums or digital signatures for ePHI. Use database integrity checks. Validate data integrity through reconciliation.", "evidenceRequired": ["Integrity check mechanisms", "Checksum validation logs", "Reconciliation reports"], "automationCapability": "full" },
+        { "id": "TS-PE-1", "name": "Person or Entity Authentication", "description": "Implement procedures to verify the identity of a person or entity seeking access to ePHI, including multi-factor authentication.", "implementationType": "required", "category": "Authentication", "mappings": { "soc2": ["CC6.1"], "iso27001": ["A.8.5"], "pci-dss": ["Req 8"], "cmmc": ["IA.L2-3.5.3"], "nist-csf": ["PR.AC-7"] }, "implementationGuidance": "Implement MFA for all systems containing ePHI. Verify user identity before granting access. Use strong authentication methods.", "evidenceRequired": ["MFA configurations", "Authentication policies", "MFA enrollment reports"], "automationCapability": "full", "codePatterns": ["auth-mfa-middleware"] },
+        { "id": "TS-TX-1", "name": "Transmission Integrity Controls", "description": "Implement security measures to ensure that electronically transmitted ePHI is not improperly modified without detection.", "implementationType": "addressable", "category": "Transmission Security", "mappings": { "soc2": ["CC6.7"], "iso27001": ["A.8.24"], "pci-dss": ["Req 4"], "nist-csf": ["PR.DS-2"] }, "implementationGuidance": "Use TLS 1.2+ for all ePHI in transit. Implement message integrity checks (HMAC). Validate data integrity at endpoints.", "evidenceRequired": ["TLS configuration evidence", "Certificate inventory", "Integrity check implementations"], "automationCapability": "full" },
+        { "id": "TS-TX-2", "name": "Encryption in Transit", "description": "Implement a mechanism to encrypt ePHI whenever it is transmitted over electronic communications networks, especially public networks.", "implementationType": "addressable", "category": "Transmission Security", "mappings": { "soc2": ["CC6.7"], "iso27001": ["A.8.24"], "gdpr": ["Cryptographic Controls TOM"], "pci-dss": ["Req 4"], "nist-csf": ["PR.DS-2"] }, "implementationGuidance": "Enforce TLS 1.2+ for all API endpoints. Use IPsec for VPN connections. Encrypt email containing ePHI. Disable deprecated protocols.", "evidenceRequired": ["TLS version configurations", "SSL scan results", "VPN encryption settings"], "automationCapability": "full", "codePatterns": ["encryption-at-rest"] }
+      ]
+    },
+    {
+      "id": "administrative-safeguards",
+      "name": "Administrative Safeguards (§164.308)",
+      "description": "Administrative actions, policies, and procedures to manage the selection, development, implementation, and maintenance of security measures to protect ePHI.",
+      "required": true,
+      "controlCount": 9,
+      "controls": [
+        { "id": "AS-RM-1", "name": "Security Management Process — Risk Analysis", "description": "Conduct an accurate and thorough assessment of the potential risks and vulnerabilities to the confidentiality, integrity, and availability of ePHI.", "implementationType": "required", "category": "Risk Management", "mappings": { "soc2": ["CC3.1", "CC3.2"], "iso27001": ["A.5.7"], "nist-csf": ["ID.RA-1"] }, "implementationGuidance": "Conduct comprehensive risk analysis covering all ePHI. Document threats, vulnerabilities, likelihood, and impact. Update annually.", "evidenceRequired": ["Risk analysis report", "Asset inventory", "Threat assessment", "Updated annually"], "automationCapability": "partial" },
+        { "id": "AS-RM-2", "name": "Security Management Process — Risk Management", "description": "Implement security measures sufficient to reduce risks and vulnerabilities to a reasonable and appropriate level.", "implementationType": "required", "category": "Risk Management", "mappings": { "soc2": ["CC9.1"], "iso27001": ["A.5.29"], "nist-csf": ["ID.RM-1"] }, "implementationGuidance": "Develop risk management plan. Implement controls based on risk analysis findings. Track remediation of identified risks.", "evidenceRequired": ["Risk management plan", "Control implementation evidence", "Remediation tracking"], "automationCapability": "partial" },
+        { "id": "AS-WS-1", "name": "Workforce Security — Authorization and Supervision", "description": "Implement procedures for the authorization and/or supervision of workforce members who work with ePHI.", "implementationType": "addressable", "category": "Workforce Security", "mappings": { "soc2": ["CC6.2", "CC6.3"], "iso27001": ["A.5.15"], "nist-csf": ["PR.AC-1"] }, "implementationGuidance": "Implement role-based access. Authorize workforce members before granting ePHI access. Supervise access for new employees.", "evidenceRequired": ["Authorization procedures", "Role definitions", "Supervision records"], "automationCapability": "partial" },
+        { "id": "AS-SA-1", "name": "Security Awareness and Training", "description": "Implement a security awareness and training program for all workforce members.", "implementationType": "required", "category": "Training", "mappings": { "soc2": ["CC2.2"], "iso27001": ["A.6.3"], "pci-dss": ["Req 12"], "nist-csf": ["PR.AT-1"] }, "implementationGuidance": "Conduct annual HIPAA security training. Include phishing awareness. Track completion. Provide role-specific training for IT staff.", "evidenceRequired": ["Training program", "Completion records", "Training materials"], "automationCapability": "full" },
+        { "id": "AS-IR-1", "name": "Security Incident Procedures", "description": "Implement policies and procedures to address security incidents. Identify and respond to suspected or known security incidents.", "implementationType": "required", "category": "Incident Response", "mappings": { "soc2": ["CC7.3", "CC7.4"], "iso27001": ["A.5.24"], "pci-dss": ["Req 12"], "nist-csf": ["RS.RP-1"] }, "implementationGuidance": "Develop incident response plan. Define incident classification. Establish communication channels. Test with tabletop exercises.", "evidenceRequired": ["Incident response plan", "Incident log", "Tabletop exercise records"], "automationCapability": "partial", "codePatterns": ["breach-notification"] },
+        { "id": "AS-CP-1", "name": "Contingency Plan", "description": "Establish and implement policies and procedures for responding to an emergency or other occurrence that damages systems containing ePHI.", "implementationType": "required", "category": "Business Continuity", "mappings": { "soc2": ["A1.2", "A1.3"], "iso27001": ["A.5.29", "A.5.30"], "dora": ["ICT Risk Management"], "nist-csf": ["PR.IP-9"] }, "implementationGuidance": "Develop disaster recovery and business continuity plans. Implement data backup. Test restoration procedures. Define RTO/RPO.", "evidenceRequired": ["Contingency plan", "Backup procedures", "Test results", "RTO/RPO documentation"], "automationCapability": "partial" },
+        { "id": "AS-BA-1", "name": "Business Associate Contracts", "description": "Document satisfactory assurances from business associates that they will appropriately safeguard ePHI through Business Associate Agreements.", "implementationType": "required", "category": "Third-Party Management", "mappings": { "soc2": ["CC9.2"], "iso27001": ["A.5.19"], "nist-csf": ["ID.SC-1"] }, "implementationGuidance": "Execute BAAs with all vendors handling ePHI. Include breach notification requirements. Require security program attestation.", "evidenceRequired": ["BAA inventory", "Signed BAAs", "Vendor security assessments"], "automationCapability": "partial" }
+      ]
+    }
+  ],
+  "requiredDocumentation": [
+    "Risk Analysis Report",
+    "Risk Management Plan",
+    "HIPAA Security Policies and Procedures",
+    "Business Associate Agreements (BAAs)",
+    "Workforce Training Records",
+    "Incident Response Plan",
+    "Contingency/Disaster Recovery Plan",
+    "Access Management Policy",
+    "Password Policy",
+    "Encryption Policy"
+  ],
+  "breachNotification": {
+    "required": true,
+    "timeframe": "60 days from discovery",
+    "notifyAuthority": "HHS Office for Civil Rights",
+    "notifyIndividuals": true,
+    "threshold": "500+ affected individuals requires media notification and HHS 'wall of shame' posting"
+  },
+  "relatedFrameworks": ["soc2", "gdpr", "nist-csf", "iso27001"],
+  "tags": ["healthcare", "ephi", "federal", "safeguards", "united-states"],
+  "resources": [
+    { "title": "HIPAA Security Rule", "url": "https://www.hhs.gov/hipaa/for-professionals/security/index.html", "type": "official" },
+    { "title": "HIPAA Breach Notification Rule", "url": "https://www.hhs.gov/hipaa/for-professionals/breach-notification/index.html", "type": "official" }
+  ]
+}

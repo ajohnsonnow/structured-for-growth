@@ -1,0 +1,116 @@
+{
+  "id": "gdpr",
+  "name": "GDPR",
+  "fullName": "General Data Protection Regulation (EU) 2016/679",
+  "version": "2016 (effective May 25, 2018)",
+  "governingBody": "European Parliament and Council of the European Union",
+  "jurisdiction": "European Union (Extraterritorial)",
+  "primaryAudience": ["Any Organization Processing EU Personal Data", "B2B SaaS Companies", "E-commerce", "AdTech", "FinTech"],
+  "description": "The GDPR enforces rigorous data privacy laws across the EU, applying extraterritorially to any global organization processing personal data of EU residents. It champions 'Privacy by Design and by Default,' mandating that data protection is integrated into software from inception. It uses a risk-based approach rather than prescriptive technology mandates.",
+  "certificationDetails": {
+    "type": "self-assessment",
+    "reportTypes": ["Data Protection Impact Assessment (DPIA)", "Record of Processing Activities (RoPA)", "DPO Reports"],
+    "assessor": "Self-assessment; enforced by national Data Protection Authorities (DPAs)",
+    "typicalCost": "$15,000 - $100,000+ (depends on complexity and DPO hiring)",
+    "auditCycle": "Ongoing compliance; DPA investigations are complaint-driven",
+    "certificationBody": "National Data Protection Authorities (e.g., ICO, CNIL, BfDI)"
+  },
+  "lifecycle": [
+    { "phase": 1, "name": "Data Mapping & Inventory", "description": "Map all personal data processing activities. Create Record of Processing Activities (RoPA).", "typicalDuration": "4-8 weeks", "keyActivities": ["Inventory all data processing", "Map data flows", "Identify legal bases", "Create RoPA", "Identify cross-border transfers"] },
+    { "phase": 2, "name": "Gap Analysis & Risk Assessment", "description": "Assess current practices against GDPR requirements. Conduct DPIAs for high-risk processing.", "typicalDuration": "4-6 weeks", "keyActivities": ["Gap analysis against GDPR articles", "Identify high-risk processing", "Conduct DPIAs", "Assess lawful bases"] },
+    { "phase": 3, "name": "Implementation of TOMs", "description": "Implement Technical and Organizational Measures. Deploy Privacy by Design controls.", "typicalDuration": "8-16 weeks", "keyActivities": ["Implement encryption", "Deploy access controls", "Set up consent management", "Build DSAR workflows", "Execute DPAs with vendors"] },
+    { "phase": 4, "name": "Ongoing Compliance", "description": "Maintain compliance through continuous monitoring, training, and documentation.", "typicalDuration": "Ongoing", "keyActivities": ["Monitor data processing changes", "Handle DSARs within 30 days", "Annual training", "Review DPAs", "Update DPIAs"] }
+  ],
+  "domains": [
+    {
+      "id": "data-processing-principles",
+      "name": "Data Processing Principles (Articles 5-11)",
+      "description": "Foundational principles governing how personal data must be processed.",
+      "required": true,
+      "controlCount": 7,
+      "controls": [
+        { "id": "GDPR-5.1a", "name": "Lawfulness, Fairness, and Transparency", "description": "Personal data shall be processed lawfully, fairly and in a transparent manner in relation to the data subject.", "implementationType": "required", "category": "Processing Principles", "mappings": { "soc2": ["P1.1"], "hipaa": ["Notice of Privacy Practices"] }, "implementationGuidance": "Document lawful basis for each processing activity. Provide clear privacy notices. Ensure transparency in all data collection.", "evidenceRequired": ["Privacy policy", "Lawful basis documentation", "Privacy notices"], "automationCapability": "partial", "codePatterns": ["gdpr-consent-manager"] },
+        { "id": "GDPR-5.1b", "name": "Purpose Limitation", "description": "Data shall be collected for specified, explicit and legitimate purposes and not further processed in a manner incompatible with those purposes.", "implementationType": "required", "category": "Processing Principles", "mappings": { "soc2": ["P6.1"] }, "implementationGuidance": "Document purpose for each data collection. Prevent function creep. Implement technical controls to restrict data use to stated purposes.", "evidenceRequired": ["Purpose documentation", "Processing register", "Technical use restrictions"], "automationCapability": "partial" },
+        { "id": "GDPR-5.1c", "name": "Data Minimization", "description": "Data shall be adequate, relevant and limited to what is necessary in relation to the purposes for which they are processed.", "implementationType": "required", "category": "Processing Principles", "mappings": { "soc2": ["P6.1"], "iso27001": ["A.5.12"] }, "implementationGuidance": "Audit data collection forms. Remove unnecessary fields. Validate that only essential data is collected in APIs.", "evidenceRequired": ["Data minimization review", "Form field audits", "API payload reviews"], "automationCapability": "partial" },
+        { "id": "GDPR-5.1d", "name": "Accuracy", "description": "Data shall be accurate and, where necessary, kept up to date.", "implementationType": "required", "category": "Processing Principles", "mappings": { "soc2": ["PI1.1"] }, "implementationGuidance": "Implement data quality checks. Provide self-service profile updates. Validate data inputs.", "evidenceRequired": ["Data quality procedures", "Update mechanisms", "Validation rules"], "automationCapability": "full" },
+        { "id": "GDPR-5.1e", "name": "Storage Limitation", "description": "Data shall be kept in a form which permits identification of data subjects for no longer than is necessary.", "implementationType": "required", "category": "Processing Principles", "mappings": { "soc2": ["C1.2"], "iso27001": ["A.8.10"] }, "implementationGuidance": "Define retention periods per data category. Implement automated deletion. Archive or anonymize data past retention period.", "evidenceRequired": ["Retention schedule", "Automated deletion evidence", "Anonymization procedures"], "automationCapability": "full" },
+        { "id": "GDPR-5.1f", "name": "Integrity and Confidentiality", "description": "Data shall be processed with appropriate security measures, including protection against unauthorized or unlawful processing and against accidental loss.", "implementationType": "required", "category": "Processing Principles", "mappings": { "soc2": ["CC6.1", "CC6.7"], "iso27001": ["A.8.24"], "hipaa": ["Encryption and Decryption"] }, "implementationGuidance": "Implement encryption at rest and in transit. Deploy access controls. Conduct regular security assessments.", "evidenceRequired": ["Encryption configurations", "Access control evidence", "Security assessment reports"], "automationCapability": "full", "codePatterns": ["encryption-at-rest"] },
+        { "id": "GDPR-5.2", "name": "Accountability", "description": "The controller shall be responsible for and able to demonstrate compliance with the data processing principles.", "implementationType": "required", "category": "Processing Principles", "mappings": { "soc2": ["CC1.5"], "iso27001": ["A.5.2"] }, "implementationGuidance": "Maintain comprehensive documentation. Conduct regular audits. Appoint DPO where required. Demonstrate compliance proactively.", "evidenceRequired": ["RoPA", "DPO appointment (if applicable)", "Compliance audit reports"], "automationCapability": "partial" }
+      ]
+    },
+    {
+      "id": "data-subject-rights",
+      "name": "Data Subject Rights (Articles 12-23)",
+      "description": "Rights granted to individuals whose personal data is processed.",
+      "required": true,
+      "controlCount": 8,
+      "controls": [
+        { "id": "GDPR-15", "name": "Right of Access", "description": "Data subjects have the right to obtain confirmation of processing and access to their personal data.", "implementationType": "required", "category": "Data Subject Rights", "mappings": { "soc2": ["P4.1"] }, "implementationGuidance": "Build data export functionality. Implement DSAR workflow. Respond within 30 days. Verify requester identity.", "evidenceRequired": ["DSAR procedure", "Response logs", "Data export capabilities"], "automationCapability": "partial", "codePatterns": ["gdpr-consent-manager"] },
+        { "id": "GDPR-16", "name": "Right to Rectification", "description": "Data subjects have the right to have inaccurate personal data rectified.", "implementationType": "required", "category": "Data Subject Rights", "mappings": { "soc2": ["P4.1"] }, "implementationGuidance": "Provide self-service data editing. Process rectification requests within 30 days. Notify third parties of corrections.", "evidenceRequired": ["Rectification procedures", "Self-service editing capabilities"], "automationCapability": "full" },
+        { "id": "GDPR-17", "name": "Right to Erasure (Right to be Forgotten)", "description": "Data subjects have the right to have their personal data erased under certain conditions.", "implementationType": "required", "category": "Data Subject Rights", "mappings": { "soc2": ["P4.1", "C1.2"] }, "implementationGuidance": "Implement data deletion workflows. Handle cascading deletes across systems. Document legal grounds for retention when erasure is refused.", "evidenceRequired": ["Deletion procedures", "Deletion confirmation records", "Retention justification documents"], "automationCapability": "partial" },
+        { "id": "GDPR-20", "name": "Right to Data Portability", "description": "Data subjects have the right to receive their personal data in a structured, commonly used, machine-readable format.", "implementationType": "required", "category": "Data Subject Rights", "mappings": {}, "implementationGuidance": "Build data export in JSON/CSV. Provide API for machine-readable data transfer. Ensure interoperability.", "evidenceRequired": ["Export functionality", "Supported formats documentation"], "automationCapability": "full" }
+      ]
+    },
+    {
+      "id": "security-of-processing",
+      "name": "Security of Processing — TOMs (Article 32)",
+      "description": "Technical and Organizational Measures required to ensure appropriate security of personal data.",
+      "required": true,
+      "controlCount": 5,
+      "controls": [
+        { "id": "GDPR-32a", "name": "Pseudonymization and Encryption", "description": "Implement pseudonymization and encryption of personal data to minimize breach impact.", "implementationType": "required", "category": "Cryptographic Controls", "mappings": { "soc2": ["CC6.7"], "iso27001": ["A.8.11", "A.8.24"], "hipaa": ["Encryption and Decryption"], "pci-dss": ["Req 3", "Req 4"] }, "implementationGuidance": "Implement AES-256 encryption at rest. Enforce TLS 1.2+ in transit. Use pseudonymization for analytics data. Tokenize PII where possible.", "evidenceRequired": ["Encryption configurations", "Pseudonymization implementation", "Tokenization evidence"], "automationCapability": "full", "codePatterns": ["encryption-at-rest", "data-masking"] },
+        { "id": "GDPR-32b", "name": "Confidentiality, Integrity, Availability, Resilience", "description": "Ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services.", "implementationType": "required", "category": "Access Controls", "mappings": { "soc2": ["CC6.1", "A1.1"], "iso27001": ["A.8.2", "A.8.5"], "hipaa": ["Access Control"], "pci-dss": ["Req 7", "Req 8"] }, "implementationGuidance": "Implement MFA, RBAC, and strict password policies. Deploy across multiple availability zones. Implement DDoS protection.", "evidenceRequired": ["MFA enrollment", "RBAC configurations", "HA architecture documentation"], "automationCapability": "full", "codePatterns": ["auth-mfa-middleware", "rbac-middleware"] },
+        { "id": "GDPR-32c", "name": "Restore Availability and Access", "description": "Implement ability to restore the availability and access to personal data in a timely manner in the event of a physical or technical incident.", "implementationType": "required", "category": "Availability and Resilience", "mappings": { "soc2": ["A1.2", "A1.3"], "iso27001": ["A.5.29", "A.5.30"], "dora": ["ICT Risk Management"] }, "implementationGuidance": "Implement backup and disaster recovery. Define RTO/RPO. Test restoration procedures regularly. Deploy multi-region backup.", "evidenceRequired": ["Backup procedures", "DR plan", "Restoration test results", "RTO/RPO documentation"], "automationCapability": "full" },
+        { "id": "GDPR-32d", "name": "Regular Testing and Assessment", "description": "Implement a process for regularly testing, assessing and evaluating the effectiveness of technical and organizational measures.", "implementationType": "required", "category": "Continuous Evaluation", "mappings": { "soc2": ["CC4.1"], "iso27001": ["A.8.8"], "pci-dss": ["Req 11"] }, "implementationGuidance": "Conduct quarterly vulnerability scans. Perform annual penetration testing. Review security controls effectiveness. Implement continuous monitoring.", "evidenceRequired": ["Vulnerability scan reports", "Penetration test reports", "Control effectiveness reviews"], "automationCapability": "full" },
+        { "id": "GDPR-32e", "name": "Protective Software and Threat Detection", "description": "Deploy advanced antivirus, antimalware, and real-time threat detection tools.", "implementationType": "required", "category": "Protective Software", "mappings": { "soc2": ["CC6.8"], "iso27001": ["A.8.7"], "pci-dss": ["Req 5"] }, "implementationGuidance": "Deploy EDR on all endpoints. Enable real-time threat detection. Implement SIEM for centralized monitoring.", "evidenceRequired": ["EDR deployment status", "SIEM configurations", "Threat detection capabilities"], "automationCapability": "full" }
+      ]
+    },
+    {
+      "id": "breach-notification",
+      "name": "Breach Notification (Articles 33-34)",
+      "description": "Requirements for notifying authorities and data subjects of personal data breaches.",
+      "required": true,
+      "controlCount": 2,
+      "controls": [
+        { "id": "GDPR-33", "name": "Notification to Supervisory Authority", "description": "In case of a personal data breach, the controller shall notify the competent supervisory authority within 72 hours of becoming aware of it.", "implementationType": "required", "category": "Breach Notification", "mappings": { "soc2": ["CC7.4"], "iso27001": ["A.5.24"], "hipaa": ["Breach Notification Rule"], "dora": ["Incident Reporting"] }, "implementationGuidance": "Develop breach notification procedures. Define 72-hour notification workflow. Prepare template notifications. Establish breach assessment criteria.", "evidenceRequired": ["Breach notification procedure", "Notification templates", "Contact lists for DPAs"], "automationCapability": "partial", "codePatterns": ["breach-notification"] },
+        { "id": "GDPR-34", "name": "Communication to Data Subject", "description": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the breach to the data subject without undue delay.", "implementationType": "required", "category": "Breach Notification", "mappings": { "soc2": ["CC7.4"], "hipaa": ["Breach Notification Rule"] }, "implementationGuidance": "Prepare data subject notification templates. Define high-risk assessment criteria. Implement mass notification capability.", "evidenceRequired": ["Notification templates", "High-risk assessment criteria", "Mass notification system"], "automationCapability": "partial", "codePatterns": ["breach-notification"] }
+      ]
+    },
+    {
+      "id": "international-transfers",
+      "name": "International Data Transfers (Chapter V)",
+      "description": "Requirements for transferring personal data outside the EU/EEA.",
+      "required": true,
+      "controlCount": 2,
+      "controls": [
+        { "id": "GDPR-44", "name": "Transfer Mechanisms", "description": "Transfers of personal data to third countries shall only take place if appropriate safeguards are provided.", "implementationType": "required", "category": "Cross-Border Transfers", "mappings": {}, "implementationGuidance": "Use Standard Contractual Clauses (SCCs) or adequacy decisions. Conduct Transfer Impact Assessments (TIAs). Document data transfer mechanisms.", "evidenceRequired": ["SCCs or adequacy decision evidence", "Transfer Impact Assessments", "Data flow maps showing cross-border transfers"], "automationCapability": "manual" },
+        { "id": "GDPR-28", "name": "Data Processing Agreements", "description": "Processing by a processor shall be governed by a contract or legal act that sets out the subject-matter, duration, nature, and purpose of the processing.", "implementationType": "required", "category": "Processor Obligations", "mappings": { "soc2": ["CC9.2"], "iso27001": ["A.5.19"], "hipaa": ["BAAs"] }, "implementationGuidance": "Execute DPAs with all data processors. Include sub-processor requirements. Define security obligations. Require breach notification.", "evidenceRequired": ["DPA inventory", "Signed DPAs", "Sub-processor lists"], "automationCapability": "partial" }
+      ]
+    }
+  ],
+  "requiredDocumentation": [
+    "Record of Processing Activities (RoPA)",
+    "Privacy Policy / Privacy Notice",
+    "Data Protection Impact Assessments (DPIAs)",
+    "Data Processing Agreements (DPAs)",
+    "Consent Records",
+    "DSAR Procedures and Response Logs",
+    "Breach Notification Procedures",
+    "Data Retention Schedule",
+    "Transfer Impact Assessments (TIAs)",
+    "DPO Appointment Documentation (if required)"
+  ],
+  "breachNotification": {
+    "required": true,
+    "timeframe": "72 hours to supervisory authority; without undue delay to data subjects",
+    "notifyAuthority": "Relevant national Data Protection Authority (DPA)",
+    "notifyIndividuals": true,
+    "threshold": "When breach likely results in high risk to rights and freedoms of individuals"
+  },
+  "relatedFrameworks": ["hipaa", "iso27001", "nis2", "pci-dss"],
+  "tags": ["privacy", "data-protection", "eu", "extraterritorial", "privacy-by-design"],
+  "resources": [
+    { "title": "GDPR Full Text", "url": "https://gdpr.eu/", "type": "official" },
+    { "title": "European Data Protection Board (EDPB)", "url": "https://edpb.europa.eu/", "type": "official" }
+  ]
+}

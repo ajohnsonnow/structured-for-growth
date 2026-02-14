@@ -1,10 +1,10 @@
 {
-  "generated": "2026-02-14T01:15:15.339Z",
-  "version": "1.4.0",
+  "generated": "2026-02-14T03:15:48.711Z",
+  "version": "1.4.2",
   "summary": {
-    "totalRoutes": 72,
-    "totalPages": 6,
-    "totalTemplates": 26,
+    "totalRoutes": 76,
+    "totalPages": 7,
+    "totalTemplates": 33,
     "totalFrameworks": 10,
     "totalFeatures": 10,
     "totalDocs": 11
@@ -104,7 +104,7 @@
     },
     {
       "name": "Developer Template Library",
-      "description": "26 production-ready code templates across 9 categories with live preview, usage notes, and search.",
+      "description": "33 production-ready code templates across 10 categories with live preview, usage notes, and search.",
       "category": "frontend",
       "relatedPages": [
         "/templates"
@@ -579,6 +579,34 @@
     },
     {
       "method": "GET",
+      "path": "/api/mbai/manifest",
+      "module": "mbai",
+      "auth": "None",
+      "description": "Returns the top-level manifest with pillars, categories, and template list"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mbai/templates",
+      "module": "mbai",
+      "auth": "None",
+      "description": "Returns all templates in a single payload"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mbai/templates/:id",
+      "module": "mbai",
+      "auth": "None",
+      "description": "Returns a single template by ID (filename without .json)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mbai/categories",
+      "module": "mbai",
+      "auth": "None",
+      "description": "Returns the list of business function categories"
+    },
+    {
+      "method": "GET",
       "path": "/api/messages",
       "module": "messages",
       "auth": "None",
@@ -754,7 +782,7 @@
     {
       "file": "client/dashboard.html",
       "slug": "/dashboard",
-      "title": "Client Portal - Structured For Growth",
+      "title": "Admin Dashboard - Structured For Growth",
       "sections": 0,
       "forms": 10,
       "modals": 91,
@@ -802,7 +830,8 @@
       "forms": 0,
       "modals": 0,
       "scripts": [
-        "/js/docs.js"
+        "/js/docs.js",
+        "https://gc.zgo.at/count.js"
       ],
       "headings": [
         "Structured",
@@ -820,7 +849,7 @@
       "file": "client/index.html",
       "slug": "/",
       "title": "Structured For Growth - Content Engineering Excellence",
-      "sections": 6,
+      "sections": 7,
       "forms": 1,
       "modals": 1,
       "scripts": [
@@ -845,6 +874,11 @@
         "API Development",
         "Code Templates",
         "Compliance Engineering",
+        "Enterprise Methodology",
+        "MBAi Paradigm",
+        "Sustainable Business",
+        "Servant Leadership",
+        "8 Enterprise Templates",
         "Template Library",
         "🎯 Form Components",
         "🔐 Authentication",
@@ -860,6 +894,26 @@
         "Get In Touch",
         "Start a Conversation",
         "Structured For Growth"
+      ]
+    },
+    {
+      "file": "client/mbai.html",
+      "slug": "/mbai",
+      "title": "MBAi Methodology — Structured For Growth",
+      "sections": 4,
+      "forms": 0,
+      "modals": 16,
+      "scripts": [
+        "/js/mbai.js",
+        "https://gc.zgo.at/count.js"
+      ],
+      "headings": [
+        "Structured",
+        "MBAi",
+        "MBAi Paradigm",
+        "Sustainable Business",
+        "Servant Leadership",
+        "Enterprise Function"
       ]
     },
     {
@@ -1109,6 +1163,62 @@
       "description": "PCI DSS 4.0.1 compliant PAN detection, masking (first-6/last-4), truncation, and tokenization. Detects 7 card brands via Luhn validation, scrubs PANs from free-text fields, and ensures card data never reaches logs.",
       "language": "JavaScript",
       "timeSaved": ""
+    },
+    {
+      "id": "mbai-sbsc",
+      "title": "Sustainable Balanced Scorecard (SBSC)",
+      "category": "mbai",
+      "description": "Strategic matrix integrating Financial, Customer, Internal Process, and Learning & Growth perspectives with sustainability KPIs, AI automation vectors, and servant leadership practices.",
+      "language": "JSON",
+      "timeSaved": ""
+    },
+    {
+      "id": "mbai-circular-supply-chain",
+      "title": "Circular Supply Chain Workflow",
+      "category": "mbai",
+      "description": "Six-phase circular economy workflow: Regenerative Sourcing → Circular Design → GreenOps Manufacturing → PaaS Distribution → Reverse Logistics → Remanufacturing.",
+      "language": "JSON",
+      "timeSaved": ""
+    },
+    {
+      "id": "mbai-tbl-impact",
+      "title": "Triple Bottom Line (TBL) P&L",
+      "category": "mbai",
+      "description": "Profit-People-Planet integrated P&L with baseline vs projected metrics, AI-driven financial modeling, and servant leadership valuation rationale.",
+      "language": "JSON",
+      "timeSaved": ""
+    },
+    {
+      "id": "mbai-marketing-audit",
+      "title": "Purpose-Driven Marketing Audit",
+      "category": "mbai",
+      "description": "Five-phase audit framework: Purpose Alignment, Impact Verification, Inclusive Storytelling, Ethical Personalization, and Continuous Sentiment Analysis.",
+      "language": "JSON",
+      "timeSaved": ""
+    },
+    {
+      "id": "mbai-servant-leadership",
+      "title": "Servant Leadership 1-on-1 & Review",
+      "category": "mbai",
+      "description": "Structured 1-on-1 coaching agenda (5 segments) plus a 5-competency performance evaluation rubric scoring empowerment, psychological safety, growth, inclusion, and ethics.",
+      "language": "JSON",
+      "timeSaved": ""
+    },
+    {
+      "id": "mbai-greenops-sdlc",
+      "title": "Sustainable SDLC & GreenOps",
+      "category": "mbai",
+      "description": "Five-phase software development lifecycle embedding energy-efficient coding, Content Engineering, and environmental performance metrics alongside traditional quality gates.",
+      "language": "JSON",
+      "timeSaved": ""
+    },
+    {
+      "id": "mbai-grc-ai",
+      "title": "AI Governance & ESG Compliance (NIST AI RMF)",
+      "category": "mbai",
+      "description": "Operationalizes the four NIST AI RMF functions (Govern, Map, Measure, Manage) with AI agent enablement, servant leadership accountability, and OSCAL documentation integration.",
+      "language": "JSON",
+      "timeSaved": ""
     }
   ],
   "compliance": {
@@ -1253,7 +1363,7 @@
   },
   "pkg": {
     "name": "structured-for-growth-www",
-    "version": "1.4.0",
+    "version": "1.4.2",
     "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
     "nodeEngine": ">=18.0.0",
     "scripts": [
@@ -1967,6 +2077,8 @@
         "UI Components\r",
         "Email\r",
         "Utilities\r",
+        "Compliance\r",
+        "MBAi\r",
         "🚀 Quick Start\r",
         "Using Templates in Your Project\r",
         "Adding New Templates\r",
@@ -1995,7 +2107,7 @@
         "🎓 Learning Resources\r",
         "📝 Changelog\r"
       ],
-      "wordCount": 888
+      "wordCount": 981
     }
   ],
   "styles": [
@@ -2021,8 +2133,13 @@
     },
     {
       "file": "client/styles/main.css",
-      "customProperties": 315,
-      "selectors": 178
+      "customProperties": 342,
+      "selectors": 192
+    },
+    {
+      "file": "client/styles/mbai.css",
+      "customProperties": 49,
+      "selectors": 82
     },
     {
       "file": "client/styles/portal.css",

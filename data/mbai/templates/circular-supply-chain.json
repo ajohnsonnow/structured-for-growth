@@ -1,0 +1,60 @@
+{
+  "id": "circular-supply-chain",
+  "title": "Circular Supply Chain Operational Workflow",
+  "version": "1.0.0",
+  "category": "operations",
+  "icon": "♻️",
+  "description": "A six-phase circular economy workflow replacing the traditional linear extract-consume-dispose model. Each phase maps AI enablement to circular KPIs and human-centric servant leadership oversight.",
+  "methodology": "MBAi + Circular Economy + Servant Leadership",
+  "frameworks": ["ISO 14001", "NIST AI RMF (Map)", "CSRD"],
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Regenerative Sourcing & Supplier Engagement",
+      "action": "Transition procurement from virgin resource extraction to secondary, recycled, and regeneratively grown biological materials. Establish clear circularity criteria for all vendor contracts.",
+      "aiEnablement": "AI agents ingest supplier documentation and ESG reports to continuously audit compliance, flagging high-risk vendors based on global supply chain datasets.",
+      "kpi": "Percentage of total procurement spend allocated to verified circular or regenerative suppliers",
+      "servantLeadership": "Partnering with suppliers to build their sustainability capacity; refusing contracts that compromise human rights or fair labor standards."
+    },
+    {
+      "id": "phase-2",
+      "name": "Circular Product Design & Architecture",
+      "action": "Engineer products prioritizing modularity, durability, repairability, and ease of material separation at end-of-lifecycle, abandoning planned obsolescence.",
+      "aiEnablement": "Generative AI models simulate thousands of material combinations and CAD designs to optimize structural integrity using minimal recycled inputs.",
+      "kpi": "Product Circularity Index (mass percentage of cycled content and potential reuse cycles)",
+      "servantLeadership": "Fostering psychological safety within R&D teams, encouraging experimentation with unconventional sustainable materials without fear of failure."
+    },
+    {
+      "id": "phase-3",
+      "name": "Sustainable Manufacturing & GreenOps",
+      "action": "Implement zero-waste manufacturing powered by renewable energy. Integrate GreenOps methodologies to minimize IT and software infrastructure carbon footprint.",
+      "aiEnablement": "Digital twins replicate the factory floor, allowing AI to autonomously adjust machinery parameters to minimize energy consumption and material waste in real-time.",
+      "kpi": "Volume of industrial waste diverted from landfills; IT infrastructure PUE (Power Usage Effectiveness)",
+      "servantLeadership": "Prioritizing health and safety of manufacturing personnel; ensuring automation augments worker capabilities rather than driving layoffs."
+    },
+    {
+      "id": "phase-4",
+      "name": "Product-as-a-Service (PaaS) Distribution",
+      "action": "Shift from transactional sales to service-based models (leasing, sharing, subscribing) where the organization retains physical asset ownership.",
+      "aiEnablement": "AI algorithms forecast regional demand patterns, optimizing inventory distribution and predicting when leased assets require proactive maintenance.",
+      "kpi": "Asset utilization rates; reduction in total units manufactured to service customer demand",
+      "servantLeadership": "Transitioning sales teams from volume-based quotas to relationship-building metrics, focusing on long-term customer success."
+    },
+    {
+      "id": "phase-5",
+      "name": "Reverse Logistics & Asset Recovery",
+      "action": "Establish localized collection hubs and incentivized take-back schemes to efficiently retrieve products from consumers at end of primary use.",
+      "aiEnablement": "Intelligent routing APIs orchestrated by AI agents dynamically generate multi-stop collection paths to minimize transportation emissions.",
+      "kpi": "Volume and mass of products successfully recovered from the consumer market",
+      "servantLeadership": "Engaging with local communities to build convenient recovery infrastructure; transparent communication regarding data privacy on returned devices."
+    },
+    {
+      "id": "phase-6",
+      "name": "Remanufacturing & Material Cycling",
+      "action": "Sort, disassemble, and process recovered assets. Triage components for direct reuse, refurbishment, remanufacturing, or foundational material recycling.",
+      "aiEnablement": "Computer vision systems rapidly identify, categorize, and assess degradation level of returned components, routing to the optimal recovery stream.",
+      "kpi": "Economic value captured from closed, open, and remanufactured loops compared to virgin material costs",
+      "servantLeadership": "Empowering reverse logistics teams with autonomy to make immediate quality-control decisions regarding material salvaging and ethical disposal."
+    }
+  ]
+}

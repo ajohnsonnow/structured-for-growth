@@ -1,0 +1,44 @@
+{
+  "id": "grc-ai-integration",
+  "title": "AI Governance and ESG Compliance Integration Workflow",
+  "version": "1.0.0",
+  "category": "governance-risk-compliance",
+  "icon": "🛡️",
+  "description": "Operationalizes the four NIST AI RMF core functions (Govern, Map, Measure, Manage) alongside ESG regulatory requirements. Provides a complete AI governance lifecycle with servant leadership accountability at every stage.",
+  "methodology": "MBAi + NIST AI RMF + ISO 42001 + Servant Leadership",
+  "frameworks": ["NIST AI RMF", "ISO 42001", "EU AI Act", "CSRD", "SOC 2", "GDPR"],
+  "functions": [
+    {
+      "id": "govern",
+      "name": "GOVERN",
+      "action": "Establish a cross-functional oversight committee. Define clear policies, roles, and risk tolerances for AI deployment and ESG reporting. Cultivate a culture of responsible risk management.",
+      "aiEnablement": "AI systems aggregate regulatory updates (e.g., EU AI Act, CSRD) and synthesize briefings for executive review.",
+      "servantLeadership": "Taking ultimate accountability for the organization's technological footprint; prioritizing human rights and safety above algorithmic efficiency.",
+      "documentation": "Documented AI Charters and Governance Policies stored in central repository; linked to ISO 42001 mandates."
+    },
+    {
+      "id": "map",
+      "name": "MAP",
+      "action": "Identify and document all deployed AI systems, their intended uses, data dependencies, and potential impacts on stakeholders and the environment.",
+      "aiEnablement": "Automated asset discovery tools continuously scan the enterprise network to map data flows, APIs, and shadow AI usage.",
+      "servantLeadership": "Ensuring transparent communication with all stakeholders regarding where and how their data is being utilized by AI.",
+      "documentation": "System Architecture Diagrams and Data Lineage Maps; cross-referenced against GDPR and SOC 2 privacy controls."
+    },
+    {
+      "id": "measure",
+      "name": "MEASURE",
+      "action": "Employ rigorous quantitative and qualitative methods to assess AI systems for algorithmic bias, hallucination rates, security vulnerabilities, and environmental energy costs.",
+      "aiEnablement": "Automated testing pipelines simulate edge-case scenarios and adversarial attacks (Red Teaming) to evaluate model robustness and fairness.",
+      "servantLeadership": "Empowering independent audit teams with authority to rigorously challenge system outputs without facing management retaliation.",
+      "documentation": "Audit logs, Bias Assessment Reports, and Penetration Testing results appended as evidence to specific OSCAL control IDs."
+    },
+    {
+      "id": "manage",
+      "name": "MANAGE",
+      "action": "Implement technical controls and operational protocols to mitigate identified risks. Establish continuous monitoring, fallback procedures, and human-in-the-loop overrides.",
+      "aiEnablement": "AI-driven observability platforms monitor systems in real-time, automatically triggering alerts or shutting down agents if they exceed defined behavioral parameters.",
+      "servantLeadership": "Creating a 'blameless' reporting culture where employees are rewarded for identifying and halting potentially harmful or non-compliant algorithmic behavior.",
+      "documentation": "Incident Response Plans, Mitigation Strategies, and Continuous Monitoring dashboards tracking real-time compliance posture."
+    }
+  ]
+}

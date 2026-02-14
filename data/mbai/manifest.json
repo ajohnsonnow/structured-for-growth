@@ -1,0 +1,44 @@
+{
+  "name": "MBAi Enterprise Methodology",
+  "version": "1.0.0",
+  "description": "Master of Business Administration in Artificial Intelligence — integrating sustainable business, servant leadership, and agentic AI into every enterprise function.",
+  "pillars": [
+    {
+      "id": "mbai",
+      "name": "MBAi Paradigm",
+      "description": "Strategic integration of computational data science and artificial intelligence with core business administration disciplines.",
+      "color": "#7ec99b"
+    },
+    {
+      "id": "sustainable",
+      "name": "Sustainable Business",
+      "description": "ESG-driven operations, circular economy, Triple Bottom Line accounting, and regenerative practices.",
+      "color": "#9dbd7e"
+    },
+    {
+      "id": "servant",
+      "name": "Servant Leadership",
+      "description": "People-first organizational governance prioritizing empathy, psychological safety, and holistic human development.",
+      "color": "#d4a574"
+    }
+  ],
+  "templates": [
+    "sbsc-strategic-matrix",
+    "circular-supply-chain",
+    "tbl-impact-model",
+    "marketing-audit",
+    "servant-leadership-coaching",
+    "servant-leadership-rubric",
+    "sustainable-sdlc",
+    "grc-ai-integration"
+  ],
+  "categories": [
+    { "id": "strategic-management", "name": "Strategic Management", "icon": "🎯" },
+    { "id": "operations", "name": "Operations & Supply Chain", "icon": "♻️" },
+    { "id": "finance", "name": "Finance & Accounting", "icon": "💰" },
+    { "id": "marketing", "name": "Marketing & Communications", "icon": "📣" },
+    { "id": "human-resources", "name": "Human Resources", "icon": "🤝" },
+    { "id": "information-technology", "name": "Information Technology", "icon": "🌿" },
+    { "id": "governance-risk-compliance", "name": "Governance, Risk & Compliance", "icon": "🛡️" }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "marketing-audit",
+  "title": "Purpose-Driven Marketing Audit and Content Strategy Framework",
+  "version": "1.0.0",
+  "category": "marketing",
+  "icon": "📣",
+  "description": "A five-phase audit ensuring marketing campaigns are authentically aligned with verified operational sustainability data, inclusive storytelling, ethical personalization, and continuous sentiment analysis.",
+  "methodology": "MBAi + Purpose-Driven Marketing + Servant Leadership",
+  "frameworks": ["GDPR", "NIST AI RMF (Manage)"],
+  "phases": [
+    {
+      "id": "audit-01",
+      "name": "Purpose Alignment & Authenticity",
+      "criteria": "Does the campaign message directly reflect the organization's core mission and verified operational capabilities, avoiding superficial alignment with random causes?",
+      "aiEnablement": "AI agents analyze proposed marketing copy against internal sustainability reports to detect and flag potential exaggerations or discrepancies.",
+      "servantLeadership": "Refusing to approve campaigns that exploit social issues for profit; ensuring the brand's internal culture matches its external messaging.",
+      "evidenceLink": "SBSC Data"
+    },
+    {
+      "id": "audit-02",
+      "name": "Impact Verification & Evidence",
+      "criteria": "Are all ESG claims substantiated by audit-quality, quantifiable data (e.g., specific reductions in emissions or waste)?",
+      "aiEnablement": "Semantic search and knowledge graphs automatically retrieve and cite exact data points from the TBL database within marketing assets.",
+      "servantLeadership": "Committing to radical transparency; acknowledging areas where the organization is still improving rather than presenting a flawless facade.",
+      "evidenceLink": "TBL Metrics"
+    },
+    {
+      "id": "audit-03",
+      "name": "Inclusive & Accessible Storytelling",
+      "criteria": "Does the content utilize accessible, culturally competent language, feature diverse representation, and avoid exclusionary jargon?",
+      "aiEnablement": "NLP models review content across demographic lenses to identify implicit bias, non-inclusive phrasing, or accessibility violations prior to publication.",
+      "servantLeadership": "Amplifying the voices of marginalized stakeholders and community partners within the narrative.",
+      "evidenceLink": "Brand Guidelines"
+    },
+    {
+      "id": "audit-04",
+      "name": "Ethical Content Personalization",
+      "criteria": "Is the personalization strategy respectful of user privacy, avoiding manipulative psychological triggers, hyperbole, or false urgency?",
+      "aiEnablement": "Agentic AI dynamically generates individualized content experiences while strictly adhering to GDPR and data sovereignty constraints.",
+      "servantLeadership": "Leading with integrity and empathy; treating the consumer as a respected community member rather than a mere data point.",
+      "evidenceLink": "Privacy Policy"
+    },
+    {
+      "id": "audit-05",
+      "name": "Continuous Sentiment Analysis",
+      "criteria": "Are mechanisms in place to monitor public reaction, brand sentiment, and real-world social impact post-launch?",
+      "aiEnablement": "AI-powered social listening tools aggregate real-time feedback across millions of channels, detecting sentiment shifts or emerging PR risks.",
+      "servantLeadership": "Actively listening to criticism without defensiveness; displaying humility to pivot strategies if community response indicates a misstep.",
+      "evidenceLink": "Analytics Dashboard"
+    }
+  ]
+}

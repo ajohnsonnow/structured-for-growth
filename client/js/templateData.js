@@ -2758,5 +2758,432 @@ class CardSanitizer {
 export { CardSanitizer, luhnCheck, CARD_BRANDS };`,
         usage: '<h3>Usage</h3><pre><code>import { CardSanitizer } from \'./pci-card-sanitizer.js\';\nconst sanitizer = new CardSanitizer({ tokenSecret: process.env.TOKEN_KEY });\n\nsanitizer.mask(\'4111111111111111\');     // \'411111******1111\'\nsanitizer.truncate(\'4111111111111111\'); // \'****1111\'\nsanitizer.tokenize(\'4111111111111111\'); // \'tok_a3f8b2c1d4e5f6a7\'\nsanitizer.detectBrand(\'4111111111111111\'); // \'Visa\'\n\n// Scrub PANs from any text (logs, support tickets, etc.)\nsanitizer.scrubText(\'Card: 4111-1111-1111-1111 was used\');\n// → \'Card: 411111******1111 was used\'\n\n// Express middleware — auto-scrub request bodies\napp.use(sanitizer.middleware());</code></pre>',
         notes: '<h3>Compliance Mapping</h3><ul><li><strong>PCI DSS 3.3</strong> — Mask PAN when displayed (first 6 / last 4 only)</li><li><strong>PCI DSS 3.4</strong> — Render PAN unreadable everywhere it is stored</li><li><strong>PCI DSS 3.5</strong> — Protect cryptographic keys for PAN protection</li><li><strong>PCI DSS 4.1</strong> — Strong cryptography for PAN in transit</li><li><strong>SOC 2 CC6.1</strong> — Data protection controls</li></ul><h3>Luhn Algorithm</h3><p>All valid card numbers pass the Luhn check (mod-10 checksum). This sanitizer validates before masking to avoid false positives on random 16-digit numbers.</p>'
+    },
+
+    // =====================================================
+    // MBAi METHODOLOGY TEMPLATES
+    // =====================================================
+    {
+        id: 'mbai-sbsc',
+        title: 'Sustainable Balanced Scorecard (SBSC)',
+        description: 'Strategic matrix integrating Financial, Customer, Internal Process, and Learning & Growth perspectives with sustainability KPIs, AI automation vectors, and servant leadership practices.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'strategy', 'ESG', 'balanced-scorecard', 'sustainability'],
+        timeSaved: 8,
+        code: `// Sustainable Balanced Scorecard — Strategic Matrix
+// Category: Strategic Management
+// Methodology: MBAi + Sustainable Business + Servant Leadership
+// Frameworks: NIST AI RMF, ISO 42001, CSRD, ISSB
+
+const sbscMatrix = {
+  perspectives: [
+    {
+      name: "Financial",
+      objectives: [
+        {
+          objective: "Transition revenue to circular, regenerative models",
+          kpi: "% revenue from Product-as-a-Service (PaaS)",
+          target: "> 35%",
+          aiVector: "AI-driven dynamic pricing for subscriptions & leases",
+          servantLeadership: "Transparent reporting & equitable profit-sharing"
+        },
+        {
+          objective: "Reduce OpEx through ecological efficiency",
+          kpi: "Energy cost savings vs production output",
+          target: "20% Reduction",
+          aiVector: "Autonomous energy grid balancing & peak load prediction",
+          servantLeadership: "Reinvest savings into employee wellness funds"
+        }
+      ]
+    },
+    {
+      name: "Customer",
+      objectives: [
+        {
+          objective: "Enhance brand equity via purpose-driven impact",
+          kpi: "NPS + Sustainability Trust Index",
+          target: "> 75 NPS",
+          aiVector: "NLP sentiment analysis on ESG feedback",
+          servantLeadership: "Customers as collaborative sustainability partners"
+        },
+        {
+          objective: "Ensure ethical AI service accessibility",
+          kpi: "% portfolio passing bias & accessibility audits",
+          target: "100%",
+          aiVector: "Automated bias detection in customer-facing AI",
+          servantLeadership: "Prioritize inclusive design for marginalized communities"
+        }
+      ]
+    },
+    {
+      name: "Internal Process",
+      objectives: [
+        {
+          objective: "Zero-waste closed-loop supply chain",
+          kpi: "% materials recovered & remanufactured",
+          target: "> 65%",
+          aiVector: "Computer vision + robotics for reverse logistics",
+          servantLeadership: "Safe environments; upskilling over displacement"
+        },
+        {
+          objective: "Operational carbon neutrality (Scope 1 & 2)",
+          kpi: "Absolute GHG Emissions (MT CO2e)",
+          target: "Net-Zero",
+          aiVector: "ML route optimization & HVAC carbon reduction",
+          servantLeadership: "Frontline authority to halt non-compliant processes"
+        }
+      ]
+    },
+    {
+      name: "Learning & Growth",
+      objectives: [
+        {
+          objective: "Culture of continuous green innovation",
+          kpi: "Employee sustainability patents/improvements",
+          target: "10/Year",
+          aiVector: "AI knowledge management surfacing cross-dept insights",
+          servantLeadership: "Fund continuous education & green skills training"
+        },
+        {
+          objective: "Inclusive, psychologically safe environment",
+          kpi: "Belonging Index & voluntary turnover",
+          target: "< 5% Turnover",
+          aiVector: "Anonymized communication analysis for inclusion gaps",
+          servantLeadership: "Radical empathy; sponsor underrepresented talent"
+        }
+      ]
+    }
+  ]
+};
+
+export default sbscMatrix;`,
+        usage: '<h3>Usage</h3><p>Deploy the SBSC as the primary strategic interface in the Admin Dashboard. Connect to SQL.js for time-series KPI tracking and use MCP server to feed from external ERP/environmental APIs.</p><pre><code>// Fetch from platform API\\nconst res = await fetch("/api/mbai/templates/sbsc-strategic-matrix");\\nconst sbsc = await res.json();\\n\\n// Iterate perspectives\\nsbsc.perspectives.forEach(p => {\\n  console.log(p.name, p.objectives.length, "objectives");\\n});</code></pre>',
+        notes: '<h3>MBAi Integration</h3><ul><li>Maps to <strong>NIST AI RMF "Govern"</strong> function for AI risk culture</li><li>Each objective requires dual documentation: AI vector + servant leadership practice</li><li>Financial perspective tracks circular/PaaS revenue — not just traditional metrics</li></ul><h3>View Full Template</h3><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
+    },
+    {
+        id: 'mbai-circular-supply-chain',
+        title: 'Circular Supply Chain Workflow',
+        description: 'Six-phase circular economy workflow: Regenerative Sourcing → Circular Design → GreenOps Manufacturing → PaaS Distribution → Reverse Logistics → Remanufacturing.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'operations', 'supply-chain', 'circular-economy', 'sustainability'],
+        timeSaved: 6,
+        code: `// Circular Supply Chain — Operational Workflow
+// Category: Operations & Supply Chain Management
+// Methodology: MBAi + Circular Economy + Servant Leadership
+
+const circularWorkflow = {
+  phases: [
+    {
+      name: "Regenerative Sourcing",
+      action: "Transition to recycled/regenerative materials",
+      aiEnablement: "AI audits supplier ESG reports continuously",
+      kpi: "% procurement spend on circular suppliers",
+      servantLeadership: "Partner with suppliers to build capacity"
+    },
+    {
+      name: "Circular Product Design",
+      action: "Modularity, durability, repairability by design",
+      aiEnablement: "Generative AI simulates material combinations",
+      kpi: "Product Circularity Index",
+      servantLeadership: "Psychological safety for experimental R&D"
+    },
+    {
+      name: "Sustainable Manufacturing & GreenOps",
+      action: "Zero-waste, renewable-powered production",
+      aiEnablement: "Digital twins optimize energy & waste real-time",
+      kpi: "Waste diverted from landfill; IT PUE",
+      servantLeadership: "Automation augments, never replaces, workers"
+    },
+    {
+      name: "Product-as-a-Service Distribution",
+      action: "Leasing & subscription over transactional sales",
+      aiEnablement: "AI forecasts demand & proactive maintenance",
+      kpi: "Asset utilization rate; units manufactured reduction",
+      servantLeadership: "Relationship metrics replace volume quotas"
+    },
+    {
+      name: "Reverse Logistics & Asset Recovery",
+      action: "Collection hubs & incentivized take-back schemes",
+      aiEnablement: "Intelligent multi-stop routing minimizes emissions",
+      kpi: "Volume & mass of products recovered",
+      servantLeadership: "Community engagement & data privacy transparency"
+    },
+    {
+      name: "Remanufacturing & Material Cycling",
+      action: "Sort, disassemble, triage for reuse/recycle",
+      aiEnablement: "Computer vision categorizes returned components",
+      kpi: "Economic value from closed-loop vs virgin costs",
+      servantLeadership: "Team autonomy for quality-control decisions"
+    }
+  ]
+};
+
+export default circularWorkflow;`,
+        usage: '<h3>Usage</h3><p>Integrate into the project tracking module. Expose phases to external suppliers via the Client Portal with dynamic progress bars.</p><pre><code>const res = await fetch("/api/mbai/templates/circular-supply-chain");\\nconst workflow = await res.json();\\nworkflow.phases.forEach(ph => console.log(ph.name, "—", ph.kpi));</code></pre>',
+        notes: '<h3>Compliance Alignment</h3><ul><li><strong>ISO 14001</strong> — Environmental management systems</li><li><strong>NIST AI RMF "Map"</strong> — Document AI data flows across vendor ecosystem</li><li><strong>CSRD</strong> — Supply chain due diligence reporting</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
+    },
+    {
+        id: 'mbai-tbl-impact',
+        title: 'Triple Bottom Line (TBL) P&L',
+        description: 'Profit-People-Planet integrated P&L with baseline vs projected metrics, AI-driven financial modeling, and servant leadership valuation rationale.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'finance', 'TBL', 'ESG', 'impact-roi'],
+        timeSaved: 6,
+        code: `// Triple Bottom Line — Integrated P&L & Impact ROI
+// Strategic Initiative: Fleet Electrification & Workforce Development
+// Methodology: MBAi + TBL Accounting + Servant Leadership
+
+const tblModel = {
+  initiative: "Fleet Electrification & Community Workforce Development",
+  dimensions: [
+    {
+      name: "Profit",
+      metrics: [
+        { metric: "CapEx", baseline: "$0", projected: "$1,500,000",
+          ai: "Predictive TCO modeling", leadership: "Approve long-term investments" },
+        { metric: "OpEx Fuel Savings", baseline: "$800K/yr", projected: "$350K/yr",
+          ai: "Charging schedule optimization", leadership: "Document savings transparently" }
+      ]
+    },
+    {
+      name: "Planet",
+      metrics: [
+        { metric: "Scope 1 GHG", baseline: "2,500 MT CO2e", projected: "300 MT CO2e",
+          ai: "IoT telematics + auto carbon reporting", leadership: "Exceed minimum compliance" },
+        { metric: "Carbon Tax Risk", baseline: "$125K liability", projected: "$15K liability",
+          ai: "NLP monitors ESG legislation", leadership: "Proactive risk mitigation" }
+      ]
+    },
+    {
+      name: "People",
+      metrics: [
+        { metric: "Job Creation", baseline: "0 specialists", projected: "25 high-wage roles",
+          ai: "AI identifies skills gaps & learning paths", leadership: "Retrain, don't outsource" },
+        { metric: "Health & Safety", baseline: "High exposure", projected: "40% noise reduction",
+          ai: "Wearable IoT exposure tracking", leadership: "Well-being above speed" }
+      ]
+    }
+  ]
+};
+
+export default tblModel;`,
+        usage: '<h3>Usage</h3><p>Instantiate in the Admin Dashboard CRUD model. Structure data as JSON for Data Table components with sorting/filtering. Connect to accounting APIs via platform wrappers.</p><pre><code>const res = await fetch("/api/mbai/templates/tbl-impact-model");\\nconst tbl = await res.json();\\nconsole.log("Initiative:", tbl.initiative);\\ntbl.dimensions.forEach(d => console.log(d.name, d.metrics.length, "metrics"));</code></pre>',
+        notes: '<h3>Methodology Notes</h3><ul><li>Document shadow price assumptions for carbon valuation</li><li>AI models under <strong>NIST AI RMF "Measure"</strong> must be continuously monitored</li><li>Social metrics use qualitative + quantitative evidence</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
+    },
+    {
+        id: 'mbai-marketing-audit',
+        title: 'Purpose-Driven Marketing Audit',
+        description: 'Five-phase audit framework: Purpose Alignment, Impact Verification, Inclusive Storytelling, Ethical Personalization, and Continuous Sentiment Analysis.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'marketing', 'ESG', 'content-strategy', 'ethics'],
+        timeSaved: 4,
+        code: `// Purpose-Driven Marketing Audit & Content Strategy
+// Methodology: MBAi + Purpose-Driven Marketing + Servant Leadership
+
+const marketingAudit = {
+  phases: [
+    {
+      name: "Purpose Alignment & Authenticity",
+      criteria: "Does the campaign reflect verified operational capabilities?",
+      aiEnablement: "AI cross-checks copy against sustainability reports",
+      ethicalAlignment: "Refuse campaigns exploiting social issues for profit",
+      evidenceLink: "SBSC Data"
+    },
+    {
+      name: "Impact Verification & Evidence",
+      criteria: "Are all ESG claims substantiated by audit-quality data?",
+      aiEnablement: "Semantic search retrieves exact TBL data points",
+      ethicalAlignment: "Radical transparency; acknowledge improvement areas",
+      evidenceLink: "TBL Metrics"
+    },
+    {
+      name: "Inclusive & Accessible Storytelling",
+      criteria: "Culturally competent language, diverse representation?",
+      aiEnablement: "NLP reviews for implicit bias & accessibility violations",
+      ethicalAlignment: "Amplify marginalized stakeholder voices",
+      evidenceLink: "Brand Guidelines"
+    },
+    {
+      name: "Ethical Content Personalization",
+      criteria: "Respectful of privacy; no manipulative triggers?",
+      aiEnablement: "Agentic AI personalizes within GDPR constraints",
+      ethicalAlignment: "Consumers are community members, not data points",
+      evidenceLink: "Privacy Policy"
+    },
+    {
+      name: "Continuous Sentiment Analysis",
+      criteria: "Active monitoring of public reaction post-launch?",
+      aiEnablement: "AI social listening across millions of channels",
+      ethicalAlignment: "Listen to criticism; pivot if community signals misstep",
+      evidenceLink: "Analytics Dashboard"
+    }
+  ]
+};
+
+export default marketingAudit;`,
+        usage: '<h3>Usage</h3><p>Implement using form state managers and validation utilities. Store completed audits in the platform database and distribute via built-in email integration.</p><pre><code>const res = await fetch("/api/mbai/templates/marketing-audit");\\nconst audit = await res.json();\\naudit.phases.forEach(ph => console.log(ph.name, "→", ph.evidenceLink));</code></pre>',
+        notes: '<h3>Anti-Greenwashing Controls</h3><ul><li>All claims anchored to verified TBL accounting data</li><li><strong>NIST AI RMF "Manage"</strong> prevents generative AI hallucination of sustainability claims</li><li>GDPR-compliant personalization required</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
+    },
+    {
+        id: 'mbai-servant-leadership',
+        title: 'Servant Leadership 1-on-1 & Review',
+        description: 'Structured 1-on-1 coaching agenda (5 segments) plus a 5-competency performance evaluation rubric scoring empowerment, psychological safety, growth, inclusion, and ethics.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'HR', 'servant-leadership', 'coaching', 'performance-review'],
+        timeSaved: 4,
+        code: `// Servant Leadership — 1-on-1 Coaching + Performance Rubric
+// Methodology: MBAi + Sustainable HR + Servant Leadership
+
+const coachingAgenda = {
+  frequency: "Weekly/Bi-Weekly",
+  duration: "45 Minutes",
+  owner: "Direct Report",
+  segments: [
+    { name: "Personal Connection", focus: "Empathy & Well-being",
+      prompt: "How are you doing outside work? Stress manageable?" },
+    { name: "Priority Alignment", focus: "Foresight & Vision",
+      prompt: "Top priorities? How do they align with sustainability goals?" },
+    { name: "Obstacle Removal", focus: "Stewardship & Empowerment",
+      prompt: "What systemic roadblocks can I remove for you today?" },
+    { name: "Retrospective", focus: "Psychological Safety",
+      prompt: "Recent win to celebrate? Challenge — what did we learn?" },
+    { name: "Growth & Career", focus: "Commitment to Growth",
+      prompt: "New skills? Getting enough actionable feedback?" }
+  ]
+};
+
+const leadershipRubric = {
+  scoring: "1 (Developing) to 4 (Exemplary)",
+  competencies: [
+    { name: "Empowerment & Delegation",
+      proficient: "Delegates with clear guidelines; avoids micromanaging",
+      exemplary: "Sponsors team for advanced roles; pushes authority down" },
+    { name: "Psychological Safety & Trust",
+      proficient: "Acknowledges mistakes; safe to voice concerns",
+      exemplary: "Blameless post-mortems; rewards challenging status quo" },
+    { name: "Commitment to Human Growth",
+      proficient: "Facilitates training; aligns career trajectories",
+      exemplary: "Dedicated mentor; sacrifices short-term for learning" },
+    { name: "Inclusive Leadership",
+      proficient: "Aware of bias; solicits diverse voices",
+      exemplary: "Dismantles systemic equity barriers; fosters belonging" },
+    { name: "Ethical Stewardship",
+      proficient: "Decisions align with ESG goals",
+      exemplary: "Moral compass; refuses unethical profitable initiatives" }
+  ]
+};
+
+export { coachingAgenda, leadershipRubric };`,
+        usage: '<h3>Usage</h3><p>Integrate into the secure messaging module with JWT authentication. Connect to HRIS via API wrappers. AI serves as coaching assistant, not surveillance.</p><pre><code>// Fetch coaching template\\nconst res = await fetch("/api/mbai/templates/servant-leadership-coaching");\\nconst coaching = await res.json();\\nconsole.log(coaching.segments.length, "coaching segments");\\n\\n// Fetch rubric\\nconst rubric = await fetch("/api/mbai/templates/servant-leadership-rubric");\\nconst data = await rubric.json();\\nconsole.log(data.competencies.length, "leadership competencies");</code></pre>',
+        notes: '<h3>Ethical AI in HR</h3><ul><li><strong>NIST AI RMF</strong> — Algorithmic fairness in hiring/promotion required</li><li>Human judgment remains the ultimate arbiter in personnel decisions</li><li>AI synthesizes feedback; humans make the call</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
+    },
+    {
+        id: 'mbai-greenops-sdlc',
+        title: 'Sustainable SDLC & GreenOps',
+        description: 'Five-phase software development lifecycle embedding energy-efficient coding, Content Engineering, and environmental performance metrics alongside traditional quality gates.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'IT', 'SDLC', 'GreenOps', 'content-engineering', 'sustainability'],
+        timeSaved: 6,
+        code: `// Sustainable SDLC, GreenOps & Content Engineering
+// Methodology: MBAi + GreenOps + Content Engineering + Servant Leadership
+
+const sustainableSDLC = {
+  phases: [
+    {
+      name: "Requirements & Strategy",
+      action: "Define scope with sustainability focus; establish content models",
+      aiVector: "AI predicts compute needs; flags redundant features",
+      greenOps: "Estimated cloud lifecycle costs; ESG alignment",
+      leadership: "Deep collaboration between business & engineering"
+    },
+    {
+      name: "Architecture & Design",
+      action: "Cloud-native, modular; format-free content for reuse",
+      aiVector: "AI assists energy-efficient schema & API design",
+      greenOps: "Reduced content duplication; data center efficiency",
+      leadership: "Remove bureaucracy; give architects autonomy"
+    },
+    {
+      name: "Development & Green Coding",
+      action: "Clean code, efficient algorithms, component-based authoring",
+      aiVector: "Copilots optimize for lower CPU/memory consumption",
+      greenOps: "Code complexity; technical debt reduction",
+      leadership: "Blameless culture; safe to admit errors & refactor"
+    },
+    {
+      name: "Testing & QA",
+      action: "Functional + security (DevSecOps) + environmental testing",
+      aiVector: "ML CI/CD pipelines minimize manual QA hours",
+      greenOps: "Server load optimization; pre-launch bug resolution",
+      leadership: "Shield team from deadline pressure on testing"
+    },
+    {
+      name: "Deployment & Observability",
+      action: "Continuous monitoring of performance & resource consumption",
+      aiVector: "AI observability detects energy anomalies; auto-scales",
+      greenOps: "Real-time PUE; carbon per GB processed",
+      leadership: "Celebrate wins; blameless retrospectives"
+    }
+  ]
+};
+
+export default sustainableSDLC;`,
+        usage: '<h3>Usage</h3><p>Integrate into the pre-deploy audit scripts (<code>npm run audit</code>). The platform&#39;s Vite 5.0 + SQL.js stack natively supports GreenOps principles.</p><pre><code>const res = await fetch("/api/mbai/templates/sustainable-sdlc");\\nconst sdlc = await res.json();\\nsdlc.phases.forEach(ph => console.log(ph.name, "—", ph.greenOps));</code></pre>',
+        notes: '<h3>Platform Alignment</h3><ul><li>Vite 5.0 fast builds = lower CI energy consumption</li><li>SQL.js lightweight database = minimal container overhead</li><li>Content Engineering structured data optimizes AI retrieval efficiency</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
+    },
+    {
+        id: 'mbai-grc-ai',
+        title: 'AI Governance & ESG Compliance (NIST AI RMF)',
+        description: 'Operationalizes the four NIST AI RMF functions (Govern, Map, Measure, Manage) with AI agent enablement, servant leadership accountability, and OSCAL documentation integration.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'GRC', 'NIST-AI-RMF', 'ISO-42001', 'compliance', 'AI-governance'],
+        timeSaved: 8,
+        code: `// AI Governance & ESG Compliance Integration
+// Based on NIST AI Risk Management Framework
+// Methodology: MBAi + NIST AI RMF + ISO 42001 + Servant Leadership
+
+const grcWorkflow = {
+  functions: [
+    {
+      name: "GOVERN",
+      action: "Cross-functional oversight committee; AI policies & risk tolerances",
+      aiEnablement: "AI aggregates regulatory updates (EU AI Act, CSRD)",
+      servantLeadership: "Ultimate accountability for tech footprint; human rights first",
+      documentation: "AI Charters → ISO 42001 mandates"
+    },
+    {
+      name: "MAP",
+      action: "Document all AI systems, data dependencies, stakeholder impacts",
+      aiEnablement: "Asset discovery scans data flows, APIs, shadow AI",
+      servantLeadership: "Transparent communication on data utilization",
+      documentation: "Architecture Diagrams → GDPR/SOC 2 controls"
+    },
+    {
+      name: "MEASURE",
+      action: "Assess bias, hallucination, security, energy costs quantitatively",
+      aiEnablement: "Automated Red Teaming & adversarial testing pipelines",
+      servantLeadership: "Independent audit teams with authority to challenge",
+      documentation: "Bias Reports → OSCAL control evidence"
+    },
+    {
+      name: "MANAGE",
+      action: "Mitigate risks; continuous monitoring; human-in-the-loop overrides",
+      aiEnablement: "Real-time observability; auto-alerts on behavioral anomalies",
+      servantLeadership: "Blameless culture; reward identifying non-compliance",
+      documentation: "Incident Response → Continuous Monitoring dashboards"
+    }
+  ]
+};
+
+export default grcWorkflow;`,
+        usage: '<h3>Usage</h3><p>This template forms the core of the Compliance Knowledge Base. Use CRUD interfaces to assign controls to teams and track evidence via the dashboard. Integrate with VS Code extension for pre-commit compliance review.</p><pre><code>const res = await fetch("/api/mbai/templates/grc-ai-integration");\\nconst grc = await res.json();\\ngrc.functions.forEach(fn => console.log(fn.name, "—", fn.documentation));</code></pre>',
+        notes: '<h3>OSCAL Integration</h3><ul><li>Maps directly to existing OSCAL catalogs (10 frameworks)</li><li>AI agents limited to flagging risks — humans decide</li><li><strong>GOVERN</strong> = human executives remain accountable</li><li>Cross-references SOC 2, GDPR, ISO 27001, NIST AI RMF</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
     }
 ];

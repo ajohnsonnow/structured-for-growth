@@ -4398,6 +4398,66 @@ export { sessionTimeout, TIMEOUT_PROFILES };`,
 </ul>
 <h3>Session Headers</h3>
 <p>Sets <code>X-Session-Warning: true</code> and <code>X-Session-Expires-In</code> headers when approaching timeout, enabling front-end warning dialogs.</p>`
+    },
+
+    // =====================================================
+    // MBAi METHODOLOGY TEMPLATES
+    // =====================================================
+    {
+        id: 'mbai-sbsc',
+        title: 'Sustainable Balanced Scorecard (SBSC)',
+        description: 'Strategic matrix integrating Financial, Customer, Internal Process, and Learning & Growth perspectives with sustainability KPIs, AI automation vectors, and servant leadership practices.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'strategy', 'ESG', 'balanced-scorecard', 'sustainability']
+    },
+    {
+        id: 'mbai-circular-supply-chain',
+        title: 'Circular Supply Chain Workflow',
+        description: 'Six-phase circular economy workflow from Regenerative Sourcing through Remanufacturing.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'operations', 'supply-chain', 'circular-economy']
+    },
+    {
+        id: 'mbai-tbl-impact',
+        title: 'Triple Bottom Line (TBL) P&L',
+        description: 'Profit-People-Planet integrated P&L with AI-driven financial modeling and servant leadership rationale.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'finance', 'TBL', 'ESG']
+    },
+    {
+        id: 'mbai-marketing-audit',
+        title: 'Purpose-Driven Marketing Audit',
+        description: 'Five-phase audit framework for authentic, ESG-verified marketing campaigns.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'marketing', 'ESG', 'content-strategy']
+    },
+    {
+        id: 'mbai-servant-leadership',
+        title: 'Servant Leadership 1-on-1 & Review',
+        description: 'Coaching agenda (5 segments) plus 5-competency performance rubric for servant leadership evaluation.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'HR', 'servant-leadership', 'coaching']
+    },
+    {
+        id: 'mbai-greenops-sdlc',
+        title: 'Sustainable SDLC & GreenOps',
+        description: 'Five-phase SDLC embedding energy-efficient coding, Content Engineering, and environmental metrics.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'IT', 'SDLC', 'GreenOps']
+    },
+    {
+        id: 'mbai-grc-ai',
+        title: 'AI Governance & ESG Compliance (NIST AI RMF)',
+        description: 'Operationalizes the four NIST AI RMF functions with OSCAL integration.',
+        category: 'mbai',
+        language: 'JSON',
+        tags: ['MBAi', 'GRC', 'NIST-AI-RMF', 'ISO-42001', 'compliance']
     }
 ];
 

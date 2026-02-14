@@ -1,0 +1,98 @@
+{
+  "id": "nis2",
+  "name": "NIS 2",
+  "fullName": "Network and Information Security Directive 2 (EU Directive 2022/2555)",
+  "version": "2022 (transposition deadline October 17, 2024)",
+  "governingBody": "European Parliament and Council of the European Union",
+  "jurisdiction": "European Union",
+  "primaryAudience": ["Essential Entities (energy, transport, health, digital infrastructure)", "Important Entities (postal services, waste management, food, manufacturing, digital providers)", "Cloud Providers", "Data Centers", "Managed Service Providers"],
+  "description": "NIS 2 dramatically expands the scope of EU cybersecurity regulation from the original NIS Directive. It covers 18 critical sectors, introduces management liability, and mandates specific cybersecurity risk management measures (Article 21). It establishes a multi-million euro fine regime modeled on GDPR.",
+  "certificationDetails": {
+    "type": "regulatory-compliance",
+    "reportTypes": ["Risk Management Measures Report", "Incident Notification", "Supply Chain Security Report"],
+    "assessor": "National competent authorities; periodic audits and inspections",
+    "typicalCost": "$20,000 - $200,000+ (depends on entity classification)",
+    "auditCycle": "Ongoing compliance; supervisory reviews and audits",
+    "certificationBody": "National competent authorities (member state CSIRTs/CAs)"
+  },
+  "lifecycle": [
+    { "phase": 1, "name": "Scoping and Classification", "description": "Determine if the entity falls under NIS 2 as essential or important. Register with relevant national authority.", "typicalDuration": "2-4 weeks", "keyActivities": ["Determine sector classification", "Assess entity size (headcount/revenue)", "Identify as essential or important", "Register with authority"] },
+    { "phase": 2, "name": "Risk Assessment", "description": "Conduct comprehensive risk assessment covering all Article 21 measures.", "typicalDuration": "4-8 weeks", "keyActivities": ["Map critical systems and services", "Identify threats and vulnerabilities", "Assess supply chain risks", "Prioritize remediation"] },
+    { "phase": 3, "name": "Implementation of Measures", "description": "Implement all 10 cybersecurity risk management measures defined in Article 21(2).", "typicalDuration": "12-24 weeks", "keyActivities": ["Implement technical measures", "Deploy organizational controls", "Establish incident response", "Secure supply chain", "Train management and staff"] },
+    { "phase": 4, "name": "Ongoing Compliance", "description": "Maintain compliance through monitoring, incident reporting, and continuous improvement.", "typicalDuration": "Ongoing", "keyActivities": ["Continuous monitoring", "Incident reporting", "Regular risk reassessment", "Supply chain monitoring", "Management training"] }
+  ],
+  "domains": [
+    {
+      "id": "article-21-measures",
+      "name": "Cybersecurity Risk Management Measures (Article 21)",
+      "description": "Ten specific cybersecurity risk management measures that entities must implement. These are the core operational requirements of NIS 2.",
+      "required": true,
+      "controlCount": 10,
+      "controls": [
+        { "id": "NIS2-21.2a", "name": "Risk Analysis and Information System Security Policies", "description": "Implement policies on risk analysis and information system security.", "implementationType": "required", "category": "Risk Management", "mappings": { "soc2": ["CC3.1", "CC3.2"], "iso27001": ["A.5.1", "A.5.7"], "dora": ["DORA-5"], "nist-csf": ["ID.RA-1", "ID.GV-1"] }, "implementationGuidance": "Develop comprehensive information security policies. Conduct regular risk analyses. Document security objectives. Review and update policies annually.", "evidenceRequired": ["Information security policy", "Risk analysis reports", "Policy review records"], "automationCapability": "partial" },
+        { "id": "NIS2-21.2b", "name": "Incident Handling", "description": "Implement procedures for incident handling, including detection, response, analysis, and reporting.", "implementationType": "required", "category": "Incident Response", "mappings": { "soc2": ["CC7.3", "CC7.4"], "iso27001": ["A.5.24", "A.5.25", "A.5.26"], "dora": ["DORA-17"], "nist-csf": ["RS.RP-1", "RS.AN-1"] }, "implementationGuidance": "Establish incident management process. Define escalation paths. Implement 24/7 monitoring. Prepare incident notification procedures (24h early warning, 72h notification, 1 month final report).", "evidenceRequired": ["Incident response plan", "Escalation procedures", "Notification templates", "Incident logs"], "automationCapability": "partial", "codePatterns": ["breach-notification"] },
+        { "id": "NIS2-21.2c", "name": "Business Continuity and Crisis Management", "description": "Ensure business continuity and crisis management, including backup management, disaster recovery, and crisis management.", "implementationType": "required", "category": "Business Continuity", "mappings": { "soc2": ["A1.2", "A1.3"], "iso27001": ["A.5.29", "A.5.30"], "dora": ["DORA-9", "DORA-10"], "hipaa": ["Contingency Plan"], "nist-csf": ["RC.RP-1"] }, "implementationGuidance": "Develop BCP and DRP. Implement backup and restoration. Define RTO/RPO. Establish crisis management team. Test plans annually.", "evidenceRequired": ["BCP", "DRP", "Backup procedures", "Crisis management structure", "Test results"], "automationCapability": "partial" },
+        { "id": "NIS2-21.2d", "name": "Supply Chain Security", "description": "Ensure supply chain security including security-related aspects between each entity and its direct suppliers or service providers.", "implementationType": "required", "category": "Supply Chain", "mappings": { "soc2": ["CC9.2"], "iso27001": ["A.5.19", "A.5.20", "A.5.21"], "dora": ["DORA-28"], "nist-csf": ["ID.SC-1", "ID.SC-2"] }, "implementationGuidance": "Assess supplier security practices. Include security requirements in contracts. Monitor supplier risks. Audit critical suppliers.", "evidenceRequired": ["Supplier risk assessments", "Security contract clauses", "Supplier monitoring records"], "automationCapability": "partial" },
+        { "id": "NIS2-21.2e", "name": "Security in Network and Information Systems Acquisition", "description": "Ensure security in network and information systems acquisition, development, and maintenance, including vulnerability handling and disclosure.", "implementationType": "required", "category": "Secure Development", "mappings": { "soc2": ["CC8.1"], "iso27001": ["A.8.25", "A.8.28"], "pci-dss": ["Req 6"], "nist-csf": ["PR.IP-2"] }, "implementationGuidance": "Integrate security into SDLC. Implement vulnerability management. Define vulnerability disclosure policy. Conduct security testing.", "evidenceRequired": ["SDLC security procedures", "Vulnerability management process", "Disclosure policy", "Testing records"], "automationCapability": "full" },
+        { "id": "NIS2-21.2f", "name": "Cybersecurity Risk Management Effectiveness Assessment", "description": "Implement policies and procedures to assess the effectiveness of cybersecurity risk management measures.", "implementationType": "required", "category": "Assessment", "mappings": { "soc2": ["CC4.1"], "iso27001": ["A.5.35", "A.5.36"], "dora": ["DORA-24"], "nist-csf": ["DE.CM-8"] }, "implementationGuidance": "Conduct regular security audits. Perform penetration testing. Measure control effectiveness with KPIs. Report to management.", "evidenceRequired": ["Audit reports", "Penetration test results", "KPI dashboards", "Management reports"], "automationCapability": "full" },
+        { "id": "NIS2-21.2g", "name": "Basic Cyber Hygiene and Cybersecurity Training", "description": "Implement basic cyber hygiene practices and provide cybersecurity training.", "implementationType": "required", "category": "Training", "mappings": { "soc2": ["CC2.2"], "iso27001": ["A.6.3"], "hipaa": ["Security Awareness Training"], "pci-dss": ["Req 12"], "nist-csf": ["PR.AT-1"] }, "implementationGuidance": "Implement patch management, password policies, least privilege. Conduct regular security awareness training. Train management body on cyber risks.", "evidenceRequired": ["Cyber hygiene policies", "Training records", "Management training evidence", "Phishing simulation results"], "automationCapability": "full" },
+        { "id": "NIS2-21.2h", "name": "Cryptography and Encryption Policies", "description": "Implement policies and procedures regarding the use of cryptography and, where appropriate, encryption.", "implementationType": "required", "category": "Cryptography", "mappings": { "soc2": ["CC6.7"], "iso27001": ["A.8.24"], "hipaa": ["Encryption and Decryption"], "pci-dss": ["Req 3", "Req 4"], "gdpr": ["GDPR-32a"], "nist-csf": ["PR.DS-1", "PR.DS-2"] }, "implementationGuidance": "Develop cryptography policy. Implement encryption at rest (AES-256) and in transit (TLS 1.2+). Establish key management procedures.", "evidenceRequired": ["Cryptography policy", "Encryption configurations", "Key management procedures", "Certificate inventory"], "automationCapability": "full", "codePatterns": ["encryption-at-rest"] },
+        { "id": "NIS2-21.2i", "name": "Human Resources Security and Access Control", "description": "Implement human resources security, access control policies, and asset management.", "implementationType": "required", "category": "Access Control", "mappings": { "soc2": ["CC6.1", "CC6.2", "CC6.3"], "iso27001": ["A.5.15", "A.6.1", "A.6.2", "A.8.2"], "pci-dss": ["Req 7", "Req 8"], "nist-csf": ["PR.AC-1", "PR.AC-4"] }, "implementationGuidance": "Implement RBAC with least privilege. Background checks for critical roles. Onboard/offboard procedures. MFA for critical systems.", "evidenceRequired": ["Access control policy", "RBAC configurations", "Onboarding/offboarding procedures", "Background check policy"], "automationCapability": "full", "codePatterns": ["rbac-middleware", "auth-mfa-middleware"] },
+        { "id": "NIS2-21.2j", "name": "Multi-Factor Authentication and Secure Communications", "description": "Use of multi-factor authentication or continuous authentication, secured voice, video, and text communications.", "implementationType": "required", "category": "Authentication", "mappings": { "soc2": ["CC6.1"], "iso27001": ["A.8.5"], "hipaa": ["Person or Entity Authentication"], "pci-dss": ["Req 8"], "cmmc": ["IA.L2-3.5.3"], "nist-csf": ["PR.AC-7"] }, "implementationGuidance": "Deploy MFA across all critical systems. Implement secured emergency communication. Use encrypted channels for sensitive communications.", "evidenceRequired": ["MFA deployment evidence", "Secure communication tools", "Emergency communication procedures"], "automationCapability": "full", "codePatterns": ["auth-mfa-middleware"] }
+      ]
+    },
+    {
+      "id": "incident-reporting",
+      "name": "Incident Reporting (Article 23)",
+      "description": "Requirements for reporting significant incidents to national authorities.",
+      "required": true,
+      "controlCount": 3,
+      "controls": [
+        { "id": "NIS2-23.1", "name": "Early Warning (24 hours)", "description": "Submit an early warning to the CSIRT or competent authority within 24 hours of becoming aware of a significant incident.", "implementationType": "required", "category": "Incident Reporting", "mappings": { "dora": ["DORA-19"], "gdpr": ["GDPR-33"] }, "implementationGuidance": "Establish 24-hour early warning procedures. Define what constitutes 'significant'. Prepare early warning template. Establish 24/7 reporting capability.", "evidenceRequired": ["Early warning procedure", "Template", "Contact details for CSIRT", "24/7 capability evidence"], "automationCapability": "partial" },
+        { "id": "NIS2-23.2", "name": "Incident Notification (72 hours)", "description": "Submit a detailed incident notification within 72 hours of becoming aware of a significant incident.", "implementationType": "required", "category": "Incident Reporting", "mappings": { "dora": ["DORA-19"], "gdpr": ["GDPR-33"] }, "implementationGuidance": "Prepare detailed notification template. Include impact assessment, root cause (if known), and mitigation measures. Update early warning with details.", "evidenceRequired": ["Notification template", "Historical notifications", "Impact assessment methodology"], "automationCapability": "partial" },
+        { "id": "NIS2-23.3", "name": "Final Report (1 month)", "description": "Submit a final report within one month of the incident notification, including root cause analysis and mitigation measures.", "implementationType": "required", "category": "Incident Reporting", "mappings": { "dora": ["DORA-19"] }, "implementationGuidance": "Conduct root cause analysis. Document lessons learned. Describe remediation measures taken and planned. Include cross-border impact assessment.", "evidenceRequired": ["Final report template", "Root cause analysis", "Remediation plan", "Lessons learned documentation"], "automationCapability": "partial" }
+      ]
+    },
+    {
+      "id": "governance",
+      "name": "Governance and Accountability (Article 20)",
+      "description": "Management body responsibilities and personal accountability for cybersecurity.",
+      "required": true,
+      "controlCount": 2,
+      "controls": [
+        { "id": "NIS2-20.1", "name": "Management Body Approval", "description": "Management bodies shall approve and oversee the implementation of cybersecurity risk management measures.", "implementationType": "required", "category": "Governance", "mappings": { "soc2": ["CC1.2", "CC1.3"], "iso27001": ["A.5.1"], "dora": ["DORA-5"] }, "implementationGuidance": "Ensure board/management formally approves cybersecurity strategy. Document approval. Assign accountability. Include in governance reporting.", "evidenceRequired": ["Board approval records", "Governance structure documentation", "Accountability assignments"], "automationCapability": "manual" },
+        { "id": "NIS2-20.2", "name": "Management Cybersecurity Training", "description": "Members of the management body shall follow cybersecurity training to gain sufficient knowledge and skills.", "implementationType": "required", "category": "Training", "mappings": { "soc2": ["CC2.2"], "iso27001": ["A.6.3"] }, "implementationGuidance": "Provide regular cybersecurity training to all management body members. Cover risk landscape, regulatory obligations, and incident procedures.", "evidenceRequired": ["Management training records", "Training content/curriculum", "Attendance records"], "automationCapability": "full" }
+      ]
+    }
+  ],
+  "requiredDocumentation": [
+    "Information System Security Policy",
+    "Risk Analysis Reports",
+    "Incident Response Plan",
+    "Business Continuity Plan",
+    "Supply Chain Security Policy",
+    "Vulnerability Management Policy",
+    "Cryptography and Encryption Policy",
+    "Access Control Policy",
+    "Training Records",
+    "Entity Registration with National Authority"
+  ],
+  "breachNotification": {
+    "required": true,
+    "timeframe": "24 hours early warning; 72 hours notification; 1 month final report",
+    "notifyAuthority": "National CSIRT or competent authority",
+    "notifyIndividuals": true,
+    "threshold": "Significant incidents causing operational disruption or financial/reputational damage"
+  },
+  "penalties": {
+    "essentialEntities": "Up to €10,000,000 or 2% of global annual turnover",
+    "importantEntities": "Up to €7,000,000 or 1.4% of global annual turnover",
+    "managementLiability": "Individual managers can be held personally liable"
+  },
+  "relatedFrameworks": ["dora", "gdpr", "iso27001", "nist-csf"],
+  "tags": ["cybersecurity", "critical-infrastructure", "eu", "directive", "18-sectors"],
+  "resources": [
+    { "title": "NIS 2 Directive Text", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32022L2555", "type": "official" },
+    { "title": "ENISA NIS Resources", "url": "https://www.enisa.europa.eu/topics/nis-directive", "type": "official" }
+  ]
+}
