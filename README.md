@@ -140,8 +140,7 @@ structured-for-growth/
 │   └── mbai/                  # MBAi Paradigm data
 │       ├── manifest.json      # Pillar & category definitions
 │       └── templates/         # 8 strategic business templates
-├── templates/                 # Reusable code templates library (33+)
-│   └── README.md              # Template documentation
+├── templates/                 # (Empty — templates defined in client/js/templateData.js)
 ├── docs/                      # Documentation
 │   ├── CLIENT-GUIDE.md        # User guide for clients
 │   └── ADMIN-GUIDE.md         # Admin dashboard guide
@@ -151,7 +150,7 @@ structured-for-growth/
 │   └── setup.ps1              # First-time project setup (PowerShell)
 ├── logs/                      # Audit logs
 ├── archive/                   # Historical artifacts (not runtime)
-│   ├── docs/                  # Build summaries & visual guides
+│   ├── docs/                  # Checklists, overviews, visual guides
 │   ├── scripts/               # One-time fix scripts
 │   └── templates/             # Superseded template data
 ├── render.yaml                # Render deployment configuration
@@ -261,11 +260,8 @@ Each template saves 1–8 hours of development time. See [docs/CLIENT-GUIDE.md](
 - **[CLIENT-GUIDE.md](docs/CLIENT-GUIDE.md)** — Complete user guide for browsing the site and using templates
 - **[ADMIN-GUIDE.md](docs/ADMIN-GUIDE.md)** — Dashboard administration guide
 - **[SETUP.md](SETUP.md)** — Deployment and configuration instructions
-- **[CHECKLIST.md](CHECKLIST.md)** — Getting-started checklist
-- **[TEMPLATE-INVENTORY.md](TEMPLATE-INVENTORY.md)** — Complete template catalog
-- **[PROJECT-OVERVIEW.md](PROJECT-OVERVIEW.md)** — Detailed architecture overview
 
-> Archived reference docs (SUCCESS.md, VISUAL-GUIDE.md, TEMPLATE-EXTRACTION-SUMMARY.md) are in `archive/docs/`.
+> Archived reference docs (CHECKLIST.md, PROJECT-OVERVIEW.md, TEMPLATE-INVENTORY.md, SUCCESS.md, VISUAL-GUIDE.md, TEMPLATE-EXTRACTION-SUMMARY.md) are in `archive/docs/`.
 
 ## 🎨 Theme
 
@@ -316,6 +312,6 @@ For inquiries, use the contact form on the website or reach out directly at <con
 
 ---
 
-**Version**: 1.4.5  
+**Version**: 1.4.8  
 **Last Updated**: February 2026  
 *Built with ❤️ by Structured For Growth*

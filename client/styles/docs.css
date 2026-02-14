@@ -79,7 +79,6 @@
     border-bottom: 2px solid var(--border-light);
     margin-bottom: var(--spacing-lg);
     overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
 }
 .docs-tabs::-webkit-scrollbar { display: none; }
 .docs-tab {

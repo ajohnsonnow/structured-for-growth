@@ -85,7 +85,6 @@ const report = new AuditReport();
 const requiredDocs = [
   'README.md',
   'SETUP.md',
-  'TEMPLATE-INVENTORY.md',
   'docs/CLIENT-GUIDE.md',
   'docs/ADMIN-GUIDE.md',
   'client/assets/docs-manifest.json'
@@ -99,7 +98,6 @@ const requiredDirs = [
   'server/controllers',
   'server/models',
   'server/middleware',
-  'templates',
   'docs'
 ];
 

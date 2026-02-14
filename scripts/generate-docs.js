@@ -233,9 +233,8 @@ function parsePackage() {
 
 function parseDocs() {
   const docFiles = [
-    'README.md', 'SETUP.md', 'PROJECT-OVERVIEW.md',
-    'TEMPLATE-INVENTORY.md', 'CHECKLIST.md',
-    'docs/ADMIN-GUIDE.md', 'docs/CLIENT-GUIDE.md', 'templates/README.md'
+    'README.md', 'SETUP.md',
+    'docs/ADMIN-GUIDE.md', 'docs/CLIENT-GUIDE.md'
   ];
   const docs = [];
 
