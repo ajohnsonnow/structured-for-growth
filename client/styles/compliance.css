@@ -9,6 +9,11 @@
     margin: 0 auto var(--spacing-lg);
 }
 
+/* Focus glow matches the compliance accent color */
+.compliance-search .search-input:focus {
+    box-shadow: var(--shadow-md), 0 0 0 3px rgba(61, 122, 95, 0.2);
+}
+
 /* --- Compliance Tabs --- */
 .compliance-tabs {
     display: flex;
@@ -80,9 +85,22 @@
 
 /* --- Compliance Grid --- */
 .compliance-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-lg);
+}
+
+.compliance-grid > * {
+    flex: 0 1 calc(33.333% - var(--spacing-lg));
+    min-width: 300px;
+    max-width: 420px;
+}
+
+/* Loading spinners span full width */
+.compliance-grid > .loading-container {
+    flex: 1 1 100%;
+    max-width: 100%;
 }
 
 /* --- Compliance Cards --- */
@@ -413,10 +431,68 @@
     color: var(--text-secondary);
 }
 
+/* --- Evidence / OSCAL Intro --- */
+.evidence-intro {
+    margin-bottom: 2rem;
+}
+
+.evidence-intro h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.evidence-intro p {
+    color: var(--text-secondary);
+}
+
+/* --- Developer Tools Section --- */
+.dev-tools-section {
+    background: var(--surface-secondary);
+}
+
+.dev-tools-heading {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.dev-tool-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.dev-tool-title {
+    color: var(--text-primary);
+}
+
+.dev-tool-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.dev-tool-list {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-align: left;
+    margin-top: 0.5rem;
+}
+
+/* --- CTA Content --- */
+.cta-content {
+    text-align: center;
+}
+
+.cta-description {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 1rem auto 2rem;
+}
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
-    .compliance-grid {
-        grid-template-columns: 1fr;
+    .compliance-grid > * {
+        flex: 1 1 100%;
+        max-width: 100%;
     }
 
     .compliance-tabs {

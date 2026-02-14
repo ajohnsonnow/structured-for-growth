@@ -74,6 +74,8 @@ Open your browser and navigate to:
 - **Main Website**: http://localhost:5173
 - **Template Library**: http://localhost:5173/client/templates.html
 - **Client Dashboard**: http://localhost:5173/client/dashboard.html
+- **Compliance KB**: http://localhost:5173/client/compliance.html
+- **Client Portal**: http://localhost:5173/client/portal.html
 
 ## 📧 Email Setup
 
@@ -128,7 +130,7 @@ When you first access the dashboard (http://localhost:5173/client/dashboard.html
 
 ## 🗄️ Database
 
-The application uses SQLite with better-sqlite3. The database is automatically created when you first run the server.
+The application uses SQLite via SQL.js (a pure JavaScript SQLite implementation — no native binaries required). The database is automatically created when you first run the server.
 
 **Default location**: `./data/database.db`
 
@@ -149,28 +151,51 @@ structured-for-growth-www/
 │   ├── index.html              # Main homepage
 │   ├── dashboard.html          # Client management
 │   ├── templates.html          # Template library
+│   ├── compliance.html         # Compliance knowledge base
+│   ├── portal.html             # Client portal
 │   ├── styles/                 # CSS files
 │   │   ├── main.css           # Main styles
 │   │   ├── components.css     # Component styles
 │   │   ├── dashboard.css      # Dashboard styles
-│   │   └── templates.css      # Template page styles
+│   │   ├── templates.css      # Template page styles
+│   │   ├── compliance.css     # Compliance page styles
+│   │   └── portal.css         # Portal page styles
 │   └── js/                     # JavaScript modules
 │       ├── main.js            # Main app logic
 │       ├── dashboard.js       # Dashboard functionality
 │       ├── templates.js       # Template library
+│       ├── compliance.js      # Compliance KB logic
+│       ├── portal.js          # Client portal logic
+│       ├── templateData.js    # Template data definitions
 │       └── modules/           # Shared modules
 ├── server/                     # Backend API
 │   ├── index.js               # Express server
 │   ├── routes/                # API routes
+│   │   ├── auth.js            # Authentication
+│   │   ├── clients.js         # Client management
+│   │   ├── contact.js         # Contact form
+│   │   ├── compliance.js      # Compliance endpoints
+│   │   ├── portal.js          # Portal endpoints
+│   │   ├── messages.js        # Messaging
+│   │   ├── campaigns.js       # Campaign management
+│   │   ├── projects.js        # Project tracking
+│   │   ├── backup.js          # Backup utilities
+│   │   └── demo.js            # Demo routes
 │   ├── controllers/           # Business logic
 │   ├── middleware/            # Custom middleware
 │   └── models/                # Database models
 ├── templates/                  # Template library data
 │   ├── templateData.js        # Template definitions
 │   └── README.md              # Template docs
-├── data/                       # Database storage (created automatically)
+├── data/                       # Database & compliance data
+│   └── compliance/            # Compliance frameworks
+│       ├── frameworks/        # Framework definitions (JSON)
+│       ├── mappings/          # Cross-framework mappings
+│       └── oscal/             # OSCAL catalogs
+├── logs/                       # Audit logs
 ├── package.json               # Dependencies
 ├── vite.config.js            # Vite configuration
+├── render.yaml                # Render deployment config
 ├── .env                       # Environment variables
 └── README.md                  # Project documentation
 ```
@@ -237,6 +262,16 @@ JWT_SECRET=your-production-secret
 - Connect your Git repository
 - Set environment variables in platform dashboard
 - Platform will build and deploy automatically
+
+#### Render (Pre-configured)
+
+The project includes a `render.yaml` for one-click Render deployment:
+
+1. Push code to GitHub
+2. Connect repository to Render
+3. Render auto-detects render.yaml configuration
+4. Set environment variables in Render dashboard
+5. Deploy
 
 #### Option 3: Serverless
 
@@ -310,7 +345,7 @@ If port 3000 or 5173 is already in use:
 
 - [Express.js Documentation](https://expressjs.com/)
 - [Vite Documentation](https://vitejs.dev/)
-- [better-sqlite3 Documentation](https://github.com/WiseLibs/better-sqlite3)
+- [SQL.js Documentation](https://sql.js.org/)
 - [JWT Best Practices](https://jwt.io/introduction)
 
 ### Tools

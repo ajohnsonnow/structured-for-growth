@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation — Structured For Growth</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/docs.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Structured <span class="highlight">For Growth</span></h1>
+                <span class="nav-byline">Agentic Solutions that Scale</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/templates.html" class="nav-link">Templates</a></li>
+                <li><a href="/compliance" class="nav-link">Compliance</a></li>
+                <li><a href="/docs" class="nav-link active">Docs</a></li>
+                <li><a href="/portal" class="nav-link nav-highlight">Client Portal</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-small">
+        <div class="container">
+            <h1>Project <span class="highlight">Documentation</span></h1>
+            <p class="hero-subtitle">Auto-generated from the codebase — always accurate, always up to date.</p>
+            <div class="docs-meta" id="docsMeta"></div>
+        </div>
+    </section>
+
+    <!-- Search + Content -->
+    <section class="section" id="docs-content">
+        <div class="container">
+            <!-- Global Search -->
+            <div class="docs-search">
+                <div class="search-wrapper">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" id="docsSearch" placeholder="Search features, routes, templates, frameworks… (Ctrl+K)" class="search-input" autocomplete="off">
+                    <kbd class="search-kbd">Ctrl+K</kbd>
+                </div>
+                <div class="search-results-count" id="searchCount"></div>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="docs-tabs" role="tablist">
+                <button class="docs-tab active" data-tab="overview" role="tab">Overview</button>
+                <button class="docs-tab" data-tab="features" role="tab">Features</button>
+                <button class="docs-tab" data-tab="api" role="tab">API Reference</button>
+                <button class="docs-tab" data-tab="templates" role="tab">Templates</button>
+                <button class="docs-tab" data-tab="compliance" role="tab">Compliance</button>
+                <button class="docs-tab" data-tab="architecture" role="tab">Architecture</button>
+            </div>
+
+            <!-- Tab Panels -->
+            <div class="docs-panels">
+
+                <!-- OVERVIEW -->
+                <div class="docs-panel active" id="panel-overview">
+                    <div class="stats-grid" id="overviewStats"></div>
+                    <div class="docs-section">
+                        <h2>Project Documentation Files</h2>
+                        <div id="docsFileList" class="docs-file-list"></div>
+                    </div>
+                </div>
+
+                <!-- FEATURES -->
+                <div class="docs-panel" id="panel-features">
+                    <div id="featuresList" class="feature-cards"></div>
+                </div>
+
+                <!-- API REFERENCE -->
+                <div class="docs-panel" id="panel-api">
+                    <div class="api-filters" id="apiFilters"></div>
+                    <div class="api-table-wrapper">
+                        <table class="api-table" id="apiTable">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Endpoint</th>
+                                    <th>Auth</th>
+                                    <th>Module</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="apiTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TEMPLATES -->
+                <div class="docs-panel" id="panel-templates">
+                    <div class="template-filters" id="templateFilters"></div>
+                    <div id="templateGrid" class="template-doc-grid"></div>
+                </div>
+
+                <!-- COMPLIANCE -->
+                <div class="docs-panel" id="panel-compliance">
+                    <div id="frameworkList" class="framework-doc-grid"></div>
+                    <div class="docs-section">
+                        <h3>Supporting Data</h3>
+                        <div id="complianceSupport"></div>
+                    </div>
+                </div>
+
+                <!-- ARCHITECTURE -->
+                <div class="docs-panel" id="panel-architecture">
+                    <div class="arch-columns">
+                        <div class="docs-section">
+                            <h2>Package Info</h2>
+                            <div id="pkgInfo"></div>
+                        </div>
+                        <div class="docs-section">
+                            <h2>NPM Scripts</h2>
+                            <div id="scriptsList"></div>
+                        </div>
+                    </div>
+                    <div class="arch-columns">
+                        <div class="docs-section">
+                            <h2>Dependencies</h2>
+                            <div id="depsList"></div>
+                        </div>
+                        <div class="docs-section">
+                            <h2>Stylesheets</h2>
+                            <div id="stylesList"></div>
+                        </div>
+                    </div>
+                    <div class="docs-section">
+                        <h2>Client Pages</h2>
+                        <div id="pagesList"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Structured For Growth. Docs auto-generated <span id="genTimestamp"></span>.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="/js/docs.js"></script>
+</body>
+</html>

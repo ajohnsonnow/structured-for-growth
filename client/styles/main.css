@@ -497,9 +497,16 @@ section {
 
 /* Services Section */
 .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-lg);
+}
+
+.services-grid > * {
+    flex: 0 1 calc(33.333% - var(--spacing-lg));
+    min-width: 280px;
+    max-width: 400px;
 }
 
 .service-card {
@@ -537,11 +544,18 @@ section {
 }
 
 .template-categories {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-lg);
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+}
+
+.template-categories > * {
+    flex: 0 1 calc(50% - var(--spacing-lg));
+    min-width: 280px;
+    max-width: 420px;
 }
 
 .category-card {
@@ -741,10 +755,14 @@ section {
         grid-template-columns: 1fr;
     }
     
-    .portfolio-grid,
-    .services-grid,
-    .template-categories {
+    .portfolio-grid {
         grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+
+    .services-grid > *,
+    .template-categories > * {
+        flex: 1 1 100%;
         max-width: 100%;
     }
     

@@ -1,0 +1,2038 @@
+{
+  "generated": "2026-02-14T01:15:15.339Z",
+  "version": "1.4.0",
+  "summary": {
+    "totalRoutes": 72,
+    "totalPages": 6,
+    "totalTemplates": 26,
+    "totalFrameworks": 10,
+    "totalFeatures": 10,
+    "totalDocs": 11
+  },
+  "features": [
+    {
+      "name": "Public Portfolio & Landing",
+      "description": "Responsive homepage showcasing projects, services, and contact form with email delivery.",
+      "category": "frontend",
+      "relatedPages": [
+        "/"
+      ],
+      "relatedRoutes": [
+        "/api/contact"
+      ],
+      "status": "stable"
+    },
+    {
+      "name": "Admin Dashboard",
+      "description": "Full-featured management console: clients, projects, tasks, time tracking, messaging, campaigns, user management, backups.",
+      "category": "frontend",
+      "relatedPages": [
+        "/dashboard"
+      ],
+      "relatedRoutes": [
+        "/api/auth/register",
+        "/api/auth/login",
+        "/api/auth/verify",
+        "/api/auth/change-password",
+        "/api/auth/profile",
+        "/api/auth/users",
+        "/api/auth/users",
+        "/api/auth/users/:id",
+        "/api/auth/users/:id",
+        "/api/auth/activity",
+        "/api/backup/list",
+        "/api/backup/create",
+        "/api/backup/download/:filename",
+        "/api/backup/export",
+        "/api/backup/restore",
+        "/api/backup/:filename",
+        "/api/backup/settings",
+        "/api/backup/stats",
+        "/api/campaigns",
+        "/api/campaigns/segments/list",
+        "/api/campaigns/templates/list",
+        "/api/campaigns/:id",
+        "/api/campaigns",
+        "/api/campaigns/:id",
+        "/api/campaigns/:id/send",
+        "/api/campaigns/:id",
+        "/api/campaigns/segments",
+        "/api/campaigns/segments/:id",
+        "/api/campaigns/templates",
+        "/api/campaigns/templates/:id",
+        "/api/campaigns/templates/:id",
+        "/api/clients",
+        "/api/clients/stats/overview",
+        "/api/clients/:id",
+        "/api/clients",
+        "/api/clients/:id",
+        "/api/clients/:id",
+        "/api/messages",
+        "/api/messages/unread/count",
+        "/api/messages/client/:clientId",
+        "/api/messages/client/:clientId",
+        "/api/messages/bulk",
+        "/api/messages/:id",
+        "/api/projects",
+        "/api/projects/:id",
+        "/api/projects",
+        "/api/projects/:id",
+        "/api/projects/:id",
+        "/api/projects/:projectId/tasks",
+        "/api/projects/:projectId/tasks/:taskId",
+        "/api/projects/:projectId/tasks/:taskId",
+        "/api/projects/:projectId/time"
+      ],
+      "status": "stable"
+    },
+    {
+      "name": "Client Portal",
+      "description": "Self-service portal for clients to view projects, billing, estimates, and exchange messages.",
+      "category": "frontend",
+      "relatedPages": [
+        "/portal"
+      ],
+      "relatedRoutes": [
+        "/api/portal/login",
+        "/api/portal/me",
+        "/api/portal/projects",
+        "/api/portal/billing",
+        "/api/portal/messages",
+        "/api/portal/messages"
+      ],
+      "status": "stable"
+    },
+    {
+      "name": "Developer Template Library",
+      "description": "26 production-ready code templates across 9 categories with live preview, usage notes, and search.",
+      "category": "frontend",
+      "relatedPages": [
+        "/templates"
+      ],
+      "relatedRoutes": [],
+      "status": "stable"
+    },
+    {
+      "name": "Compliance Knowledge Base",
+      "description": "10 regulatory frameworks with cross-mapping, evidence tracking, OSCAL catalogs, and implementation guidance.",
+      "category": "frontend",
+      "relatedPages": [
+        "/compliance"
+      ],
+      "relatedRoutes": [
+        "/api/compliance/frameworks",
+        "/api/compliance/frameworks/:id",
+        "/api/compliance/crossmap",
+        "/api/compliance/templates",
+        "/api/compliance/oscal",
+        "/api/compliance/oscal/:framework",
+        "/api/compliance/evidence",
+        "/api/compliance/guidance/:framework",
+        "/api/compliance/lookup"
+      ],
+      "status": "stable"
+    },
+    {
+      "name": "Authentication & RBAC",
+      "description": "JWT-based auth with admin/user roles, activity logging, and password management.",
+      "category": "backend",
+      "relatedPages": [],
+      "relatedRoutes": [
+        "/api/auth/register",
+        "/api/auth/login",
+        "/api/auth/verify",
+        "/api/auth/change-password",
+        "/api/auth/profile",
+        "/api/auth/users",
+        "/api/auth/users",
+        "/api/auth/users/:id",
+        "/api/auth/users/:id",
+        "/api/auth/activity"
+      ],
+      "status": "stable"
+    },
+    {
+      "name": "Campaign & Messaging Engine",
+      "description": "Segment-based bulk messaging, email templates, read-tracking, and campaign analytics.",
+      "category": "backend",
+      "relatedPages": [],
+      "relatedRoutes": [
+        "/api/campaigns",
+        "/api/campaigns/segments/list",
+        "/api/campaigns/templates/list",
+        "/api/campaigns/:id",
+        "/api/campaigns",
+        "/api/campaigns/:id",
+        "/api/campaigns/:id/send",
+        "/api/campaigns/:id",
+        "/api/campaigns/segments",
+        "/api/campaigns/segments/:id",
+        "/api/campaigns/templates",
+        "/api/campaigns/templates/:id",
+        "/api/campaigns/templates/:id",
+        "/api/messages",
+        "/api/messages/unread/count",
+        "/api/messages/client/:clientId",
+        "/api/messages/client/:clientId",
+        "/api/messages/bulk",
+        "/api/messages/:id"
+      ],
+      "status": "stable"
+    },
+    {
+      "name": "Backup & Restore",
+      "description": "On-demand JSON backups, downloadable exports, and one-click restoration with safety snapshots.",
+      "category": "backend",
+      "relatedPages": [],
+      "relatedRoutes": [
+        "/api/backup/list",
+        "/api/backup/create",
+        "/api/backup/download/:filename",
+        "/api/backup/export",
+        "/api/backup/restore",
+        "/api/backup/:filename",
+        "/api/backup/settings",
+        "/api/backup/stats"
+      ],
+      "status": "stable"
+    },
+    {
+      "name": "Demo Data Generator",
+      "description": "One-click demo population with realistic clients, projects, messages, and campaigns. Selective or full cleanup.",
+      "category": "backend",
+      "relatedPages": [],
+      "relatedRoutes": [
+        "/api/demo/generate",
+        "/api/demo/stats",
+        "/api/demo/clear"
+      ],
+      "status": "stable"
+    },
+    {
+      "name": "Docs-as-Code",
+      "description": "Auto-generated, searchable documentation page that stays in sync with the codebase on every deploy.",
+      "category": "tooling",
+      "relatedPages": [
+        "/docs"
+      ],
+      "relatedRoutes": [],
+      "status": "stable"
+    }
+  ],
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "module": "core",
+      "auth": "None",
+      "description": "Health check endpoint"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/register",
+      "module": "auth",
+      "auth": "None",
+      "description": "Register new user"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "module": "auth",
+      "auth": "None",
+      "description": "Login"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/verify",
+      "module": "auth",
+      "auth": "None",
+      "description": "Verify token"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/change-password",
+      "module": "auth",
+      "auth": "Token",
+      "description": "Change password"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/profile",
+      "module": "auth",
+      "auth": "Token",
+      "description": "Get current user profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/users",
+      "module": "auth",
+      "auth": "Token",
+      "description": "Get all users (admin only)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/users",
+      "module": "auth",
+      "auth": "Token",
+      "description": "Create user (admin only)"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/auth/users/:id",
+      "module": "auth",
+      "auth": "Token",
+      "description": "Update user (admin only)"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/auth/users/:id",
+      "module": "auth",
+      "auth": "Token",
+      "description": "Delete user (admin only)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/activity",
+      "module": "auth",
+      "auth": "Token",
+      "description": "Get activity log (admin only)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/list",
+      "module": "backup",
+      "auth": "Token",
+      "description": "List all backups"
+    },
+    {
+      "method": "POST",
+      "path": "/api/backup/create",
+      "module": "backup",
+      "auth": "Token",
+      "description": "Create a backup"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/download/:filename",
+      "module": "backup",
+      "auth": "Token",
+      "description": "Download a backup"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/export",
+      "module": "backup",
+      "auth": "Token",
+      "description": "Export current database (direct download without saving to file)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/backup/restore",
+      "module": "backup",
+      "auth": "Token",
+      "description": "Restore from backup"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/backup/:filename",
+      "module": "backup",
+      "auth": "Token",
+      "description": "Delete a backup"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/settings",
+      "module": "backup",
+      "auth": "Token",
+      "description": "Get/set backup settings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/stats",
+      "module": "backup",
+      "auth": "Token",
+      "description": "Get database statistics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/campaigns",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Get all campaigns"
+    },
+    {
+      "method": "GET",
+      "path": "/api/campaigns/segments/list",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Get all segments"
+    },
+    {
+      "method": "GET",
+      "path": "/api/campaigns/templates/list",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Get all email templates"
+    },
+    {
+      "method": "GET",
+      "path": "/api/campaigns/:id",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Get single campaign with recipients"
+    },
+    {
+      "method": "POST",
+      "path": "/api/campaigns",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Create campaign"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/campaigns/:id",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Update campaign"
+    },
+    {
+      "method": "POST",
+      "path": "/api/campaigns/:id/send",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Send campaign"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/campaigns/:id",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Delete campaign"
+    },
+    {
+      "method": "POST",
+      "path": "/api/campaigns/segments",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Create segment"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/campaigns/segments/:id",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Delete segment"
+    },
+    {
+      "method": "POST",
+      "path": "/api/campaigns/templates",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Create template"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/campaigns/templates/:id",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Update template"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/campaigns/templates/:id",
+      "module": "campaigns",
+      "auth": "None",
+      "description": "Delete template"
+    },
+    {
+      "method": "GET",
+      "path": "/api/clients",
+      "module": "clients",
+      "auth": "None",
+      "description": "Get all clients with optional filtering"
+    },
+    {
+      "method": "GET",
+      "path": "/api/clients/stats/overview",
+      "module": "clients",
+      "auth": "None",
+      "description": "Get client statistics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/clients/:id",
+      "module": "clients",
+      "auth": "None",
+      "description": "Get single client with projects"
+    },
+    {
+      "method": "POST",
+      "path": "/api/clients",
+      "module": "clients",
+      "auth": "None",
+      "description": "Create new client"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/clients/:id",
+      "module": "clients",
+      "auth": "None",
+      "description": "Update client"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/clients/:id",
+      "module": "clients",
+      "auth": "None",
+      "description": "Delete client"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance/frameworks",
+      "module": "compliance",
+      "auth": "None",
+      "description": "Returns all framework summaries in a single list"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance/frameworks/:id",
+      "module": "compliance",
+      "auth": "None",
+      "description": "Returns a single framework by its ID (filename without .json)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance/crossmap",
+      "module": "compliance",
+      "auth": "None",
+      "description": "Returns the cross-framework mapping data"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance/templates",
+      "module": "compliance",
+      "auth": "None",
+      "description": "Returns template metadata (the actual templates live in the Compliance-as-Code repo)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance/oscal",
+      "module": "compliance",
+      "auth": "None",
+      "description": "Returns list of available OSCAL catalogs"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance/oscal/:framework",
+      "module": "compliance",
+      "auth": "None",
+      "description": "Returns a specific OSCAL catalog JSON"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance/evidence",
+      "module": "compliance",
+      "auth": "None",
+      "description": "Returns evidence requirements matrix across all frameworks"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance/guidance/:framework",
+      "module": "compliance",
+      "auth": "None",
+      "description": "Returns the implementation guide markdown for a framework"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance/lookup",
+      "module": "compliance",
+      "auth": "None",
+      "description": "Returns the pre-built cross-framework lookup table (if available)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/contact",
+      "module": "contact",
+      "auth": "None",
+      "description": "Contact form submission"
+    },
+    {
+      "method": "POST",
+      "path": "/api/demo/generate",
+      "module": "demo",
+      "auth": "Token",
+      "description": "Generate comprehensive demo data"
+    },
+    {
+      "method": "GET",
+      "path": "/api/demo/stats",
+      "module": "demo",
+      "auth": "Token",
+      "description": "Get demo data statistics"
+    },
+    {
+      "method": "POST",
+      "path": "/api/demo/clear",
+      "module": "demo",
+      "auth": "Token",
+      "description": "Clear demo data only (WHERE is_demo = 1)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/messages",
+      "module": "messages",
+      "auth": "None",
+      "description": "Get all conversations (grouped by client)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/messages/unread/count",
+      "module": "messages",
+      "auth": "None",
+      "description": "Get unread count"
+    },
+    {
+      "method": "GET",
+      "path": "/api/messages/client/:clientId",
+      "module": "messages",
+      "auth": "None",
+      "description": "Get messages for a specific client"
+    },
+    {
+      "method": "POST",
+      "path": "/api/messages/client/:clientId",
+      "module": "messages",
+      "auth": "None",
+      "description": "Send message to client"
+    },
+    {
+      "method": "POST",
+      "path": "/api/messages/bulk",
+      "module": "messages",
+      "auth": "None",
+      "description": "Bulk message to multiple clients"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/messages/:id",
+      "module": "messages",
+      "auth": "None",
+      "description": "Delete a message"
+    },
+    {
+      "method": "POST",
+      "path": "/api/portal/login",
+      "module": "portal",
+      "auth": "None",
+      "description": "POST /api/portal/login - Client portal login"
+    },
+    {
+      "method": "GET",
+      "path": "/api/portal/me",
+      "module": "portal",
+      "auth": "Client Token",
+      "description": "GET /api/portal/me - Get current client info"
+    },
+    {
+      "method": "GET",
+      "path": "/api/portal/projects",
+      "module": "portal",
+      "auth": "Client Token",
+      "description": "GET /api/portal/projects - Get client's projects"
+    },
+    {
+      "method": "GET",
+      "path": "/api/portal/billing",
+      "module": "portal",
+      "auth": "Client Token",
+      "description": "GET /api/portal/billing - Get billing/payment info"
+    },
+    {
+      "method": "GET",
+      "path": "/api/portal/messages",
+      "module": "portal",
+      "auth": "Client Token",
+      "description": "GET /api/portal/messages - Get client's messages"
+    },
+    {
+      "method": "POST",
+      "path": "/api/portal/messages",
+      "module": "portal",
+      "auth": "Client Token",
+      "description": "POST /api/portal/messages - Send a message (client to admin)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/projects",
+      "module": "projects",
+      "auth": "None",
+      "description": "Get all projects with filtering"
+    },
+    {
+      "method": "GET",
+      "path": "/api/projects/:id",
+      "module": "projects",
+      "auth": "None",
+      "description": "Get single project with tasks"
+    },
+    {
+      "method": "POST",
+      "path": "/api/projects",
+      "module": "projects",
+      "auth": "None",
+      "description": "Create new project"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/projects/:id",
+      "module": "projects",
+      "auth": "None",
+      "description": "Update project"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/projects/:id",
+      "module": "projects",
+      "auth": "None",
+      "description": "Delete project"
+    },
+    {
+      "method": "POST",
+      "path": "/api/projects/:projectId/tasks",
+      "module": "projects",
+      "auth": "None",
+      "description": "Create task"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/projects/:projectId/tasks/:taskId",
+      "module": "projects",
+      "auth": "None",
+      "description": "Update task"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/projects/:projectId/tasks/:taskId",
+      "module": "projects",
+      "auth": "None",
+      "description": "Delete task"
+    },
+    {
+      "method": "POST",
+      "path": "/api/projects/:projectId/time",
+      "module": "projects",
+      "auth": "None",
+      "description": "Add time entry"
+    }
+  ],
+  "pages": [
+    {
+      "file": "client/compliance.html",
+      "slug": "/compliance",
+      "title": "Compliance Knowledge Base — Structured For Growth",
+      "sections": 4,
+      "forms": 0,
+      "modals": 10,
+      "scripts": [
+        "/js/compliance.js",
+        "https://gc.zgo.at/count.js"
+      ],
+      "headings": [
+        "Structured",
+        "Compliance",
+        "Evidence Collection Dashboard",
+        "NIST OSCAL Catalogs",
+        "Developer Tools",
+        "VS Code Extension",
+        "MCP Server",
+        "Ticketing Integration",
+        "AI Compliance Review",
+        "Need Help with Compliance?",
+        "Framework Detail"
+      ]
+    },
+    {
+      "file": "client/dashboard.html",
+      "slug": "/dashboard",
+      "title": "Client Portal - Structured For Growth",
+      "sections": 0,
+      "forms": 10,
+      "modals": 91,
+      "scripts": [
+        "/js/dashboard.js",
+        "https://gc.zgo.at/count.js"
+      ],
+      "headings": [
+        "Structured",
+        "Dashboard Overview",
+        "Recent Clients",
+        "Active Projects",
+        "Client Management",
+        "Project Management",
+        "User Management",
+        "Activity Log",
+        "System & Backups",
+        "Create Backup",
+        "Restore from Backup",
+        "Saved Backups",
+        "Demo Data Controls",
+        "Database Statistics",
+        "Messages",
+        "Conversations",
+        "Select a conversation",
+        "Email Campaigns",
+        "Client Segments",
+        "Email Templates",
+        "Add Client",
+        "New Project",
+        "🔐 Admin Login",
+        "Create Account",
+        "Create Campaign",
+        "Create Segment",
+        "Create Template",
+        "New Message",
+        "Add User"
+      ]
+    },
+    {
+      "file": "client/docs.html",
+      "slug": "/docs",
+      "title": "Documentation — Structured For Growth",
+      "sections": 2,
+      "forms": 0,
+      "modals": 0,
+      "scripts": [
+        "/js/docs.js"
+      ],
+      "headings": [
+        "Structured",
+        "Project",
+        "Project Documentation Files",
+        "Supporting Data",
+        "Package Info",
+        "NPM Scripts",
+        "Dependencies",
+        "Stylesheets",
+        "Client Pages"
+      ]
+    },
+    {
+      "file": "client/index.html",
+      "slug": "/",
+      "title": "Structured For Growth - Content Engineering Excellence",
+      "sections": 6,
+      "forms": 1,
+      "modals": 1,
+      "scripts": [
+        "/js/main.js",
+        "/scripts/value-calculator.js",
+        "https://gc.zgo.at/count.js"
+      ],
+      "headings": [
+        "Structured",
+        "Content Engineering",
+        "Featured Projects",
+        "Vet-Rate.org",
+        "Firearm Safety Team",
+        "Customer Management System",
+        "Queer Alliance Network",
+        "Fernhill Community",
+        "Services",
+        "Web Development",
+        "Content Engineering",
+        "Database Design",
+        "Authentication Systems",
+        "API Development",
+        "Code Templates",
+        "Compliance Engineering",
+        "Template Library",
+        "🎯 Form Components",
+        "🔐 Authentication",
+        "📊 Database Patterns",
+        "🎨 UI Components",
+        "🛡️ Compliance",
+        "The Value Proposition",
+        "A Real Case Study: Fernhill Community PWA",
+        "Traditional 9-Person Team",
+        "Content Engineer + AI",
+        "Estimate Your Project",
+        "What Makes This Possible",
+        "Get In Touch",
+        "Start a Conversation",
+        "Structured For Growth"
+      ]
+    },
+    {
+      "file": "client/portal.html",
+      "slug": "/portal",
+      "title": "Client Portal - Structured For Growth",
+      "sections": 5,
+      "forms": 1,
+      "modals": 3,
+      "scripts": [
+        "/js/portal.js",
+        "https://gc.zgo.at/count.js"
+      ],
+      "headings": [
+        "Client Portal",
+        "Client Portal",
+        "Account Summary",
+        "Make a Payment",
+        "Your Information",
+        "Your Projects",
+        "Cost Estimates"
+      ]
+    },
+    {
+      "file": "client/templates.html",
+      "slug": "/templates",
+      "title": "Template Library - Structured For Growth",
+      "sections": 2,
+      "forms": 0,
+      "modals": 9,
+      "scripts": [
+        "/js/templates.js",
+        "https://gc.zgo.at/count.js"
+      ],
+      "headings": [
+        "Structured",
+        "Template Library",
+        "Interactive Preview"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "id": "contact-form-validation",
+      "title": "Contact Form with Validation",
+      "category": "forms",
+      "description": "Complete contact form with client and server-side validation, error handling, and user feedback.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "jwt-auth-middleware",
+      "title": "JWT Authentication Middleware",
+      "category": "auth",
+      "description": "Express middleware for JWT token validation with role-based access control.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "crud-database-model",
+      "title": "CRUD Database Model",
+      "category": "database",
+      "description": "Generic CRUD operations class for SQLite with better-sqlite3, easily adaptable to any table.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "rest-api-controller",
+      "title": "RESTful API Controller Pattern",
+      "category": "api",
+      "description": "Standard REST API controller with proper HTTP methods, error handling, and validation.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "api-client-wrapper",
+      "title": "API Client Wrapper",
+      "category": "api",
+      "description": "Simplified fetch wrapper with authentication, error handling, and request/response interceptors.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "modal-component",
+      "title": "Reusable Modal Component",
+      "category": "ui",
+      "description": "Flexible modal dialog component with customizable content, animations, and accessibility features.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "confirmModal",
+      "title": "Confirm Action",
+      "category": "misc",
+      "description": "",
+      "language": "javascript",
+      "timeSaved": ""
+    },
+    {
+      "id": "notification-system",
+      "title": "Toast Notification System",
+      "category": "ui",
+      "description": "Lightweight notification system with multiple types, auto-dismiss, and animations.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "loading-state-manager",
+      "title": "Loading State Manager",
+      "category": "ui",
+      "description": "Manage loading states for buttons, forms, and page sections with consistent UI feedback.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "data-table-component",
+      "title": "Data Table with Search & Filter",
+      "category": "ui",
+      "description": "Feature-rich data table with search, sort, filter, and pagination capabilities.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "email-service",
+      "title": "Email Service with Templates",
+      "category": "email",
+      "description": "Nodemailer email service with HTML templates and fallback plain text.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "local-storage-manager",
+      "title": "LocalStorage Manager",
+      "category": "utils",
+      "description": "Type-safe localStorage wrapper with JSON serialization, expiration, and error handling.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "validation-utilities",
+      "title": "Validation Utility Functions",
+      "category": "utils",
+      "description": "Collection of common validation functions for forms, APIs, and data processing.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "form-state-manager",
+      "title": "Form State Manager",
+      "category": "forms",
+      "description": "Centralized form state management with validation, dirty state tracking, and error handling.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "debounce-throttle",
+      "title": "Debounce & Throttle Utilities",
+      "category": "utils",
+      "description": "Performance optimization utilities for rate-limiting function calls.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "date-time-utils",
+      "title": "Date & Time Utilities",
+      "category": "utils",
+      "description": "Common date/time formatting and manipulation functions.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "rbac-middleware",
+      "title": "Role-Based Access Control Middleware",
+      "category": "compliance",
+      "description": "Express middleware for RBAC with role hierarchy, permission checks, and audit logging. Maps to SOC 2 CC6.1, ISO 27001 A.8.2, HIPAA Access Controls.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "chain-hashed-audit-logger",
+      "title": "Chain-Hashed Audit Logger",
+      "category": "compliance",
+      "description": "Tamper-evident audit log with SHA-256 hash chaining. Each entry links to the previous via cryptographic hash, satisfying SOC 2 CC7.2, ISO 27001 A.8.15, and HIPAA audit requirements.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "aes256-field-encryption",
+      "title": "AES-256-GCM Field Encryption Service",
+      "category": "compliance",
+      "description": "Encrypt sensitive database fields at rest using AES-256-GCM with per-field IV and auth tags. Maps to GDPR Art. 32, HIPAA §164.312(a)(2)(iv), PCI DSS Req 3.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "pii-data-masking",
+      "title": "PII Data Masking Utility",
+      "category": "compliance",
+      "description": "Mask or redact personally identifiable information in logs, exports, and displays. Supports SSN, email, phone, credit card, and custom patterns. Maps to GDPR Art. 25, HIPAA Safe Harbor.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "breach-notification-engine",
+      "title": "Breach Notification Workflow Engine",
+      "category": "compliance",
+      "description": "Multi-framework breach notification engine with deadline tracking for GDPR (72h), HIPAA (60d), DORA (4h), and NIS 2 (24h). Classifies severity, routes to authorities, and generates timelines.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "mfa-middleware",
+      "title": "Multi-Factor Authentication Middleware",
+      "category": "compliance",
+      "description": "TOTP (RFC 6238) and WebAuthn/FIDO2 MFA middleware with recovery codes, rate-limiting lockout (PCI DSS 8.3.4), and 8-hour session window. Drop-in Express middleware for protecting admin routes.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "session-timeout-manager",
+      "title": "Configurable Session Timeout Manager",
+      "category": "compliance",
+      "description": "Framework-compliant session timeout middleware with idle + absolute timeouts, configurable profiles (standard/sensitive/critical), grace-period warnings, and audit-logged auto-logout.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "hipaa-phi-filter",
+      "title": "HIPAA Minimum Necessary PHI Filter",
+      "category": "compliance",
+      "description": "Role-based PHI field filtering implementing HIPAA §164.502(b) Minimum Necessary Standard. Defines the 18 Safe Harbor identifiers, provides per-role access profiles, and logs every PHI access for audit compliance.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "gdpr-consent-manager",
+      "title": "GDPR Granular Consent Manager",
+      "category": "compliance",
+      "description": "Per-purpose consent tracking implementing GDPR Articles 6, 7, 13, 17, 20, and 21. Tracks consent versions, withdrawal history, legal basis, and generates Kantara-specification consent receipts for audit evidence.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    },
+    {
+      "id": "pci-card-sanitizer",
+      "title": "PCI DSS Card Data Sanitizer",
+      "category": "compliance",
+      "description": "PCI DSS 4.0.1 compliant PAN detection, masking (first-6/last-4), truncation, and tokenization. Detects 7 card brands via Luhn validation, scrubs PANs from free-text fields, and ensures card data never reaches logs.",
+      "language": "JavaScript",
+      "timeSaved": ""
+    }
+  ],
+  "compliance": {
+    "frameworks": [
+      {
+        "id": "cmmc",
+        "name": "CMMC",
+        "description": "CMMC 2.0 ensures that Defense Industrial Base (DIB) companies implement cybersecurity practices to protect Controlled Unclassified Information (CUI) and Federal Contract Information (FCI). It aligns directly with NIST SP 800-171 requirements and adds third-party certification for Level 2 contractors. CMMC is a pass/fail requirement for DoD contracts.",
+        "version": "2.0 (Final Rule December 2024)",
+        "controlCount": 16,
+        "file": "data/compliance/frameworks/cmmc.json"
+      },
+      {
+        "id": "dora",
+        "name": "DORA",
+        "description": "DORA harmonizes ICT risk management rules across the EU financial sector, ensuring all participants can withstand, respond to, and recover from ICT-related disruptions and threats. It explicitly covers third-party ICT providers and mandates resilience testing including TLPT. DORA fills a critical gap by moving beyond traditional financial risk to address operational technology risk.",
+        "version": "2022 (effective January 17, 2025)",
+        "controlCount": 20,
+        "file": "data/compliance/frameworks/dora.json"
+      },
+      {
+        "id": "gdpr",
+        "name": "GDPR",
+        "description": "The GDPR enforces rigorous data privacy laws across the EU, applying extraterritorially to any global organization processing personal data of EU residents. It champions 'Privacy by Design and by Default,' mandating that data protection is integrated into software from inception. It uses a risk-based approach rather than prescriptive technology mandates.",
+        "version": "2016 (effective May 25, 2018)",
+        "controlCount": 20,
+        "file": "data/compliance/frameworks/gdpr.json"
+      },
+      {
+        "id": "hipaa",
+        "name": "HIPAA",
+        "description": "HIPAA establishes the definitive federal standard for protecting sensitive patient data. The Security Rule establishes national standards for protecting electronic Protected Health Information (ePHI). Covered Entities and Business Associates must implement Administrative, Physical, and Technical Safeguards. Specifications are designated as Required (R) or Addressable (A) — addressable does NOT mean optional.",
+        "version": "2013 Omnibus Rule (Updated)",
+        "controlCount": 16,
+        "file": "data/compliance/frameworks/hipaa.json"
+      },
+      {
+        "id": "iso27001",
+        "name": "ISO 27001",
+        "description": "ISO/IEC 27001 is the international gold standard for establishing, implementing, maintaining, and continually improving an Information Security Management System (ISMS). It requires a systemic approach to managing sensitive company information through continuous risk assessment and risk treatment. The 2022 revision consolidated 114 controls into 93 across 4 domains.",
+        "version": "2022",
+        "controlCount": 32,
+        "file": "data/compliance/frameworks/iso27001.json"
+      },
+      {
+        "id": "iso42001",
+        "name": "ISO 42001",
+        "description": "ISO 42001 is the world's first international certifiable management system standard for Artificial Intelligence. It provides a structured framework for organizations to manage AI responsibly, addressing the unique challenges of AI such as transparency, explainability, fairness, and the ethical use of data. It follows the ISO High-Level Structure (HLS), making it integrable with ISO 27001 and ISO 9001. Annex A contains 38 controls across the AI lifecycle.",
+        "version": "2023",
+        "controlCount": 22,
+        "file": "data/compliance/frameworks/iso42001.json"
+      },
+      {
+        "id": "nis2",
+        "name": "NIS 2",
+        "description": "NIS 2 dramatically expands the scope of EU cybersecurity regulation from the original NIS Directive. It covers 18 critical sectors, introduces management liability, and mandates specific cybersecurity risk management measures (Article 21). It establishes a multi-million euro fine regime modeled on GDPR.",
+        "version": "2022 (transposition deadline October 17, 2024)",
+        "controlCount": 15,
+        "file": "data/compliance/frameworks/nis2.json"
+      },
+      {
+        "id": "nist-ai-rmf",
+        "name": "NIST AI RMF",
+        "description": "The NIST AI RMF provides a voluntary framework for managing risks associated with AI systems throughout their lifecycle. It promotes trustworthy AI by addressing validity, reliability, safety, security, explainability, privacy, fairness, and accountability. The framework uses four core functions: Govern, Map, Measure, and Manage. It is technology-agnostic and applicable to all AI system types.",
+        "version": "1.0 (January 2023)",
+        "controlCount": 19,
+        "file": "data/compliance/frameworks/nist-ai-rmf.json"
+      },
+      {
+        "id": "pci-dss",
+        "name": "PCI DSS",
+        "description": "PCI DSS provides a rigorous technical and operational baseline for protecting Cardholder Data (CHD) and Sensitive Authentication Data (SAD). Version 4.0.1 emphasizes continuous security, risk-based customization via the Customized Approach, and robust authentication. It applies to any entity that stores, processes, or transmits payment card information.",
+        "version": "4.0.1",
+        "controlCount": 12,
+        "file": "data/compliance/frameworks/pci-dss.json"
+      },
+      {
+        "id": "soc2",
+        "name": "SOC 2",
+        "description": "SOC 2 is the prevailing compliance standard for technology service providers, SaaS platforms, and cloud-native organizations. Developed by the American Institute of Certified Public Accountants (AICPA), it evaluates an organization's information systems against the Trust Services Criteria (TSC). Unlike prescriptive frameworks, SOC 2 is principles-based — it evaluates whether controls effectively protect systems, giving flexibility to design controls that fit operational maturity.",
+        "version": "2017 (TSC 2017)",
+        "controlCount": 42,
+        "file": "data/compliance/frameworks/soc2.json"
+      }
+    ],
+    "oscal": [
+      {
+        "id": "cmmc",
+        "file": "data/compliance/oscal/catalog-cmmc.json"
+      },
+      {
+        "id": "dora",
+        "file": "data/compliance/oscal/catalog-dora.json"
+      },
+      {
+        "id": "gdpr",
+        "file": "data/compliance/oscal/catalog-gdpr.json"
+      },
+      {
+        "id": "hipaa",
+        "file": "data/compliance/oscal/catalog-hipaa.json"
+      },
+      {
+        "id": "iso27001",
+        "file": "data/compliance/oscal/catalog-iso27001.json"
+      },
+      {
+        "id": "iso42001",
+        "file": "data/compliance/oscal/catalog-iso42001.json"
+      },
+      {
+        "id": "nis2",
+        "file": "data/compliance/oscal/catalog-nis2.json"
+      },
+      {
+        "id": "nist-ai-rmf",
+        "file": "data/compliance/oscal/catalog-nist-ai-rmf.json"
+      },
+      {
+        "id": "pci-dss",
+        "file": "data/compliance/oscal/catalog-pci-dss.json"
+      },
+      {
+        "id": "soc2",
+        "file": "data/compliance/oscal/catalog-soc2.json"
+      }
+    ],
+    "mappings": [
+      {
+        "file": "cross-framework-lookup.json",
+        "entries": 7
+      },
+      {
+        "file": "cross-framework-map.json",
+        "entries": 12
+      },
+      {
+        "file": "resource-taxonomy.json",
+        "entries": 5
+      }
+    ]
+  },
+  "pkg": {
+    "name": "structured-for-growth-www",
+    "version": "1.4.0",
+    "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
+    "nodeEngine": ">=18.0.0",
+    "scripts": [
+      {
+        "name": "dev",
+        "command": "concurrently \"npm run dev:server\" \"npm run dev:client\""
+      },
+      {
+        "name": "dev:server",
+        "command": "nodemon server/index.js"
+      },
+      {
+        "name": "dev:client",
+        "command": "vite"
+      },
+      {
+        "name": "build",
+        "command": "node scripts/generate-docs.js && vite build"
+      },
+      {
+        "name": "postinstall",
+        "command": "npm run build"
+      },
+      {
+        "name": "preview",
+        "command": "vite preview"
+      },
+      {
+        "name": "start",
+        "command": "node server/index.js"
+      },
+      {
+        "name": "render-build",
+        "command": "npm install && npm run build"
+      },
+      {
+        "name": "docs:generate",
+        "command": "node scripts/generate-docs.js"
+      },
+      {
+        "name": "audit",
+        "command": "node scripts/audit.js"
+      },
+      {
+        "name": "audit:bump",
+        "command": "node scripts/audit.js --bump"
+      },
+      {
+        "name": "audit:major",
+        "command": "node scripts/audit.js --bump major"
+      },
+      {
+        "name": "audit:minor",
+        "command": "node scripts/audit.js --bump minor"
+      },
+      {
+        "name": "predeploy",
+        "command": "npm run docs:generate && npm run audit:bump"
+      },
+      {
+        "name": "prepush",
+        "command": "npm run docs:generate && npm run audit"
+      }
+    ],
+    "dependencies": [
+      {
+        "name": "bcryptjs",
+        "version": "^2.4.3"
+      },
+      {
+        "name": "cors",
+        "version": "^2.8.5"
+      },
+      {
+        "name": "dotenv",
+        "version": "^16.3.1"
+      },
+      {
+        "name": "express",
+        "version": "^4.18.2"
+      },
+      {
+        "name": "express-rate-limit",
+        "version": "^7.1.5"
+      },
+      {
+        "name": "express-validator",
+        "version": "^7.0.1"
+      },
+      {
+        "name": "helmet",
+        "version": "^7.1.0"
+      },
+      {
+        "name": "jsonwebtoken",
+        "version": "^9.0.2"
+      },
+      {
+        "name": "nodemailer",
+        "version": "^6.9.7"
+      },
+      {
+        "name": "sql.js",
+        "version": "^1.13.0"
+      },
+      {
+        "name": "vite",
+        "version": "^5.0.8"
+      }
+    ],
+    "devDependencies": [
+      {
+        "name": "concurrently",
+        "version": "^8.2.2"
+      },
+      {
+        "name": "nodemon",
+        "version": "^3.0.2"
+      }
+    ]
+  },
+  "docs": [
+    {
+      "file": "README.md",
+      "headings": [
+        "Structured For Growth\r",
+        "🎯 Features\r",
+        "Public-Facing\r",
+        "Client Portal\r",
+        "Admin Dashboard\r",
+        "Compliance Knowledge Base\r",
+        "Developer Tools\r",
+        "🚀 Quick Start\r",
+        "📁 Project Structure\r",
+        "🛠️ Technology Stack\r",
+        "🌐 API Endpoints\r",
+        "📚 Template Library\r",
+        "🚦 Scripts\r",
+        "📖 Documentation\r",
+        "🎨 Theme\r",
+        "💰 Value Proposition\r",
+        "🔐 Security Features\r",
+        "🚀 Deployment\r",
+        "Production build\r",
+        "Start production server\r",
+        "📧 Contact\r"
+      ],
+      "wordCount": 1486
+    },
+    {
+      "file": "SETUP.md",
+      "headings": [
+        "Structured For Growth - Setup Guide\r",
+        "🎉 Welcome!\r",
+        "📋 Prerequisites\r",
+        "🚀 Quick Start\r",
+        "1. Install Dependencies\r",
+        "2. Configure Environment Variables\r",
+        "Server Configuration\r",
+        "Email Configuration (for contact form)\r",
+        "JWT Secret (for authentication)\r",
+        "Database\r",
+        "CORS Origins\r",
+        "3. Start Development Server\r",
+        "4. Access the Website\r",
+        "📧 Email Setup\r",
+        "Gmail Configuration\r",
+        "Other Email Providers\r",
+        "🔐 Security Setup\r",
+        "1. Generate JWT Secret\r",
+        "Generate a random string (PowerShell)\r",
+        "2. First User Account\r",
+        "🗄️ Database\r",
+        "Database Tables\r",
+        "📱 Project Structure\r",
+        "🎨 Customization\r",
+        "Update Branding\r",
+        "Add Projects\r",
+        "Customize Templates\r",
+        "🚀 Deployment\r",
+        "Build for Production\r",
+        "Environment Variables\r",
+        "Update other settings as needed\r",
+        "Deployment Options\r",
+        "Option 1: Traditional Hosting\r",
+        "Option 2: Platform as a Service (PaaS)\r",
+        "Render (Pre-configured)\r",
+        "Option 3: Serverless\r",
+        "🔧 Maintenance\r",
+        "Update Dependencies\r",
+        "Check for updates\r",
+        "Update packages\r",
+        "Update to latest major versions (careful!)\r",
+        "Backup Database\r",
+        "Copy database file\r",
+        "Monitor Logs\r",
+        "🐛 Troubleshooting\r",
+        "Port Already in Use\r",
+        "Email Not Sending\r",
+        "Database Errors\r",
+        "Build Errors\r",
+        "📚 Additional Resources\r",
+        "Learning\r",
+        "Tools\r",
+        "🤝 Support\r",
+        "🎯 Next Steps\r"
+      ],
+      "wordCount": 1273
+    },
+    {
+      "file": "PROJECT-OVERVIEW.md",
+      "headings": [
+        "🎯 Structured For Growth - Project Overview\r",
+        "What You've Built\r",
+        "1. **Portfolio Website** 🌐\r",
+        "2. **Contact Form System** 📧\r",
+        "3. **Client Management System** 👥\r",
+        "4. **Template Library** 📚\r",
+        "Form Templates\r",
+        "Authentication Templates\r",
+        "Database Templates\r",
+        "API Templates\r",
+        "UI Components\r",
+        "Email Templates\r",
+        "Utilities\r",
+        "5. **Compliance Knowledge Base** 🛡️\r",
+        "6. **Client Portal** 🔒\r",
+        "🎨 Technology Stack\r",
+        "Frontend\r",
+        "Backend\r",
+        "Security\r",
+        "📁 Key Files\r",
+        "🚀 Getting Started\r",
+        "Quick Start (5 minutes)\r",
+        "Detailed Setup\r",
+        "🎓 How to Use This System\r",
+        "As a Portfolio\r",
+        "As a Template Library\r",
+        "As a Client Management Tool\r",
+        "As a Learning Resource\r",
+        "💡 Best Practices Implemented\r",
+        "Code Organization\r",
+        "Security\r",
+        "Performance\r",
+        "User Experience\r",
+        "Developer Experience\r",
+        "🔧 Customization Guide\r",
+        "Update Branding\r",
+        "Add Projects\r",
+        "Extend API\r",
+        "Add Templates\r",
+        "📊 Database Schema\r",
+        "Users Table\r",
+        "Clients Table\r",
+        "Projects Table\r",
+        "Contact Submissions\r",
+        "Messages Table\r",
+        "Campaigns Table\r",
+        "🚢 Deployment Options\r",
+        "Option 1: Traditional Hosting\r",
+        "Option 2: Platform as a Service\r",
+        "Option 3: Serverless\r",
+        "Recommended: Render (render.yaml included)\r",
+        "Alternative: Railway\r",
+        "🎯 Next Steps\r",
+        "Immediate\r",
+        "Short Term\r",
+        "Long Term\r",
+        "💼 Business Use Cases\r",
+        "For Your Business\r",
+        "For Your Clients\r",
+        "For Your Growth\r",
+        "🤝 Contributing to Your Library\r",
+        "📈 Growth Strategy\r",
+        "Month 1\r",
+        "Month 2-3\r",
+        "Month 4-6\r",
+        "Month 6+\r",
+        "🎓 Learning Path\r",
+        "🔐 Security Checklist\r",
+        "📞 Support & Resources\r",
+        "Documentation\r",
+        "External Resources\r",
+        "🎉 Congratulations!\r"
+      ],
+      "wordCount": 1975
+    },
+    {
+      "file": "TEMPLATE-INVENTORY.md",
+      "headings": [
+        "📚 Template Library Inventory\r",
+        "Overview\r",
+        "📋 Complete Template List\r",
+        "🎯 Forms (3 templates)\r",
+        "🔐 Authentication (1 template)\r",
+        "🗄️ Database (1 template)\r",
+        "🌐 API (2 templates)\r",
+        "🎨 UI Components (4 templates)\r",
+        "📧 Email (1 template)\r",
+        "🛠️ Utilities (4 templates)\r",
+        "🎯 Templates by Use Case\r",
+        "Building a New Website\r",
+        "Building an Admin Dashboard\r",
+        "Building a SaaS Application\r",
+        "Performance Optimization\r",
+        "Data Management\r",
+        "📊 Coverage Analysis\r",
+        "Frontend Needs ✅\r",
+        "Backend Needs ✅\r",
+        "Utilities ✅\r",
+        "🚀 How Templates Accelerate Development\r",
+        "Without Templates\r",
+        "With Templates\r",
+        "💡 Real-World Value Calculations\r",
+        "Scenario 1: Building Client Website\r",
+        "Scenario 2: Building Admin Dashboard\r",
+        "Scenario 3: Adding Features to Existing App\r",
+        "📈 Template Quality Standards\r",
+        "✅ Clean Code\r",
+        "✅ Production-Ready\r",
+        "✅ Well-Documented\r",
+        "✅ Tested\r",
+        "🎯 Growing Your Template Library\r",
+        "When to Add a New Template\r",
+        "Template Extraction Process\r",
+        "Maintenance\r",
+        "📊 Template Statistics\r",
+        "By Category\r",
+        "By Complexity\r",
+        "By Language\r",
+        "🎁 Template Value Proposition\r",
+        "For You\r",
+        "For Clients\r",
+        "For Your Business\r",
+        "🔥 Most Valuable Templates (Top 5)\r",
+        "🎯 Next Steps\r",
+        "Short Term (This Month)\r",
+        "Medium Term (3 Months)\r",
+        "Long Term (6+ Months)\r",
+        "📞 Template Support\r",
+        "Using Templates\r",
+        "Adding Templates\r",
+        "Improving Templates\r",
+        "🎉 Success Metrics\r",
+        "Track Your Template Usage\r",
+        "Set Goals\r",
+        "💪 Template Philosophy\r",
+        "Core Principles\r"
+      ],
+      "wordCount": 1685
+    },
+    {
+      "file": "CHECKLIST.md",
+      "headings": [
+        "✅ Getting Started Checklist\r",
+        "📋 Phase 1: Initial Setup (15 minutes)\r",
+        "Step 1: Prerequisites\r",
+        "Step 2: Project Setup\r",
+        "Step 3: Environment Configuration\r",
+        "Step 4: Email Setup (Gmail)\r",
+        "Step 5: First Run\r",
+        "🌐 Phase 2: Verify Installation (10 minutes)\r",
+        "Frontend Tests\r",
+        "Template Library Tests\r",
+        "Compliance Knowledge Base Tests\r",
+        "Client Portal Tests\r",
+        "Dashboard Tests\r",
+        "Client Management Tests\r",
+        "Messaging Tests\r",
+        "Campaign Tests\r",
+        "Contact Form Tests\r",
+        "🎨 Phase 3: Customization (30 minutes)\r",
+        "Update Branding\r",
+        "Update Homepage Content\r",
+        "Update Project Details\r",
+        "Add Your Logo (Optional)\r",
+        "📚 Phase 4: Explore Templates (20 minutes)\r",
+        "Review Each Category\r",
+        "Test Template Usage\r",
+        "Add Your First Custom Template\r",
+        "🚀 Phase 5: Production Preparation (30 minutes)\r",
+        "Security Review\r",
+        "Content Review\r",
+        "Testing\r",
+        "Build Test\r",
+        "🌍 Phase 6: Deployment (Time varies by platform)\r",
+        "Choose Hosting Platform\r",
+        "Prepare for Deployment\r",
+        "Deploy\r",
+        "Post-Deployment Tests\r",
+        "DNS Configuration (If using custom domain)\r",
+        "📈 Phase 7: Post-Launch (Ongoing)\r",
+        "Week 1\r",
+        "Month 1\r",
+        "Quarterly\r",
+        "🎯 Optional Enhancements\r",
+        "Short Term\r",
+        "Medium Term\r",
+        "Long Term\r",
+        "🐛 Troubleshooting Checklist\r",
+        "Server Won't Start\r",
+        "Email Not Sending\r",
+        "Database Errors\r",
+        "Build Errors\r",
+        "Can't Login to Dashboard\r",
+        "📞 Getting Help\r",
+        "🎉 Completion Checklist\r",
+        "🚀 Next Actions\r",
+        "💪 You've Got This!\r"
+      ],
+      "wordCount": 2348
+    },
+    {
+      "file": "SUCCESS.md",
+      "headings": [
+        "🎉 PROJECT COMPLETE!\r",
+        "What We Built\r",
+        "📦 Project Summary\r",
+        "**84 Files**\r",
+        "**Total Lines of Code: ~53,500+**\r",
+        "🌟 Key Features\r",
+        "1. **Portfolio Website** (index.html)\r",
+        "2. **Contact Form System**\r",
+        "3. **Client Management Dashboard** (dashboard.html)\r",
+        "5. **Compliance Knowledge Base** (compliance.html) 🛡️\r",
+        "6. **Client Portal** (portal.html) 🔒\r",
+        "4. **Template Library** (templates.html) ⭐ THE GAME CHANGER\r",
+        "📝 Forms (3 templates)\r",
+        "🔐 Authentication (1 template)\r",
+        "🗄️ Database (1 template)\r",
+        "🌐 API (2 templates)\r",
+        "🎨 UI Components (4 templates)\r",
+        "📧 Email (1 template)\r",
+        "🛠️ Utilities (4 templates)\r",
+        "🚀 Quick Start\r",
+        "1️⃣ Setup (5 minutes)\r",
+        "Run the setup script\r",
+        "It will:\r",
+        "✅ Check Node.js\r",
+        "✅ Install dependencies\r",
+        "✅ Create .env file\r",
+        "✅ Generate JWT secret\r",
+        "✅ Create data directory\r",
+        "2️⃣ Configure Email\r",
+        "3️⃣ Start Development\r",
+        "4️⃣ Access\r",
+        "📚 Documentation\r",
+        "💎 The Template Library Advantage\r",
+        "Traditional Development\r",
+        "With Your Template Library\r",
+        "Example: Adding Authentication\r",
+        "That's **25x faster!** 🚀\r",
+        "🎯 What Makes This Special\r",
+        "1. **Complete System**\r",
+        "2. **Production Ready**\r",
+        "3. **Well Documented**\r",
+        "4. **Easily Extensible**\r",
+        "5. **Learning Resource**\r",
+        "💼 Real-World Usage\r",
+        "Scenario 1: New Client Project\r",
+        "Scenario 2: Add Authentication\r",
+        "Scenario 3: Database Operations\r",
+        "🏗️ Project Structure\r",
+        "🎓 What You Learned\r",
+        "📈 Your Growth Path\r",
+        "Week 1: Setup & Customize\r",
+        "Month 1: Use & Learn\r",
+        "Month 3: Expand\r",
+        "Month 6: Scale\r",
+        "🚀 Deployment Checklist\r",
+        "Security\r",
+        "Content\r",
+        "Performance\r",
+        "Deployment\r",
+        "🎯 Next Steps\r",
+        "Immediate (Today)\r",
+        "This Week\r",
+        "This Month\r",
+        "Long Term\r",
+        "💡 Pro Tips\r",
+        "Template Library\r",
+        "Client Management\r",
+        "Development\r",
+        "🌟 Special Features\r",
+        "What Makes This Different\r",
+        "📞 Resources\r",
+        "Documentation\r",
+        "External\r",
+        "🎉 Congratulations!\r",
+        "This system will:\r",
+        "🚀 Final Thoughts\r",
+        "Your Journey Starts Now!\r",
+        "📊 Quick Stats\r"
+      ],
+      "wordCount": 1919
+    },
+    {
+      "file": "VISUAL-GUIDE.md",
+      "headings": [
+        "🎨 Visual Guide - Structured For Growth\r",
+        "What You're Looking At\r",
+        "🏠 Homepage (index.html)\r",
+        "👥 Client Dashboard (dashboard.html)\r",
+        "📚 Template Library (templates.html)\r",
+        "🛡️ Compliance Knowledge Base (compliance.html)\r",
+        "🔒 Client Portal (portal.html)\r",
+        "🔄 System Flow\r",
+        "Contact Form Flow\r",
+        "Authentication Flow\r",
+        "Client Management Flow\r",
+        "Template Usage Flow\r",
+        "📁 File Organization\r",
+        "🎯 Feature Map\r",
+        "🚀 Usage Scenarios\r",
+        "Scenario 1: Showcase Your Work\r",
+        "Scenario 2: Manage Clients\r",
+        "Scenario 3: Build New Project\r",
+        "Scenario 4: Add Authentication\r",
+        "💡 Quick Reference\r",
+        "Common Tasks\r",
+        "🎨 Color Scheme\r",
+        "📊 Database Schema Visual\r",
+        "🎓 Learning Path Visual\r",
+        "✅ Checklist Visual\r",
+        "Setup Checklist\r",
+        "Pre-Deployment Checklist\r",
+        "🎉 Success Indicators\r"
+      ],
+      "wordCount": 1816
+    },
+    {
+      "file": "TEMPLATE-EXTRACTION-SUMMARY.md",
+      "headings": [
+        "🎯 Template Extraction Summary\r",
+        "Mission Complete! ✅\r",
+        "📊 Template Breakdown\r",
+        "What We Started With\r",
+        "What We Added (8 NEW Templates)\r",
+        "Final Count: 16 Templates\r",
+        "🔍 Templates by Category\r",
+        "📝 Forms (3)\r",
+        "🔐 Authentication (1)\r",
+        "🗄️ Database (1)\r",
+        "🌐 API (2)\r",
+        "🎨 UI Components (4)\r",
+        "📧 Email (1)\r",
+        "🛠️ Utilities (4)\r",
+        "✨ Quality Standards Met\r",
+        "✅ Clean & Generic\r",
+        "✅ Production-Ready\r",
+        "✅ Well-Documented\r",
+        "🚀 Development Acceleration\r",
+        "Time Savings per Template\r",
+        "💰 Real-World Value\r",
+        "Project Examples\r",
+        "Small Website (Contact + Portfolio)\r",
+        "Admin Dashboard\r",
+        "SaaS MVP\r",
+        "Annual Impact\r",
+        "🎯 Template Sources\r",
+        "Extracted From Your Work\r",
+        "Battle-Tested\r",
+        "📚 Documentation Created\r",
+        "🔥 Next Steps\r",
+        "Immediate Actions\r",
+        "This Week\r",
+        "This Month\r",
+        "This Quarter\r",
+        "💡 Using Your Templates\r",
+        "Access Templates\r",
+        "Adding New Templates\r",
+        "Best Practices\r",
+        "🎁 Template Library Features\r",
+        "Current Features\r",
+        "Future Enhancements\r",
+        "📈 Growth Strategy\r",
+        "Template Library Goals\r",
+        "Focus Areas\r",
+        "🏆 Success Metrics\r",
+        "Track Your Progress\r",
+        "Celebrate Wins\r",
+        "🎊 Congratulations!\r",
+        "Your Competitive Edge\r",
+        "📞 Support\r",
+        "Questions?\r",
+        "Issues?\r",
+        "🚀 Final Thoughts\r",
+        "Key Takeaways\r",
+        "📝 Template Checklist\r"
+      ],
+      "wordCount": 1380
+    },
+    {
+      "file": "docs/ADMIN-GUIDE.md",
+      "headings": [
+        "Admin User Guide\r",
+        "Structured For Growth - Dashboard Administration\r",
+        "Table of Contents\r",
+        "Getting Started\r",
+        "System Requirements\r",
+        "First-Time Setup\r",
+        "Access Levels\r",
+        "Authentication\r",
+        "Creating an Account\r",
+        "Logging In\r",
+        "Logging Out\r",
+        "Password Requirements\r",
+        "Token Expiration\r",
+        "Dashboard Overview\r",
+        "Main Navigation\r",
+        "Dashboard Sections\r",
+        "Client Management\r",
+        "Viewing Clients\r",
+        "Adding a New Client\r",
+        "Editing a Client\r",
+        "Deleting a Client\r",
+        "Client Statuses\r",
+        "Exporting Client Data\r",
+        "Project Management\r",
+        "Viewing Projects\r",
+        "Creating a New Project\r",
+        "Updating Project Status\r",
+        "Project Notes\r",
+        "Linking Projects to Clients\r",
+        "Contact Form Submissions\r",
+        "Viewing Messages\r",
+        "Reading Messages\r",
+        "Responding to Messages\r",
+        "Message Statuses\r",
+        "Archiving Messages\r",
+        "Template Library Management\r",
+        "Current Template Management\r",
+        "Template Categories\r",
+        "Updating Templates\r",
+        "Removing Templates\r",
+        "Security & Best Practices\r",
+        "Password Security\r",
+        "Session Management\r",
+        "Data Protection\r",
+        "Backup Procedures\r",
+        "Access Control\r",
+        "Troubleshooting\r",
+        "Can't Log In\r",
+        "Session Expired\r",
+        "Dashboard Not Loading\r",
+        "Can't Add/Edit Client\r",
+        "Data Not Saving\r",
+        "Export Not Working\r",
+        "Server Errors (500)\r",
+        "Database Issues\r",
+        "Backup first!\r",
+        "Delete and restart server\r",
+        "Database recreates automatically\r",
+        "Advanced Features\r",
+        "API Endpoints\r",
+        "Database Direct Access\r",
+        "Keyboard Shortcuts\r",
+        "Getting Help\r",
+        "Documentation\r",
+        "Support Channels\r",
+        "Feature Requests\r",
+        "Appendix\r",
+        "Keyboard & Mouse Tips\r",
+        "Browser Compatibility\r",
+        "Performance Tips\r"
+      ],
+      "wordCount": 2628
+    },
+    {
+      "file": "docs/CLIENT-GUIDE.md",
+      "headings": [
+        "Client User Guide\r",
+        "Welcome to Structured For Growth\r",
+        "Table of Contents\r",
+        "Getting Started\r",
+        "What You Can Do Here\r",
+        "Homepage Navigation\r",
+        "Main Sections\r",
+        "Template Library\r",
+        "Features\r",
+        "Using Templates\r",
+        "Template Categories\r",
+        "Cost Savings\r",
+        "Contact Form\r",
+        "How to Contact Us\r",
+        "Form Validation\r",
+        "What Happens Next\r",
+        "Understanding Value Proposition\r",
+        "Why Structured For Growth?\r",
+        "Cost Comparison Calculator\r",
+        "FAQ\r",
+        "General Questions\r",
+        "Technical Questions\r",
+        "Pricing Questions\r",
+        "Project Questions\r",
+        "Need Help?\r",
+        "Quick Start Checklist\r"
+      ],
+      "wordCount": 1367
+    },
+    {
+      "file": "templates/README.md",
+      "headings": [
+        "Template Library\r",
+        "📁 Structure\r",
+        "🎯 Categories\r",
+        "Forms\r",
+        "Authentication\r",
+        "Database\r",
+        "API Patterns\r",
+        "UI Components\r",
+        "Email\r",
+        "Utilities\r",
+        "🚀 Quick Start\r",
+        "Using Templates in Your Project\r",
+        "Adding New Templates\r",
+        "📚 Best Practices\r",
+        "When Creating Templates\r",
+        "When Using Templates\r",
+        "🎨 Customization\r",
+        "Styling\r",
+        "Configuration\r",
+        "🔧 Maintenance\r",
+        "Regular Updates\r",
+        "Quality Control\r",
+        "📖 Template Sections Explained\r",
+        "Code Section\r",
+        "Usage Section\r",
+        "Notes Section\r",
+        "🌟 Featured Templates\r",
+        "Must-Have Templates for Every Project\r",
+        "🔐 Security Considerations\r",
+        "Always Review for Security\r",
+        "Never Include in Templates\r",
+        "🚧 Extending the Library\r",
+        "Add Your Own Categories\r",
+        "Create Template Collections\r",
+        "📞 Contributing\r",
+        "🎓 Learning Resources\r",
+        "📝 Changelog\r"
+      ],
+      "wordCount": 888
+    }
+  ],
+  "styles": [
+    {
+      "file": "client/styles/compliance.css",
+      "customProperties": 142,
+      "selectors": 76
+    },
+    {
+      "file": "client/styles/components.css",
+      "customProperties": 139,
+      "selectors": 109
+    },
+    {
+      "file": "client/styles/dashboard.css",
+      "customProperties": 368,
+      "selectors": 263
+    },
+    {
+      "file": "client/styles/docs.css",
+      "customProperties": 116,
+      "selectors": 97
+    },
+    {
+      "file": "client/styles/main.css",
+      "customProperties": 315,
+      "selectors": 178
+    },
+    {
+      "file": "client/styles/portal.css",
+      "customProperties": 136,
+      "selectors": 99
+    },
+    {
+      "file": "client/styles/templates.css",
+      "customProperties": 242,
+      "selectors": 161
+    }
+  ]
+}

@@ -83,6 +83,19 @@ A complete, professional Content Engineering portfolio website with:
 - String manipulation
 - Error handling
 
+### 5. **Compliance Knowledge Base** 🛡️
+- 10 regulatory framework browser (SOC 2, HIPAA, GDPR, PCI-DSS, CMMC, DORA, NIS2, ISO 27001, ISO 42001, NIST AI RMF)
+- Cross-framework control mapping matrix
+- NIST OSCAL catalog downloads
+- Evidence tracking dashboard
+- Developer tools (VS Code extension, MCP server, ticketing, AI review)
+
+### 6. **Client Portal** 🔒
+- Authenticated client access with project visibility
+- Payment integration (Venmo)
+- Estimate and invoice tracking
+- Real-time project status and progress bars
+
 ## 🎨 Technology Stack
 
 ### Frontend
@@ -94,17 +107,17 @@ A complete, professional Content Engineering portfolio website with:
 ### Backend
 - **Node.js** - JavaScript runtime
 - **Express.js** - Web framework
-- **better-sqlite3** - Fast, embedded database
+- **sql.js** - Pure JavaScript SQLite, no native binaries
 - **JWT** - Secure authentication
 - **Nodemailer** - Email sending
-- **bcrypt** - Password hashing
+- **bcryptjs** - Password hashing
 
 ### Security
 - **Helmet** - Security headers
 - **Rate Limiting** - API protection
 - **CORS** - Cross-origin control
 - **Input Validation** - express-validator
-- **Password Hashing** - bcrypt
+- **Password Hashing** - bcryptjs
 
 ## 📁 Key Files
 
@@ -114,32 +127,51 @@ Your Project Structure:
 │   ├── index.html              → Your homepage
 │   ├── dashboard.html          → Client management
 │   ├── templates.html          → Template library UI
+│   ├── compliance.html         → Compliance knowledge base
+│   ├── portal.html             → Client portal
 │   ├── styles/
 │   │   ├── main.css           → Main styles
 │   │   ├── components.css     → Reusable component styles
 │   │   ├── dashboard.css      → Dashboard-specific styles
-│   │   └── templates.css      → Template page styles
+│   │   ├── templates.css      → Template page styles
+│   │   ├── compliance.css     → Compliance page styles
+│   │   └── portal.css         → Client portal styles
 │   └── js/
 │       ├── main.js            → Homepage logic
 │       ├── dashboard.js       → Client management logic
 │       ├── templates.js       → Template library logic
+│       ├── compliance.js      → Compliance browser logic
+│       ├── portal.js          → Client portal logic
 │       └── modules/           → Shared modules
 ├── server/
 │   ├── index.js               → Express server
 │   ├── routes/
 │   │   ├── contact.js         → Contact form API
 │   │   ├── auth.js            → Authentication API
-│   │   └── clients.js         → Client management API
+│   │   ├── clients.js         → Client management API
+│   │   ├── compliance.js      → Compliance data API
+│   │   ├── portal.js          → Client portal API
+│   │   ├── messages.js        → Threaded messaging API
+│   │   ├── campaigns.js       → Email campaigns API
+│   │   ├── backup.js          → Backup & restore API
+│   │   ├── demo.js            → Demo data API
+│   │   └── projects.js        → Project management API
 │   ├── controllers/
 │   │   └── contactController.js → Email sending logic
 │   ├── middleware/
 │   │   └── auth.js            → JWT verification
 │   └── models/
 │       └── database.js        → Database setup & models
+├── data/
+│   └── compliance/
+│       ├── frameworks/        → 10 regulatory framework JSONs
+│       ├── mappings/          → Cross-framework mapping data
+│       └── oscal/             → NIST OSCAL catalog files
 ├── templates/
 │   ├── templateData.js        → Your template collection!
 │   └── README.md              → Template documentation
 ├── package.json               → Dependencies
+├── render.yaml               → Render deployment config
 ├── vite.config.js            → Frontend build config
 ├── .env.example              → Environment template
 └── README.md                 → This file!
@@ -312,6 +344,27 @@ Add to `templates/templateData.js`:
 - status (new, read, archived)
 - timestamp
 
+### Messages Table
+- id (Primary Key)
+- client_id (Foreign Key → clients)
+- sender (admin, client)
+- subject
+- body
+- parent_id (Foreign Key → messages, for threading)
+- read (boolean)
+- timestamps
+
+### Campaigns Table
+- id (Primary Key)
+- title
+- subject
+- body
+- status (draft, sent)
+- recipients (JSON array)
+- sent_at
+- created_by (Foreign Key → users)
+- timestamps
+
 ## 🚢 Deployment Options
 
 ### Option 1: Traditional Hosting
@@ -330,7 +383,13 @@ Add to `templates/templateData.js`:
 - **Backend**: AWS Lambda, Vercel Functions, Netlify Functions
 - **Database**: Could migrate to PostgreSQL (Supabase, Railway)
 
-### Recommended: Railway
+### Recommended: Render (render.yaml included)
+1. Push code to GitHub
+2. Connect repository to Render
+3. Set environment variables
+4. Deploy automatically via `render.yaml`
+
+### Alternative: Railway
 1. Push code to GitHub
 2. Connect repository to Railway
 3. Set environment variables

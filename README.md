@@ -1,24 +1,41 @@
 # Structured For Growth
 
-**Content Engineering Portfolio & Template Library**
+**Content Engineering Portfolio, Template Library & Compliance Knowledge Base**
 
-A comprehensive full-stack website showcasing Content Engineering projects with an integrated client management system and extensive template library. Features a dark forest green theme and dynamic value proposition calculator.
+A comprehensive full-stack website showcasing Content Engineering projects with an integrated client management system, extensive template library, compliance knowledge base covering 10 regulatory frameworks, and a client portal with project tracking and payments. Features a dark forest green theme and dynamic value proposition calculator.
 
 ## 🎯 Features
 
 ### Public-Facing
 - **Portfolio Showcase**: Highlights of 5 major projects demonstrating full-stack expertise
 - **Template Library**: 16+ production-ready code templates with search and filtering
+- **Compliance Knowledge Base**: 10 regulatory frameworks (SOC 2, HIPAA, GDPR, PCI-DSS, CMMC, DORA, NIS2, ISO 27001, ISO 42001, NIST AI RMF) with cross-framework mapping, OSCAL catalogs, and evidence tracking
 - **Value Proposition Calculator**: Interactive cost comparison showing savings vs traditional development teams
 - **Contact Form**: Professional contact form with server-side email integration
 - **Dark Forest Green Theme**: Modern, elegant dark mode design throughout
+
+### Client Portal
+- **Authenticated Client Access**: Secure login for clients to view their projects
+- **Project Tracking**: Real-time project status, progress bars, and milestone tracking
+- **Payment Integration**: Venmo payment link with balance-due tracking
+- **Estimates & Invoicing**: View pending estimates and project costs
 
 ### Admin Dashboard
 - **Authentication System**: Secure JWT-based authentication with bcrypt password hashing
 - **Client Management**: Full CRUD operations for managing client relationships
 - **Project Management**: Track projects, statuses, budgets, and timelines
+- **Messaging System**: Threaded messaging between admin and clients
+- **Campaign Management**: Email campaigns with segmentation and template support
 - **Contact Submissions**: View and manage all contact form submissions
-- **Database**: SQL.js-powered database with automatic persistence
+- **Database Backup**: One-click database backup and restore
+- **Database**: SQL.js-powered SQLite database with automatic persistence
+
+### Compliance Knowledge Base
+- **10 Regulatory Frameworks**: Complete control catalogs with searchable metadata
+- **Cross-Framework Mapping**: Matrix showing control overlap between frameworks
+- **OSCAL Catalogs**: NIST-standard machine-readable catalogs for GRC tool integration
+- **Evidence Tracking**: Per-control evidence requirements and collection status
+- **Developer Tools**: VS Code extension, MCP server, ticketing integration, AI compliance review
 
 ### Developer Tools
 - **Pre-Deploy Audit**: Comprehensive audit script with automatic versioning
@@ -52,47 +69,87 @@ A comprehensive full-stack website showcasing Content Engineering projects with 
 ## 📁 Project Structure
 
 ```
-structured-for-growth-www/
-├── client/                 # Frontend application
-│   ├── index.html         # Main homepage
-│   ├── dashboard.html     # Admin dashboard
-│   ├── templates.html     # Template library
-│   ├── styles/            # CSS stylesheets (dark forest green theme)
-│   ├── scripts/           # JavaScript modules
-│   └── assets/            # Images, favicon, icons
-├── server/                # Backend API
-│   ├── index.js           # Express server
-│   ├── routes/            # API routes (auth, clients, projects, contact)
-│   ├── controllers/       # Business logic
-│   ├── middleware/        # Authentication & security middleware
-│   └── models/            # Database models (sql.js)
-├── templates/             # Reusable code templates library (16+)
-│   ├── templateData.js    # Template definitions
-│   └── README.md          # Template documentation
-├── docs/                  # Documentation
-│   ├── CLIENT-GUIDE.md    # User guide for clients
-│   └── ADMIN-GUIDE.md     # Admin dashboard guide
-├── scripts/               # Build & deployment scripts
-│   └── audit.js           # Pre-deploy audit with versioning
-├── data/                  # Database storage (SQLite)
-└── logs/                  # Audit logs
-
+structured-for-growth/
+├── client/                     # Frontend application
+│   ├── index.html             # Main homepage
+│   ├── dashboard.html         # Admin dashboard
+│   ├── templates.html         # Template library
+│   ├── compliance.html        # Compliance knowledge base
+│   ├── portal.html            # Client portal
+│   ├── styles/                # CSS stylesheets (dark forest green theme)
+│   │   ├── main.css           # Core styles & variables
+│   │   ├── components.css     # Reusable component styles
+│   │   ├── dashboard.css      # Dashboard-specific styles
+│   │   ├── templates.css      # Template page styles
+│   │   ├── compliance.css     # Compliance page styles
+│   │   └── portal.css         # Client portal styles
+│   ├── js/                    # JavaScript modules
+│   │   ├── main.js            # Homepage logic
+│   │   ├── dashboard.js       # Admin dashboard logic
+│   │   ├── templates.js       # Template library logic
+│   │   ├── compliance.js      # Compliance page logic
+│   │   ├── portal.js          # Client portal logic
+│   │   ├── templateData.js    # Template definitions
+│   │   └── modules/           # Shared modules
+│   │       ├── contactForm.js # Contact form handler
+│   │       ├── navigation.js  # Navigation logic
+│   │       └── smoothScroll.js# Smooth scrolling
+│   ├── scripts/               # Client-side scripts
+│   │   └── value-calculator.js# Value proposition calculator
+│   └── assets/                # Images, favicon, icons
+├── server/                    # Backend API
+│   ├── index.js               # Express server entry point
+│   ├── routes/                # API routes
+│   │   ├── auth.js            # Authentication (login/register)
+│   │   ├── clients.js         # Client management CRUD
+│   │   ├── projects.js        # Project management
+│   │   ├── contact.js         # Contact form submissions
+│   │   ├── compliance.js      # Compliance data API
+│   │   ├── portal.js          # Client portal API
+│   │   ├── messages.js        # Messaging system
+│   │   ├── campaigns.js       # Email campaigns
+│   │   ├── backup.js          # Database backup/restore
+│   │   └── demo.js            # Demo/sandbox routes
+│   ├── controllers/           # Business logic
+│   │   └── contactController.js # Email sending logic
+│   ├── middleware/            # Authentication & security middleware
+│   │   └── auth.js            # JWT verification
+│   └── models/                # Database models
+│       └── database.js        # SQL.js database setup & models
+├── data/                      # Data files
+│   └── compliance/            # Compliance framework data
+│       ├── frameworks/        # 10 framework JSON files
+│       ├── mappings/          # Cross-framework mapping data
+│       └── oscal/             # NIST OSCAL catalog files
+├── templates/                 # Reusable code templates library (16+)
+│   ├── templateData.js        # Template definitions
+│   └── README.md              # Template documentation
+├── docs/                      # Documentation
+│   ├── CLIENT-GUIDE.md        # User guide for clients
+│   └── ADMIN-GUIDE.md         # Admin dashboard guide
+├── scripts/                   # Build & deployment scripts
+│   └── audit.js               # Pre-deploy audit with versioning
+├── logs/                      # Audit logs
+├── render.yaml                # Render deployment configuration
+├── vite.config.js             # Vite build configuration
+└── package.json               # Dependencies & scripts
 ```
 
 ## 🛠️ Technology Stack
 
 **Frontend**
 - Vanilla JavaScript (ES6+ modules)
-- HTML5 & CSS3 (Custom properties, Grid, Flexbox)
+- HTML5 & CSS3 (Custom properties, Flexbox, Grid)
 - Vite 5.0 (Build tool & dev server)
 - Dark Forest Green theme
+- GoatCounter (Privacy-friendly analytics)
 
 **Backend**
-- Node.js 25.2.1
+- Node.js (v18+)
 - Express 4.18.2
-- SQL.js 1.13.0 (Pure JavaScript SQLite)
+- SQL.js 1.13.0 (Pure JavaScript SQLite — no native binaries)
 - JWT authentication (jsonwebtoken 9.0.2)
-- bcrypt 5.1.1 (Password hashing)
+- bcryptjs 2.4.3 (Password hashing)
 - Nodemailer 6.9.7 (Email service)
 
 **Security**
@@ -104,7 +161,25 @@ structured-for-growth-www/
 **Development**
 - nodemon 3.0.2 (Auto-restart)
 - concurrently 8.2.2 (Run multiple servers)
-- GoatCounter (Analytics)
+
+## 🌐 API Endpoints
+
+| Route                        | Description                              |
+| ---------------------------- | ---------------------------------------- |
+| `/api/auth`                  | Login, register, JWT authentication      |
+| `/api/clients`               | Client CRUD operations                   |
+| `/api/projects`              | Project management                       |
+| `/api/contact`               | Contact form submissions                 |
+| `/api/compliance/frameworks` | Compliance framework data (10 frameworks)|
+| `/api/compliance/crossmap`   | Cross-framework control mapping          |
+| `/api/compliance/oscal`      | NIST OSCAL catalog listing               |
+| `/api/compliance/evidence`   | Evidence requirements matrix             |
+| `/api/portal`                | Client portal data                       |
+| `/api/messages`              | Threaded messaging                       |
+| `/api/campaigns`             | Email campaign management                |
+| `/api/backup`                | Database backup & restore                |
+| `/api/demo`                  | Demo/sandbox routes                      |
+| `/api/health`                | Health check                             |
 
 ## 📚 Template Library
 
@@ -132,24 +207,28 @@ The template library includes 16+ production-ready templates:
 - Date/Time Utilities
 - Template Documentation Generator
 
-Each template saves 1-8 hours of development time. See `docs/CLIENT-GUIDE.md` for detailed template information.
+Each template saves 1–8 hours of development time. See [docs/CLIENT-GUIDE.md](docs/CLIENT-GUIDE.md) for detailed template information.
 
 ## 🚦 Scripts
 
-- `npm run dev` - Start development servers (frontend + backend)
-- `npm run build` - Build for production
-- `npm start` - Run production server
-- `npm run audit` - Run pre-deploy audit
-- `npm run audit:bump` - Audit and bump patch version
-- `npm run audit:major` - Audit and bump major version
-- `npm run audit:minor` - Audit and bump minor version
+| Command                | Description                                |
+| ---------------------- | ------------------------------------------ |
+| `npm run dev`          | Start development servers (frontend + API) |
+| `npm run build`        | Build for production                       |
+| `npm start`            | Run production server                      |
+| `npm run audit`        | Run pre-deploy audit                       |
+| `npm run audit:bump`   | Audit and bump patch version               |
+| `npm run audit:major`  | Audit and bump major version               |
+| `npm run audit:minor`  | Audit and bump minor version               |
 
 ## 📖 Documentation
 
-- **[CLIENT-GUIDE.md](docs/CLIENT-GUIDE.md)** - Complete user guide for browsing the site and using templates
-- **[ADMIN-GUIDE.md](docs/ADMIN-GUIDE.md)** - Dashboard administration guide
-- **[SETUP.md](SETUP.md)** - Deployment and configuration instructions
-- **[TEMPLATE-INVENTORY.md](TEMPLATE-INVENTORY.md)** - Complete template catalog
+- **[CLIENT-GUIDE.md](docs/CLIENT-GUIDE.md)** — Complete user guide for browsing the site and using templates
+- **[ADMIN-GUIDE.md](docs/ADMIN-GUIDE.md)** — Dashboard administration guide
+- **[SETUP.md](SETUP.md)** — Deployment and configuration instructions
+- **[CHECKLIST.md](CHECKLIST.md)** — Getting-started checklist
+- **[TEMPLATE-INVENTORY.md](TEMPLATE-INVENTORY.md)** — Complete template catalog
+- **[PROJECT-OVERVIEW.md](PROJECT-OVERVIEW.md)** — Detailed architecture overview
 
 ## 🎨 Theme
 
@@ -164,19 +243,33 @@ The site features a custom dark forest green theme:
 
 The homepage features an interactive calculator showing real cost savings:
 - **Solo Expert**: $420/hour
-- **Development Team**: $600-1,250/hour (3-5 developers)
+- **Development Team**: $600–1,250/hour (3–5 developers)
 - **Template Library**: 16+ templates = 48+ hours saved = $20,160+ in time savings
-- **Average Project Savings**: 40-60% vs traditional team approach
+- **Average Project Savings**: 40–60% vs traditional team approach
 
 ## 🔐 Security Features
 
 - JWT token authentication (7-day expiration)
-- bcrypt password hashing
-- Rate limiting (100 requests/15 minutes)
+- bcrypt password hashing (bcryptjs)
+- Rate limiting (100 requests / 15 minutes)
 - Input validation on all forms
 - CORS protection
 - Security headers (Helmet)
-- SQL injection prevention
+- SQL injection prevention (parameterized queries)
+
+## 🚀 Deployment
+
+The project is configured for **Render** deployment via [render.yaml](render.yaml). It also works on Railway, Heroku, Fly.io, or any Node.js-capable host.
+
+```bash
+# Production build
+npm run build
+
+# Start production server
+NODE_ENV=production npm start
+```
+
+See [SETUP.md](SETUP.md) for full deployment instructions.
 
 ## 📧 Contact
 
@@ -184,6 +277,6 @@ For inquiries, use the contact form on the website or reach out directly at cont
 
 ---
 
-**Version**: 1.0.0  
+**Version**: 1.4.0  
 **Last Updated**: February 2026  
 *Built with ❤️ by Structured For Growth*

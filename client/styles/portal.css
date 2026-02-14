@@ -59,10 +59,17 @@
 .portal-login-form input {
     width: 100%;
     padding: 0.875rem;
-    border: 1px solid var(--border-color);
+    background: var(--bg-card, var(--bg-primary));
+    color: var(--text-primary);
+    border: 2px solid var(--border-light, var(--border-color));
     border-radius: var(--radius-md);
     font-size: 1rem;
-    transition: border-color var(--transition-fast);
+    font-family: var(--font-sans);
+    transition: all var(--transition-fast);
+}
+
+.portal-login-form input::placeholder {
+    color: var(--text-muted);
 }
 
 .portal-login-form input:focus {
@@ -112,6 +119,7 @@
 
 /* Portal Container */
 .portal-container {
+    display: none;
     min-height: 100vh;
     background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
 }
@@ -173,9 +181,15 @@
 
 /* Summary Cards */
 .summary-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-md);
+}
+
+.summary-cards > * {
+    flex: 0 1 calc(25% - var(--spacing-md));
+    min-width: 200px;
 }
 
 .summary-card {
@@ -581,22 +595,22 @@
         font-size: 2rem;
     }
     
-    .summary-cards {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-    .info-grid {
-        grid-template-columns: 1fr;
+    .summary-cards > * {
+        flex: 0 1 calc(50% - var(--spacing-md));
     }
     
     .project-details {
         grid-template-columns: 1fr 1fr;
     }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 480px) {
-    .summary-cards {
-        grid-template-columns: 1fr;
+    .summary-cards > * {
+        flex: 1 1 100%;
     }
     
     .project-details {

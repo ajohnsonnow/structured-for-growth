@@ -97,6 +97,10 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, '../dist/compliance.html'));
     });
     
+    app.get('/docs', (req, res) => {
+        res.sendFile(path.join(__dirname, '../dist/docs.html'));
+    });
+    
     // Catch-all route for main page
     app.get('*', (req, res) => {
         // Don't catch API routes

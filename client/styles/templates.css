@@ -63,48 +63,25 @@
     margin-right: auto;
 }
 
-.search-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.search-icon {
-    position: absolute;
-    left: var(--spacing-md);
-    font-size: 1.25rem;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.search-input {
-    width: 100%;
-    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) * 3);
-    background: var(--bg-card);
-    border: 2px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    color: var(--text-primary);
-    font-size: 1rem;
-    transition: all var(--transition-base);
-    box-shadow: var(--shadow-sm);
-}
-
-.search-input::placeholder {
-    color: var(--text-muted);
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
+/* .search-wrapper, .search-icon, .search-input base styles
+   are in components.css (loaded globally). 
+   Override the focus glow to use the templates glow token: */
+.template-search .search-input:focus {
     box-shadow: var(--shadow-md), var(--glow-green);
-    background: var(--bg-primary);
 }
 
 /* Templates Grid */
 .templates-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-lg);
+}
+
+.templates-grid > .template-card {
+    flex: 0 1 calc(33.333% - var(--spacing-lg));
+    min-width: 300px;
+    max-width: 420px;
 }
 
 .template-card {
@@ -151,6 +128,11 @@
 /* Template Detail Modal */
 .modal-large {
     max-width: 900px;
+}
+
+.template-modal-desc {
+    color: var(--text-secondary);
+    margin: 0;
 }
 
 .template-details {
@@ -831,8 +813,12 @@
     }
     
     /* Grid */
+    .templates-grid > .template-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    
     .templates-grid {
-        grid-template-columns: 1fr;
         padding: 0 var(--spacing-sm);
     }
     

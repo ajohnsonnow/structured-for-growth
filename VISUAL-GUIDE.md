@@ -108,6 +108,59 @@ Click any template to see:
 
 ---
 
+## 🛡️ Compliance Knowledge Base (compliance.html)
+
+```
+┌─────────────────────────────────────────────────────┐
+│  Compliance Knowledge Base                           │
+├─────────────────────────────────────────────────────┤
+│  Search: [________________]                         │
+│                                                      │
+│  [All] [Privacy] [Financial] [Government] [AI]      │
+│                                                      │
+│  [Frameworks] [Cross-Map] [Evidence] [OSCAL]        │
+│                                                      │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐│
+│  │  SOC 2      │  │  HIPAA      │  │  GDPR       ││
+│  │  214+ ctrls │  │  Healthcare │  │  EU Privacy ││
+│  └─────────────┘  └─────────────┘  └─────────────┘│
+│                                                      │
+│  Developer Tools                                    │
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────┐│
+│  │VS Code Ext│ │MCP Server │ │Ticketing  │ │AI   ││
+│  └───────────┘ └───────────┘ └───────────┘ └─────┘│
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🔒 Client Portal (portal.html)
+
+```
+┌─────────────────────────────────────────────────────┐
+│  Structured For Growth — Client Portal              │
+├─────────────────────────────────────────────────────┤
+│  Welcome, [Client Name]              [Logout]       │
+│                                                      │
+│  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐           │
+│  │Active│  │Total │  │Next  │  │Balance│           │
+│  │  2   │  │  5   │  │ Due  │  │$1,200│           │
+│  └──────┘  └──────┘  └──────┘  └──────┘           │
+│                                                      │
+│  PROJECTS                                           │
+│  ┌──────────────────────────────────────────┐       │
+│  │ Website Redesign          In Progress    │       │
+│  │ ████████████░░░░░░░░ 65%                 │       │
+│  └──────────────────────────────────────────┘       │
+│                                                      │
+│  PAYMENT                                            │
+│  Current Balance: $1,200.00                         │
+│  [Pay with Venmo]                                   │
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
 ## 🔄 System Flow
 
 ### Contact Form Flow
@@ -157,17 +210,23 @@ structured-for-growth-www/
 │   ├── index.html           → Homepage
 │   ├── dashboard.html       → Client mgmt
 │   ├── templates.html       → Template library
+│   ├── compliance.html      → Compliance KB
+│   ├── portal.html          → Client portal
 │   │
 │   ├── styles/
-│   │   ├── main.css         → Base styles
+│   │   ├── main.css         → Base styles & variables
 │   │   ├── components.css   → Reusable styles
 │   │   ├── dashboard.css    → Dashboard styles
-│   │   └── templates.css    → Template styles
+│   │   ├── templates.css    → Template styles
+│   │   ├── compliance.css   → Compliance styles
+│   │   └── portal.css       → Portal styles
 │   │
 │   └── js/
 │       ├── main.js          → Homepage logic
 │       ├── dashboard.js     → Dashboard logic
 │       ├── templates.js     → Template browser
+│       ├── compliance.js    → Compliance logic
+│       ├── portal.js        → Portal logic
 │       └── modules/
 │           ├── navigation.js
 │           ├── contactForm.js
@@ -177,9 +236,16 @@ structured-for-growth-www/
 │   ├── index.js             → Express server
 │   │
 │   ├── routes/
-│   │   ├── contact.js       → Contact API
 │   │   ├── auth.js          → Auth API
-│   │   └── clients.js       → Client API
+│   │   ├── clients.js       → Client API
+│   │   ├── projects.js      → Project API
+│   │   ├── contact.js       → Contact API
+│   │   ├── compliance.js    → Compliance API
+│   │   ├── portal.js        → Portal API
+│   │   ├── messages.js      → Messaging API
+│   │   ├── campaigns.js     → Campaigns API
+│   │   ├── backup.js        → Backup API
+│   │   └── demo.js          → Demo API
 │   │
 │   ├── controllers/
 │   │   └── contactController.js
@@ -188,7 +254,12 @@ structured-for-growth-www/
 │   │   └── auth.js          → JWT verification
 │   │
 │   └── models/
-│       └── database.js      → DB setup
+│       └── database.js      → SQL.js setup
+│
+├── 📊 Compliance Data (data/compliance/)
+│   ├── frameworks/          → 10 framework JSONs
+│   ├── mappings/            → Cross-framework maps
+│   └── oscal/               → NIST OSCAL catalogs
 │
 └── 📚 Templates (templates/)
     ├── templateData.js      → All templates!
@@ -224,20 +295,46 @@ DASHBOARD                  │
 │   ├── Update            │
 │   └── Delete            │
 │                         │
+├── Messaging             │
+│   ├── Threaded convos   │
+│   └── Unread badges     │
+│                         │
+├── Campaigns             │
+│   ├── Segments          │
+│   └── Templates         │
+│                         │
+├── Backup / Restore      │
+│                         │
 └── Analytics             │
+                          │
+COMPLIANCE KB             │
+├── 10 Frameworks         │
+├── Cross-Map Matrix      │
+├── OSCAL Catalogs        │
+├── Evidence Tracking     │
+└── Developer Tools       │
+                          │
+CLIENT PORTAL             │
+├── Project Status        │
+├── Progress Bars         │
+├── Payments (Venmo)      │
+├── Estimates             │
+└── Secure Login          │
                           │
 TEMPLATE LIBRARY          │
 ├── 8 Categories          │
-├── 8+ Templates          │
+├── 16+ Templates         │
 ├── Code Examples         │
 ├── Usage Guides          │
 └── Copy & Paste Ready    │
                           │
 DATABASE                  │
-├── SQLite                │
+├── SQL.js (SQLite)       │
 ├── Users Table           │
 ├── Clients Table         │
 ├── Projects Table        │
+├── Messages Table        │
+├── Campaigns Table       │
 └── Contact Submissions───┘
 ```
 
@@ -317,14 +414,14 @@ Edit `templates/templateData.js`, add object:
 ## 🎨 Color Scheme
 
 ```
-Primary:   #2563eb (Blue)   ■
-Secondary: #10b981 (Green)  ■
-Accent:    #f59e0b (Orange) ■
-Text:      #1f2937 (Dark)   ■
-Light:     #f9fafb (Gray)   ■
+Primary:   #3d7a5f (Forest Green)  ■
+Accent:    #9dbd7e (Moss Green)    ■
+Highlight: #d4a574 (Amber)         ■
+Text:      #eaeaea (Light Gray)    ■
+Bg Dark:   #1a1f25 (Deep Forest)   ■
 ```
 
-**Customization**: Edit `client/styles/main.css`
+**Customization**: Edit `client/styles/main.css` CSS variables
 
 ---
 
@@ -419,6 +516,8 @@ You know it's working when:
 ✅ You can create/edit/delete clients
 ✅ Template library shows all templates
 ✅ Templates are copy-paste ready
+✅ Compliance page loads 10 frameworks
+✅ Client portal authenticates and renders projects
 
 ---
 

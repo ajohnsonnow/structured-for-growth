@@ -1,23 +1,45 @@
 /**
  * Compliance Knowledge Base — Express API Routes
- * Reads framework JSON data from the Compliance-as-Code repo and serves
- * it for the SFG compliance page.
+ * Reads framework JSON data and serves it for the SFG compliance page.
+ *
+ * Resolution order for data directories:
+ *   1. Local bundled data  →  <project>/data/compliance/
+ *   2. Sibling repo        →  ../Compliance-as-Code/data/
+ * If neither exists the endpoints return empty collections (no 500s).
  */
 
 import { Router } from 'express';
-import { readdir, readFile } from 'fs/promises';
+import { readdir, readFile, access } from 'fs/promises';
 import { join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-// Path to the Compliance-as-Code data directory (sibling repo)
-const CAC_ROOT = resolve(__dirname, '..', '..', '..', 'Compliance-as-Code');
-const DATA_ROOT = join(CAC_ROOT, 'data');
+// ── Resolve data root: local bundle first, sibling repo second ──
+const PROJECT_ROOT = resolve(__dirname, '..', '..');
+const LOCAL_DATA   = join(PROJECT_ROOT, 'data', 'compliance');
+const CAC_DATA     = resolve(PROJECT_ROOT, '..', 'Compliance-as-Code', 'data');
+
+async function dirExists(p) {
+  try { await access(p); return true; } catch { return false; }
+}
+
+let DATA_ROOT;
+if (await dirExists(LOCAL_DATA)) {
+  DATA_ROOT = LOCAL_DATA;
+  console.log('[compliance] Using local bundled data:', LOCAL_DATA);
+} else if (await dirExists(CAC_DATA)) {
+  DATA_ROOT = CAC_DATA;
+  console.log('[compliance] Using sibling Compliance-as-Code repo:', CAC_DATA);
+} else {
+  DATA_ROOT = LOCAL_DATA;           // will fail gracefully per-endpoint
+  console.warn('[compliance] No compliance data found — endpoints will return empty results');
+}
+
 const FRAMEWORKS_DIR = join(DATA_ROOT, 'frameworks');
-const MAPPINGS_DIR  = join(DATA_ROOT, 'mappings');
-const OSCAL_DIR     = join(DATA_ROOT, 'oscal');
-const KB_DIR        = join(CAC_ROOT, 'knowledge-base');
+const MAPPINGS_DIR   = join(DATA_ROOT, 'mappings');
+const OSCAL_DIR      = join(DATA_ROOT, 'oscal');
+const KB_DIR         = resolve(PROJECT_ROOT, '..', 'Compliance-as-Code', 'knowledge-base');
 
 const router = Router();
 
@@ -35,6 +57,9 @@ router.get('/frameworks', async (_req, res) => {
     );
     res.json({ frameworks });
   } catch (err) {
+    if (err.code === 'ENOENT') {
+      return res.json({ frameworks: [] });
+    }
     console.error('[compliance] Error loading frameworks:', err.message);
     res.status(500).json({ error: 'Failed to load framework data', detail: err.message });
   }
@@ -65,6 +90,9 @@ router.get('/crossmap', async (_req, res) => {
     const raw = await readFile(join(MAPPINGS_DIR, 'cross-framework-map.json'), 'utf-8');
     res.json(JSON.parse(raw));
   } catch (err) {
+    if (err.code === 'ENOENT') {
+      return res.json({ mappings: [] });
+    }
     console.error('[compliance] Error loading cross-map:', err.message);
     res.status(500).json({ error: 'Failed to load cross-framework map', detail: err.message });
   }
@@ -93,6 +121,9 @@ router.get('/oscal', async (_req, res) => {
     });
     res.json({ catalogs });
   } catch (err) {
+    if (err.code === 'ENOENT') {
+      return res.json({ catalogs: [] });
+    }
     console.error('[compliance] Error listing OSCAL catalogs:', err.message);
     res.status(500).json({ error: 'Failed to list OSCAL catalogs', detail: err.message });
   }
@@ -146,6 +177,9 @@ router.get('/evidence', async (_req, res) => {
 
     res.json({ totalControls: evidence.length, evidence });
   } catch (err) {
+    if (err.code === 'ENOENT') {
+      return res.json({ totalControls: 0, evidence: [] });
+    }
     console.error('[compliance] Error loading evidence data:', err.message);
     res.status(500).json({ error: 'Failed to load evidence matrix', detail: err.message });
   }

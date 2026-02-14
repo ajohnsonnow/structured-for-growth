@@ -1,6 +1,6 @@
 {
   "name": "structured-for-growth-www",
-  "version": "1.3.2",
+  "version": "1.4.1",
   "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
   "main": "server/index.js",
   "type": "module",
@@ -11,17 +11,18 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "nodemon server/index.js",
     "dev:client": "vite",
-    "build": "vite build",
+    "build": "node scripts/generate-docs.js && vite build",
     "postinstall": "npm run build",
     "preview": "vite preview",
     "start": "node server/index.js",
     "render-build": "npm install && npm run build",
+    "docs:generate": "node scripts/generate-docs.js",
     "audit": "node scripts/audit.js",
     "audit:bump": "node scripts/audit.js --bump",
     "audit:major": "node scripts/audit.js --bump major",
     "audit:minor": "node scripts/audit.js --bump minor",
-    "predeploy": "npm run audit:bump",
-    "prepush": "npm run audit"
+    "predeploy": "npm run docs:generate && npm run audit:bump",
+    "prepush": "npm run docs:generate && npm run audit"
   },
   "keywords": [
     "content-engineering",

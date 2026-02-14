@@ -63,6 +63,29 @@ If using Gmail:
 - [ ] Copy button works
 - [ ] Can close modal
 
+### Compliance Knowledge Base Tests
+- [ ] Go to http://localhost:5173/client/compliance.html
+- [ ] Page loads with framework cards
+- [ ] Search bar filters frameworks
+- [ ] Category filter buttons work
+- [ ] Click a framework card to view details
+- [ ] Cross-Map tab loads the mapping matrix
+- [ ] Evidence tab loads evidence requirements
+- [ ] Evidence framework filter works
+- [ ] OSCAL tab lists downloadable catalogs
+- [ ] Developer Tools section renders correctly
+
+### Client Portal Tests
+- [ ] Go to http://localhost:5173/client/portal.html
+- [ ] Login modal appears
+- [ ] Login with client credentials
+- [ ] Portal loads with project summary cards
+- [ ] Project progress bars render
+- [ ] Payment section shows balance due
+- [ ] Venmo payment link works (opens in new tab)
+- [ ] Estimates section loads
+- [ ] Logout works
+
 ### Dashboard Tests
 - [ ] Go to http://localhost:5173/client/dashboard.html
 - [ ] Login modal appears
@@ -86,6 +109,22 @@ If using Gmail:
 - [ ] Status filter works
 - [ ] Click Analytics
 - [ ] See statistics
+
+### Messaging Tests
+- [ ] Click Messages in sidebar
+- [ ] Thread list loads
+- [ ] Click a thread to open it
+- [ ] Send a reply message
+- [ ] Message appears in thread
+- [ ] Unread badge updates
+
+### Campaign Tests
+- [ ] Click Campaigns in sidebar
+- [ ] Campaign list loads
+- [ ] Create a new campaign
+- [ ] Add a segment
+- [ ] Create an email template
+- [ ] Campaign cards render correctly
 
 ### Contact Form Tests
 - [ ] Go back to homepage
