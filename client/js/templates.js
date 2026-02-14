@@ -487,6 +487,491 @@ demoConfigs['chain-hashed-audit-logger'] = {
     }
 };
 
+// ── Enterprise Demo Configs: Compliance (continued) ────────
+
+demoConfigs['aes256-field-encryption'] = {
+    html: `
+        <div class="demo-encryption">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🔐 AES-256-GCM Field Encryption</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Encrypt and decrypt sensitive fields — see how data looks at rest vs. in use</p>
+            <div style="display:flex;gap:var(--spacing-sm);margin-bottom:var(--spacing-md);flex-wrap:wrap;">
+                <input type="text" id="encInput" placeholder="Enter sensitive data (e.g., SSN, email)" value="123-45-6789" style="flex:1;min-width:200px;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
+                <button class="btn btn-primary" id="encBtn">🔒 Encrypt</button>
+                <button class="btn btn-secondary" id="decBtn">🔓 Decrypt</button>
+            </div>
+            <div id="encFields" style="display:grid;gap:var(--spacing-sm);">
+                <div style="padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
+                    <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-bottom:4px;">📄 Plaintext Value</div>
+                    <div id="encPlain" style="font-family:var(--font-mono);font-size:0.85rem;color:var(--text-primary);word-break:break-all;">123-45-6789</div>
+                </div>
+                <div style="padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
+                    <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-bottom:4px;">🔒 Encrypted (stored in DB)</div>
+                    <div id="encCipher" style="font-family:var(--font-mono);font-size:0.82rem;color:#ef4444;word-break:break-all;">—</div>
+                </div>
+                <div style="padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
+                    <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-bottom:4px;">🔓 Decrypted (application layer)</div>
+                    <div id="encDecrypted" style="font-family:var(--font-mono);font-size:0.85rem;color:#10b981;word-break:break-all;">—</div>
+                </div>
+            </div>
+            <div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);">
+                <span style="font-size:0.75rem;color:var(--text-muted);">Maps to: GDPR Art. 32 · HIPAA §164.312(a)(2)(iv) · PCI DSS Req 3 · SOC 2 CC6.1</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        function simEncrypt(text) {
+            const iv = Array.from({length:16}, () => Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join('');
+            let enc = ''; for (let i = 0; i < text.length; i++) { enc += (text.charCodeAt(i) ^ 0x5A).toString(16).padStart(2,'0'); }
+            const tag = Array.from({length:16}, () => Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join('');
+            return iv + ':' + enc + ':' + tag;
+        }
+        function simDecrypt(cipher, original) { return original; }
+        let lastPlain = '123-45-6789';
+        document.getElementById('encBtn').addEventListener('click', () => {
+            lastPlain = document.getElementById('encInput').value || 'test-data';
+            document.getElementById('encPlain').textContent = lastPlain;
+            document.getElementById('encCipher').textContent = simEncrypt(lastPlain);
+            document.getElementById('encDecrypted').textContent = '—';
+        });
+        document.getElementById('decBtn').addEventListener('click', () => {
+            const cipher = document.getElementById('encCipher').textContent;
+            if (cipher === '—') { alert('Encrypt something first!'); return; }
+            document.getElementById('encDecrypted').textContent = lastPlain;
+        });
+    }
+};
+
+demoConfigs['pii-data-masking'] = {
+    html: `
+        <div class="demo-masking">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🎭 PII Data Masking</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Enter text with PII — SSN, email, phone, credit card, or IP — and watch it get masked in real time</p>
+            <textarea id="piiInput" rows="4" placeholder="Try: John Doe, SSN 123-45-6789, email john@acme.com, phone 503-555-1234, card 4111-1111-1111-1111, IP 192.168.1.100" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);font-family:var(--font-mono);font-size:0.85rem;resize:vertical;">John Doe, SSN 123-45-6789, email john@acme.com, phone 503-555-1234, card 4111-1111-1111-1111, IP 192.168.1.100</textarea>
+            <button class="btn btn-primary" id="maskBtn" style="margin-top:var(--spacing-sm);">🎭 Apply Masking</button>
+            <div id="piiResult" style="margin-top:var(--spacing-md);padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);font-family:var(--font-mono);font-size:0.85rem;color:var(--text-primary);white-space:pre-wrap;min-height:60px;">
+                <span style="color:var(--text-muted);">Masked output will appear here</span>
+            </div>
+            <div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);">
+                <span style="font-size:0.75rem;color:var(--text-muted);">Maps to: GDPR Art. 25 · HIPAA Safe Harbor (18 identifiers) · SOC 2 CC6.1</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        document.getElementById('maskBtn').addEventListener('click', () => {
+            let text = document.getElementById('piiInput').value;
+            let count = 0;
+            text = text.replace(/\b(\d{3})-(\d{2})-(\d{4})\b/g, () => { count++; return '1**-**-***9'; });
+            text = text.replace(/([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, (m, local, domain) => { count++; return local[0] + '***@' + domain; });
+            text = text.replace(/\b(\d{3})[-.\s]?(\d{3})[-.\s]?(\d{4})\b/g, (m, a, b, c) => { count++; return '(***) ***-' + c; });
+            text = text.replace(/\b(\d{4})[- ]?(\d{4})[- ]?(\d{4})[- ]?(\d{4})\b/g, (m, a, b, c, d) => { count++; return '**** **** **** ' + d; });
+            text = text.replace(/\b(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\b/g, () => { count++; return '***.***.***.***'; });
+            document.getElementById('piiResult').innerHTML = '<div style="color:#10b981;font-weight:600;margin-bottom:var(--spacing-xs);">✓ ' + count + ' PII pattern(s) masked</div>' + text;
+        });
+    }
+};
+
+demoConfigs['breach-notification-engine'] = {
+    html: `
+        <div class="demo-breach">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🚨 Breach Notification Simulator</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Configure an incident and see framework-specific notification deadlines</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-sm);margin-bottom:var(--spacing-md);">
+                <div>
+                    <label style="display:block;margin-bottom:4px;color:var(--text-secondary);font-weight:600;font-size:0.85rem;">Records Affected</label>
+                    <input type="number" id="breachCount" value="1200" min="1" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
+                </div>
+                <div>
+                    <label style="display:block;margin-bottom:4px;color:var(--text-secondary);font-weight:600;font-size:0.85rem;">Data Types</label>
+                    <select id="breachType" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
+                        <option value="phi">PHI (Health Data)</option>
+                        <option value="pii">PII (Personal Data)</option>
+                        <option value="financial">Financial Data</option>
+                        <option value="credentials">Credentials</option>
+                    </select>
+                </div>
+            </div>
+            <div style="margin-bottom:var(--spacing-md);">
+                <label style="display:block;margin-bottom:4px;color:var(--text-secondary);font-weight:600;font-size:0.85rem;">Applicable Frameworks</label>
+                <div id="breachFrameworks" style="display:flex;flex-wrap:wrap;gap:var(--spacing-xs);"></div>
+            </div>
+            <button class="btn btn-primary" id="breachReportBtn">🚨 Generate Report</button>
+            <div id="breachResult" style="margin-top:var(--spacing-md);padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:80px;">
+                <span style="color:var(--text-muted);">Configure incident and click Generate Report</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const FW = { dora: { auth: 'National Competent Authority', hours: 4, label: 'DORA Initial' }, nis2: { auth: 'National CSIRT', hours: 24, label: 'NIS 2 Early Warning' }, gdpr: { auth: 'Supervisory Authority (DPA)', hours: 72, label: 'GDPR Art. 33' }, hipaa: { auth: 'HHS OCR', hours: 1440, label: 'HIPAA Breach Notification' }, pci: { auth: 'Acquiring Bank / Card Brands', hours: 72, label: 'PCI Incident' } };
+        const fwDiv = document.getElementById('breachFrameworks');
+        Object.keys(FW).forEach(fw => {
+            const checked = ['gdpr','hipaa'].includes(fw) ? 'checked' : '';
+            fwDiv.innerHTML += '<label style="display:flex;align-items:center;gap:4px;padding:4px 10px;background:var(--bg-tertiary);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" value="' + fw + '" ' + checked + ' style="accent-color:var(--forest-green-accent);">' + fw.toUpperCase() + '</label>';
+        });
+        document.getElementById('breachReportBtn').addEventListener('click', () => {
+            const count = parseInt(document.getElementById('breachCount').value) || 100;
+            const dataType = document.getElementById('breachType').value;
+            const frameworks = [...document.querySelectorAll('#breachFrameworks input:checked')].map(i => i.value);
+            let severity = 'LOW';
+            if (count > 500) severity = 'HIGH';
+            if (count > 5000) severity = 'CRITICAL';
+            if (['phi','credentials'].includes(dataType) && count > 500) severity = 'CRITICAL';
+            if (['phi','pii','financial','credentials'].includes(dataType)) severity = severity === 'LOW' ? 'HIGH' : severity;
+            const colors = { LOW: '#3b82f6', MEDIUM: '#f59e0b', HIGH: '#f97316', CRITICAL: '#ef4444' };
+            const now = new Date();
+            let html = '<div style="color:' + colors[severity] + ';font-weight:700;font-size:1.1rem;margin-bottom:var(--spacing-sm);">⚠ Severity: ' + severity + '</div>';
+            html += '<div style="color:var(--text-secondary);margin-bottom:var(--spacing-md);font-size:0.85rem;">Incident ID: INC-' + Date.now() + ' · ' + count.toLocaleString() + ' ' + dataType.toUpperCase() + ' records</div>';
+            if (frameworks.length === 0) { html += '<div style="color:var(--text-muted);">No frameworks selected.</div>'; }
+            else {
+                html += '<div style="font-weight:600;color:var(--text-primary);margin-bottom:var(--spacing-xs);">📋 Notification Deadlines (sorted by urgency):</div>';
+                const deadlines = frameworks.map(fw => { const d = FW[fw]; const dl = new Date(now.getTime() + d.hours * 3600000); return { ...d, fw, deadline: dl }; }).sort((a, b) => a.deadline - b.deadline);
+                deadlines.forEach(d => {
+                    const remaining = ((d.deadline - now) / 3600000).toFixed(1);
+                    const urgent = d.hours <= 24;
+                    html += '<div style="padding:var(--spacing-sm);margin-bottom:4px;background:' + (urgent ? 'rgba(239,68,68,0.1)' : 'var(--bg-tertiary)') + ';border-radius:var(--radius-sm);border-left:3px solid ' + (urgent ? '#ef4444' : '#3b82f6') + ';font-size:0.85rem;">';
+                    html += '<strong style="color:var(--text-primary);">' + d.label + '</strong> (' + d.fw.toUpperCase() + ')<br>';
+                    html += '<span style="color:var(--text-secondary);">Authority: ' + d.auth + '</span><br>';
+                    html += '<span style="color:' + (urgent ? '#ef4444' : 'var(--text-muted)') + ';">⏰ ' + remaining + 'h remaining — Deadline: ' + d.deadline.toLocaleString() + '</span>';
+                    html += '</div>';
+                });
+            }
+            document.getElementById('breachResult').innerHTML = html;
+        });
+    }
+};
+
+demoConfigs['mfa-middleware'] = {
+    html: `
+        <div class="demo-mfa">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🔑 Multi-Factor Authentication Simulator</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Simulate TOTP enrollment and verification with rate-limiting lockout</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-md);">
+                <div style="padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
+                    <h5 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">1. Enroll</h5>
+                    <button class="btn btn-primary" id="mfaEnrollBtn" style="width:100%;">📲 Generate TOTP Secret</button>
+                    <div id="mfaSecret" style="margin-top:var(--spacing-sm);font-family:var(--font-mono);font-size:0.85rem;color:var(--text-secondary);word-break:break-all;min-height:40px;">—</div>
+                    <div id="mfaCode" style="margin-top:var(--spacing-xs);font-size:1.4rem;font-weight:700;color:var(--forest-green-accent);text-align:center;">——————</div>
+                    <div id="mfaTimer" style="text-align:center;font-size:0.75rem;color:var(--text-muted);margin-top:4px;">—</div>
+                </div>
+                <div style="padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
+                    <h5 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">2. Verify</h5>
+                    <input type="text" id="mfaInput" placeholder="Enter 6-digit code" maxlength="6" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);text-align:center;font-size:1.2rem;letter-spacing:0.3em;">
+                    <button class="btn btn-primary" id="mfaVerifyBtn" style="width:100%;margin-top:var(--spacing-sm);">✓ Verify Code</button>
+                    <div id="mfaResult" style="margin-top:var(--spacing-sm);font-size:0.9rem;min-height:40px;">—</div>
+                    <div id="mfaAttempts" style="font-size:0.75rem;color:var(--text-muted);">Attempts: 0/5</div>
+                </div>
+            </div>
+            <div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);">
+                <span style="font-size:0.75rem;color:var(--text-muted);">Maps to: SOC 2 CC6.1 · HIPAA §164.312(d) · PCI DSS 8.4 · CMMC IA.L2-3.5.3</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        let currentCode = '', attempts = 0, locked = false, timerInterval = null;
+        function genCode() { return String(Math.floor(100000 + Math.random() * 900000)); }
+        function genSecret() { const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'; let s = ''; for (let i = 0; i < 16; i++) s += chars[Math.floor(Math.random() * chars.length)]; return s; }
+        document.getElementById('mfaEnrollBtn').addEventListener('click', () => {
+            attempts = 0; locked = false;
+            document.getElementById('mfaAttempts').textContent = 'Attempts: 0/5';
+            document.getElementById('mfaResult').innerHTML = '—';
+            const secret = genSecret();
+            document.getElementById('mfaSecret').textContent = 'Secret: ' + secret;
+            currentCode = genCode();
+            document.getElementById('mfaCode').textContent = currentCode;
+            let remaining = 30;
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('mfaTimer').textContent = remaining + 's remaining';
+            timerInterval = setInterval(() => {
+                remaining--;
+                if (remaining <= 0) { currentCode = genCode(); document.getElementById('mfaCode').textContent = currentCode; remaining = 30; }
+                document.getElementById('mfaTimer').textContent = remaining + 's remaining';
+            }, 1000);
+        });
+        document.getElementById('mfaVerifyBtn').addEventListener('click', () => {
+            if (locked) { document.getElementById('mfaResult').innerHTML = '<span style="color:#ef4444;font-weight:600;">🔒 Account locked — too many failed attempts (30min cooldown)</span>'; return; }
+            if (!currentCode) { document.getElementById('mfaResult').innerHTML = '<span style="color:var(--text-muted);">Enroll first to generate a code.</span>'; return; }
+            const input = document.getElementById('mfaInput').value.trim();
+            if (input === currentCode) {
+                document.getElementById('mfaResult').innerHTML = '<span style="color:#10b981;font-weight:600;">✓ MFA VERIFIED — session authenticated</span>';
+                attempts = 0;
+            } else {
+                attempts++;
+                if (attempts >= 5) { locked = true; document.getElementById('mfaResult').innerHTML = '<span style="color:#ef4444;font-weight:600;">🔒 LOCKED — 5 failed attempts (PCI DSS 8.3.4)</span>'; }
+                else { document.getElementById('mfaResult').innerHTML = '<span style="color:#ef4444;">✗ Invalid code. Try again.</span>'; }
+            }
+            document.getElementById('mfaAttempts').textContent = 'Attempts: ' + attempts + '/5' + (locked ? ' — LOCKED' : '');
+        });
+    }
+};
+
+demoConfigs['session-timeout-manager'] = {
+    html: `
+        <div class="demo-session">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">⏱️ Session Timeout Profiles</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Compare timeout profiles for different compliance requirements</p>
+            <div style="display:flex;gap:var(--spacing-sm);margin-bottom:var(--spacing-md);flex-wrap:wrap;">
+                <button class="btn btn-secondary" id="sesStd" style="flex:1;">📗 Standard</button>
+                <button class="btn btn-secondary" id="sesSens" style="flex:1;">📙 Sensitive</button>
+                <button class="btn btn-secondary" id="sesCrit" style="flex:1;">📕 Critical</button>
+            </div>
+            <div id="sesInfo" style="padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:120px;">
+                <span style="color:var(--text-muted);">Select a profile to see timeout configuration and compliance mapping.</span>
+            </div>
+            <div style="margin-top:var(--spacing-md);">
+                <h5 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">⏳ Live Session Simulator</h5>
+                <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                    <button class="btn btn-primary" id="sesStartBtn">▶ Start Session</button>
+                    <button class="btn btn-secondary" id="sesActivityBtn" disabled>👆 Simulate Activity</button>
+                    <span id="sesTimer" style="font-family:var(--font-mono);font-size:0.9rem;color:var(--text-secondary);">—</span>
+                </div>
+                <div id="sesStatus" style="margin-top:var(--spacing-sm);font-size:0.85rem;color:var(--text-muted);">—</div>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const profiles = {
+            standard:  { idle: 30, absolute: 480, warn: 5, label: 'Standard', color: '#10b981', use: 'General web applications, internal tools' },
+            sensitive: { idle: 15, absolute: 240, warn: 2, label: 'Sensitive', color: '#f59e0b', use: 'PCI DSS CDE access, HIPAA ePHI systems' },
+            critical:  { idle: 5,  absolute: 60,  warn: 1, label: 'Critical', color: '#ef4444', use: 'Financial trading, military systems, root access' }
+        };
+        let activeProfile = null, sessionTimer = null, idleSeconds = 0, maxIdle = 0, warnAt = 0;
+        function showProfile(key) {
+            activeProfile = key;
+            const p = profiles[key];
+            document.getElementById('sesInfo').innerHTML =
+                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--spacing-sm);"><span style="font-weight:700;color:' + p.color + ';font-size:1.1rem;">' + p.label + ' Profile</span></div>' +
+                '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-sm);margin-bottom:var(--spacing-sm);">' +
+                '<div style="text-align:center;padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-sm);"><div style="font-size:1.2rem;font-weight:700;color:' + p.color + ';">' + p.idle + 'min</div><div style="font-size:0.75rem;color:var(--text-muted);">Idle Timeout</div></div>' +
+                '<div style="text-align:center;padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-sm);"><div style="font-size:1.2rem;font-weight:700;color:' + p.color + ';">' + (p.absolute/60) + 'hr</div><div style="font-size:0.75rem;color:var(--text-muted);">Max Session</div></div>' +
+                '<div style="text-align:center;padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-sm);"><div style="font-size:1.2rem;font-weight:700;color:' + p.color + ';">' + p.warn + 'min</div><div style="font-size:0.75rem;color:var(--text-muted);">Warning</div></div></div>' +
+                '<div style="font-size:0.85rem;color:var(--text-secondary);">🎯 <strong>Use case:</strong> ' + p.use + '</div>';
+        }
+        document.getElementById('sesStd').addEventListener('click', () => showProfile('standard'));
+        document.getElementById('sesSens').addEventListener('click', () => showProfile('sensitive'));
+        document.getElementById('sesCrit').addEventListener('click', () => showProfile('critical'));
+        document.getElementById('sesStartBtn').addEventListener('click', () => {
+            if (!activeProfile) { showProfile('standard'); }
+            const p = profiles[activeProfile];
+            maxIdle = p.idle * 6; warnAt = (p.idle - p.warn) * 6; idleSeconds = 0;
+            document.getElementById('sesActivityBtn').disabled = false;
+            if (sessionTimer) clearInterval(sessionTimer);
+            sessionTimer = setInterval(() => {
+                idleSeconds++;
+                const pct = Math.min(100, (idleSeconds / maxIdle) * 100);
+                const warning = idleSeconds >= warnAt;
+                const expired = idleSeconds >= maxIdle;
+                if (expired) {
+                    clearInterval(sessionTimer);
+                    document.getElementById('sesStatus').innerHTML = '<span style="color:#ef4444;font-weight:600;">🔒 SESSION EXPIRED — auto-logout triggered</span>';
+                    document.getElementById('sesActivityBtn').disabled = true;
+                } else if (warning) {
+                    document.getElementById('sesStatus').innerHTML = '<span style="color:#f59e0b;font-weight:600;">⚠ WARNING: Session expiring in ' + (maxIdle - idleSeconds) + 's — click activity to extend</span>';
+                } else {
+                    document.getElementById('sesStatus').innerHTML = '<span style="color:#10b981;">Active session</span>';
+                }
+                document.getElementById('sesTimer').textContent = 'Idle: ' + idleSeconds + 's / ' + maxIdle + 's (' + pct.toFixed(0) + '%)';
+            }, 1000);
+        });
+        document.getElementById('sesActivityBtn').addEventListener('click', () => { idleSeconds = 0; document.getElementById('sesStatus').innerHTML = '<span style="color:#10b981;">✓ Activity detected — idle timer reset</span>'; });
+    }
+};
+
+demoConfigs['hipaa-phi-filter'] = {
+    html: `
+        <div class="demo-phi">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🏥 HIPAA PHI Access Filter</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Select a role to see which PHI fields are accessible under the Minimum Necessary Standard</p>
+            <div style="margin-bottom:var(--spacing-md);">
+                <label style="display:block;margin-bottom:4px;color:var(--text-secondary);font-weight:600;">Select Role:</label>
+                <select id="phiRole" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
+                    <option value="treating_provider">Treating Provider (Full Access)</option>
+                    <option value="billing">Billing Staff</option>
+                    <option value="researcher">Researcher (De-identified)</option>
+                    <option value="it_support">IT Support</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" id="phiFilterBtn">🔍 View Patient Record</button>
+            <div id="phiResult" style="margin-top:var(--spacing-md);padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:100px;">
+                <span style="color:var(--text-muted);">Select a role and click View Patient Record</span>
+            </div>
+            <div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);">
+                <span style="font-size:0.75rem;color:var(--text-muted);">Maps to: HIPAA §164.502(b) · §164.514(b)(2) Safe Harbor · §164.312(a)(1) · SOC 2 CC6.1</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const record = { names: 'Jane Doe', geographic: '1234 Elm St, Portland OR 97201', dates: '1985-03-15', phone: '503-555-0199', email: 'jane.doe@email.com', ssn: '123-45-6789', mrn: 'MRN-00482', healthPlanId: 'BCBS-9921', accountNumbers: 'ACCT-3847', diagnosis: 'Type 2 Diabetes', medications: 'Metformin 500mg' };
+        const roles = {
+            treating_provider: { access: Object.keys(record), label: 'Full PHI (Treatment)', color: '#10b981' },
+            billing: { access: ['names','mrn','healthPlanId','accountNumbers','dates'], label: 'Billing Subset', color: '#f59e0b' },
+            researcher: { access: ['diagnosis','medications'], label: 'De-identified Only', color: '#3b82f6' },
+            it_support: { access: ['mrn'], label: 'MRN Only', color: '#8b5cf6' }
+        };
+        document.getElementById('phiFilterBtn').addEventListener('click', () => {
+            const role = document.getElementById('phiRole').value;
+            const r = roles[role];
+            let html = '<div style="font-weight:600;color:' + r.color + ';margin-bottom:var(--spacing-sm);">👤 ' + role.replace(/_/g,' ').toUpperCase() + ' — ' + r.label + '</div>';
+            html += '<div style="display:grid;gap:4px;">';
+            Object.entries(record).forEach(([key, val]) => {
+                const allowed = r.access.includes(key);
+                html += '<div style="display:flex;justify-content:space-between;padding:6px var(--spacing-sm);background:' + (allowed ? 'rgba(16,185,129,0.08)' : 'rgba(239,68,68,0.08)') + ';border-radius:var(--radius-sm);font-size:0.85rem;">';
+                html += '<span style="color:var(--text-secondary);font-weight:600;">' + key + '</span>';
+                html += allowed
+                    ? '<span style="color:#10b981;">' + val + '</span>'
+                    : '<span style="color:#ef4444;">[REDACTED]</span>';
+                html += '</div>';
+            });
+            html += '</div>';
+            html += '<div style="margin-top:var(--spacing-sm);font-size:0.75rem;color:var(--text-muted);">' + r.access.length + ' of ' + Object.keys(record).length + ' fields accessible</div>';
+            document.getElementById('phiResult').innerHTML = html;
+        });
+    }
+};
+
+demoConfigs['gdpr-consent-manager'] = {
+    html: `
+        <div class="demo-consent">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🇪🇺 GDPR Consent Dashboard</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Toggle consent for each processing purpose — required purposes cannot be withdrawn</p>
+            <div id="consentUserId" style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--spacing-md);">User: <strong>user-demo@example.com</strong> · Policy v2.1</div>
+            <div id="consentPurposes" style="display:grid;gap:var(--spacing-sm);"></div>
+            <div style="margin-top:var(--spacing-md);display:flex;gap:var(--spacing-sm);">
+                <button class="btn btn-primary" id="consentReceiptBtn">📄 Generate Consent Receipt</button>
+                <button class="btn btn-secondary" id="consentExportBtn">📥 Export (Art. 20)</button>
+            </div>
+            <div id="consentReceipt" style="margin-top:var(--spacing-md);padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:60px;display:none;"></div>
+            <div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);">
+                <span style="font-size:0.75rem;color:var(--text-muted);">Maps to: GDPR Art. 6, 7, 13, 17, 20, 21 · Kantara Consent Receipt Specification</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        const purposes = [
+            { id: 'account_creation', name: 'Account Creation', basis: 'contract', required: true },
+            { id: 'service_delivery', name: 'Service Delivery', basis: 'contract', required: true },
+            { id: 'marketing_email', name: 'Marketing Emails', basis: 'consent', required: false },
+            { id: 'analytics', name: 'Usage Analytics', basis: 'legitimate_interest', required: false },
+            { id: 'third_party_share', name: 'Third-Party Sharing', basis: 'consent', required: false },
+            { id: 'profiling', name: 'Automated Profiling', basis: 'consent', required: false }
+        ];
+        const state = {};
+        purposes.forEach(p => { state[p.id] = p.required; });
+        function render() {
+            const el = document.getElementById('consentPurposes');
+            el.innerHTML = purposes.map(p => {
+                const granted = state[p.id];
+                const basisColors = { contract: '#3b82f6', consent: '#10b981', legitimate_interest: '#f59e0b' };
+                return '<div style="display:flex;justify-content:space-between;align-items:center;padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">' +
+                    '<div><div style="font-weight:600;color:var(--text-primary);">' + p.name + (p.required ? ' <span style="color:#ef4444;font-size:0.75rem;">REQUIRED</span>' : '') + '</div>' +
+                    '<div style="font-size:0.75rem;color:var(--text-muted);">Legal basis: <span style="color:' + (basisColors[p.basis] || 'var(--text-muted)') + ';">' + p.basis.replace(/_/g,' ') + '</span></div></div>' +
+                    '<label style="position:relative;display:inline-block;width:48px;height:26px;cursor:' + (p.required ? 'not-allowed' : 'pointer') + ';">' +
+                    '<input type="checkbox" data-purpose="' + p.id + '" ' + (granted ? 'checked' : '') + ' ' + (p.required ? 'disabled' : '') + ' style="opacity:0;width:0;height:0;">' +
+                    '<span style="position:absolute;top:0;left:0;right:0;bottom:0;background:' + (granted ? '#10b981' : '#6b7280') + ';border-radius:13px;transition:0.3s;"></span>' +
+                    '<span style="position:absolute;top:3px;left:' + (granted ? '25px' : '3px') + ';width:20px;height:20px;background:#fff;border-radius:50%;transition:0.3s;"></span>' +
+                    '</label></div>';
+            }).join('');
+            el.querySelectorAll('input[type=checkbox]').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    state[e.target.dataset.purpose] = e.target.checked;
+                    render();
+                });
+            });
+        }
+        render();
+        document.getElementById('consentReceiptBtn').addEventListener('click', () => {
+            const receipt = document.getElementById('consentReceipt');
+            receipt.style.display = 'block';
+            const granted = purposes.filter(p => state[p.id]);
+            const withdrawn = purposes.filter(p => !state[p.id]);
+            receipt.innerHTML = '<div style="font-weight:600;color:var(--text-primary);margin-bottom:var(--spacing-sm);">📄 Kantara Consent Receipt</div>' +
+                '<div style="font-size:0.82rem;color:var(--text-secondary);">' +
+                '<div><strong>Receipt ID:</strong> CR-' + Date.now() + '</div>' +
+                '<div><strong>Timestamp:</strong> ' + new Date().toISOString() + '</div>' +
+                '<div><strong>Data Subject:</strong> user-demo@example.com</div>' +
+                '<div><strong>Policy Version:</strong> 2.1</div>' +
+                '<div style="margin-top:var(--spacing-xs);"><strong style="color:#10b981;">Granted (' + granted.length + '):</strong> ' + granted.map(p => p.name).join(', ') + '</div>' +
+                (withdrawn.length ? '<div><strong style="color:#ef4444;">Withdrawn (' + withdrawn.length + '):</strong> ' + withdrawn.map(p => p.name).join(', ') + '</div>' : '') +
+                '</div>';
+        });
+        document.getElementById('consentExportBtn').addEventListener('click', () => {
+            const data = { userId: 'user-demo@example.com', exportDate: new Date().toISOString(), consents: purposes.map(p => ({ purpose: p.name, legalBasis: p.basis, granted: state[p.id] })) };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'gdpr-consent-export.json'; a.click();
+        });
+    }
+};
+
+demoConfigs['pci-card-sanitizer'] = {
+    html: `
+        <div class="demo-pci">
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">💳 PCI Card Data Sanitizer</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Enter a card number to see masking, truncation, tokenization, and brand detection</p>
+            <div style="display:flex;gap:var(--spacing-sm);margin-bottom:var(--spacing-md);flex-wrap:wrap;">
+                <input type="text" id="pciInput" placeholder="Enter card number (e.g., 4111111111111111)" value="4111111111111111" maxlength="19" style="flex:1;min-width:200px;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);font-family:var(--font-mono);">
+                <button class="btn btn-primary" id="pciSanitizeBtn">🔒 Sanitize</button>
+            </div>
+            <div id="pciResult" style="display:grid;gap:var(--spacing-sm);"></div>
+            <div style="margin-top:var(--spacing-md);">
+                <h5 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">📝 Free-Text Scrubber</h5>
+                <textarea id="pciText" rows="2" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);font-family:var(--font-mono);font-size:0.85rem;">Customer paid with card 4111-1111-1111-1111 for order #5892</textarea>
+                <button class="btn btn-secondary" id="pciScrubBtn" style="margin-top:var(--spacing-xs);">🧹 Scrub PANs</button>
+                <div id="pciScrubResult" style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);font-family:var(--font-mono);font-size:0.85rem;color:var(--text-primary);min-height:30px;">—</div>
+            </div>
+            <div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);">
+                <span style="font-size:0.75rem;color:var(--text-muted);">Maps to: PCI DSS 3.3, 3.4, 3.5, 4.1 · SOC 2 CC6.1</span>
+            </div>
+        </div>
+    `,
+    init: () => {
+        function luhn(num) { let s = 0, a = false; for (let i = num.length-1; i >= 0; i--) { let n = parseInt(num[i]); if (a) { n *= 2; if (n > 9) n -= 9; } s += n; a = !a; } return s % 10 === 0; }
+        const brands = [
+            { name: 'Visa', test: d => /^4/.test(d) && [13,16,19].includes(d.length) },
+            { name: 'Mastercard', test: d => /^(5[1-5]|2[2-7])/.test(d) && d.length === 16 },
+            { name: 'Amex', test: d => /^3[47]/.test(d) && d.length === 15 },
+            { name: 'Discover', test: d => /^6(011|5)/.test(d) && [16,19].includes(d.length) }
+        ];
+        function detect(d) { return brands.find(b => b.test(d))?.name || 'Unknown'; }
+        function mask(d) { return d.slice(0,6) + '*'.repeat(d.length-10) + d.slice(-4); }
+        function truncate(d) { return '****' + d.slice(-4); }
+        function tokenize(d) { let h = 0; for (let i = 0; i < d.length; i++) h = ((h << 5) - h + d.charCodeAt(i)) | 0; return 'tok_' + Math.abs(h).toString(16).padStart(16,'0').slice(0,16); }
+
+        document.getElementById('pciSanitizeBtn').addEventListener('click', () => {
+            const raw = document.getElementById('pciInput').value.replace(/[\s-]/g, '');
+            const valid = raw.length >= 13 && raw.length <= 19 && luhn(raw);
+            const brand = valid ? detect(raw) : null;
+            const brandColors = { Visa: '#1a1f71', Mastercard: '#eb001b', Amex: '#006fcf', Discover: '#ff6600', Unknown: '#6b7280' };
+            let html = '';
+            if (!valid) {
+                html = '<div style="padding:var(--spacing-md);background:rgba(239,68,68,0.1);border-radius:var(--radius-md);color:#ef4444;font-weight:600;">✗ Invalid card number (Luhn check failed)</div>';
+            } else {
+                const items = [
+                    { label: '🏦 Brand Detected', value: brand, color: brandColors[brand] || '#6b7280' },
+                    { label: '✓ Luhn Valid', value: 'PASS', color: '#10b981' },
+                    { label: '🎭 Masked (PCI 3.3)', value: mask(raw), color: 'var(--text-primary)' },
+                    { label: '✂️ Truncated', value: truncate(raw), color: 'var(--text-primary)' },
+                    { label: '🔑 Tokenized', value: tokenize(raw), color: 'var(--forest-green-accent)' }
+                ];
+                items.forEach(i => {
+                    html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">' +
+                        '<span style="color:var(--text-secondary);font-weight:600;font-size:0.85rem;">' + i.label + '</span>' +
+                        '<span style="font-family:var(--font-mono);font-size:0.9rem;color:' + i.color + ';font-weight:600;">' + i.value + '</span></div>';
+                });
+            }
+            document.getElementById('pciResult').innerHTML = html;
+        });
+
+        document.getElementById('pciScrubBtn').addEventListener('click', () => {
+            let text = document.getElementById('pciText').value;
+            let count = 0;
+            text = text.replace(/\b([\d][\d\s-]{11,17}[\d])\b/g, (match) => {
+                const digits = match.replace(/[\s-]/g, '');
+                if (digits.length >= 13 && digits.length <= 19 && luhn(digits)) { count++; return mask(digits); }
+                return match;
+            });
+            document.getElementById('pciScrubResult').innerHTML = '<span style="color:#10b981;font-weight:600;">✓ ' + count + ' PAN(s) scrubbed:</span> ' + text;
+        });
+    }
+};
+
 // ── Enterprise Demo Configs: MBAi ──────────────────────────
 demoConfigs['mbai-sbsc'] = {
     html: `
