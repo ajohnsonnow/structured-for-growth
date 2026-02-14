@@ -1,6 +1,6 @@
-﻿{
-  "generated": "2026-02-14T06:29:34.053Z",
-  "version": "1.4.7",
+{
+  "generated": "2026-02-14T08:36:29.383Z",
+  "version": "1.4.8",
   "summary": {
     "totalRoutes": 76,
     "totalPages": 7,
@@ -1363,7 +1363,7 @@
   },
   "pkg": {
     "name": "structured-for-growth-www",
-    "version": "1.4.7",
+    "version": "1.4.8",
     "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
     "nodeEngine": ">=18.0.0",
     "scripts": [
@@ -1489,7 +1489,6 @@
     {
       "file": "README.md",
       "headings": [
-        "Structured For Growth\r",
         "Content Engineering Portfolio, Template Library & Compliance Knowledge Base\r",
         "🎯 Features\r",
         "Public-Facing\r",
@@ -1520,12 +1519,11 @@
         "Start production server\r",
         "📧 Contact\r"
       ],
-      "wordCount": 1640
+      "wordCount": 1641
     },
     {
       "file": "SETUP.md",
       "headings": [
-        "Structured For Growth - Setup Guide\r",
         "🎉 Welcome!\r",
         "📋 Prerequisites\r",
         "🚀 Quick Start\r",
@@ -1580,7 +1578,7 @@
         "🤝 Support\r",
         "🎯 Next Steps\r"
       ],
-      "wordCount": 1273
+      "wordCount": 1274
     },
     {
       "file": "docs/ADMIN-GUIDE.md",
@@ -1710,7 +1708,7 @@
     {
       "file": "client/styles/docs.css",
       "customProperties": 116,
-      "selectors": 97
+      "selectors": 101
     },
     {
       "file": "client/styles/main.css",
@@ -1720,7 +1718,7 @@
     {
       "file": "client/styles/mbai.css",
       "customProperties": 49,
-      "selectors": 82
+      "selectors": 86
     },
     {
       "file": "client/styles/portal.css",

@@ -28,7 +28,7 @@ function read(rel) {
   return fs.readFileSync(path.join(ROOT, rel), 'utf-8');
 }
 function readJSON(rel) {
-  return JSON.parse(read(rel));
+  return JSON.parse(read(rel).replace(/^\uFEFF/, ''));
 }
 function exists(rel) {
   return fs.existsSync(path.join(ROOT, rel));
