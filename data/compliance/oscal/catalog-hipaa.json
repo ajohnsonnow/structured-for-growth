@@ -1,8 +1,8 @@
-{
+﻿{
   "catalog": {
     "uuid": "fa9e4e0d-0b5e-5378-9067-3cca49fe42f4",
     "metadata": {
-      "title": "Health Insurance Portability and Accountability Act — Security Rule",
+      "title": "Health Insurance Portability and Accountability Act - Security Rule",
       "last-modified": "2026-02-13T19:30:32.141Z",
       "version": "2013 Omnibus Rule (Updated)",
       "oscal-version": "1.1.2",
@@ -41,7 +41,7 @@
           "name": "U.S. Department of Health and Human Services (HHS)"
         }
       ],
-      "remarks": "HIPAA establishes the definitive federal standard for protecting sensitive patient data. The Security Rule establishes national standards for protecting electronic Protected Health Information (ePHI). Covered Entities and Business Associates must implement Administrative, Physical, and Technical Safeguards. Specifications are designated as Required (R) or Addressable (A) — addressable does NOT mean optional."
+      "remarks": "HIPAA establishes the definitive federal standard for protecting sensitive patient data. The Security Rule establishes national standards for protecting electronic Protected Health Information (ePHI). Covered Entities and Business Associates must implement Administrative, Physical, and Technical Safeguards. Specifications are designated as Required (R) or Addressable (A) - addressable does NOT mean optional."
     },
     "groups": [
       {
@@ -298,7 +298,7 @@
           },
           {
             "id": "ts-au-1",
-            "title": "Audit Controls — Hardware/Software Logging",
+            "title": "Audit Controls - Hardware/Software Logging",
             "props": [
               {
                 "name": "implementation-type",
@@ -614,7 +614,7 @@
         "controls": [
           {
             "id": "as-rm-1",
-            "title": "Security Management Process — Risk Analysis",
+            "title": "Security Management Process - Risk Analysis",
             "props": [
               {
                 "name": "implementation-type",
@@ -671,7 +671,7 @@
           },
           {
             "id": "as-rm-2",
-            "title": "Security Management Process — Risk Management",
+            "title": "Security Management Process - Risk Management",
             "props": [
               {
                 "name": "implementation-type",
@@ -723,7 +723,7 @@
           },
           {
             "id": "as-ws-1",
-            "title": "Workforce Security — Authorization and Supervision",
+            "title": "Workforce Security - Authorization and Supervision",
             "props": [
               {
                 "name": "implementation-type",

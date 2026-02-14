@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft-07/schema#",
   "title": "Cross-Framework Control Mapping",
   "description": "Maps common security control objectives across all 10 compliance frameworks, enabling organizations to see how a single implementation can satisfy requirements across multiple standards simultaneously.",
@@ -19,7 +19,7 @@
         "dora": { "controls": ["DORA-7"], "requirement": "required", "notes": "ICT protection and prevention measures" },
         "nis2": { "controls": ["NIS2-21.2j"], "requirement": "required", "notes": "Explicitly named in Article 21(2)(j)" },
         "cmmc": { "controls": ["IA.L2-3.5.3"], "requirement": "required", "notes": "MFA for privileged and network access" },
-        "nist-ai-rmf": { "controls": [], "requirement": "n/a", "notes": "Not directly addressed—defers to security frameworks" },
+        "nist-ai-rmf": { "controls": [], "requirement": "n/a", "notes": "Not directly addressed-defers to security frameworks" },
         "iso42001": { "controls": [], "requirement": "n/a", "notes": "Defers to ISO 27001 for security controls" }
       },
       "implementationTemplates": ["auth-mfa-middleware"],

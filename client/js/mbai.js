@@ -1,5 +1,5 @@
-/**
- * MBAi Methodology — Frontend Module
+﻿/**
+ * MBAi Methodology - Frontend Module
  * Fetches data from /api/mbai and renders interactive template cards,
  * category tabs, search, and a detail modal for each template.
  */
@@ -56,7 +56,7 @@ function renderStats(m) {
   const updateFw = () => {
     const set = new Set();
     allTemplates.forEach(t => (t.frameworks || []).forEach(f => set.add(f)));
-    el('frameworkCount').textContent = set.size || '—';
+    el('frameworkCount').textContent = set.size || '-';
   };
   setTimeout(updateFw, 1500);
 }
@@ -181,7 +181,7 @@ function openModal(tpl) {
     <span class="badge badge-category">${tpl.icon} ${formatCategory(tpl.category)}</span>
   `;
 
-  // Body — render template-specific tables
+  // Body - render template-specific tables
   const bodyEl = document.getElementById('mbaiModalBody');
   bodyEl.innerHTML = renderTemplateBody(tpl);
 
@@ -301,7 +301,7 @@ function renderRubric(tpl) {
       <th>Competency</th><th>Developing (1)</th><th>Competent (2)</th><th>Proficient (3)</th><th>Exemplary (4)</th><th>Evidence Source</th>
     </tr></thead>
     <tbody>${(tpl.competencies || []).map(c => `<tr>
-      <td><strong>${c.name}</strong></td><td>${c.developing || '—'}</td><td>${c.competent || '—'}</td><td>${c.proficient}</td><td>${c.exemplary}</td>
+      <td><strong>${c.name}</strong></td><td>${c.developing || '-'}</td><td>${c.competent || '-'}</td><td>${c.proficient}</td><td>${c.exemplary}</td>
       <td>${c.evidenceSource}</td>
     </tr>`).join('')}</tbody>
   </table></div>`;

@@ -1,4 +1,4 @@
-/* Client Portal Styles */
+﻿/* Client Portal Styles */
 
 /* Login Modal */
 .portal-login-modal {
@@ -528,7 +528,7 @@
     border: 1px dashed var(--border-color);
 }
 
-/* Badge styles — dark-theme-safe overrides matching components.css */
+/* Badge styles - dark-theme-safe overrides matching components.css */
 .badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;

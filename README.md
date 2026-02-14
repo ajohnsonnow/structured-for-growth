@@ -1,4 +1,4 @@
-# Structured For Growth
+﻿# Structured For Growth
 
 ## Content Engineering Portfolio, Template Library & Compliance Knowledge Base
 
@@ -140,7 +140,7 @@ structured-for-growth/
 │   └── mbai/                  # MBAi Paradigm data
 │       ├── manifest.json      # Pillar & category definitions
 │       └── templates/         # 8 strategic business templates
-├── templates/                 # (Empty — templates defined in client/js/templateData.js)
+├── templates/                 # (Empty - templates defined in client/js/templateData.js)
 ├── docs/                      # Documentation
 │   ├── CLIENT-GUIDE.md        # User guide for clients
 │   └── ADMIN-GUIDE.md         # Admin dashboard guide
@@ -172,7 +172,7 @@ structured-for-growth/
 
 - Node.js (v18+)
 - Express 4.18.2
-- SQL.js 1.13.0 (Pure JavaScript SQLite — no native binaries)
+- SQL.js 1.13.0 (Pure JavaScript SQLite - no native binaries)
 - JWT authentication (jsonwebtoken 9.0.2)
 - bcryptjs 2.4.3 (Password hashing)
 - Nodemailer 6.9.7 (Email service)
@@ -238,7 +238,7 @@ The template library includes 33 production-ready templates:
 - Date/Time Utilities
 - Template Documentation Generator
 
-Each template saves 1–8 hours of development time. See [docs/CLIENT-GUIDE.md](docs/CLIENT-GUIDE.md) for detailed template information.
+Each template saves 1-8 hours of development time. See [docs/CLIENT-GUIDE.md](docs/CLIENT-GUIDE.md) for detailed template information.
 
 ## 🚦 Scripts
 
@@ -257,9 +257,9 @@ Each template saves 1–8 hours of development time. See [docs/CLIENT-GUIDE.md](
 
 ## 📖 Documentation
 
-- **[CLIENT-GUIDE.md](docs/CLIENT-GUIDE.md)** — Complete user guide for browsing the site and using templates
-- **[ADMIN-GUIDE.md](docs/ADMIN-GUIDE.md)** — Dashboard administration guide
-- **[SETUP.md](SETUP.md)** — Deployment and configuration instructions
+- **[CLIENT-GUIDE.md](docs/CLIENT-GUIDE.md)** - Complete user guide for browsing the site and using templates
+- **[ADMIN-GUIDE.md](docs/ADMIN-GUIDE.md)** - Dashboard administration guide
+- **[SETUP.md](SETUP.md)** - Deployment and configuration instructions
 
 > Archived reference docs (CHECKLIST.md, PROJECT-OVERVIEW.md, TEMPLATE-INVENTORY.md, SUCCESS.md, VISUAL-GUIDE.md, TEMPLATE-EXTRACTION-SUMMARY.md) are in `archive/docs/`.
 
@@ -278,9 +278,9 @@ The site features a custom dark forest green theme:
 The homepage features an interactive calculator showing real cost savings:
 
 - **Solo Expert**: $420/hour
-- **Development Team**: $600–1,250/hour (3–5 developers)
+- **Development Team**: $600-1,250/hour (3-5 developers)
 - **Template Library**: 33 templates = 96+ hours saved = $40,320+ in time savings
-- **Average Project Savings**: 40–60% vs traditional team approach
+- **Average Project Savings**: 40-60% vs traditional team approach
 
 ## 🔐 Security Features
 

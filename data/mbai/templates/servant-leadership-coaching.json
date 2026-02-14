@@ -1,10 +1,10 @@
-{
+﻿{
   "id": "servant-leadership-coaching",
   "title": "Servant Leadership 1-on-1 Coaching Agenda",
   "version": "1.0.0",
   "category": "human-resources",
   "icon": "🤝",
-  "description": "A structured 45-minute coaching agenda where the direct report owns the meeting. Designed to operationalize empathy, psychological safety, and human growth in every conversation — augmented by AI coaching assistants.",
+  "description": "A structured 45-minute coaching agenda where the direct report owns the meeting. Designed to operationalize empathy, psychological safety, and human growth in every conversation - augmented by AI coaching assistants.",
   "methodology": "MBAi + Sustainable HR + Servant Leadership",
   "frameworks": ["NIST AI RMF (Fairness)"],
   "frequency": "Weekly/Bi-Weekly",

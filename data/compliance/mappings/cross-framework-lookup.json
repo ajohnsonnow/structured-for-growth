@@ -1,4 +1,4 @@
-{
+﻿{
   "generatedAt": "2026-02-13T19:30:32.051Z",
   "frameworkCount": 10,
   "controlCount": 214,
@@ -25,19 +25,19 @@
     {
       "id": "hipaa",
       "name": "HIPAA",
-      "fullName": "Health Insurance Portability and Accountability Act — Security Rule",
+      "fullName": "Health Insurance Portability and Accountability Act - Security Rule",
       "controlCount": 16
     },
     {
       "id": "iso27001",
       "name": "ISO 27001",
-      "fullName": "ISO/IEC 27001:2022 — Information Security Management Systems",
+      "fullName": "ISO/IEC 27001:2022 - Information Security Management Systems",
       "controlCount": 32
     },
     {
       "id": "iso42001",
       "name": "ISO 42001",
-      "fullName": "ISO/IEC 42001:2023 — Information Technology — Artificial Intelligence Management System",
+      "fullName": "ISO/IEC 42001:2023 - Information Technology - Artificial Intelligence Management System",
       "controlCount": 22
     },
     {
@@ -169,7 +169,7 @@
           "controlId": "GDPR-32b",
           "requirement": "required",
           "frameworkName": "GDPR",
-          "domain": "Security of Processing — TOMs (Article 32)",
+          "domain": "Security of Processing - TOMs (Article 32)",
           "controlName": "Confidentiality, Integrity, Availability, Resilience",
           "description": "Ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services.",
           "mappings": {
@@ -459,7 +459,7 @@
           "controlId": "GDPR-32a",
           "requirement": "required",
           "frameworkName": "GDPR",
-          "domain": "Security of Processing — TOMs (Article 32)",
+          "domain": "Security of Processing - TOMs (Article 32)",
           "controlName": "Pseudonymization and Encryption",
           "description": "Implement pseudonymization and encryption of personal data to minimize breach impact.",
           "mappings": {
@@ -690,7 +690,7 @@
           "requirement": "required",
           "frameworkName": "HIPAA",
           "domain": "Technical Safeguards (§164.312)",
-          "controlName": "Audit Controls — Hardware/Software Logging",
+          "controlName": "Audit Controls - Hardware/Software Logging",
           "description": "Implement hardware, software, and/or procedural mechanisms that record and examine activity in systems containing or using ePHI.",
           "mappings": {
             "soc2": [
@@ -714,7 +714,7 @@
           "controlId": "GDPR-32d",
           "requirement": "required",
           "frameworkName": "GDPR",
-          "domain": "Security of Processing — TOMs (Article 32)",
+          "domain": "Security of Processing - TOMs (Article 32)",
           "controlName": "Regular Testing and Assessment",
           "description": "Implement a process for regularly testing, assessing and evaluating the effectiveness of technical and organizational measures.",
           "mappings": {
@@ -1048,7 +1048,7 @@
           "requirement": "addressable",
           "frameworkName": "HIPAA",
           "domain": "Administrative Safeguards (§164.308)",
-          "controlName": "Workforce Security — Authorization and Supervision",
+          "controlName": "Workforce Security - Authorization and Supervision",
           "description": "Implement procedures for the authorization and/or supervision of workforce members who work with ePHI.",
           "mappings": {
             "soc2": [
@@ -1068,7 +1068,7 @@
           "controlId": "GDPR-32b",
           "requirement": "required",
           "frameworkName": "GDPR",
-          "domain": "Security of Processing — TOMs (Article 32)",
+          "domain": "Security of Processing - TOMs (Article 32)",
           "controlName": "Confidentiality, Integrity, Availability, Resilience",
           "description": "Ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services.",
           "mappings": {
@@ -1743,7 +1743,7 @@
           "controlId": "GDPR-32a",
           "requirement": "required",
           "frameworkName": "GDPR",
-          "domain": "Security of Processing — TOMs (Article 32)",
+          "domain": "Security of Processing - TOMs (Article 32)",
           "controlName": "Pseudonymization and Encryption",
           "description": "Implement pseudonymization and encryption of personal data to minimize breach impact.",
           "mappings": {
@@ -1964,7 +1964,7 @@
           "controlId": "GDPR-32b",
           "requirement": "required",
           "frameworkName": "GDPR",
-          "domain": "Security of Processing — TOMs (Article 32)",
+          "domain": "Security of Processing - TOMs (Article 32)",
           "controlName": "Confidentiality, Integrity, Availability, Resilience",
           "description": "Ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services.",
           "mappings": {
@@ -2211,7 +2211,7 @@
           "controlId": "GDPR-32c",
           "requirement": "required",
           "frameworkName": "GDPR",
-          "domain": "Security of Processing — TOMs (Article 32)",
+          "domain": "Security of Processing - TOMs (Article 32)",
           "controlName": "Restore Availability and Access",
           "description": "Implement ability to restore the availability and access to personal data in a timely manner in the event of a physical or technical incident.",
           "mappings": {
@@ -2508,7 +2508,7 @@
           "requirement": "required",
           "frameworkName": "HIPAA",
           "domain": "Administrative Safeguards (§164.308)",
-          "controlName": "Security Management Process — Risk Analysis",
+          "controlName": "Security Management Process - Risk Analysis",
           "description": "Conduct an accurate and thorough assessment of the potential risks and vulnerabilities to the confidentiality, integrity, and availability of ePHI.",
           "mappings": {
             "soc2": [
@@ -2528,7 +2528,7 @@
           "controlId": "GDPR-32d",
           "requirement": "required",
           "frameworkName": "GDPR",
-          "domain": "Security of Processing — TOMs (Article 32)",
+          "domain": "Security of Processing - TOMs (Article 32)",
           "controlName": "Regular Testing and Assessment",
           "description": "Implement a process for regularly testing, assessing and evaluating the effectiveness of technical and organizational measures.",
           "mappings": {
@@ -4052,7 +4052,7 @@
     "gdpr/GDPR-32a": {
       "frameworkId": "gdpr",
       "frameworkName": "GDPR",
-      "domain": "Security of Processing — TOMs (Article 32)",
+      "domain": "Security of Processing - TOMs (Article 32)",
       "controlId": "GDPR-32a",
       "controlName": "Pseudonymization and Encryption",
       "description": "Implement pseudonymization and encryption of personal data to minimize breach impact.",
@@ -4076,7 +4076,7 @@
     "gdpr/GDPR-32b": {
       "frameworkId": "gdpr",
       "frameworkName": "GDPR",
-      "domain": "Security of Processing — TOMs (Article 32)",
+      "domain": "Security of Processing - TOMs (Article 32)",
       "controlId": "GDPR-32b",
       "controlName": "Confidentiality, Integrity, Availability, Resilience",
       "description": "Ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services.",
@@ -4101,7 +4101,7 @@
     "gdpr/GDPR-32c": {
       "frameworkId": "gdpr",
       "frameworkName": "GDPR",
-      "domain": "Security of Processing — TOMs (Article 32)",
+      "domain": "Security of Processing - TOMs (Article 32)",
       "controlId": "GDPR-32c",
       "controlName": "Restore Availability and Access",
       "description": "Implement ability to restore the availability and access to personal data in a timely manner in the event of a physical or technical incident.",
@@ -4122,7 +4122,7 @@
     "gdpr/GDPR-32d": {
       "frameworkId": "gdpr",
       "frameworkName": "GDPR",
-      "domain": "Security of Processing — TOMs (Article 32)",
+      "domain": "Security of Processing - TOMs (Article 32)",
       "controlId": "GDPR-32d",
       "controlName": "Regular Testing and Assessment",
       "description": "Implement a process for regularly testing, assessing and evaluating the effectiveness of technical and organizational measures.",
@@ -4141,7 +4141,7 @@
     "gdpr/GDPR-32e": {
       "frameworkId": "gdpr",
       "frameworkName": "GDPR",
-      "domain": "Security of Processing — TOMs (Article 32)",
+      "domain": "Security of Processing - TOMs (Article 32)",
       "controlId": "GDPR-32e",
       "controlName": "Protective Software and Threat Detection",
       "description": "Deploy advanced antivirus, antimalware, and real-time threat detection tools.",
@@ -4318,7 +4318,7 @@
       "frameworkName": "HIPAA",
       "domain": "Technical Safeguards (§164.312)",
       "controlId": "TS-AU-1",
-      "controlName": "Audit Controls — Hardware/Software Logging",
+      "controlName": "Audit Controls - Hardware/Software Logging",
       "description": "Implement hardware, software, and/or procedural mechanisms that record and examine activity in systems containing or using ePHI.",
       "mappings": {
         "soc2": [
@@ -4433,7 +4433,7 @@
       "frameworkName": "HIPAA",
       "domain": "Administrative Safeguards (§164.308)",
       "controlId": "AS-RM-1",
-      "controlName": "Security Management Process — Risk Analysis",
+      "controlName": "Security Management Process - Risk Analysis",
       "description": "Conduct an accurate and thorough assessment of the potential risks and vulnerabilities to the confidentiality, integrity, and availability of ePHI.",
       "mappings": {
         "soc2": [
@@ -4453,7 +4453,7 @@
       "frameworkName": "HIPAA",
       "domain": "Administrative Safeguards (§164.308)",
       "controlId": "AS-RM-2",
-      "controlName": "Security Management Process — Risk Management",
+      "controlName": "Security Management Process - Risk Management",
       "description": "Implement security measures sufficient to reduce risks and vulnerabilities to a reasonable and appropriate level.",
       "mappings": {
         "soc2": [
@@ -4472,7 +4472,7 @@
       "frameworkName": "HIPAA",
       "domain": "Administrative Safeguards (§164.308)",
       "controlId": "AS-WS-1",
-      "controlName": "Workforce Security — Authorization and Supervision",
+      "controlName": "Workforce Security - Authorization and Supervision",
       "description": "Implement procedures for the authorization and/or supervision of workforce members who work with ePHI.",
       "mappings": {
         "soc2": [

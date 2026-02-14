@@ -1,4 +1,4 @@
-{
+﻿{
   "id": "gdpr",
   "name": "GDPR",
   "fullName": "General Data Protection Regulation (EU) 2016/679",
@@ -53,7 +53,7 @@
     },
     {
       "id": "security-of-processing",
-      "name": "Security of Processing — TOMs (Article 32)",
+      "name": "Security of Processing - TOMs (Article 32)",
       "description": "Technical and Organizational Measures required to ensure appropriate security of personal data.",
       "required": true,
       "controlCount": 5,

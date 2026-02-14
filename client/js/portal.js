@@ -1,4 +1,4 @@
-// Client Portal JavaScript
+﻿// Client Portal JavaScript
 let authToken = localStorage.getItem('portalToken');
 let clientData = null;
 
@@ -102,10 +102,10 @@ function showLoginModal() {
 function displayClientInfo() {
     if (!clientData) return;
     
-    document.getElementById('infoName').textContent = clientData.name || '—';
-    document.getElementById('infoEmail').textContent = clientData.email || '—';
-    document.getElementById('infoCompany').textContent = clientData.company || '—';
-    document.getElementById('infoPhone').textContent = clientData.phone || '—';
+    document.getElementById('infoName').textContent = clientData.name || '-';
+    document.getElementById('infoEmail').textContent = clientData.email || '-';
+    document.getElementById('infoCompany').textContent = clientData.company || '-';
+    document.getElementById('infoPhone').textContent = clientData.phone || '-';
     
     const statusEl = document.getElementById('infoStatus');
     statusEl.textContent = clientData.status || 'active';
@@ -225,7 +225,7 @@ function displayPaymentInfo(billing) {
         document.getElementById('nextDueDate').textContent = 'Due Now';
         document.getElementById('paymentDueText').textContent = 'Payment due upon receipt';
     } else {
-        document.getElementById('nextDueDate').textContent = '—';
+        document.getElementById('nextDueDate').textContent = '-';
         document.getElementById('paymentDueText').textContent = 'No payments due at this time';
     }
     
@@ -278,7 +278,7 @@ function formatCurrency(amount) {
 }
 
 function formatDate(dateString) {
-    if (!dateString) return '—';
+    if (!dateString) return '-';
     return new Date(dateString).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',

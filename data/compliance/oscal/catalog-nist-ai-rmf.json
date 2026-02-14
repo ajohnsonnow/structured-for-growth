@@ -1,4 +1,4 @@
-{
+﻿{
   "catalog": {
     "uuid": "af97a190-741f-58ab-8ee2-674f83b52475",
     "metadata": {
@@ -17,7 +17,7 @@
         },
         {
           "name": "jurisdiction",
-          "value": "United States (Voluntary — Global Influence)"
+          "value": "United States (Voluntary - Global Influence)"
         },
         {
           "name": "certification-type",

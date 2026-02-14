@@ -1,4 +1,4 @@
-{
+﻿{
   "catalog": {
     "uuid": "aefca357-1e57-58f3-9e89-b6c4d511c93d",
     "metadata": {
@@ -574,7 +574,7 @@
       },
       {
         "id": "security-of-processing",
-        "title": "Security of Processing — TOMs (Article 32)",
+        "title": "Security of Processing - TOMs (Article 32)",
         "props": [
           {
             "name": "required",

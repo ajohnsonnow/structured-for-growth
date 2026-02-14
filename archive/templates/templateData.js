@@ -1,4 +1,4 @@
-// Template Library Data
+﻿// Template Library Data
 export const templates = [
     // FORM TEMPLATES
     {
@@ -3350,18 +3350,18 @@ export { AuditLogger, AuditEventTypes };`,
         notes: `
 <h3>Compliance Coverage</h3>
 <ul>
-    <li><strong>SOC 2 CC7.2</strong> — System monitoring and event logging</li>
-    <li><strong>ISO 27001 A.8.15</strong> — Activity logging</li>
-    <li><strong>HIPAA §164.312(b)</strong> — Audit controls</li>
-    <li><strong>PCI DSS 10.2</strong> — Audit trail requirements</li>
-    <li><strong>DORA Art. 9</strong> — Logging and monitoring</li>
+    <li><strong>SOC 2 CC7.2</strong> - System monitoring and event logging</li>
+    <li><strong>ISO 27001 A.8.15</strong> - Activity logging</li>
+    <li><strong>HIPAA §164.312(b)</strong> - Audit controls</li>
+    <li><strong>PCI DSS 10.2</strong> - Audit trail requirements</li>
+    <li><strong>DORA Art. 9</strong> - Logging and monitoring</li>
 </ul>
 <h3>Key Features</h3>
 <ul>
-    <li>Chain-hashed entries — each log hashes the previous one, forming a tamper-evident chain</li>
-    <li>Automatic PII masking — passwords, tokens, SSNs, and card numbers are automatically redacted</li>
-    <li>Retention metadata — each entry records when it can be purged per data-retention policy</li>
-    <li>Integrity verification — <code>verify()</code> walks the hash chain to detect tampering</li>
+    <li>Chain-hashed entries - each log hashes the previous one, forming a tamper-evident chain</li>
+    <li>Automatic PII masking - passwords, tokens, SSNs, and card numbers are automatically redacted</li>
+    <li>Retention metadata - each entry records when it can be purged per data-retention policy</li>
+    <li>Integrity verification - <code>verify()</code> walks the hash chain to detect tampering</li>
 </ul>`
     },
 
@@ -3415,7 +3415,7 @@ async function enrollTOTP(req, res) {
   const secret = authenticator.generateSecret();
   const otpauth = authenticator.keyuri(req.user.email, MFA_CONFIG.totp.issuer, secret);
   const qrCode = await QRCode.toDataURL(otpauth);
-  // Store secret (encrypted) against user — mark as unverified until first use
+  // Store secret (encrypted) against user - mark as unverified until first use
   await req.userStore.saveMFASecret(req.user.id, secret, { verified: false });
   res.json({ qrCode, manualEntry: secret });
 }
@@ -3424,7 +3424,7 @@ async function enrollTOTP(req, res) {
 async function verifyTOTP(req, res) {
   const { code } = req.body;
   if (isLockedOut(req.user.id)) {
-    return res.status(429).json({ error: 'Account locked — too many failed attempts' });
+    return res.status(429).json({ error: 'Account locked - too many failed attempts' });
   }
   const secret = await req.userStore.getMFASecret(req.user.id);
   const valid = authenticator.verify({ token: code, secret });
@@ -3438,7 +3438,7 @@ async function verifyTOTP(req, res) {
   res.json({ success: true });
 }
 
-/** Express middleware — blocks requests unless MFA is verified */
+/** Express middleware - blocks requests unless MFA is verified */
 function requireMFA(req, res, next) {
   if (req.session?.mfaVerified) return next();
   return res.status(403).json({ error: 'MFA verification required', redirect: '/mfa/verify' });
@@ -3459,16 +3459,16 @@ export { enrollTOTP, verifyTOTP, requireMFA, generateRecoveryCodes, MFA_CONFIG }
         notes: `
 <h3>Compliance Coverage</h3>
 <ul>
-    <li><strong>SOC 2 CC6.1</strong> — Logical access controls requiring MFA</li>
-    <li><strong>HIPAA §164.312(d)</strong> — Person or entity authentication</li>
-    <li><strong>PCI DSS 8.4</strong> — MFA for administrative access to CDE</li>
-    <li><strong>CMMC IA.L2-3.5.3</strong> — Multifactor authentication for privileged accounts</li>
+    <li><strong>SOC 2 CC6.1</strong> - Logical access controls requiring MFA</li>
+    <li><strong>HIPAA §164.312(d)</strong> - Person or entity authentication</li>
+    <li><strong>PCI DSS 8.4</strong> - MFA for administrative access to CDE</li>
+    <li><strong>CMMC IA.L2-3.5.3</strong> - Multifactor authentication for privileged accounts</li>
 </ul>
 <h3>Supported Methods</h3>
 <ul>
-    <li><strong>TOTP</strong> — Authenticator-app compatible (Google Authenticator, Authy, 1Password)</li>
-    <li><strong>WebAuthn / FIDO2</strong> — Hardware security keys (YubiKey, Titan)</li>
-    <li><strong>Recovery Codes</strong> — Hashed one-time backup codes</li>
+    <li><strong>TOTP</strong> - Authenticator-app compatible (Google Authenticator, Authy, 1Password)</li>
+    <li><strong>WebAuthn / FIDO2</strong> - Hardware security keys (YubiKey, Titan)</li>
+    <li><strong>Recovery Codes</strong> - Hashed one-time backup codes</li>
 </ul>
 <h3>Dependencies</h3>
 <p><code>npm install otplib qrcode @simplewebauthn/server</code></p>`
@@ -3550,17 +3550,17 @@ export { FieldEncryptor };`,
         notes: `
 <h3>Compliance Coverage</h3>
 <ul>
-    <li><strong>HIPAA §164.312(a)(2)(iv)</strong> — Encryption and decryption of ePHI</li>
-    <li><strong>GDPR Art. 32(1)(a)</strong> — Encryption of personal data</li>
-    <li><strong>PCI DSS 3.5</strong> — Protect stored account data with strong cryptography</li>
-    <li><strong>SOC 2 CC6.7</strong> — Data encryption controls</li>
+    <li><strong>HIPAA §164.312(a)(2)(iv)</strong> - Encryption and decryption of ePHI</li>
+    <li><strong>GDPR Art. 32(1)(a)</strong> - Encryption of personal data</li>
+    <li><strong>PCI DSS 3.5</strong> - Protect stored account data with strong cryptography</li>
+    <li><strong>SOC 2 CC6.7</strong> - Data encryption controls</li>
 </ul>
 <h3>Key Features</h3>
 <ul>
-    <li><strong>AES-256-GCM</strong> — NIST-approved authenticated encryption</li>
-    <li><strong>Unique IV per encryption</strong> — 96-bit random IV for every operation</li>
-    <li><strong>Key versioning</strong> — Supports seamless key rotation with version prefix</li>
-    <li><strong>Envelope encryption</strong> — DEK/KEK pattern ready</li>
+    <li><strong>AES-256-GCM</strong> - NIST-approved authenticated encryption</li>
+    <li><strong>Unique IV per encryption</strong> - 96-bit random IV for every operation</li>
+    <li><strong>Key versioning</strong> - Supports seamless key rotation with version prefix</li>
+    <li><strong>Envelope encryption</strong> - DEK/KEK pattern ready</li>
 </ul>
 <h3>Key Generation</h3>
 <p><code>node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"</code></p>`
@@ -3663,18 +3663,18 @@ export { RBAC, authorize, DEFAULT_ROLES };`,
         notes: `
 <h3>Compliance Coverage</h3>
 <ul>
-    <li><strong>SOC 2 CC6.3</strong> — Role-based access controls</li>
-    <li><strong>ISO 27001 A.5.15 / A.5.18</strong> — Access control and access rights</li>
-    <li><strong>HIPAA §164.312(a)(1)</strong> — Access control mechanisms</li>
-    <li><strong>PCI DSS 7.1 / 7.2</strong> — Restrict access by business need-to-know</li>
-    <li><strong>NIST 800-53 AC-3 / AC-6</strong> — Access enforcement & least privilege</li>
+    <li><strong>SOC 2 CC6.3</strong> - Role-based access controls</li>
+    <li><strong>ISO 27001 A.5.15 / A.5.18</strong> - Access control and access rights</li>
+    <li><strong>HIPAA §164.312(a)(1)</strong> - Access control mechanisms</li>
+    <li><strong>PCI DSS 7.1 / 7.2</strong> - Restrict access by business need-to-know</li>
+    <li><strong>NIST 800-53 AC-3 / AC-6</strong> - Access enforcement & least privilege</li>
 </ul>
 <h3>Key Features</h3>
 <ul>
-    <li><strong>Hierarchical roles</strong> — Permissions inherited from parent roles</li>
-    <li><strong>Deny-override</strong> — Explicit denials always win over inherited allows</li>
-    <li><strong>Wildcard permissions</strong> — <code>users:*</code> grants all user actions</li>
-    <li><strong>Audit-ready decisions</strong> — Every check returns a reason</li>
+    <li><strong>Hierarchical roles</strong> - Permissions inherited from parent roles</li>
+    <li><strong>Deny-override</strong> - Explicit denials always win over inherited allows</li>
+    <li><strong>Wildcard permissions</strong> - <code>users:*</code> grants all user actions</li>
+    <li><strong>Audit-ready decisions</strong> - Every check returns a reason</li>
 </ul>`
     },
 
@@ -3787,18 +3787,18 @@ export { DataMasker, DEFAULT_RULES };`,
         notes: `
 <h3>Compliance Coverage</h3>
 <ul>
-    <li><strong>PCI DSS 3.3 / 3.4</strong> — PAN display masking and rendering PAN unreadable</li>
-    <li><strong>HIPAA §164.502(b)</strong> — Minimum Necessary standard</li>
-    <li><strong>GDPR Art. 5(1)(c)</strong> — Data minimisation principle</li>
-    <li><strong>ISO 27001 A.8.11</strong> — Data masking controls</li>
+    <li><strong>PCI DSS 3.3 / 3.4</strong> - PAN display masking and rendering PAN unreadable</li>
+    <li><strong>HIPAA §164.502(b)</strong> - Minimum Necessary standard</li>
+    <li><strong>GDPR Art. 5(1)(c)</strong> - Data minimisation principle</li>
+    <li><strong>ISO 27001 A.8.11</strong> - Data masking controls</li>
 </ul>
 <h3>Masking Strategies</h3>
 <ul>
-    <li><strong>Redact</strong> — Full replacement with [REDACTED]</li>
-    <li><strong>Partial</strong> — Show first/last N characters, mask the rest</li>
-    <li><strong>PAN</strong> — PCI-compliant: first 6 + last 4 only</li>
-    <li><strong>Tokenize</strong> — Reversible pseudonym mapping</li>
-    <li><strong>Generalize</strong> — Reduce precision (year only, ZIP-3)</li>
+    <li><strong>Redact</strong> - Full replacement with [REDACTED]</li>
+    <li><strong>Partial</strong> - Show first/last N characters, mask the rest</li>
+    <li><strong>PAN</strong> - PCI-compliant: first 6 + last 4 only</li>
+    <li><strong>Tokenize</strong> - Reversible pseudonym mapping</li>
+    <li><strong>Generalize</strong> - Reduce precision (year only, ZIP-3)</li>
 </ul>`
     },
 
@@ -3897,7 +3897,7 @@ class BreachNotifier {
     await this.#mailer?.send({
       to: '{{INCIDENT_RESPONSE_TEAM}}',
       subject: \`[BREACH \${incident.severity.toUpperCase()}] \${incident.title}\`,
-      body: \`Incident \${incident.id} — \${incident.affectedRecords} records.\\n\`
+      body: \`Incident \${incident.id} - \${incident.affectedRecords} records.\\n\`
           + \`Next deadline: \${urgentDeadline?.deadline} (\${urgentDeadline?.framework})\`,
     });
     incident.notifications.push({
@@ -3911,15 +3911,15 @@ export { BreachNotifier, FRAMEWORK_DEADLINES, SEVERITY };`,
         notes: `
 <h3>Compliance Coverage</h3>
 <ul>
-    <li><strong>GDPR Art. 33/34</strong> — 72-hour DPA + data subject notification</li>
-    <li><strong>HIPAA §164.408</strong> — 60-day HHS + individual notification (media if 500+)</li>
-    <li><strong>DORA Art. 19</strong> — 4h initial → 72h intermediate → 1-month final report</li>
-    <li><strong>NIS 2 Art. 23</strong> — 24h early warning → 72h notification → 1-month final</li>
+    <li><strong>GDPR Art. 33/34</strong> - 72-hour DPA + data subject notification</li>
+    <li><strong>HIPAA §164.408</strong> - 60-day HHS + individual notification (media if 500+)</li>
+    <li><strong>DORA Art. 19</strong> - 4h initial → 72h intermediate → 1-month final report</li>
+    <li><strong>NIS 2 Art. 23</strong> - 24h early warning → 72h notification → 1-month final</li>
 </ul>
 <h3>Key Features</h3>
 <ul>
     <li>Automatic deadline calculation per applicable framework</li>
-    <li>Severity-based escalation — critical/high triggers immediate notification</li>
+    <li>Severity-based escalation - critical/high triggers immediate notification</li>
     <li>Multi-channel dispatch (email, webhook, SMS)</li>
     <li>Full audit trail for every notification sent</li>
 </ul>`
@@ -3933,7 +3933,7 @@ export { BreachNotifier, FRAMEWORK_DEADLINES, SEVERITY };`,
         language: 'JavaScript',
         tags: ['gdpr', 'consent', 'privacy', 'dsr', 'data-rights', 'compliance'],
         code: `/**
- * GDPR Consent Manager — Granular Consent Tracking
+ * GDPR Consent Manager - Granular Consent Tracking
  * GDPR Art. 6/7/13/17/20/21 | SOC 2 CC2.2 | ISO 27001 A.5.34
  */
 import crypto from 'node:crypto';
@@ -4033,17 +4033,17 @@ export { ConsentManager, CONSENT_PURPOSES, DSR_TYPES };`,
         notes: `
 <h3>Compliance Coverage</h3>
 <ul>
-    <li><strong>GDPR Art. 6</strong> — Lawful basis for processing (consent, contract, legitimate interest)</li>
-    <li><strong>GDPR Art. 7</strong> — Conditions for valid consent (granular, specific, withdrawable)</li>
-    <li><strong>GDPR Art. 17</strong> — Right to erasure (integrated DSR workflow)</li>
-    <li><strong>GDPR Art. 20</strong> — Right to data portability</li>
+    <li><strong>GDPR Art. 6</strong> - Lawful basis for processing (consent, contract, legitimate interest)</li>
+    <li><strong>GDPR Art. 7</strong> - Conditions for valid consent (granular, specific, withdrawable)</li>
+    <li><strong>GDPR Art. 17</strong> - Right to erasure (integrated DSR workflow)</li>
+    <li><strong>GDPR Art. 20</strong> - Right to data portability</li>
 </ul>
 <h3>Key Features</h3>
 <ul>
-    <li><strong>Per-purpose tracking</strong> — No blanket consent; each purpose is independently managed</li>
-    <li><strong>Consent versioning</strong> — Links consent to the exact policy version shown</li>
-    <li><strong>DSR workflow</strong> — Submit and track Data Subject Requests with deadline enforcement</li>
-    <li><strong>Consent receipts</strong> — Cryptographic proof of consent (Kantara specification)</li>
+    <li><strong>Per-purpose tracking</strong> - No blanket consent; each purpose is independently managed</li>
+    <li><strong>Consent versioning</strong> - Links consent to the exact policy version shown</li>
+    <li><strong>DSR workflow</strong> - Submit and track Data Subject Requests with deadline enforcement</li>
+    <li><strong>Consent receipts</strong> - Cryptographic proof of consent (Kantara specification)</li>
 </ul>`
     },
 
@@ -4179,16 +4179,16 @@ export { PHIFilter, filterPHI, PHI_IDENTIFIERS, ACCESS_PROFILES };`,
         notes: `
 <h3>Compliance Coverage</h3>
 <ul>
-    <li><strong>HIPAA §164.502(b)</strong> — Minimum Necessary standard</li>
-    <li><strong>HIPAA §164.514(b)(2)</strong> — Safe Harbor de-identification (18 identifiers)</li>
-    <li><strong>HIPAA §164.312(a)(1)</strong> — Access control for ePHI</li>
+    <li><strong>HIPAA §164.502(b)</strong> - Minimum Necessary standard</li>
+    <li><strong>HIPAA §164.514(b)(2)</strong> - Safe Harbor de-identification (18 identifiers)</li>
+    <li><strong>HIPAA §164.312(a)(1)</strong> - Access control for ePHI</li>
 </ul>
 <h3>Access Profiles</h3>
 <ul>
-    <li><strong>Treatment</strong> — Full clinical data access for care providers</li>
-    <li><strong>Payment</strong> — Billing-relevant fields only</li>
-    <li><strong>Operations</strong> — Aggregated operational data</li>
-    <li><strong>Research</strong> — De-identified data only</li>
+    <li><strong>Treatment</strong> - Full clinical data access for care providers</li>
+    <li><strong>Payment</strong> - Billing-relevant fields only</li>
+    <li><strong>Operations</strong> - Aggregated operational data</li>
+    <li><strong>Research</strong> - De-identified data only</li>
 </ul>`
     },
 
@@ -4200,7 +4200,7 @@ export { PHIFilter, filterPHI, PHI_IDENTIFIERS, ACCESS_PROFILES };`,
         language: 'JavaScript',
         tags: ['pci-dss', 'pan', 'tokenization', 'card', 'payment', 'compliance'],
         code: `/**
- * PCI DSS Card Sanitizer — PAN Truncation & Tokenization
+ * PCI DSS Card Sanitizer - PAN Truncation & Tokenization
  * PCI DSS 3.3 | 3.4 | 3.5 | SOC 2 CC6.1 | ISO 27001 A.8.11
  */
 import crypto from 'node:crypto';
@@ -4221,7 +4221,7 @@ class CardSanitizer {
     this.#hmacKey = typeof hmacKey === 'string' ? Buffer.from(hmacKey, 'base64') : hmacKey;
   }
 
-  /** PCI DSS 3.3 — Display only first 6 + last 4 */
+  /** PCI DSS 3.3 - Display only first 6 + last 4 */
   mask(pan) {
     const digits = pan.replace(/\\D/g, '');
     if (!this.luhnCheck(digits)) return '[INVALID CARD]';
@@ -4234,7 +4234,7 @@ class CardSanitizer {
     return '****' + digits.slice(-4);
   }
 
-  /** PCI DSS 3.4 — Tokenize (reversible only with vault access) */
+  /** PCI DSS 3.4 - Tokenize (reversible only with vault access) */
   tokenize(pan) {
     const digits = pan.replace(/\\D/g, '');
     const hmac = crypto.createHmac('sha256', this.#hmacKey).update(digits).digest('hex');
@@ -4281,18 +4281,18 @@ export { CardSanitizer, CARD_BRANDS };`,
         notes: `
 <h3>Compliance Coverage</h3>
 <ul>
-    <li><strong>PCI DSS 3.3</strong> — Display masking: first 6 + last 4 digits only</li>
-    <li><strong>PCI DSS 3.4</strong> — Render PAN unreadable via tokenization</li>
-    <li><strong>PCI DSS 3.5</strong> — Key management for token vault</li>
-    <li><strong>SOC 2 CC6.1</strong> — Data protection controls</li>
+    <li><strong>PCI DSS 3.3</strong> - Display masking: first 6 + last 4 digits only</li>
+    <li><strong>PCI DSS 3.4</strong> - Render PAN unreadable via tokenization</li>
+    <li><strong>PCI DSS 3.5</strong> - Key management for token vault</li>
+    <li><strong>SOC 2 CC6.1</strong> - Data protection controls</li>
 </ul>
 <h3>Key Features</h3>
 <ul>
-    <li><strong>Mask</strong> — Show first 6 + last 4 (PCI 3.3 compliant)</li>
-    <li><strong>Truncate</strong> — Last 4 only (irreversible)</li>
-    <li><strong>Tokenize</strong> — HMAC-based tokenization with vault</li>
-    <li><strong>Scrub</strong> — Detect and remove PANs from free text (logs, errors)</li>
-    <li><strong>Luhn validation</strong> — Card number checksum verification</li>
+    <li><strong>Mask</strong> - Show first 6 + last 4 (PCI 3.3 compliant)</li>
+    <li><strong>Truncate</strong> - Last 4 only (irreversible)</li>
+    <li><strong>Tokenize</strong> - HMAC-based tokenization with vault</li>
+    <li><strong>Scrub</strong> - Detect and remove PANs from free text (logs, errors)</li>
+    <li><strong>Luhn validation</strong> - Card number checksum verification</li>
 </ul>`
     },
 
@@ -4385,16 +4385,16 @@ export { sessionTimeout, TIMEOUT_PROFILES };`,
         notes: `
 <h3>Compliance Coverage</h3>
 <ul>
-    <li><strong>PCI DSS 8.2.8</strong> — Maximum 15 minutes idle for CDE access</li>
-    <li><strong>HIPAA §164.312(a)(2)(iii)</strong> — Automatic logoff after inactivity</li>
-    <li><strong>SOC 2 CC6.1</strong> — Session management controls</li>
-    <li><strong>CMMC AC.L2-3.1.11</strong> — Session lock after inactivity</li>
+    <li><strong>PCI DSS 8.2.8</strong> - Maximum 15 minutes idle for CDE access</li>
+    <li><strong>HIPAA §164.312(a)(2)(iii)</strong> - Automatic logoff after inactivity</li>
+    <li><strong>SOC 2 CC6.1</strong> - Session management controls</li>
+    <li><strong>CMMC AC.L2-3.1.11</strong> - Session lock after inactivity</li>
 </ul>
 <h3>Timeout Profiles</h3>
 <ul>
-    <li><strong>Standard</strong> — 30 min idle / 8h absolute (general web apps)</li>
-    <li><strong>Elevated</strong> — 15 min idle / 4h absolute (PCI DSS CDE access)</li>
-    <li><strong>Critical</strong> — 5 min idle / 1h absolute (admin panels, key management)</li>
+    <li><strong>Standard</strong> - 30 min idle / 8h absolute (general web apps)</li>
+    <li><strong>Elevated</strong> - 15 min idle / 4h absolute (PCI DSS CDE access)</li>
+    <li><strong>Critical</strong> - 5 min idle / 1h absolute (admin panels, key management)</li>
 </ul>
 <h3>Session Headers</h3>
 <p>Sets <code>X-Session-Warning: true</code> and <code>X-Session-Expires-In</code> headers when approaching timeout, enabling front-end warning dialogs.</p>`

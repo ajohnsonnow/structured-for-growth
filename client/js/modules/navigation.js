@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Navigation Module
  * ─────────────────
  * World-class responsive nav with:
@@ -164,7 +164,7 @@ export function initNavigation() {
 
             const href = link.getAttribute('href');
 
-            // Anchor links — smooth scroll
+            // Anchor links - smooth scroll
             if (href && href.startsWith('#')) {
                 e.preventDefault();
 

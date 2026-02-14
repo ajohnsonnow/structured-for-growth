@@ -1,0 +1,13 @@
+---
+sourceLocationPrefix: /home/runner/work/bulk-builder/bulk-builder
+baselineLinesOfCode: 11860
+unicodeNewlines: true
+columnKind: utf16
+primaryLanguage: javascript
+creationMetadata:
+  sha: 95df04783dd07b8e21d0313016e518e86a951be5
+  cliVersion: 2.24.0
+  creationTime: 2026-02-12T06:12:57.845768167Z
+overlayBaseDatabase: false
+overlayDatabase: false
+finalised: true

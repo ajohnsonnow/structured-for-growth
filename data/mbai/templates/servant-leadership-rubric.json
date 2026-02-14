@@ -1,13 +1,13 @@
-{
+﻿{
   "id": "servant-leadership-rubric",
   "title": "Servant Leadership Performance Evaluation Rubric",
   "version": "1.0.0",
   "category": "human-resources",
   "icon": "📊",
-  "description": "A four-level rubric (1-Developing to 4-Exemplary) evaluating leaders on empowerment, psychological safety, human growth, inclusive leadership, and ethical stewardship — the five pillars of servant leadership.",
+  "description": "A four-level rubric (1-Developing to 4-Exemplary) evaluating leaders on empowerment, psychological safety, human growth, inclusive leadership, and ethical stewardship - the five pillars of servant leadership.",
   "methodology": "MBAi + Sustainable HR + Servant Leadership",
   "frameworks": ["NIST AI RMF (Fairness)", "ISO 42001"],
-  "scoringSystem": "1 (Developing) — 2 (Competent) — 3 (Proficient) — 4 (Exemplary)",
+  "scoringSystem": "1 (Developing) - 2 (Competent) - 3 (Proficient) - 4 (Exemplary)",
   "competencies": [
     {
       "id": "comp-01",

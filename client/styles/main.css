@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    STRUCTURED FOR GROWTH - MAIN STYLESHEET
    ============================================ */
 
@@ -276,7 +276,7 @@ img {
     box-shadow: var(--shadow-md);
 }
 
-/* Mobile menu toggle button — 48px touch target (WCAG 2.5.8) */
+/* Mobile menu toggle button - 48px touch target (WCAG 2.5.8) */
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
@@ -895,7 +895,7 @@ section {
 }
 
 /* ──────────────────────────────────────────────
-   Responsive Design — Mobile-First Breakpoints
+   Responsive Design - Mobile-First Breakpoints
    ────────────────────────────────────────────── */
 
 /* Tablet: compact nav spacing (≤1024px) */

@@ -1,10 +1,10 @@
-{
+﻿{
   "id": "nist-ai-rmf",
   "name": "NIST AI RMF",
   "fullName": "NIST Artificial Intelligence Risk Management Framework 1.0",
   "version": "1.0 (January 2023)",
   "governingBody": "National Institute of Standards and Technology (NIST)",
-  "jurisdiction": "United States (Voluntary — Global Influence)",
+  "jurisdiction": "United States (Voluntary - Global Influence)",
   "primaryAudience": ["AI Developers", "AI Deployers", "ML Engineers", "AI Product Managers", "AI Governance Teams", "Enterprises Using AI"],
   "description": "The NIST AI RMF provides a voluntary framework for managing risks associated with AI systems throughout their lifecycle. It promotes trustworthy AI by addressing validity, reliability, safety, security, explainability, privacy, fairness, and accountability. The framework uses four core functions: Govern, Map, Measure, and Manage. It is technology-agnostic and applicable to all AI system types.",
   "certificationDetails": {

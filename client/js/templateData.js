@@ -1,4 +1,4 @@
-// Template Library Data - Complete Collection
+﻿// Template Library Data - Complete Collection
 // All templates with proper escaping for Vite build
 
 export const templates = [
@@ -2011,7 +2011,7 @@ export default DateUtils;`,
         category: 'compliance',
         language: 'JavaScript',
         tags: ['rbac', 'access-control', 'middleware', 'soc2', 'iso27001', 'hipaa'],
-        code: `// RBAC Middleware — Compliance-Ready Access Control
+        code: `// RBAC Middleware - Compliance-Ready Access Control
 const ROLES = {
   SUPER_ADMIN: 'super_admin',
   ADMIN: 'admin',
@@ -2094,7 +2094,7 @@ function logAccess(req, decision, detail) {
 
 export { ROLES, requireRole, requirePermission, hasPermission };`,
         usage: '<h3>Express Integration</h3><pre><code>import { requireRole, requirePermission, ROLES } from \'./middleware/rbac.js\';\n\n// Protect admin routes\napp.get(\'/admin/users\', requireRole(ROLES.ADMIN), listUsers);\n\n// Permission-based\napp.delete(\'/api/users/:id\', requirePermission(\'users:delete\'), deleteUser);\n\n// Multiple roles\napp.get(\'/reports\', requireRole(ROLES.MANAGER, ROLES.ADMIN), getReports);</code></pre>',
-        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC6.1</strong> — Logical access security</li><li><strong>ISO 27001 A.8.2</strong> — Privileged access rights</li><li><strong>HIPAA §164.312(a)</strong> — Access controls</li><li><strong>PCI DSS Req 7</strong> — Restrict access by business need</li></ul><h3>Audit Trail</h3><p>Every access decision is logged with timestamp, user, role, path, IP, and decision. Retain logs per your retention policy (SOC 2: 1 year, HIPAA: 6 years).</p>'
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC6.1</strong> - Logical access security</li><li><strong>ISO 27001 A.8.2</strong> - Privileged access rights</li><li><strong>HIPAA §164.312(a)</strong> - Access controls</li><li><strong>PCI DSS Req 7</strong> - Restrict access by business need</li></ul><h3>Audit Trail</h3><p>Every access decision is logged with timestamp, user, role, path, IP, and decision. Retain logs per your retention policy (SOC 2: 1 year, HIPAA: 6 years).</p>'
     },
     {
         id: 'chain-hashed-audit-logger',
@@ -2167,7 +2167,7 @@ class AuditLogger {
 
 export default AuditLogger;`,
         usage: '<h3>Usage</h3><pre><code>import AuditLogger from \'./AuditLogger.js\';\nconst audit = new AuditLogger(\'security-audit.jsonl\');\n\n// Log events\naudit.log({ action: \'LOGIN\', actor: \'user@co.com\', resource: \'auth\', detail: \'MFA verified\' });\naudit.log({ action: \'DATA_ACCESS\', actor: \'admin@co.com\', resource: \'users\', detail: \'Exported PII report\' });\n\n// Verify chain integrity\nconst result = audit.verify();\nconsole.log(result.valid ? \'Chain intact\' : \'TAMPERING DETECTED at entry \' + result.brokenAt);</code></pre>',
-        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC7.2</strong> — System monitoring and anomaly detection</li><li><strong>ISO 27001 A.8.15</strong> — Logging and monitoring</li><li><strong>HIPAA §164.312(b)</strong> — Audit controls</li><li><strong>PCI DSS Req 10</strong> — Track and monitor access</li></ul><h3>Tamper Evidence</h3><p>Each entry includes a SHA-256 hash of its content plus the previous entry hash, forming a blockchain-like chain. If any entry is modified, all subsequent hashes break, making tampering immediately detectable.</p>'
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC7.2</strong> - System monitoring and anomaly detection</li><li><strong>ISO 27001 A.8.15</strong> - Logging and monitoring</li><li><strong>HIPAA §164.312(b)</strong> - Audit controls</li><li><strong>PCI DSS Req 10</strong> - Track and monitor access</li></ul><h3>Tamper Evidence</h3><p>Each entry includes a SHA-256 hash of its content plus the previous entry hash, forming a blockchain-like chain. If any entry is modified, all subsequent hashes break, making tampering immediately detectable.</p>'
     },
     {
         id: 'aes256-field-encryption',
@@ -2230,7 +2230,7 @@ class FieldEncryptor {
 
 export default FieldEncryptor;`,
         usage: '<h3>Usage</h3><pre><code>import FieldEncryptor from \'./FieldEncryptor.js\';\nconst enc = new FieldEncryptor(process.env.FIELD_ENCRYPTION_KEY);\n\n// Encrypt individual values\nconst cipher = enc.encrypt(\'123-45-6789\');\nconst plain  = enc.decrypt(cipher);\n\n// Encrypt specific object fields before DB insert\nconst record = { name: \'Jane\', ssn: \'123-45-6789\', email: \'jane@co.com\' };\nconst safe = enc.encryptFields(record, [\'ssn\', \'email\']);\n// safe.ssn → \'a1b2c3...:d4e5f6...:aabbcc...\'\n\n// Decrypt after DB read\nconst restored = enc.decryptFields(safe, [\'ssn\', \'email\']);</code></pre>',
-        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 32</strong> — Encryption of personal data</li><li><strong>HIPAA §164.312(a)(2)(iv)</strong> — Encryption at rest</li><li><strong>PCI DSS Req 3</strong> — Protect stored cardholder data</li><li><strong>SOC 2 CC6.1</strong> — Encryption controls</li></ul><h3>Key Management</h3><p>Generate key: <code>node -e \"console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))\"</code>. Store in environment variable or KMS. Rotate by re-encrypting under new key. Never commit keys to source control.</p>'
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 32</strong> - Encryption of personal data</li><li><strong>HIPAA §164.312(a)(2)(iv)</strong> - Encryption at rest</li><li><strong>PCI DSS Req 3</strong> - Protect stored cardholder data</li><li><strong>SOC 2 CC6.1</strong> - Encryption controls</li></ul><h3>Key Management</h3><p>Generate key: <code>node -e \"console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))\"</code>. Store in environment variable or KMS. Rotate by re-encrypting under new key. Never commit keys to source control.</p>'
     },
     {
         id: 'pii-data-masking',
@@ -2293,7 +2293,7 @@ class DataMasker {
 
 export { DataMasker, PATTERNS };`,
         usage: '<h3>Usage</h3><pre><code>import { DataMasker } from \'./DataMasker.js\';\nconst masker = new DataMasker();\n\n// Mask a string\nmasker.mask(\'SSN: 123-45-6789, Email: john@acme.com\');\n// → \'SSN: 1**-**-**89, Email: j***@acme.com\'\n\n// Mask object fields\nconst user = { name: \'Jane\', ssn: \'987-65-4321\', phone: \'555-123-4567\' };\nmasker.maskObject(user);\n// → { name: \'Jane\', ssn: \'9**-**-**21\', phone: \'(***) ***-4567\' }\n\n// Full redaction for logs\nmasker.redact(\'Card: 4111-1111-1111-1111\');\n// → \'Card: [REDACTED]\'</code></pre>',
-        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 25</strong> — Data protection by design (pseudonymisation)</li><li><strong>HIPAA Safe Harbor</strong> — De-identification of PHI</li><li><strong>PCI DSS Req 3.4</strong> — Render PAN unreadable</li><li><strong>SOC 2 CC6.7</strong> — Data classification and handling</li></ul><h3>Best Practices</h3><p>Apply masking at the logging layer so PII never reaches log files. Use <code>maskObject()</code> before serialising API responses for non-privileged consumers. Add custom patterns for domain-specific identifiers (patient IDs, account numbers).</p>'
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 25</strong> - Data protection by design (pseudonymisation)</li><li><strong>HIPAA Safe Harbor</strong> - De-identification of PHI</li><li><strong>PCI DSS Req 3.4</strong> - Render PAN unreadable</li><li><strong>SOC 2 CC6.7</strong> - Data classification and handling</li></ul><h3>Best Practices</h3><p>Apply masking at the logging layer so PII never reaches log files. Use <code>maskObject()</code> before serialising API responses for non-privileged consumers. Add custom patterns for domain-specific identifiers (patient IDs, account numbers).</p>'
     },
     {
         id: 'breach-notification-engine',
@@ -2361,7 +2361,7 @@ class BreachNotificationEngine {
     if (this.notifier) {
       for (const dl of classified.deadlines) {
         await this.notifier.send({
-          subject: '[BREACH] ' + dl.label + ' — ' + classified.id,
+          subject: '[BREACH] ' + dl.label + ' - ' + classified.id,
           framework: dl.framework, deadline: dl.deadlineISO,
           authority: dl.authority, summary: classified.summary });
       }
@@ -2372,7 +2372,7 @@ class BreachNotificationEngine {
 
 export { BreachNotificationEngine, FRAMEWORK_DEADLINES, SEVERITY };`,
         usage: '<h3>Usage</h3><pre><code>import { BreachNotificationEngine } from \'./BreachNotification.js\';\nconst engine = new BreachNotificationEngine({ notifier: emailService });\n\nconst result = await engine.report({\n  summary: \'Unauthorized access to patient records\',\n  dataTypes: [\'phi\', \'pii\'],\n  recordCount: 1200,\n  frameworks: [\'hipaa\', \'gdpr\']\n});\n\nconsole.log(result.severity);   // \'CRITICAL\'\nconsole.log(result.deadlines);  // sorted by urgency</code></pre>',
-        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 33</strong> — 72-hour notification to DPA</li><li><strong>HIPAA Breach Notification Rule</strong> — 60-day notification to HHS</li><li><strong>DORA Art. 19</strong> — 4-hour initial classification</li><li><strong>NIS 2 Art. 23</strong> — 24-hour early warning</li></ul><h3>Severity Matrix</h3><p>LOW: &lt;100 records, non-sensitive. MEDIUM: 100-500 records. HIGH: 500+ records or sensitive data. CRITICAL: 5000+ records or PHI with 500+ records.</p>'
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 33</strong> - 72-hour notification to DPA</li><li><strong>HIPAA Breach Notification Rule</strong> - 60-day notification to HHS</li><li><strong>DORA Art. 19</strong> - 4-hour initial classification</li><li><strong>NIS 2 Art. 23</strong> - 24-hour early warning</li></ul><h3>Severity Matrix</h3><p>LOW: &lt;100 records, non-sensitive. MEDIUM: 100-500 records. HIGH: 500+ records or sensitive data. CRITICAL: 5000+ records or PHI with 500+ records.</p>'
     },
     // ─── MFA MIDDLEWARE ─────────────────────────────────────────
     {
@@ -2427,14 +2427,14 @@ function generateRecoveryCodes() {
 function requireMFA(req, res, next) {
   const userId = req.user?.id;
   if (!userId) return res.status(401).json({ error: 'Authentication required' });
-  if (isLockedOut(userId)) return res.status(429).json({ error: 'Account locked — too many failed MFA attempts' });
+  if (isLockedOut(userId)) return res.status(429).json({ error: 'Account locked - too many failed MFA attempts' });
   if (req.session?.mfaVerified) return next();
   return res.status(403).json({ error: 'MFA verification required', mfaRequired: true });
 }
 
 export { requireMFA, enrollTOTP, verifyTOTP, generateRecoveryCodes, MFA_CONFIG };`,
         usage: '<h3>Usage</h3><pre><code>import { requireMFA, enrollTOTP, verifyTOTP } from \'./mfa-middleware.js\';\n\n// Protect admin routes\napp.use(\'/admin\', requireMFA);\n\n// Enroll user in TOTP\nconst { secret, qrCodeUrl } = await enrollTOTP(userId, email);\n// → Show qrCodeUrl to user, store secret in DB\n\n// Verify token on login\nconst valid = verifyTOTP(userToken, storedSecret);\nif (valid) req.session.mfaVerified = true;</code></pre>',
-        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC6.1</strong> — Logical access controls</li><li><strong>ISO 27001 A.8.5</strong> — Secure authentication</li><li><strong>HIPAA §164.312(d)</strong> — Person or entity authentication</li><li><strong>PCI DSS 8.4</strong> — MFA for administrative access</li><li><strong>CMMC IA.L2-3.5.3</strong> — Multifactor authentication</li></ul><h3>Dependencies</h3><p><code>npm install otplib qrcode @simplewebauthn/server</code></p>'
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC6.1</strong> - Logical access controls</li><li><strong>ISO 27001 A.8.5</strong> - Secure authentication</li><li><strong>HIPAA §164.312(d)</strong> - Person or entity authentication</li><li><strong>PCI DSS 8.4</strong> - MFA for administrative access</li><li><strong>CMMC IA.L2-3.5.3</strong> - Multifactor authentication</li></ul><h3>Dependencies</h3><p><code>npm install otplib qrcode @simplewebauthn/server</code></p>'
     },
     // ─── SESSION TIMEOUT ────────────────────────────────────────
     {
@@ -2465,11 +2465,11 @@ class SessionTimeoutManager {
       const created = req.session.createdAt || now;
       const lastActivity = req.session.lastActivity || now;
 
-      // Absolute timeout — session too old regardless of activity
+      // Absolute timeout - session too old regardless of activity
       if (now - created > this.profile.absoluteMs) {
         return this.#expireSession(req, res, 'absolute_timeout');
       }
-      // Idle timeout — no activity for too long
+      // Idle timeout - no activity for too long
       if (now - lastActivity > this.profile.idleMs) {
         return this.#expireSession(req, res, 'idle_timeout');
       }
@@ -2500,7 +2500,7 @@ class SessionTimeoutManager {
 
 export { SessionTimeoutManager, TIMEOUT_PROFILES };`,
         usage: '<h3>Usage</h3><pre><code>import { SessionTimeoutManager } from \'./session-timeout.js\';\n\nconst timeout = new SessionTimeoutManager({\n  profile: \'sensitive\',   // 15-min idle, 4-hour max\n  auditLogger: auditLog,\n  onTimeout: (req) => notifyUser(req.session.userId)\n});\n\napp.use(timeout.middleware());\n\n// Client-side: watch X-Session-Warning header to show countdown</code></pre>',
-        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC6.1</strong> — Session management controls</li><li><strong>HIPAA §164.312(a)(2)(iii)</strong> — Automatic logoff</li><li><strong>PCI DSS 8.2.8</strong> — Session idle timeout ≤15 min for CDE access</li><li><strong>CMMC AC.L2-3.1.11</strong> — Session lock</li></ul><h3>Timeout Profiles</h3><p><strong>Standard:</strong> 30min idle / 8hr max. <strong>Sensitive:</strong> 15min idle / 4hr max. <strong>Critical:</strong> 5min idle / 1hr max. Use <em>sensitive</em> for PCI DSS cardholder environments and HIPAA ePHI systems.</p>'
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>SOC 2 CC6.1</strong> - Session management controls</li><li><strong>HIPAA §164.312(a)(2)(iii)</strong> - Automatic logoff</li><li><strong>PCI DSS 8.2.8</strong> - Session idle timeout ≤15 min for CDE access</li><li><strong>CMMC AC.L2-3.1.11</strong> - Session lock</li></ul><h3>Timeout Profiles</h3><p><strong>Standard:</strong> 30min idle / 8hr max. <strong>Sensitive:</strong> 15min idle / 4hr max. <strong>Critical:</strong> 5min idle / 1hr max. Use <em>sensitive</em> for PCI DSS cardholder environments and HIPAA ePHI systems.</p>'
     },
     // ─── HIPAA PHI FILTER ───────────────────────────────────────
     {
@@ -2589,8 +2589,8 @@ function filterPHI(phiFilter, role) {
 }
 
 export { PHIFilter, filterPHI, PHI_IDENTIFIERS, ROLE_PROFILES };`,
-        usage: '<h3>Usage</h3><pre><code>import { PHIFilter, filterPHI } from \'./hipaa-phi-filter.js\';\nconst filter = new PHIFilter({ auditLogger: hipaaAuditLog });\n\n// Middleware — auto-filter responses by role\napp.get(\'/api/patients/:id\', filterPHI(filter, \'billing\'));\n// → Only returns: names, mrn, healthPlanId, accountNumbers, dates\n\n// Direct use\nconst record = { names: \'Jane Doe\', ssn: \'123-45-6789\', mrn: \'MRN-001\' };\nfilter.filter(record, \'billing\');\n// → { names: \'Jane Doe\', ssn: \'[REDACTED]\', mrn: \'MRN-001\' }</code></pre>',
-        notes: '<h3>Compliance Mapping</h3><ul><li><strong>HIPAA §164.502(b)</strong> — Minimum Necessary Standard</li><li><strong>HIPAA §164.514(b)(2)</strong> — Safe Harbor de-identification (18 identifiers)</li><li><strong>HIPAA §164.312(a)(1)</strong> — Access control</li><li><strong>SOC 2 CC6.1</strong> — Logical access controls</li></ul><h3>Role Profiles</h3><p><strong>treating_provider:</strong> Full PHI access (Treatment). <strong>billing:</strong> Name, MRN, health plan, account, dates. <strong>researcher:</strong> De-identified data only. <strong>it_support:</strong> MRN only.</p>'
+        usage: '<h3>Usage</h3><pre><code>import { PHIFilter, filterPHI } from \'./hipaa-phi-filter.js\';\nconst filter = new PHIFilter({ auditLogger: hipaaAuditLog });\n\n// Middleware - auto-filter responses by role\napp.get(\'/api/patients/:id\', filterPHI(filter, \'billing\'));\n// → Only returns: names, mrn, healthPlanId, accountNumbers, dates\n\n// Direct use\nconst record = { names: \'Jane Doe\', ssn: \'123-45-6789\', mrn: \'MRN-001\' };\nfilter.filter(record, \'billing\');\n// → { names: \'Jane Doe\', ssn: \'[REDACTED]\', mrn: \'MRN-001\' }</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>HIPAA §164.502(b)</strong> - Minimum Necessary Standard</li><li><strong>HIPAA §164.514(b)(2)</strong> - Safe Harbor de-identification (18 identifiers)</li><li><strong>HIPAA §164.312(a)(1)</strong> - Access control</li><li><strong>SOC 2 CC6.1</strong> - Logical access controls</li></ul><h3>Role Profiles</h3><p><strong>treating_provider:</strong> Full PHI access (Treatment). <strong>billing:</strong> Name, MRN, health plan, account, dates. <strong>researcher:</strong> De-identified data only. <strong>it_support:</strong> MRN only.</p>'
     },
     // ─── GDPR CONSENT MANAGER ───────────────────────────────────
     {
@@ -2675,8 +2675,8 @@ class ConsentManager {
 }
 
 export { ConsentManager, CONSENT_PURPOSES };`,
-        usage: '<h3>Usage</h3><pre><code>import { ConsentManager } from \'./gdpr-consent-manager.js\';\nconst consent = new ConsentManager({ store: consentDB });\n\n// Grant consent\nawait consent.grant(userId, \'marketing_email\', { policyVersion: \'2.1\', ip: req.ip });\n\n// Check before processing\nconst { granted } = await consent.check(userId, \'marketing_email\');\nif (!granted) throw new Error(\'No consent for marketing emails\');\n\n// Withdraw (GDPR Art. 7(3) — right to withdraw)\nawait consent.withdraw(userId, \'marketing_email\', \'User preference\');\n\n// Generate audit receipt\nconst receipt = consent.generateReceipt(consentRecord);</code></pre>',
-        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 6</strong> — Lawful basis for processing</li><li><strong>GDPR Art. 7</strong> — Conditions for consent (freely given, specific, informed, unambiguous)</li><li><strong>GDPR Art. 7(3)</strong> — Right to withdraw consent at any time</li><li><strong>GDPR Art. 13/14</strong> — Information obligations to data subjects</li><li><strong>SOC 2 CC2.2</strong> — Communication about processing</li></ul><h3>Legal Basis Types</h3><p><strong>consent:</strong> Explicit opt-in required. <strong>contract:</strong> Necessary for service delivery. <strong>legitimate_interest:</strong> Balance test required (document in DPIA).</p>'
+        usage: '<h3>Usage</h3><pre><code>import { ConsentManager } from \'./gdpr-consent-manager.js\';\nconst consent = new ConsentManager({ store: consentDB });\n\n// Grant consent\nawait consent.grant(userId, \'marketing_email\', { policyVersion: \'2.1\', ip: req.ip });\n\n// Check before processing\nconst { granted } = await consent.check(userId, \'marketing_email\');\nif (!granted) throw new Error(\'No consent for marketing emails\');\n\n// Withdraw (GDPR Art. 7(3) - right to withdraw)\nawait consent.withdraw(userId, \'marketing_email\', \'User preference\');\n\n// Generate audit receipt\nconst receipt = consent.generateReceipt(consentRecord);</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>GDPR Art. 6</strong> - Lawful basis for processing</li><li><strong>GDPR Art. 7</strong> - Conditions for consent (freely given, specific, informed, unambiguous)</li><li><strong>GDPR Art. 7(3)</strong> - Right to withdraw consent at any time</li><li><strong>GDPR Art. 13/14</strong> - Information obligations to data subjects</li><li><strong>SOC 2 CC2.2</strong> - Communication about processing</li></ul><h3>Legal Basis Types</h3><p><strong>consent:</strong> Explicit opt-in required. <strong>contract:</strong> Necessary for service delivery. <strong>legitimate_interest:</strong> Balance test required (document in DPIA).</p>'
     },
     // ─── PCI CARD SANITIZER ─────────────────────────────────────
     {
@@ -2756,8 +2756,8 @@ class CardSanitizer {
 }
 
 export { CardSanitizer, luhnCheck, CARD_BRANDS };`,
-        usage: '<h3>Usage</h3><pre><code>import { CardSanitizer } from \'./pci-card-sanitizer.js\';\nconst sanitizer = new CardSanitizer({ tokenSecret: process.env.TOKEN_KEY });\n\nsanitizer.mask(\'4111111111111111\');     // \'411111******1111\'\nsanitizer.truncate(\'4111111111111111\'); // \'****1111\'\nsanitizer.tokenize(\'4111111111111111\'); // \'tok_a3f8b2c1d4e5f6a7\'\nsanitizer.detectBrand(\'4111111111111111\'); // \'Visa\'\n\n// Scrub PANs from any text (logs, support tickets, etc.)\nsanitizer.scrubText(\'Card: 4111-1111-1111-1111 was used\');\n// → \'Card: 411111******1111 was used\'\n\n// Express middleware — auto-scrub request bodies\napp.use(sanitizer.middleware());</code></pre>',
-        notes: '<h3>Compliance Mapping</h3><ul><li><strong>PCI DSS 3.3</strong> — Mask PAN when displayed (first 6 / last 4 only)</li><li><strong>PCI DSS 3.4</strong> — Render PAN unreadable everywhere it is stored</li><li><strong>PCI DSS 3.5</strong> — Protect cryptographic keys for PAN protection</li><li><strong>PCI DSS 4.1</strong> — Strong cryptography for PAN in transit</li><li><strong>SOC 2 CC6.1</strong> — Data protection controls</li></ul><h3>Luhn Algorithm</h3><p>All valid card numbers pass the Luhn check (mod-10 checksum). This sanitizer validates before masking to avoid false positives on random 16-digit numbers.</p>'
+        usage: '<h3>Usage</h3><pre><code>import { CardSanitizer } from \'./pci-card-sanitizer.js\';\nconst sanitizer = new CardSanitizer({ tokenSecret: process.env.TOKEN_KEY });\n\nsanitizer.mask(\'4111111111111111\');     // \'411111******1111\'\nsanitizer.truncate(\'4111111111111111\'); // \'****1111\'\nsanitizer.tokenize(\'4111111111111111\'); // \'tok_a3f8b2c1d4e5f6a7\'\nsanitizer.detectBrand(\'4111111111111111\'); // \'Visa\'\n\n// Scrub PANs from any text (logs, support tickets, etc.)\nsanitizer.scrubText(\'Card: 4111-1111-1111-1111 was used\');\n// → \'Card: 411111******1111 was used\'\n\n// Express middleware - auto-scrub request bodies\napp.use(sanitizer.middleware());</code></pre>',
+        notes: '<h3>Compliance Mapping</h3><ul><li><strong>PCI DSS 3.3</strong> - Mask PAN when displayed (first 6 / last 4 only)</li><li><strong>PCI DSS 3.4</strong> - Render PAN unreadable everywhere it is stored</li><li><strong>PCI DSS 3.5</strong> - Protect cryptographic keys for PAN protection</li><li><strong>PCI DSS 4.1</strong> - Strong cryptography for PAN in transit</li><li><strong>SOC 2 CC6.1</strong> - Data protection controls</li></ul><h3>Luhn Algorithm</h3><p>All valid card numbers pass the Luhn check (mod-10 checksum). This sanitizer validates before masking to avoid false positives on random 16-digit numbers.</p>'
     },
 
     // =====================================================
@@ -2771,7 +2771,7 @@ export { CardSanitizer, luhnCheck, CARD_BRANDS };`,
         language: 'JSON',
         tags: ['MBAi', 'strategy', 'ESG', 'balanced-scorecard', 'sustainability'],
         timeSaved: 8,
-        code: `// Sustainable Balanced Scorecard — Strategic Matrix
+        code: `// Sustainable Balanced Scorecard - Strategic Matrix
 // Category: Strategic Management
 // Methodology: MBAi + Sustainable Business + Servant Leadership
 // Frameworks: NIST AI RMF, ISO 42001, CSRD, ISSB
@@ -2859,7 +2859,7 @@ const sbscMatrix = {
 
 export default sbscMatrix;`,
         usage: '<h3>Usage</h3><p>Deploy the SBSC as the primary strategic interface in the Admin Dashboard. Connect to SQL.js for time-series KPI tracking and use MCP server to feed from external ERP/environmental APIs.</p><pre><code>// Fetch from platform API\\nconst res = await fetch("/api/mbai/templates/sbsc-strategic-matrix");\\nconst sbsc = await res.json();\\n\\n// Iterate perspectives\\nsbsc.perspectives.forEach(p => {\\n  console.log(p.name, p.objectives.length, "objectives");\\n});</code></pre>',
-        notes: '<h3>MBAi Integration</h3><ul><li>Maps to <strong>NIST AI RMF "Govern"</strong> function for AI risk culture</li><li>Each objective requires dual documentation: AI vector + servant leadership practice</li><li>Financial perspective tracks circular/PaaS revenue — not just traditional metrics</li></ul><h3>View Full Template</h3><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
+        notes: '<h3>MBAi Integration</h3><ul><li>Maps to <strong>NIST AI RMF "Govern"</strong> function for AI risk culture</li><li>Each objective requires dual documentation: AI vector + servant leadership practice</li><li>Financial perspective tracks circular/PaaS revenue - not just traditional metrics</li></ul><h3>View Full Template</h3><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
     },
     {
         id: 'mbai-circular-supply-chain',
@@ -2869,7 +2869,7 @@ export default sbscMatrix;`,
         language: 'JSON',
         tags: ['MBAi', 'operations', 'supply-chain', 'circular-economy', 'sustainability'],
         timeSaved: 6,
-        code: `// Circular Supply Chain — Operational Workflow
+        code: `// Circular Supply Chain - Operational Workflow
 // Category: Operations & Supply Chain Management
 // Methodology: MBAi + Circular Economy + Servant Leadership
 
@@ -2921,8 +2921,8 @@ const circularWorkflow = {
 };
 
 export default circularWorkflow;`,
-        usage: '<h3>Usage</h3><p>Integrate into the project tracking module. Expose phases to external suppliers via the Client Portal with dynamic progress bars.</p><pre><code>const res = await fetch("/api/mbai/templates/circular-supply-chain");\\nconst workflow = await res.json();\\nworkflow.phases.forEach(ph => console.log(ph.name, "—", ph.kpi));</code></pre>',
-        notes: '<h3>Compliance Alignment</h3><ul><li><strong>ISO 14001</strong> — Environmental management systems</li><li><strong>NIST AI RMF "Map"</strong> — Document AI data flows across vendor ecosystem</li><li><strong>CSRD</strong> — Supply chain due diligence reporting</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
+        usage: '<h3>Usage</h3><p>Integrate into the project tracking module. Expose phases to external suppliers via the Client Portal with dynamic progress bars.</p><pre><code>const res = await fetch("/api/mbai/templates/circular-supply-chain");\\nconst workflow = await res.json();\\nworkflow.phases.forEach(ph => console.log(ph.name, "-", ph.kpi));</code></pre>',
+        notes: '<h3>Compliance Alignment</h3><ul><li><strong>ISO 14001</strong> - Environmental management systems</li><li><strong>NIST AI RMF "Map"</strong> - Document AI data flows across vendor ecosystem</li><li><strong>CSRD</strong> - Supply chain due diligence reporting</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
     },
     {
         id: 'mbai-tbl-impact',
@@ -2932,7 +2932,7 @@ export default circularWorkflow;`,
         language: 'JSON',
         tags: ['MBAi', 'finance', 'TBL', 'ESG', 'impact-roi'],
         timeSaved: 6,
-        code: `// Triple Bottom Line — Integrated P&L & Impact ROI
+        code: `// Triple Bottom Line - Integrated P&L & Impact ROI
 // Strategic Initiative: Fleet Electrification & Workforce Development
 // Methodology: MBAi + TBL Accounting + Servant Leadership
 
@@ -3036,7 +3036,7 @@ export default marketingAudit;`,
         language: 'JSON',
         tags: ['MBAi', 'HR', 'servant-leadership', 'coaching', 'performance-review'],
         timeSaved: 4,
-        code: `// Servant Leadership — 1-on-1 Coaching + Performance Rubric
+        code: `// Servant Leadership - 1-on-1 Coaching + Performance Rubric
 // Methodology: MBAi + Sustainable HR + Servant Leadership
 
 const coachingAgenda = {
@@ -3051,7 +3051,7 @@ const coachingAgenda = {
     { name: "Obstacle Removal", focus: "Stewardship & Empowerment",
       prompt: "What systemic roadblocks can I remove for you today?" },
     { name: "Retrospective", focus: "Psychological Safety",
-      prompt: "Recent win to celebrate? Challenge — what did we learn?" },
+      prompt: "Recent win to celebrate? Challenge - what did we learn?" },
     { name: "Growth & Career", focus: "Commitment to Growth",
       prompt: "New skills? Getting enough actionable feedback?" }
   ]
@@ -3080,7 +3080,7 @@ const leadershipRubric = {
 
 export { coachingAgenda, leadershipRubric };`,
         usage: '<h3>Usage</h3><p>Integrate into the secure messaging module with JWT authentication. Connect to HRIS via API wrappers. AI serves as coaching assistant, not surveillance.</p><pre><code>// Fetch coaching template\\nconst res = await fetch("/api/mbai/templates/servant-leadership-coaching");\\nconst coaching = await res.json();\\nconsole.log(coaching.segments.length, "coaching segments");\\n\\n// Fetch rubric\\nconst rubric = await fetch("/api/mbai/templates/servant-leadership-rubric");\\nconst data = await rubric.json();\\nconsole.log(data.competencies.length, "leadership competencies");</code></pre>',
-        notes: '<h3>Ethical AI in HR</h3><ul><li><strong>NIST AI RMF</strong> — Algorithmic fairness in hiring/promotion required</li><li>Human judgment remains the ultimate arbiter in personnel decisions</li><li>AI synthesizes feedback; humans make the call</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
+        notes: '<h3>Ethical AI in HR</h3><ul><li><strong>NIST AI RMF</strong> - Algorithmic fairness in hiring/promotion required</li><li>Human judgment remains the ultimate arbiter in personnel decisions</li><li>AI synthesizes feedback; humans make the call</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
     },
     {
         id: 'mbai-greenops-sdlc',
@@ -3134,7 +3134,7 @@ const sustainableSDLC = {
 };
 
 export default sustainableSDLC;`,
-        usage: '<h3>Usage</h3><p>Integrate into the pre-deploy audit scripts (<code>npm run audit</code>). The platform&#39;s Vite 5.0 + SQL.js stack natively supports GreenOps principles.</p><pre><code>const res = await fetch("/api/mbai/templates/sustainable-sdlc");\\nconst sdlc = await res.json();\\nsdlc.phases.forEach(ph => console.log(ph.name, "—", ph.greenOps));</code></pre>',
+        usage: '<h3>Usage</h3><p>Integrate into the pre-deploy audit scripts (<code>npm run audit</code>). The platform&#39;s Vite 5.0 + SQL.js stack natively supports GreenOps principles.</p><pre><code>const res = await fetch("/api/mbai/templates/sustainable-sdlc");\\nconst sdlc = await res.json();\\nsdlc.phases.forEach(ph => console.log(ph.name, "-", ph.greenOps));</code></pre>',
         notes: '<h3>Platform Alignment</h3><ul><li>Vite 5.0 fast builds = lower CI energy consumption</li><li>SQL.js lightweight database = minimal container overhead</li><li>Content Engineering structured data optimizes AI retrieval efficiency</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
     },
     {
@@ -3183,7 +3183,7 @@ const grcWorkflow = {
 };
 
 export default grcWorkflow;`,
-        usage: '<h3>Usage</h3><p>This template forms the core of the Compliance Knowledge Base. Use CRUD interfaces to assign controls to teams and track evidence via the dashboard. Integrate with VS Code extension for pre-commit compliance review.</p><pre><code>const res = await fetch("/api/mbai/templates/grc-ai-integration");\\nconst grc = await res.json();\\ngrc.functions.forEach(fn => console.log(fn.name, "—", fn.documentation));</code></pre>',
-        notes: '<h3>OSCAL Integration</h3><ul><li>Maps directly to existing OSCAL catalogs (10 frameworks)</li><li>AI agents limited to flagging risks — humans decide</li><li><strong>GOVERN</strong> = human executives remain accountable</li><li>Cross-references SOC 2, GDPR, ISO 27001, NIST AI RMF</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
+        usage: '<h3>Usage</h3><p>This template forms the core of the Compliance Knowledge Base. Use CRUD interfaces to assign controls to teams and track evidence via the dashboard. Integrate with VS Code extension for pre-commit compliance review.</p><pre><code>const res = await fetch("/api/mbai/templates/grc-ai-integration");\\nconst grc = await res.json();\\ngrc.functions.forEach(fn => console.log(fn.name, "-", fn.documentation));</code></pre>',
+        notes: '<h3>OSCAL Integration</h3><ul><li>Maps directly to existing OSCAL catalogs (10 frameworks)</li><li>AI agents limited to flagging risks - humans decide</li><li><strong>GOVERN</strong> = human executives remain accountable</li><li>Cross-references SOC 2, GDPR, ISO 27001, NIST AI RMF</li></ul><p><a href="/mbai">Open MBAi Methodology Dashboard →</a></p>'
     }
 ];

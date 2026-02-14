@@ -1,4 +1,4 @@
-{
+﻿{
   "generated": "2026-02-14T06:29:34.053Z",
   "version": "1.4.7",
   "summary": {
@@ -757,7 +757,7 @@
     {
       "file": "client/compliance.html",
       "slug": "/compliance",
-      "title": "Compliance Knowledge Base — Structured For Growth",
+      "title": "Compliance Knowledge Base - Structured For Growth",
       "sections": 4,
       "forms": 0,
       "modals": 10,
@@ -825,7 +825,7 @@
     {
       "file": "client/docs.html",
       "slug": "/docs",
-      "title": "Documentation — Structured For Growth",
+      "title": "Documentation - Structured For Growth",
       "sections": 2,
       "forms": 0,
       "modals": 0,
@@ -899,7 +899,7 @@
     {
       "file": "client/mbai.html",
       "slug": "/mbai",
-      "title": "MBAi Methodology — Structured For Growth",
+      "title": "MBAi Methodology - Structured For Growth",
       "sections": 4,
       "forms": 0,
       "modals": 16,
@@ -1250,7 +1250,7 @@
       {
         "id": "hipaa",
         "name": "HIPAA",
-        "description": "HIPAA establishes the definitive federal standard for protecting sensitive patient data. The Security Rule establishes national standards for protecting electronic Protected Health Information (ePHI). Covered Entities and Business Associates must implement Administrative, Physical, and Technical Safeguards. Specifications are designated as Required (R) or Addressable (A) — addressable does NOT mean optional.",
+        "description": "HIPAA establishes the definitive federal standard for protecting sensitive patient data. The Security Rule establishes national standards for protecting electronic Protected Health Information (ePHI). Covered Entities and Business Associates must implement Administrative, Physical, and Technical Safeguards. Specifications are designated as Required (R) or Addressable (A) - addressable does NOT mean optional.",
         "version": "2013 Omnibus Rule (Updated)",
         "controlCount": 16,
         "file": "data/compliance/frameworks/hipaa.json"
@@ -1298,7 +1298,7 @@
       {
         "id": "soc2",
         "name": "SOC 2",
-        "description": "SOC 2 is the prevailing compliance standard for technology service providers, SaaS platforms, and cloud-native organizations. Developed by the American Institute of Certified Public Accountants (AICPA), it evaluates an organization's information systems against the Trust Services Criteria (TSC). Unlike prescriptive frameworks, SOC 2 is principles-based — it evaluates whether controls effectively protect systems, giving flexibility to design controls that fit operational maturity.",
+        "description": "SOC 2 is the prevailing compliance standard for technology service providers, SaaS platforms, and cloud-native organizations. Developed by the American Institute of Certified Public Accountants (AICPA), it evaluates an organization's information systems against the Trust Services Criteria (TSC). Unlike prescriptive frameworks, SOC 2 is principles-based - it evaluates whether controls effectively protect systems, giving flexibility to design controls that fit operational maturity.",
         "version": "2017 (TSC 2017)",
         "controlCount": 42,
         "file": "data/compliance/frameworks/soc2.json"

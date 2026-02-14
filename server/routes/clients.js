@@ -1,4 +1,4 @@
-import express from 'express';
+﻿import express from 'express';
 import { body, validationResult } from 'express-validator';
 import { query, queryOne, execute, logActivity } from '../models/database.js';
 import { authenticateToken } from '../middleware/auth.js';
@@ -84,7 +84,7 @@ router.get('/stats/overview', (req, res) => {
         // Retainer client count
         const retainerClients = queryOne("SELECT COUNT(*) as count FROM clients WHERE status = 'active' AND monthly_retainer IS NOT NULL AND monthly_retainer > 0")?.count || 0;
         
-        // Project revenue (sum of budgets for active/planning projects — one-off work)
+        // Project revenue (sum of budgets for active/planning projects - one-off work)
         const projectRevenue = queryOne("SELECT SUM(budget) as total FROM projects WHERE status IN ('planning', 'in-progress') AND budget IS NOT NULL AND budget > 0")?.total || 0;
         
         // One-off project count (projects with budgets, excluding retainer overlap)

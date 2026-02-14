@@ -1,4 +1,4 @@
-# 🎉 PROJECT COMPLETE!
+﻿# 🎉 PROJECT COMPLETE!
 
 ## What We Built
 
@@ -514,7 +514,7 @@ Built with ❤️ for Content Engineering Excellence
 - **API Routes**: 10 route modules, 14+ endpoints
 - **Pages**: 5 (Homepage, Templates, Compliance, Dashboard, Portal)
 - **Time to Setup**: 5 minutes
-- **Time Saved per Project**: 10–50 hours
+- **Time Saved per Project**: 10-50 hours
 - **Value**: Priceless ✨
 
 ---

@@ -1,4 +1,4 @@
-// Templates Page JavaScript
+﻿// Templates Page JavaScript
 import { templates } from './templateData.js';
 import { initNavigation } from './modules/navigation.js';
 
@@ -422,7 +422,7 @@ demoConfigs['chain-hashed-audit-logger'] = {
     html: `
         <div class="demo-audit">
             <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">📝 Tamper-Evident Audit Log</h4>
-            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Each entry is hash-chained to the previous — modify one and the chain breaks.</p>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Each entry is hash-chained to the previous - modify one and the chain breaks.</p>
             <div style="display:flex;gap:var(--spacing-sm);margin-bottom:var(--spacing-md);flex-wrap:wrap;">
                 <input type="text" id="auditAction" placeholder="Action (e.g., USER_LOGIN)" style="flex:1;min-width:150px;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
                 <input type="text" id="auditUser" placeholder="User ID" value="admin@sfg.com" style="flex:1;min-width:150px;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
@@ -480,8 +480,8 @@ demoConfigs['chain-hashed-audit-logger'] = {
             for (const e of entries) { if (e.tampered) { valid = false; break; } }
             const el = document.getElementById('auditChain');
             const msg = valid
-                ? '<div style="padding:var(--spacing-sm);background:rgba(16,185,129,0.15);border-radius:var(--radius-md);color:#10b981;font-weight:600;margin-bottom:var(--spacing-sm);">✓ Chain integrity verified — all hashes valid</div>'
-                : '<div style="padding:var(--spacing-sm);background:rgba(239,68,68,0.15);border-radius:var(--radius-md);color:#ef4444;font-weight:600;margin-bottom:var(--spacing-sm);">✗ Chain integrity BROKEN — tampering detected!</div>';
+                ? '<div style="padding:var(--spacing-sm);background:rgba(16,185,129,0.15);border-radius:var(--radius-md);color:#10b981;font-weight:600;margin-bottom:var(--spacing-sm);">✓ Chain integrity verified - all hashes valid</div>'
+                : '<div style="padding:var(--spacing-sm);background:rgba(239,68,68,0.15);border-radius:var(--radius-md);color:#ef4444;font-weight:600;margin-bottom:var(--spacing-sm);">✗ Chain integrity BROKEN - tampering detected!</div>';
             el.innerHTML = msg + el.innerHTML;
         });
     }
@@ -493,7 +493,7 @@ demoConfigs['aes256-field-encryption'] = {
     html: `
         <div class="demo-encryption">
             <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🔐 AES-256-GCM Field Encryption</h4>
-            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Encrypt and decrypt sensitive fields — see how data looks at rest vs. in use</p>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Encrypt and decrypt sensitive fields - see how data looks at rest vs. in use</p>
             <div style="display:flex;gap:var(--spacing-sm);margin-bottom:var(--spacing-md);flex-wrap:wrap;">
                 <input type="text" id="encInput" placeholder="Enter sensitive data (e.g., SSN, email)" value="123-45-6789" style="flex:1;min-width:200px;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);">
                 <button class="btn btn-primary" id="encBtn">🔒 Encrypt</button>
@@ -506,11 +506,11 @@ demoConfigs['aes256-field-encryption'] = {
                 </div>
                 <div style="padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
                     <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-bottom:4px;">🔒 Encrypted (stored in DB)</div>
-                    <div id="encCipher" style="font-family:var(--font-mono);font-size:0.82rem;color:#ef4444;word-break:break-all;">—</div>
+                    <div id="encCipher" style="font-family:var(--font-mono);font-size:0.82rem;color:#ef4444;word-break:break-all;">-</div>
                 </div>
                 <div style="padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
                     <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-bottom:4px;">🔓 Decrypted (application layer)</div>
-                    <div id="encDecrypted" style="font-family:var(--font-mono);font-size:0.85rem;color:#10b981;word-break:break-all;">—</div>
+                    <div id="encDecrypted" style="font-family:var(--font-mono);font-size:0.85rem;color:#10b981;word-break:break-all;">-</div>
                 </div>
             </div>
             <div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);">
@@ -531,11 +531,11 @@ demoConfigs['aes256-field-encryption'] = {
             lastPlain = document.getElementById('encInput').value || 'test-data';
             document.getElementById('encPlain').textContent = lastPlain;
             document.getElementById('encCipher').textContent = simEncrypt(lastPlain);
-            document.getElementById('encDecrypted').textContent = '—';
+            document.getElementById('encDecrypted').textContent = '-';
         });
         document.getElementById('decBtn').addEventListener('click', () => {
             const cipher = document.getElementById('encCipher').textContent;
-            if (cipher === '—') { alert('Encrypt something first!'); return; }
+            if (cipher === '-') { alert('Encrypt something first!'); return; }
             document.getElementById('encDecrypted').textContent = lastPlain;
         });
     }
@@ -545,7 +545,7 @@ demoConfigs['pii-data-masking'] = {
     html: `
         <div class="demo-masking">
             <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🎭 PII Data Masking</h4>
-            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Enter text with PII — SSN, email, phone, credit card, or IP — and watch it get masked in real time</p>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Enter text with PII - SSN, email, phone, credit card, or IP - and watch it get masked in real time</p>
             <textarea id="piiInput" rows="4" placeholder="Try: John Doe, SSN 123-45-6789, email john@acme.com, phone 503-555-1234, card 4111-1111-1111-1111, IP 192.168.1.100" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);font-family:var(--font-mono);font-size:0.85rem;resize:vertical;">John Doe, SSN 123-45-6789, email john@acme.com, phone 503-555-1234, card 4111-1111-1111-1111, IP 192.168.1.100</textarea>
             <button class="btn btn-primary" id="maskBtn" style="margin-top:var(--spacing-sm);">🎭 Apply Masking</button>
             <div id="piiResult" style="margin-top:var(--spacing-md);padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);font-family:var(--font-mono);font-size:0.85rem;color:var(--text-primary);white-space:pre-wrap;min-height:60px;">
@@ -630,7 +630,7 @@ demoConfigs['breach-notification-engine'] = {
                     html += '<div style="padding:var(--spacing-sm);margin-bottom:4px;background:' + (urgent ? 'rgba(239,68,68,0.1)' : 'var(--bg-tertiary)') + ';border-radius:var(--radius-sm);border-left:3px solid ' + (urgent ? '#ef4444' : '#3b82f6') + ';font-size:0.85rem;">';
                     html += '<strong style="color:var(--text-primary);">' + d.label + '</strong> (' + d.fw.toUpperCase() + ')<br>';
                     html += '<span style="color:var(--text-secondary);">Authority: ' + d.auth + '</span><br>';
-                    html += '<span style="color:' + (urgent ? '#ef4444' : 'var(--text-muted)') + ';">⏰ ' + remaining + 'h remaining — Deadline: ' + d.deadline.toLocaleString() + '</span>';
+                    html += '<span style="color:' + (urgent ? '#ef4444' : 'var(--text-muted)') + ';">⏰ ' + remaining + 'h remaining - Deadline: ' + d.deadline.toLocaleString() + '</span>';
                     html += '</div>';
                 });
             }
@@ -648,15 +648,15 @@ demoConfigs['mfa-middleware'] = {
                 <div style="padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
                     <h5 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">1. Enroll</h5>
                     <button class="btn btn-primary" id="mfaEnrollBtn" style="width:100%;">📲 Generate TOTP Secret</button>
-                    <div id="mfaSecret" style="margin-top:var(--spacing-sm);font-family:var(--font-mono);font-size:0.85rem;color:var(--text-secondary);word-break:break-all;min-height:40px;">—</div>
-                    <div id="mfaCode" style="margin-top:var(--spacing-xs);font-size:1.4rem;font-weight:700;color:var(--forest-green-accent);text-align:center;">——————</div>
-                    <div id="mfaTimer" style="text-align:center;font-size:0.75rem;color:var(--text-muted);margin-top:4px;">—</div>
+                    <div id="mfaSecret" style="margin-top:var(--spacing-sm);font-family:var(--font-mono);font-size:0.85rem;color:var(--text-secondary);word-break:break-all;min-height:40px;">-</div>
+                    <div id="mfaCode" style="margin-top:var(--spacing-xs);font-size:1.4rem;font-weight:700;color:var(--forest-green-accent);text-align:center;">------</div>
+                    <div id="mfaTimer" style="text-align:center;font-size:0.75rem;color:var(--text-muted);margin-top:4px;">-</div>
                 </div>
                 <div style="padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
                     <h5 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">2. Verify</h5>
                     <input type="text" id="mfaInput" placeholder="Enter 6-digit code" maxlength="6" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);text-align:center;font-size:1.2rem;letter-spacing:0.3em;">
                     <button class="btn btn-primary" id="mfaVerifyBtn" style="width:100%;margin-top:var(--spacing-sm);">✓ Verify Code</button>
-                    <div id="mfaResult" style="margin-top:var(--spacing-sm);font-size:0.9rem;min-height:40px;">—</div>
+                    <div id="mfaResult" style="margin-top:var(--spacing-sm);font-size:0.9rem;min-height:40px;">-</div>
                     <div id="mfaAttempts" style="font-size:0.75rem;color:var(--text-muted);">Attempts: 0/5</div>
                 </div>
             </div>
@@ -672,7 +672,7 @@ demoConfigs['mfa-middleware'] = {
         document.getElementById('mfaEnrollBtn').addEventListener('click', () => {
             attempts = 0; locked = false;
             document.getElementById('mfaAttempts').textContent = 'Attempts: 0/5';
-            document.getElementById('mfaResult').innerHTML = '—';
+            document.getElementById('mfaResult').innerHTML = '-';
             const secret = genSecret();
             document.getElementById('mfaSecret').textContent = 'Secret: ' + secret;
             currentCode = genCode();
@@ -687,18 +687,18 @@ demoConfigs['mfa-middleware'] = {
             }, 1000);
         });
         document.getElementById('mfaVerifyBtn').addEventListener('click', () => {
-            if (locked) { document.getElementById('mfaResult').innerHTML = '<span style="color:#ef4444;font-weight:600;">🔒 Account locked — too many failed attempts (30min cooldown)</span>'; return; }
+            if (locked) { document.getElementById('mfaResult').innerHTML = '<span style="color:#ef4444;font-weight:600;">🔒 Account locked - too many failed attempts (30min cooldown)</span>'; return; }
             if (!currentCode) { document.getElementById('mfaResult').innerHTML = '<span style="color:var(--text-muted);">Enroll first to generate a code.</span>'; return; }
             const input = document.getElementById('mfaInput').value.trim();
             if (input === currentCode) {
-                document.getElementById('mfaResult').innerHTML = '<span style="color:#10b981;font-weight:600;">✓ MFA VERIFIED — session authenticated</span>';
+                document.getElementById('mfaResult').innerHTML = '<span style="color:#10b981;font-weight:600;">✓ MFA VERIFIED - session authenticated</span>';
                 attempts = 0;
             } else {
                 attempts++;
-                if (attempts >= 5) { locked = true; document.getElementById('mfaResult').innerHTML = '<span style="color:#ef4444;font-weight:600;">🔒 LOCKED — 5 failed attempts (PCI DSS 8.3.4)</span>'; }
+                if (attempts >= 5) { locked = true; document.getElementById('mfaResult').innerHTML = '<span style="color:#ef4444;font-weight:600;">🔒 LOCKED - 5 failed attempts (PCI DSS 8.3.4)</span>'; }
                 else { document.getElementById('mfaResult').innerHTML = '<span style="color:#ef4444;">✗ Invalid code. Try again.</span>'; }
             }
-            document.getElementById('mfaAttempts').textContent = 'Attempts: ' + attempts + '/5' + (locked ? ' — LOCKED' : '');
+            document.getElementById('mfaAttempts').textContent = 'Attempts: ' + attempts + '/5' + (locked ? ' - LOCKED' : '');
         });
     }
 };
@@ -721,9 +721,9 @@ demoConfigs['session-timeout-manager'] = {
                 <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
                     <button class="btn btn-primary" id="sesStartBtn">▶ Start Session</button>
                     <button class="btn btn-secondary" id="sesActivityBtn" disabled>👆 Simulate Activity</button>
-                    <span id="sesTimer" style="font-family:var(--font-mono);font-size:0.9rem;color:var(--text-secondary);">—</span>
+                    <span id="sesTimer" style="font-family:var(--font-mono);font-size:0.9rem;color:var(--text-secondary);">-</span>
                 </div>
-                <div id="sesStatus" style="margin-top:var(--spacing-sm);font-size:0.85rem;color:var(--text-muted);">—</div>
+                <div id="sesStatus" style="margin-top:var(--spacing-sm);font-size:0.85rem;color:var(--text-muted);">-</div>
             </div>
         </div>
     `,
@@ -761,17 +761,17 @@ demoConfigs['session-timeout-manager'] = {
                 const expired = idleSeconds >= maxIdle;
                 if (expired) {
                     clearInterval(sessionTimer);
-                    document.getElementById('sesStatus').innerHTML = '<span style="color:#ef4444;font-weight:600;">🔒 SESSION EXPIRED — auto-logout triggered</span>';
+                    document.getElementById('sesStatus').innerHTML = '<span style="color:#ef4444;font-weight:600;">🔒 SESSION EXPIRED - auto-logout triggered</span>';
                     document.getElementById('sesActivityBtn').disabled = true;
                 } else if (warning) {
-                    document.getElementById('sesStatus').innerHTML = '<span style="color:#f59e0b;font-weight:600;">⚠ WARNING: Session expiring in ' + (maxIdle - idleSeconds) + 's — click activity to extend</span>';
+                    document.getElementById('sesStatus').innerHTML = '<span style="color:#f59e0b;font-weight:600;">⚠ WARNING: Session expiring in ' + (maxIdle - idleSeconds) + 's - click activity to extend</span>';
                 } else {
                     document.getElementById('sesStatus').innerHTML = '<span style="color:#10b981;">Active session</span>';
                 }
                 document.getElementById('sesTimer').textContent = 'Idle: ' + idleSeconds + 's / ' + maxIdle + 's (' + pct.toFixed(0) + '%)';
             }, 1000);
         });
-        document.getElementById('sesActivityBtn').addEventListener('click', () => { idleSeconds = 0; document.getElementById('sesStatus').innerHTML = '<span style="color:#10b981;">✓ Activity detected — idle timer reset</span>'; });
+        document.getElementById('sesActivityBtn').addEventListener('click', () => { idleSeconds = 0; document.getElementById('sesStatus').innerHTML = '<span style="color:#10b981;">✓ Activity detected - idle timer reset</span>'; });
     }
 };
 
@@ -809,7 +809,7 @@ demoConfigs['hipaa-phi-filter'] = {
         document.getElementById('phiFilterBtn').addEventListener('click', () => {
             const role = document.getElementById('phiRole').value;
             const r = roles[role];
-            let html = '<div style="font-weight:600;color:' + r.color + ';margin-bottom:var(--spacing-sm);">👤 ' + role.replace(/_/g,' ').toUpperCase() + ' — ' + r.label + '</div>';
+            let html = '<div style="font-weight:600;color:' + r.color + ';margin-bottom:var(--spacing-sm);">👤 ' + role.replace(/_/g,' ').toUpperCase() + ' - ' + r.label + '</div>';
             html += '<div style="display:grid;gap:4px;">';
             Object.entries(record).forEach(([key, val]) => {
                 const allowed = r.access.includes(key);
@@ -831,7 +831,7 @@ demoConfigs['gdpr-consent-manager'] = {
     html: `
         <div class="demo-consent">
             <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🇪🇺 GDPR Consent Dashboard</h4>
-            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Toggle consent for each processing purpose — required purposes cannot be withdrawn</p>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Toggle consent for each processing purpose - required purposes cannot be withdrawn</p>
             <div id="consentUserId" style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--spacing-md);">User: <strong>user-demo@example.com</strong> · Policy v2.1</div>
             <div id="consentPurposes" style="display:grid;gap:var(--spacing-sm);"></div>
             <div style="margin-top:var(--spacing-md);display:flex;gap:var(--spacing-sm);">
@@ -914,7 +914,7 @@ demoConfigs['pci-card-sanitizer'] = {
                 <h5 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">📝 Free-Text Scrubber</h5>
                 <textarea id="pciText" rows="2" style="width:100%;padding:var(--spacing-sm);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);color:var(--text-primary);font-family:var(--font-mono);font-size:0.85rem;">Customer paid with card 4111-1111-1111-1111 for order #5892</textarea>
                 <button class="btn btn-secondary" id="pciScrubBtn" style="margin-top:var(--spacing-xs);">🧹 Scrub PANs</button>
-                <div id="pciScrubResult" style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);font-family:var(--font-mono);font-size:0.85rem;color:var(--text-primary);min-height:30px;">—</div>
+                <div id="pciScrubResult" style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);font-family:var(--font-mono);font-size:0.85rem;color:var(--text-primary);min-height:30px;">-</div>
             </div>
             <div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);">
                 <span style="font-size:0.75rem;color:var(--text-muted);">Maps to: PCI DSS 3.3, 3.4, 3.5, 4.1 · SOC 2 CC6.1</span>
@@ -977,7 +977,7 @@ demoConfigs['mbai-sbsc'] = {
     html: `
         <div class="demo-sbsc">
             <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">📊 Sustainable Balanced Scorecard</h4>
-            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Explore the four strategic perspectives — click to expand details</p>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Explore the four strategic perspectives - click to expand details</p>
             <div id="sbscPerspectives" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-sm);"></div>
             <div id="sbscDetail" style="margin-top:var(--spacing-md);padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:100px;">
                 <span style="color:var(--text-muted);">Click a perspective above to see objectives, KPIs, and AI vectors.</span>
@@ -1030,7 +1030,7 @@ demoConfigs['mbai-circular-supply-chain'] = {
     html: `
         <div class="demo-circular">
             <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">♻️ Circular Supply Chain Workflow</h4>
-            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Six-phase circular loop — click each phase to explore</p>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Six-phase circular loop - click each phase to explore</p>
             <div id="circularPhases" style="display:flex;flex-wrap:wrap;gap:var(--spacing-xs);justify-content:center;margin-bottom:var(--spacing-md);"></div>
             <div id="circularDetail" style="padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:120px;">
                 <span style="color:var(--text-muted);">Click a phase to see its details.</span>
@@ -1069,7 +1069,7 @@ demoConfigs['mbai-tbl-impact'] = {
     html: `
         <div class="demo-tbl">
             <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">📊 Triple Bottom Line P&L</h4>
-            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Profit · People · Planet — compare baseline vs projected impact</p>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Profit · People · Planet - compare baseline vs projected impact</p>
             <div id="tblDimensions" style="display:grid;gap:var(--spacing-sm);"></div>
         </div>
     `,
@@ -1104,7 +1104,7 @@ demoConfigs['mbai-marketing-audit'] = {
     html: `
         <div class="demo-audit-mkt">
             <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">📋 Purpose-Driven Marketing Audit</h4>
-            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">5-phase audit checklist — mark each phase as you complete the review</p>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">5-phase audit checklist - mark each phase as you complete the review</p>
             <div id="mktPhases" style="display:grid;gap:var(--spacing-xs);"></div>
             <div id="mktProgress" style="margin-top:var(--spacing-md);padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-md);text-align:center;"></div>
         </div>
@@ -1141,7 +1141,7 @@ demoConfigs['mbai-servant-leadership'] = {
     html: `
         <div class="demo-leadership">
             <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🤝 Servant Leadership 1-on-1 Agenda</h4>
-            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">45-minute coaching session — step through each segment</p>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">45-minute coaching session - step through each segment</p>
             <div id="coachingSegments" style="display:grid;gap:var(--spacing-xs);"></div>
         </div>
     `,
@@ -1150,7 +1150,7 @@ demoConfigs['mbai-servant-leadership'] = {
             { name: 'Personal Connection', focus: 'Empathy & Well-being', prompt: 'How are you doing outside work? Stress manageable?', time: '5 min' },
             { name: 'Priority Alignment', focus: 'Foresight & Vision', prompt: 'Top priorities? How do they align with sustainability goals?', time: '10 min' },
             { name: 'Obstacle Removal', focus: 'Stewardship & Empowerment', prompt: 'What systemic roadblocks can I remove for you today?', time: '10 min' },
-            { name: 'Retrospective', focus: 'Psychological Safety', prompt: 'Recent win to celebrate? Challenge — what did we learn?', time: '10 min' },
+            { name: 'Retrospective', focus: 'Psychological Safety', prompt: 'Recent win to celebrate? Challenge - what did we learn?', time: '10 min' },
             { name: 'Growth & Career', focus: 'Commitment to Growth', prompt: 'New skills? Getting enough actionable feedback?', time: '10 min' }
         ];
         let activeIdx = -1;
@@ -1214,8 +1214,8 @@ demoConfigs['mbai-greenops-sdlc'] = {
 demoConfigs['mbai-grc-ai'] = {
     html: `
         <div class="demo-grc">
-            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🏛️ NIST AI RMF — Four Functions</h4>
-            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Govern · Map · Measure · Manage — click to explore each function</p>
+            <h4 style="color:var(--text-primary);margin-bottom:var(--spacing-sm);">🏛️ NIST AI RMF - Four Functions</h4>
+            <p style="color:var(--text-muted);margin-bottom:var(--spacing-md);">Govern · Map · Measure · Manage - click to explore each function</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-sm);" id="grcFunctions"></div>
             <div id="grcDetail" style="margin-top:var(--spacing-md);padding:var(--spacing-md);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);min-height:100px;">
                 <span style="color:var(--text-muted);">Click a function above to explore details.</span>

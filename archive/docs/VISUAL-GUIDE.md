@@ -1,4 +1,4 @@
-# 🎨 Visual Guide - Structured For Growth
+﻿# 🎨 Visual Guide - Structured For Growth
 
 ## What You're Looking At
 
@@ -138,7 +138,7 @@ Click any template to see:
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  Structured For Growth — Client Portal              │
+│  Structured For Growth - Client Portal              │
 ├─────────────────────────────────────────────────────┤
 │  Welcome, [Client Name]              [Logout]       │
 │                                                      │

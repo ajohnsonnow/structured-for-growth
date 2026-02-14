@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    COMPONENT STYLES
    ============================================ */
 
@@ -556,7 +556,7 @@
     z-index: 1;
 }
 
-/* Base search input — provides dark-mode-safe defaults everywhere */
+/* Base search input - provides dark-mode-safe defaults everywhere */
 .search-input {
     width: 100%;
     padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) * 3);

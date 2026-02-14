@@ -1,8 +1,8 @@
-{
+﻿{
   "catalog": {
     "uuid": "a9d5d8b2-f863-531d-80bf-d9e253c61857",
     "metadata": {
-      "title": "ISO/IEC 27001:2022 — Information Security Management Systems",
+      "title": "ISO/IEC 27001:2022 - Information Security Management Systems",
       "last-modified": "2026-02-13T19:30:32.142Z",
       "version": "2022",
       "oscal-version": "1.1.2",

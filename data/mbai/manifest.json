@@ -1,24 +1,24 @@
-{
+﻿{
   "name": "MBAi Enterprise Methodology",
   "version": "1.0.0",
-  "description": "Built on an MBA in Sustainable Business, a Servant Leadership practice forged through military service and technical communication leadership, and 35+ years of hands-on technology — integrated through Agentic AI into a unified enterprise operating system.",
+  "description": "Built on an MBA in Sustainable Business, a Servant Leadership practice forged through military service and technical communication leadership, and 35+ years of hands-on technology - integrated through Agentic AI into a unified enterprise operating system.",
   "pillars": [
     {
       "id": "mbai",
       "name": "MBAi Paradigm",
-      "description": "35+ years of hands-on technology — from a 286 running DOS to building full-stack agentic systems — fused with formal business administration and AI governance.",
+      "description": "35+ years of hands-on technology - from a 286 running DOS to building full-stack agentic systems - fused with formal business administration and AI governance.",
       "color": "#7ec99b"
     },
     {
       "id": "sustainable",
       "name": "Sustainable Business",
-      "description": "Rooted in an MBA concentration in Sustainable Business — Triple Bottom Line accounting, circular economy, ESG-driven operations, and regenerative practices.",
+      "description": "Rooted in an MBA concentration in Sustainable Business - Triple Bottom Line accounting, circular economy, ESG-driven operations, and regenerative practices.",
       "color": "#9dbd7e"
     },
     {
       "id": "servant",
       "name": "Servant Leadership",
-      "description": "Forged through 11 years of military service including two combat deployments, and seven years of technical writer-editor leadership — people-first governance built on empathy and accountability.",
+      "description": "Forged through 11 years of military service including two combat deployments, and seven years of technical writer-editor leadership - people-first governance built on empathy and accountability.",
       "color": "#d4a574"
     }
   ],

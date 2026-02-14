@@ -1,5 +1,5 @@
-/* ============================================
-   MBAi METHODOLOGY — STYLESHEET
+﻿/* ============================================
+   MBAi METHODOLOGY - STYLESHEET
    Themed to match SFG Dark Forest Green palette
    ============================================ */
 
@@ -22,9 +22,16 @@
     padding: 3rem 0 1rem;
 }
 .mbai-pillars {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.5rem;
+}
+
+.mbai-pillars > .mbai-pillar {
+    flex: 0 1 calc(33.333% - 1.5rem);
+    min-width: 280px;
+    max-width: 420px;
 }
 .mbai-pillar {
     background: var(--bg-card);
@@ -126,10 +133,30 @@
 
 /* ── Card Grid ─────────────────────────────── */
 .mbai-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.5rem;
     min-height: 200px;
+}
+
+.mbai-grid > .mbai-card {
+    flex: 0 1 calc(33.333% - 1.5rem);
+    min-width: 300px;
+    max-width: 420px;
+}
+
+/* Loading spinners span full width */
+.mbai-grid > .loading-container {
+    flex: 1 1 100%;
+    max-width: 100%;
+}
+
+/* Empty / error states span full width */
+.mbai-grid > .empty-state,
+.mbai-grid > .error-msg {
+    flex: 1 1 100%;
+    max-width: 100%;
 }
 
 .mbai-card {
@@ -400,14 +427,16 @@
 
 /* ── Responsive ────────────────────────────── */
 @media (max-width: 768px) {
-    .mbai-grid {
-        grid-template-columns: 1fr;
+    .mbai-grid > .mbai-card {
+        flex: 1 1 100%;
+        max-width: 100%;
     }
     .mbai-stats {
         gap: 1.5rem;
     }
-    .mbai-pillars {
-        grid-template-columns: 1fr;
+    .mbai-pillars > .mbai-pillar {
+        flex: 1 1 100%;
+        max-width: 100%;
     }
     .mbai-modal-content {
         margin: 1rem;

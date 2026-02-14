@@ -1,4 +1,4 @@
-# Structured For Growth - Setup Guide
+﻿# Structured For Growth - Setup Guide
 
 ## 🎉 Welcome!
 
@@ -130,7 +130,7 @@ When you first access the dashboard (http://localhost:5173/client/dashboard.html
 
 ## 🗄️ Database
 
-The application uses SQLite via SQL.js (a pure JavaScript SQLite implementation — no native binaries required). The database is automatically created when you first run the server.
+The application uses SQLite via SQL.js (a pure JavaScript SQLite implementation - no native binaries required). The database is automatically created when you first run the server.
 
 **Default location**: `./data/database.db`
 

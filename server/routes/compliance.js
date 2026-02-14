@@ -1,5 +1,5 @@
-/**
- * Compliance Knowledge Base — Express API Routes
+﻿/**
+ * Compliance Knowledge Base - Express API Routes
  * Reads framework JSON data and serves it for the SFG compliance page.
  *
  * Resolution order for data directories:
@@ -33,7 +33,7 @@ if (await dirExists(LOCAL_DATA)) {
   console.log('[compliance] Using sibling Compliance-as-Code repo:', CAC_DATA);
 } else {
   DATA_ROOT = LOCAL_DATA;           // will fail gracefully per-endpoint
-  console.warn('[compliance] No compliance data found — endpoints will return empty results');
+  console.warn('[compliance] No compliance data found - endpoints will return empty results');
 }
 
 const FRAMEWORKS_DIR = join(DATA_ROOT, 'frameworks');

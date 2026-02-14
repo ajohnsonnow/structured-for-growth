@@ -1,5 +1,5 @@
-/**
- * Compliance Knowledge Base — SFG Integration Module
+﻿/**
+ * Compliance Knowledge Base - SFG Integration Module
  * Fetches framework data from the /api/compliance endpoints and renders
  * the compliance knowledge base page within the SFG site.
  */
@@ -160,7 +160,7 @@ function renderFrameworkGrid(fws) {
         <div class="compliance-card-stats">
           <div class="compliance-card-stat"><span class="compliance-card-stat-value">${domainCount}</span><span class="compliance-card-stat-label">Domains</span></div>
           <div class="compliance-card-stat"><span class="compliance-card-stat-value">${controlCount}</span><span class="compliance-card-stat-label">Controls</span></div>
-          <div class="compliance-card-stat"><span class="compliance-card-stat-value">${fw.certificationDetails?.auditCycle || '—'}</span><span class="compliance-card-stat-label">Cycle</span></div>
+          <div class="compliance-card-stat"><span class="compliance-card-stat-value">${fw.certificationDetails?.auditCycle || '-'}</span><span class="compliance-card-stat-label">Cycle</span></div>
         </div>
       </div>`;
   }).join('');
@@ -205,10 +205,10 @@ function showFrameworkModal(fw) {
       <h4 style="margin-bottom:var(--spacing-xs);color:var(--forest-green-accent);">Certification</h4>
       <table class="data-table">
         <tbody>
-          <tr><td style="font-weight:600;width:140px;">Type</td><td>${fw.certificationDetails.type || '—'}</td></tr>
-          <tr><td style="font-weight:600;">Assessor</td><td>${fw.certificationDetails.assessor || '—'}</td></tr>
-          <tr><td style="font-weight:600;">Typical Cost</td><td>${fw.certificationDetails.typicalCost || '—'}</td></tr>
-          <tr><td style="font-weight:600;">Cycle</td><td>${fw.certificationDetails.auditCycle || '—'}</td></tr>
+          <tr><td style="font-weight:600;width:140px;">Type</td><td>${fw.certificationDetails.type || '-'}</td></tr>
+          <tr><td style="font-weight:600;">Assessor</td><td>${fw.certificationDetails.assessor || '-'}</td></tr>
+          <tr><td style="font-weight:600;">Typical Cost</td><td>${fw.certificationDetails.typicalCost || '-'}</td></tr>
+          <tr><td style="font-weight:600;">Cycle</td><td>${fw.certificationDetails.auditCycle || '-'}</td></tr>
         </tbody>
       </table>
     ` : ''}
@@ -279,7 +279,7 @@ function renderCrossMap(mappings) {
   const rows = mappings.map(m => {
     const cells = keys.map(k => {
       const fw = m.frameworks?.[k];
-      if (!fw || !fw.controls?.length) return '<td class="cm-no">—</td>';
+      if (!fw || !fw.controls?.length) return '<td class="cm-no">-</td>';
       return `<td class="cm-yes">${fw.controls.join(', ')}</td>`;
     }).join('');
     return `<tr><td>${m.controlObjective}<br><span style="font-size:0.65rem;color:var(--text-muted);">${m.category || ''}</span></td>${cells}</tr>`;

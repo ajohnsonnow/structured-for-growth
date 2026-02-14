@@ -1,4 +1,4 @@
-{
+﻿{
   "catalog": {
     "uuid": "4eb77c38-9dc1-5ad7-9b32-b0d82b29a643",
     "metadata": {
@@ -41,7 +41,7 @@
           "name": "AICPA"
         }
       ],
-      "remarks": "SOC 2 is the prevailing compliance standard for technology service providers, SaaS platforms, and cloud-native organizations. Developed by the American Institute of Certified Public Accountants (AICPA), it evaluates an organization's information systems against the Trust Services Criteria (TSC). Unlike prescriptive frameworks, SOC 2 is principles-based — it evaluates whether controls effectively protect systems, giving flexibility to design controls that fit operational maturity."
+      "remarks": "SOC 2 is the prevailing compliance standard for technology service providers, SaaS platforms, and cloud-native organizations. Developed by the American Institute of Certified Public Accountants (AICPA), it evaluates an organization's information systems against the Trust Services Criteria (TSC). Unlike prescriptive frameworks, SOC 2 is principles-based - it evaluates whether controls effectively protect systems, giving flexibility to design controls that fit operational maturity."
     },
     "groups": [
       {

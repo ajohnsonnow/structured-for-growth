@@ -1,5 +1,5 @@
-/**
- * MBAi Methodology — Express API Routes
+﻿/**
+ * MBAi Methodology - Express API Routes
  * Serves the MBAi paradigm templates (SBSC, Circular Supply Chain,
  * TBL, Marketing, HR, SDLC, GRC) for the SFG platform.
  *

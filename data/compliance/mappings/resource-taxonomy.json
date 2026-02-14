@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft-07/schema#",
   "title": "Resource Taxonomy",
   "description": "Defines the resource types commonly used in automated evidence collection and compliance-as-code evaluation. Each resource type maps to compliance controls it can help satisfy.",
@@ -32,9 +32,9 @@
         { "name": "sharedAccount", "type": "boolean", "description": "Whether this is a shared/service account", "required": true }
       ],
       "complianceChecks": [
-        { "check": "mfa_enabled", "rule": "mfaEnabled === true", "failMessage": "MFA not enabled—violates CC6.1, A.8.5, PCI Req 8, HIPAA TS-PE-1", "severity": "critical" },
-        { "check": "no_shared_accounts", "rule": "sharedAccount === false", "failMessage": "Shared account detected—violates unique user identification requirements", "severity": "high" },
-        { "check": "inactive_account", "rule": "daysSinceLastLogin < 90", "failMessage": "Account inactive >90 days—review for disablement", "severity": "medium" },
+        { "check": "mfa_enabled", "rule": "mfaEnabled === true", "failMessage": "MFA not enabled-violates CC6.1, A.8.5, PCI Req 8, HIPAA TS-PE-1", "severity": "critical" },
+        { "check": "no_shared_accounts", "rule": "sharedAccount === false", "failMessage": "Shared account detected-violates unique user identification requirements", "severity": "high" },
+        { "check": "inactive_account", "rule": "daysSinceLastLogin < 90", "failMessage": "Account inactive >90 days-review for disablement", "severity": "medium" },
         { "check": "password_age", "rule": "daysSincePasswordChange < 365", "failMessage": "Password older than 1 year", "severity": "medium" },
         { "check": "privileged_mfa", "rule": "if privileged then mfaMethod in ['FIDO2', 'TOTP']", "failMessage": "Privileged account using weak MFA method", "severity": "critical" }
       ]
@@ -66,9 +66,9 @@
         { "name": "classification", "type": "string", "description": "Device classification: workstation, laptop, server, mobile", "required": true }
       ],
       "complianceChecks": [
-        { "check": "disk_encryption", "rule": "diskEncrypted === true", "failMessage": "Full-disk encryption not enabled—data at rest protection failure", "severity": "critical" },
-        { "check": "antimalware_active", "rule": "antiMalwareStatus === 'active'", "failMessage": "Antimalware not active—violates PCI Req 5, A.8.7", "severity": "critical" },
-        { "check": "firewall_enabled", "rule": "firewallEnabled === true", "failMessage": "Host firewall disabled—violates PCI Req 1", "severity": "high" },
+        { "check": "disk_encryption", "rule": "diskEncrypted === true", "failMessage": "Full-disk encryption not enabled-data at rest protection failure", "severity": "critical" },
+        { "check": "antimalware_active", "rule": "antiMalwareStatus === 'active'", "failMessage": "Antimalware not active-violates PCI Req 5, A.8.7", "severity": "critical" },
+        { "check": "firewall_enabled", "rule": "firewallEnabled === true", "failMessage": "Host firewall disabled-violates PCI Req 1", "severity": "high" },
         { "check": "patch_current", "rule": "daysSinceLastPatch < 30", "failMessage": "Critical patches older than 30 days", "severity": "high" },
         { "check": "cis_compliance", "rule": "cisComplianceScore >= 80", "failMessage": "CIS benchmark score below 80%", "severity": "medium" }
       ]
@@ -101,7 +101,7 @@
         { "name": "accessRestrictedTo", "type": "array", "description": "List of services/users with access", "required": true }
       ],
       "complianceChecks": [
-        { "check": "vault_storage", "rule": "storedInVault === true", "failMessage": "Secret not stored in approved vault—key management failure", "severity": "critical" },
+        { "check": "vault_storage", "rule": "storedInVault === true", "failMessage": "Secret not stored in approved vault-key management failure", "severity": "critical" },
         { "check": "algorithm_strength", "rule": "algorithm in ['AES-256', 'RSA-2048+', 'Ed25519', 'bcrypt', 'argon2']", "failMessage": "Weak or deprecated algorithm detected", "severity": "critical" },
         { "check": "rotation_compliance", "rule": "daysSinceLastRotation < rotationPolicyDays", "failMessage": "Secret overdue for rotation", "severity": "high" },
         { "check": "expiration", "rule": "daysUntilExpiration > 30", "failMessage": "Secret expiring within 30 days", "severity": "medium" },
@@ -129,7 +129,7 @@
         { "name": "complianceStatus", "type": "string", "description": "compliant, non_compliant, partial, not_assessed", "required": true }
       ],
       "complianceChecks": [
-        { "check": "classification_assigned", "rule": "classification !== null", "failMessage": "Resource not classified—required for scope determination", "severity": "high" },
+        { "check": "classification_assigned", "rule": "classification !== null", "failMessage": "Resource not classified-required for scope determination", "severity": "high" },
         { "check": "owner_assigned", "rule": "owner !== null && owner !== ''", "failMessage": "Resource has no assigned owner", "severity": "medium" },
         { "check": "recent_assessment", "rule": "daysSinceLastAssessment < 365", "failMessage": "Resource not assessed within the past year", "severity": "medium" },
         { "check": "production_compliance", "rule": "if environment === 'production' then complianceStatus === 'compliant'", "failMessage": "Production resource not in compliant status", "severity": "critical" }

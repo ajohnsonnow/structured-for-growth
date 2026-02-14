@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 
 /**
  * Docs-as-Code Generator
@@ -147,7 +147,7 @@ function parseTemplates() {
   const content = read('client/js/templateData.js');
   const templates = [];
 
-  // Match template object literals — id, title, category, description
+  // Match template object literals - id, title, category, description
   const templateBlocks = content.split(/(?=\{\s*id\s*:)/g).slice(1);
 
   for (const block of templateBlocks) {

@@ -1,5 +1,5 @@
-/**
- * Docs Page — Client-side renderer
+﻿/**
+ * Docs Page - Client-side renderer
  * Loads the auto-generated docs-manifest.json and renders
  * a searchable, tabbed documentation experience.
  */
@@ -131,7 +131,7 @@ function renderApiRows(module) {
       <td class="path-cell">${r.path}</td>
       <td class="auth-cell">${r.auth}</td>
       <td>${r.module}</td>
-      <td>${r.description || '—'}</td>
+      <td>${r.description || '-'}</td>
     </tr>
   `).join('');
 }
