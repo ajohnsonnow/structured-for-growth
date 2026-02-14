@@ -70,6 +70,11 @@
     --radius-md: 0.5rem;
     --radius-lg: 0.75rem;
     --radius-xl: 1rem;
+    --radius-full: 9999px;
+    
+    /* RGB triplets for rgba() usage */
+    --primary-color-rgb: 61, 122, 95;
+    --forest-green-deep: #0a1f16;
 }
 
 /* Reset & Base Styles */
@@ -927,7 +932,6 @@ section {
         gap: var(--spacing-xs);
         z-index: 1000;
         overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
         transform: translateX(100%);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }

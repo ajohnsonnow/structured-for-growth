@@ -459,7 +459,7 @@
 
 /* --- Developer Tools Section --- */
 .dev-tools-section {
-    background: var(--surface-secondary);
+    background: var(--bg-secondary);
 }
 
 .dev-tools-heading {

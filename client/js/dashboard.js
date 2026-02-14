@@ -150,6 +150,33 @@ async function loadDashboard() {
             document.getElementById('statTotalProjects').textContent = stats.totalProjects;
             document.getElementById('statMonthlyRevenue').textContent = formatCurrency(stats.monthlyRevenue);
             
+            // Retainer details
+            const retainerCountEl = document.getElementById('statRetainerCount');
+            if (retainerCountEl) {
+                retainerCountEl.textContent = `${stats.retainerClients || 0} retainer client${(stats.retainerClients || 0) !== 1 ? 's' : ''}`;
+            }
+            
+            // Project revenue (one-off / billable projects)
+            const projectRevEl = document.getElementById('statProjectRevenue');
+            if (projectRevEl) {
+                projectRevEl.textContent = formatCurrency(stats.projectRevenue || 0);
+            }
+            const oneOffCountEl = document.getElementById('statOneOffCount');
+            if (oneOffCountEl) {
+                oneOffCountEl.textContent = `${stats.oneOffProjects || 0} billable project${(stats.oneOffProjects || 0) !== 1 ? 's' : ''}`;
+            }
+            
+            // Total pipeline = retainers + active project budgets
+            const totalRevEl = document.getElementById('statTotalRevenue');
+            if (totalRevEl) {
+                const totalPipeline = (stats.monthlyRevenue || 0) + (stats.projectRevenue || 0);
+                totalRevEl.textContent = formatCurrency(totalPipeline);
+            }
+            const completedRevEl = document.getElementById('statCompletedRevenue');
+            if (completedRevEl) {
+                completedRevEl.textContent = `${formatCurrency(stats.completedRevenue || 0)} completed`;
+            }
+            
             document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString();
         }
     } catch (error) {
@@ -1206,7 +1233,8 @@ async function updateUnreadBadge() {
 }
 
 function displayConversations(conversations) {
-    const container = document.getElementById('conversationsList');
+    const container = document.getElementById('conversationsListBody');
+    if (!container) return;
     
     if (conversations.length === 0) {
         container.innerHTML = '<p class="empty-message">No conversations yet. Start messaging clients!</p>';
@@ -1234,8 +1262,15 @@ window.openConversation = async function(clientId) {
     const conv = allConversations.find(c => c.client_id === clientId);
     
     // Update UI
-    document.getElementById('threadClientName').textContent = conv?.client_name || 'Client';
-    document.getElementById('messageThread').innerHTML = '<p class="loading-text">Loading messages...</p>';
+    const clientNameEl = document.getElementById('threadClientName');
+    if (clientNameEl) clientNameEl.textContent = conv?.client_name || 'Client';
+    
+    const threadMessagesEl = document.getElementById('threadMessages');
+    if (threadMessagesEl) threadMessagesEl.innerHTML = '<p class="loading-text">Loading messages...</p>';
+    
+    // Show compose area
+    const composeEl = document.getElementById('threadCompose');
+    if (composeEl) composeEl.classList.remove('hidden');
     
     // Highlight active conversation
     document.querySelectorAll('.conversation-item').forEach(item => item.classList.remove('active'));
@@ -1259,7 +1294,8 @@ window.openConversation = async function(clientId) {
 }
 
 function displayThread(messages) {
-    const container = document.getElementById('messageThread');
+    const container = document.getElementById('threadMessages');
+    if (!container) return;
     
     if (messages.length === 0) {
         container.innerHTML = '<p class="empty-thread">No messages in this conversation yet.</p>';

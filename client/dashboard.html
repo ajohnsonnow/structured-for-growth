@@ -108,10 +108,29 @@
                     </div>
                     
                     <div class="stat-card stat-warning">
-                        <div class="stat-icon">💰</div>
+                        <div class="stat-icon">�</div>
                         <div class="stat-content">
                             <p class="stat-value" id="statMonthlyRevenue">$0</p>
                             <p class="stat-label">Monthly Retainers</p>
+                            <p class="stat-sub" id="statRetainerCount">0 retainer clients</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-accent">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-content">
+                            <p class="stat-value" id="statProjectRevenue">$0</p>
+                            <p class="stat-label">Active Project Revenue</p>
+                            <p class="stat-sub" id="statOneOffCount">0 billable projects</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-total">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <p class="stat-value" id="statTotalRevenue">$0</p>
+                            <p class="stat-label">Total Pipeline</p>
+                            <p class="stat-sub" id="statCompletedRevenue">$0 completed</p>
                         </div>
                     </div>
                 </div>
@@ -384,23 +403,15 @@
                     
                     <div class="message-thread" id="messageThread">
                         <div class="thread-header" id="threadHeader">
-                            <h3>Select a conversation</h3>
+                            <h3 id="threadClientName">Select a conversation</h3>
                         </div>
                         <div class="thread-messages" id="threadMessages">
                             <p class="empty-message">Select a client to view messages</p>
                         </div>
                         <div class="thread-compose hidden" id="threadCompose">
-                            <form id="messageForm">
-                                <input type="hidden" id="messageClientId">
-                                <div class="form-group">
-                                    <input type="text" id="messageSubject" placeholder="Subject (optional)">
-                                </div>
-                                <div class="form-group">
-                                    <textarea id="messageContent" rows="3" placeholder="Type your message..." required></textarea>
-                                </div>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Send Message</button>
-                                </div>
+                            <form id="threadComposeForm">
+                                <textarea id="threadReplyContent" placeholder="Type your reply..." rows="2" required></textarea>
+                                <button type="submit" class="btn btn-primary">Send</button>
                             </form>
                         </div>
                     </div>

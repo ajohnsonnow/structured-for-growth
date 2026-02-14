@@ -254,9 +254,64 @@ body:has(#loginModal.active) .dashboard-container {
 /* Stats Grid - Dashboard Overview */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-lg);
     margin-bottom: var(--spacing-2xl);
+}
+
+/* Stat Card Variants */
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-card .stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-card .stat-content {
+    text-align: center;
+}
+
+.stat-card .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: var(--spacing-xs);
+}
+
+.stat-card .stat-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* Individual stat card color accents */
+.stat-card.stat-primary {
+    border-top: 3px solid var(--primary-color);
+}
+
+.stat-card.stat-success {
+    border-top: 3px solid #10b981;
+}
+
+.stat-card.stat-info {
+    border-top: 3px solid #3b82f6;
+}
+
+.stat-card.stat-warning {
+    border-top: 3px solid var(--accent-color);
+}
+
+.stat-card.stat-accent {
+    border-top: 3px solid #7ec99b;
+}
+
+.stat-card.stat-total {
+    border-top: 3px solid #8b5cf6;
 }
 
 .stat-card.gradient-green {
@@ -502,7 +557,14 @@ body:has(#loginModal.active) .dashboard-container {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
     background: var(--bg-primary);
+    color: var(--text-primary);
     cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.role-select option {
+    background: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 /* Badge Variants */
@@ -682,7 +744,7 @@ body:has(#loginModal.active) .dashboard-container {
 }
 
 .conversation-item.unread {
-    background: rgba(var(--primary-color-rgb), 0.1);
+    background: rgba(61, 122, 95, 0.1);
     border-left: 3px solid var(--primary-color);
 }
 
@@ -1306,7 +1368,7 @@ body:has(#loginModal.active) .dashboard-container {
     padding: var(--spacing-sm) var(--spacing-md);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    background: var(--bg-input);
+    background: var(--bg-card, var(--bg-primary));
     color: var(--text-primary);
 }
 
@@ -1370,14 +1432,17 @@ body:has(#loginModal.active) .dashboard-container {
     border: 1px solid var(--border-color);
 }
 
+.stat-mini {
+    color: var(--text-primary);
+}
+
 .stat-mini strong {
     color: var(--primary-color);
 }
 
 .stat-mini .demo-tag {
     font-size: 0.75rem;
-    color: var(--text-secondary);
-    opacity: 0.8;
+    color: var(--text-muted);
 }
 
 .demo-stats-summary {
@@ -1423,9 +1488,28 @@ body:has(#loginModal.active) .dashboard-container {
     margin-top: var(--spacing-xs);
 }
 
+/* Dark text overrides for light-background summary boxes */
+.summary-box.demo-box .summary-value,
+.summary-box.real-box .summary-value,
+.summary-box.total-box .summary-value {
+    color: #1a1a2e;
+}
+
+.summary-box.demo-box .summary-label {
+    color: #92400e;
+}
+
+.summary-box.real-box .summary-label {
+    color: #065f46;
+}
+
+.summary-box.total-box .summary-label {
+    color: #1e40af;
+}
+
 .db-stat-demo {
     font-size: 0.75rem;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     margin-top: var(--spacing-xs);
 }
 

@@ -189,7 +189,7 @@
     border-radius: var(--radius-sm);
     font-family: var(--font-mono);
     font-size: 0.875rem;
-    color: var(--primary-color);
+    color: var(--forest-green-accent);
 }
 
 /* Demo Area Styles */
@@ -255,6 +255,11 @@
     border-radius: var(--radius-md);
     color: var(--text-primary);
     font-size: 1rem;
+}
+
+.demo-form select option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
 .demo-form input:focus,
@@ -501,6 +506,11 @@
     background: var(--bg-tertiary);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
+    color: var(--text-primary);
+}
+
+.table-controls select option {
+    background: var(--bg-secondary);
     color: var(--text-primary);
 }
 
@@ -759,12 +769,18 @@
     cursor: pointer;
 }
 
+.demo-api select option,
+.demo-email select option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
 .api-response pre,
 .demo-api-client pre {
     background: var(--bg-card);
     padding: var(--spacing-md);
     border-radius: var(--radius-md);
-    color: var(--primary-color);
+    color: var(--forest-green-accent);
     font-size: 0.85rem;
     max-height: 250px;
     overflow: auto;

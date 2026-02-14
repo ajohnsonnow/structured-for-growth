@@ -81,6 +81,18 @@ router.get('/stats/overview', (req, res) => {
         // Monthly revenue (sum of monthly retainers for active clients)
         const monthlyRevenue = queryOne("SELECT SUM(monthly_retainer) as total FROM clients WHERE status = 'active' AND monthly_retainer IS NOT NULL")?.total || 0;
         
+        // Retainer client count
+        const retainerClients = queryOne("SELECT COUNT(*) as count FROM clients WHERE status = 'active' AND monthly_retainer IS NOT NULL AND monthly_retainer > 0")?.count || 0;
+        
+        // Project revenue (sum of budgets for active/planning projects — one-off work)
+        const projectRevenue = queryOne("SELECT SUM(budget) as total FROM projects WHERE status IN ('planning', 'in-progress') AND budget IS NOT NULL AND budget > 0")?.total || 0;
+        
+        // One-off project count (projects with budgets, excluding retainer overlap)
+        const oneOffProjects = queryOne("SELECT COUNT(*) as count FROM projects WHERE status IN ('planning', 'in-progress') AND budget IS NOT NULL AND budget > 0")?.count || 0;
+        
+        // Completed project revenue
+        const completedRevenue = queryOne("SELECT SUM(budget) as total FROM projects WHERE status = 'completed' AND budget IS NOT NULL AND budget > 0")?.total || 0;
+        
         // New clients this month
         const newThisMonth = queryOne(`
             SELECT COUNT(*) as count FROM clients 
@@ -95,6 +107,10 @@ router.get('/stats/overview', (req, res) => {
                 totalProjects,
                 activeProjects,
                 monthlyRevenue,
+                retainerClients,
+                projectRevenue,
+                oneOffProjects,
+                completedRevenue,
                 newThisMonth
             }
         });
