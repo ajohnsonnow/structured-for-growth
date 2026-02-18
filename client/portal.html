@@ -4,37 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Portal - Structured For Growth</title>
+    <meta name="description" content="Secure client portal for accessing projects, invoices, and account details at Structured For Growth.">
+    <link rel="canonical" href="https://structured-for-growth.onrender.com/portal">
+    <meta property="og:title" content="Client Portal — Structured For Growth">
+    <meta property="og:description" content="Access your projects, invoices, and account details.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://structured-for-growth.onrender.com/portal">
+    <meta name="twitter:card" content="summary">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/tooltip.css">
     <link rel="stylesheet" href="/styles/portal.css">
 </head>
 <body>
+    <!-- Skip Navigation Link (P1.3.1) -->
+    <a href="#portalContent" class="skip-link">Skip to main content</a>
+
+    <!-- Announcer for screen readers (P1.3.3) -->
+    <div id="liveAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
     <!-- Login Modal (shown when not authenticated) -->
-    <div id="loginModal" class="portal-login-modal">
+    <div id="loginModal" class="portal-login-modal" role="dialog" aria-label="Client portal login" aria-modal="true">
         <div class="portal-login-container">
             <div class="portal-login-header">
                 <img src="/assets/favicon.svg" alt="SFG Logo" class="portal-logo">
-                <h1>Client Portal</h1>
+                <h2>Client Portal</h2>
                 <p>Access your projects, invoices, and account details</p>
             </div>
-            
+
             <form id="loginForm" class="portal-login-form">
                 <div class="form-group">
                     <label for="loginUsername">Username</label>
                     <input type="text" id="loginUsername" required placeholder="Enter your username">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="loginPassword">Password</label>
                     <input type="password" id="loginPassword" required placeholder="Enter your password">
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary btn-full">Sign In</button>
-                
+
                 <div class="form-message" id="loginMessage"></div>
             </form>
-            
+
             <p class="portal-login-footer">
                 <a href="/">← Back to website</a>
             </p>
@@ -43,8 +61,13 @@
 
     <!-- Main Portal Content (shown when authenticated) -->
     <div id="portalContent" class="portal-container">
+        <!-- Navigation -->
+        <nav class="portal-nav" role="navigation" aria-label="Portal navigation">
+            <a href="/">Home</a>
+        </nav>
+
         <!-- Header -->
-        <header class="portal-header">
+        <header class="portal-header" role="banner">
             <div class="portal-header-left">
                 <img src="/assets/favicon.svg" alt="SFG" class="portal-header-logo">
                 <div>
@@ -58,34 +81,34 @@
         </header>
 
         <!-- Main Content -->
-        <main class="portal-main">
+        <main class="portal-main" role="main" aria-label="Portal content">
             <!-- Account Summary Card -->
             <section class="portal-section">
                 <h2>Account Summary</h2>
                 <div class="summary-cards">
                     <div class="summary-card">
-                        <div class="summary-icon">📊</div>
+                        <div class="summary-icon" aria-hidden="true">📊</div>
                         <div class="summary-info">
                             <span class="summary-label">Active Projects</span>
                             <span class="summary-value" id="activeProjectCount">0</span>
                         </div>
                     </div>
                     <div class="summary-card">
-                        <div class="summary-icon">💰</div>
+                        <div class="summary-icon" aria-hidden="true">💰</div>
                         <div class="summary-info">
                             <span class="summary-label">Total Project Value</span>
                             <span class="summary-value" id="totalProjectValue">$0</span>
                         </div>
                     </div>
                     <div class="summary-card highlight">
-                        <div class="summary-icon">⚠️</div>
+                        <div class="summary-icon" aria-hidden="true">⚠️</div>
                         <div class="summary-info">
                             <span class="summary-label">Amount Due</span>
                             <span class="summary-value" id="amountDue">$0</span>
                         </div>
                     </div>
                     <div class="summary-card">
-                        <div class="summary-icon">📅</div>
+                        <div class="summary-icon" aria-hidden="true">📅</div>
                         <div class="summary-info">
                             <span class="summary-label">Next Due Date</span>
                             <span class="summary-value" id="nextDueDate">-</span>
@@ -166,7 +189,7 @@
         </main>
 
         <!-- Footer -->
-        <footer class="portal-footer">
+        <footer class="portal-footer" role="contentinfo">
             <p>Questions? Contact us at <a href="mailto:contact@structuredforgrowth.com">contact@structuredforgrowth.com</a></p>
             <p>&copy; 2026 Structured For Growth. All rights reserved.</p>
         </footer>
@@ -175,5 +198,22 @@
     <script type="module" src="/js/portal.js"></script>
     <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
             async src="https://gc.zgo.at/count.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const worker = reg.installing;
+            worker.addEventListener('statechange', () => {
+              if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('A new version is available. Reload now?')) {
+                  worker.postMessage({ type: 'SKIP_WAITING' });
+                  location.reload();
+                }
+              }
+            });
+          });
+        });
+      }
+    </script>
 </body>
 </html>

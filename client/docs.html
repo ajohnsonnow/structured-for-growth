@@ -4,19 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation - Structured For Growth</title>
+    <meta name="description" content="Auto-generated project documentation covering features, API reference, templates, compliance, and architecture — always accurate, always up to date.">
+    <link rel="canonical" href="https://structured-for-growth.onrender.com/docs">
+    <meta property="og:title" content="Documentation — Structured For Growth">
+    <meta property="og:description" content="Auto-generated project documentation. Features, API reference, templates, and architecture.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://structured-for-growth.onrender.com/docs">
+    <meta name="twitter:card" content="summary">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/tooltip.css">
     <link rel="stylesheet" href="/styles/docs.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
 
+    <!-- Announcer for screen readers (P1.3.3) -->
+    <div id="liveAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
     <!-- Navigation -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
             <div class="nav-brand">
-                <a href="/"><h1>Structured <span class="highlight">For Growth</span></h1></a>
+                <a href="/"><span class="nav-brand-title">Structured <span class="highlight">For Growth</span></span></a>
                 <span class="nav-byline">Agentic Solutions that Scale</span>
             </div>
             <ul class="nav-menu" id="nav-menu" role="menubar">
@@ -35,8 +50,9 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <!-- Hero -->
-    <section id="main-content" class="hero-small">
+    <section class="hero-small">
         <div class="container">
             <h1>Project <span class="highlight">Documentation</span></h1>
             <p class="hero-subtitle">Auto-generated from the codebase - always accurate, always up to date.</p>
@@ -51,27 +67,27 @@
             <div class="docs-search">
                 <div class="search-wrapper">
                     <span class="search-icon">&#128269;</span>
-                    <input type="text" id="docsSearch" placeholder="Search features, routes, templates, frameworks… (Ctrl+K)" class="search-input" autocomplete="off">
+                    <input type="text" id="docsSearch" placeholder="Search features, routes, templates, frameworks… (Ctrl+K)" class="search-input" autocomplete="off" aria-label="Search documentation">
                     <kbd class="search-kbd">Ctrl+K</kbd>
                 </div>
                 <div class="search-results-count" id="searchCount"></div>
             </div>
 
             <!-- Category Tabs -->
-            <div class="docs-tabs" role="tablist">
-                <button class="docs-tab active" data-tab="overview" role="tab">Overview</button>
-                <button class="docs-tab" data-tab="features" role="tab">Features</button>
-                <button class="docs-tab" data-tab="api" role="tab">API Reference</button>
-                <button class="docs-tab" data-tab="templates" role="tab">Templates</button>
-                <button class="docs-tab" data-tab="compliance" role="tab">Compliance</button>
-                <button class="docs-tab" data-tab="architecture" role="tab">Architecture</button>
+            <div class="docs-tabs" role="tablist" aria-label="Documentation sections">
+                <button class="docs-tab active" data-tab="overview" role="tab" aria-selected="true" aria-controls="panel-overview" id="tab-overview">Overview</button>
+                <button class="docs-tab" data-tab="features" role="tab" aria-selected="false" aria-controls="panel-features" id="tab-features">Features</button>
+                <button class="docs-tab" data-tab="api" role="tab" aria-selected="false" aria-controls="panel-api" id="tab-api">API Reference</button>
+                <button class="docs-tab" data-tab="templates" role="tab" aria-selected="false" aria-controls="panel-templates" id="tab-templates">Templates</button>
+                <button class="docs-tab" data-tab="compliance" role="tab" aria-selected="false" aria-controls="panel-compliance" id="tab-compliance">Compliance</button>
+                <button class="docs-tab" data-tab="architecture" role="tab" aria-selected="false" aria-controls="panel-architecture" id="tab-architecture">Architecture</button>
             </div>
 
             <!-- Tab Panels -->
             <div class="docs-panels">
 
                 <!-- OVERVIEW -->
-                <div class="docs-panel active" id="panel-overview">
+                <div class="docs-panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
                     <div class="stats-grid" id="overviewStats"></div>
                     <div class="docs-section">
                         <h2>Project Documentation Files</h2>
@@ -80,12 +96,12 @@
                 </div>
 
                 <!-- FEATURES -->
-                <div class="docs-panel" id="panel-features">
+                <div class="docs-panel" id="panel-features" role="tabpanel" aria-labelledby="tab-features">
                     <div id="featuresList" class="feature-cards"></div>
                 </div>
 
                 <!-- API REFERENCE -->
-                <div class="docs-panel" id="panel-api">
+                <div class="docs-panel" id="panel-api" role="tabpanel" aria-labelledby="tab-api">
                     <div class="api-filters" id="apiFilters"></div>
                     <div class="api-table-wrapper">
                         <table class="api-table" id="apiTable">
@@ -104,13 +120,13 @@
                 </div>
 
                 <!-- TEMPLATES -->
-                <div class="docs-panel" id="panel-templates">
+                <div class="docs-panel" id="panel-templates" role="tabpanel" aria-labelledby="tab-templates">
                     <div class="template-filters" id="templateFilters"></div>
                     <div id="templateGrid" class="template-doc-grid"></div>
                 </div>
 
                 <!-- COMPLIANCE -->
-                <div class="docs-panel" id="panel-compliance">
+                <div class="docs-panel" id="panel-compliance" role="tabpanel" aria-labelledby="tab-compliance">
                     <div id="frameworkList" class="framework-doc-grid"></div>
                     <div class="docs-section">
                         <h3>Supporting Data</h3>
@@ -119,7 +135,7 @@
                 </div>
 
                 <!-- ARCHITECTURE -->
-                <div class="docs-panel" id="panel-architecture">
+                <div class="docs-panel" id="panel-architecture" role="tabpanel" aria-labelledby="tab-architecture">
                     <div class="arch-columns">
                         <div class="docs-section">
                             <h2>Package Info</h2>
@@ -149,6 +165,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -160,5 +177,22 @@
     <script type="module" src="/js/docs.js"></script>
     <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
             async src="https://gc.zgo.at/count.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const worker = reg.installing;
+            worker.addEventListener('statechange', () => {
+              if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('A new version is available. Reload now?')) {
+                  worker.postMessage({ type: 'SKIP_WAITING' });
+                  location.reload();
+                }
+              }
+            });
+          });
+        });
+      }
+    </script>
 </body>
 </html>

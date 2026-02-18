@@ -4,18 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compliance Knowledge Base - Structured For Growth</title>
+    <meta name="description" content="10 global compliance frameworks, 214+ controls, 31 templates, OSCAL exports, and AI-assisted review — compliance fully codified.">
+    <link rel="canonical" href="https://structured-for-growth.onrender.com/compliance">
+    <meta property="og:title" content="Compliance Knowledge Base — Structured For Growth">
+    <meta property="og:description" content="10 frameworks, 214+ controls, OSCAL exports — compliance fully codified.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://structured-for-growth.onrender.com/compliance">
+    <meta name="twitter:card" content="summary">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/tooltip.css">
     <link rel="stylesheet" href="/styles/compliance.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
 
+    <!-- Announcer for screen readers (P1.3.3) -->
+    <div id="liveAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
             <div class="nav-brand">
-                <a href="/"><h1>Structured <span class="highlight">For Growth</span></h1></a>
+                <a href="/"><span class="nav-brand-title">Structured <span class="highlight">For Growth</span></span></a>
                 <span class="nav-byline">Agentic Solutions that Scale</span>
             </div>
             <ul class="nav-menu" id="nav-menu" role="menubar">
@@ -34,8 +49,9 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <!-- Hero -->
-    <section id="main-content" class="hero-small">
+    <section class="hero-small">
         <div class="container">
             <h1>Compliance <span class="highlight">Knowledge Base</span></h1>
             <p class="hero-subtitle">10 global frameworks, 214+ controls, 31 templates, OSCAL exports, evidence tracking, and AI-assisted review - compliance fully codified.</p>
@@ -48,7 +64,7 @@
             <div class="compliance-search">
                 <div class="search-wrapper">
                     <span class="search-icon">&#128269;</span>
-                    <input type="text" id="complianceSearch" placeholder="Search frameworks, controls, templates..." class="search-input">
+                    <input type="text" id="complianceSearch" placeholder="Search frameworks, controls, templates..." class="search-input" aria-label="Search compliance frameworks">
                 </div>
             </div>
 
@@ -97,7 +113,7 @@
             <!-- Evidence Tab -->
             <div class="compliance-tab-content" id="tab-evidence">
                 <div class="evidence-intro">
-                    <h3>Evidence Collection Dashboard</h3>
+                    <h2>Evidence Collection Dashboard</h2>
                     <p>Track evidence requirements across all 10 frameworks. Filter by framework, view collection status, and identify gaps before your next audit.</p>
                 </div>
                 <div class="compliance-category-nav" id="evidenceFilter">
@@ -114,7 +130,7 @@
             <!-- OSCAL Tab -->
             <div class="compliance-tab-content" id="tab-oscal">
                 <div class="evidence-intro">
-                    <h3>NIST OSCAL Catalogs</h3>
+                    <h2>NIST OSCAL Catalogs</h2>
                     <p>Download machine-readable OSCAL (Open Security Controls Assessment Language) catalogs for interoperability with GRC tools, SIEM platforms, and automated audit systems.</p>
                 </div>
                 <div class="compliance-grid" id="oscalGrid">
@@ -128,7 +144,7 @@
     </section>
 
     <!-- Developer Tools -->
-    <section class="section dev-tools-section">
+    <section class="section dev-tools-section" aria-label="Developer Tools">
         <div class="container">
             <h2 class="dev-tools-heading">Developer Tools</h2>
             <div class="compliance-grid">
@@ -189,15 +205,17 @@
     </section>
 
     <!-- Framework Detail Modal -->
-    <div class="modal-overlay" id="detailModal">
+    <div class="modal-overlay" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-container">
             <div class="modal-header">
-                <h3 id="modalTitle">Framework Detail</h3>
-                <button class="modal-close-btn" id="modalClose">&times;</button>
+                <h2 id="modalTitle">Framework Detail</h2>
+                <button class="modal-close-btn" id="modalClose" aria-label="Close modal">&times;</button>
             </div>
             <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
+
+    </main>
 
     <footer class="footer">
         <div class="container">
@@ -208,5 +226,22 @@
     <script type="module" src="/js/compliance.js"></script>
     <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
             async src="https://gc.zgo.at/count.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const worker = reg.installing;
+            worker.addEventListener('statechange', () => {
+              if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('A new version is available. Reload now?')) {
+                  worker.postMessage({ type: 'SKIP_WAITING' });
+                  location.reload();
+                }
+              }
+            });
+          });
+        });
+      }
+    </script>
 </body>
 </html>

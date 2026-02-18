@@ -1,0 +1,351 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "updated": "2026-02-15",
+    "description": "Interactive skills web — maps capabilities to client outcomes"
+  },
+  "categories": [
+    { "id": "engineering", "label": "Engineering", "color": "#2d8a5e", "icon": "code" },
+    { "id": "security", "label": "Security & Compliance", "color": "#e67e22", "icon": "shield" },
+    { "id": "leadership", "label": "Leadership", "color": "#3498db", "icon": "users" },
+    { "id": "ai", "label": "AI & Automation", "color": "#9b59b6", "icon": "cpu" },
+    { "id": "content", "label": "Content & Design", "color": "#e74c3c", "icon": "edit" },
+    { "id": "government", "label": "Government & Defense", "color": "#1abc9c", "icon": "landmark" }
+  ],
+  "skills": [
+    {
+      "id": "full-stack-dev",
+      "name": "Full-Stack Development",
+      "category": "engineering",
+      "level": 5,
+      "summary": "End-to-end web application architecture — Node.js, Express, vanilla JS, REST APIs, SQLite, PWA.",
+      "clientValue": "Your idea becomes a working product, not just a mockup. From database to pixel, built to scale.",
+      "useCases": ["Custom web portals", "Admin dashboards", "Client-facing apps", "API integrations"],
+      "related": ["api-design", "database-design", "pwa", "accessibility"]
+    },
+    {
+      "id": "api-design",
+      "name": "API Design & Integration",
+      "category": "engineering",
+      "level": 5,
+      "summary": "RESTful API architecture with OpenAPI/Swagger documentation, rate limiting, input validation, and versioning.",
+      "clientValue": "Your systems talk to each other reliably. Partners integrate easily. Data flows safely.",
+      "useCases": ["Third-party integrations", "Microservice architecture", "Webhook systems", "Data pipelines"],
+      "related": ["full-stack-dev", "database-design", "zero-trust"]
+    },
+    {
+      "id": "database-design",
+      "name": "Database Architecture",
+      "category": "engineering",
+      "level": 4,
+      "summary": "Relational schema design, migrations, query optimization, backup/restore, and data integrity enforcement.",
+      "clientValue": "Your data is organized, fast to query, and impossible to lose. Migrations run without downtime.",
+      "useCases": ["CRM systems", "Records management", "Analytics dashboards", "Compliance evidence stores"],
+      "related": ["full-stack-dev", "api-design", "records-management"]
+    },
+    {
+      "id": "pwa",
+      "name": "Progressive Web Apps",
+      "category": "engineering",
+      "level": 4,
+      "summary": "Offline-first architecture with service workers, IndexedDB caching, install prompts, and push notifications.",
+      "clientValue": "Your app works everywhere — even without internet. Install it like a native app, no app store needed.",
+      "useCases": ["Field operations", "Remote workforce tools", "Low-connectivity environments", "Mobile-first apps"],
+      "related": ["full-stack-dev", "accessibility", "performance"]
+    },
+    {
+      "id": "performance",
+      "name": "Web Performance",
+      "category": "engineering",
+      "level": 4,
+      "summary": "Core Web Vitals optimization, Lighthouse CI, bundle analysis, lazy loading, code splitting.",
+      "clientValue": "Pages load in under 2 seconds. Users stay longer. Google ranks you higher.",
+      "useCases": ["E-commerce speed", "SEO performance", "Mobile optimization", "Lighthouse audits"],
+      "related": ["pwa", "full-stack-dev", "seo"]
+    },
+    {
+      "id": "accessibility",
+      "name": "WCAG Accessibility",
+      "category": "engineering",
+      "level": 5,
+      "summary": "WCAG 2.1/2.2 AA compliance, Section 508, VPAT/ACR authoring, axe-core testing, screen reader QA.",
+      "clientValue": "Everyone can use your product — it's the law for government, and the right thing for everyone else.",
+      "useCases": ["Government contracts (Section 508)", "VPAT generation", "ADA compliance", "Inclusive design"],
+      "related": ["full-stack-dev", "section-508", "trusted-tester", "content-engineering"]
+    },
+    {
+      "id": "devops",
+      "name": "DevOps & CI/CD",
+      "category": "engineering",
+      "level": 4,
+      "summary": "GitHub Actions, automated testing, linting, SBOM generation, Lighthouse CI, deployment pipelines.",
+      "clientValue": "Every code change is tested, scanned, and deployed automatically. No manual steps, no human error.",
+      "useCases": ["Automated deployments", "Quality gates", "Security scanning", "SBOM compliance"],
+      "related": ["full-stack-dev", "testing", "performance"]
+    },
+    {
+      "id": "testing",
+      "name": "Automated Testing",
+      "category": "engineering",
+      "level": 4,
+      "summary": "Unit testing (Vitest), integration testing (supertest), accessibility testing (axe-core), 80%+ coverage enforcement.",
+      "clientValue": "Bugs get caught before users see them. Refactoring is safe. Confidence ships with every release.",
+      "useCases": ["Quality assurance", "Regression prevention", "Compliance evidence", "Continuous delivery"],
+      "related": ["devops", "full-stack-dev", "accessibility"]
+    },
+    {
+      "id": "nist-compliance",
+      "name": "NIST 800-171 / 800-53",
+      "category": "security",
+      "level": 5,
+      "summary": "Full implementation of NIST SP 800-171r2/r3 and 800-53 Rev 5 controls. SPRS scoring, POA&M management.",
+      "clientValue": "Pass your NIST assessment the first time. Protect CUI. Win DoD contracts.",
+      "useCases": ["CMMC preparation", "SPRS score improvement", "CUI protection", "SSP development"],
+      "related": ["cmmc", "fedramp", "zero-trust", "records-management"]
+    },
+    {
+      "id": "cmmc",
+      "name": "CMMC 2.0 Certification",
+      "category": "security",
+      "level": 4,
+      "summary": "CMMC Level 1–3 readiness assessment, gap analysis, POA&M development, evidence collection automation.",
+      "clientValue": "Get certified to bid on DoD contracts. Know exactly where your gaps are and how to close them.",
+      "useCases": ["Defense contractor compliance", "Supply chain security", "Self-assessment readiness", "C3PAO preparation"],
+      "related": ["nist-compliance", "zero-trust", "records-management"]
+    },
+    {
+      "id": "fedramp",
+      "name": "FedRAMP Authorization",
+      "category": "security",
+      "level": 4,
+      "summary": "FedRAMP SSP generation, continuous monitoring dashboards, POA&M tracking, OSCAL export.",
+      "clientValue": "Sell your cloud service to every federal agency. One authorization, governmentwide reuse.",
+      "useCases": ["Cloud service providers", "Federal SaaS", "Continuous monitoring", "3PAO audit prep"],
+      "related": ["nist-compliance", "zero-trust", "oscal"]
+    },
+    {
+      "id": "zero-trust",
+      "name": "Zero Trust Architecture",
+      "category": "security",
+      "level": 4,
+      "summary": "Continuous trust evaluation, risk-based access, device posture, MFA enforcement, micro-segmentation.",
+      "clientValue": "Every request is verified. No implicit trust. Your architecture matches the executive order.",
+      "useCases": ["Federal zero trust mandates", "Remote workforce security", "Least-privilege access", "Identity-centric security"],
+      "related": ["nist-compliance", "mfa", "api-design"]
+    },
+    {
+      "id": "mfa",
+      "name": "Multi-Factor Authentication",
+      "category": "security",
+      "level": 4,
+      "summary": "TOTP-based MFA, PIV/CAC smart card integration, backup codes, recovery flows.",
+      "clientValue": "Passwords alone aren't enough. Add a second factor without making users hate you.",
+      "useCases": ["Admin portal security", "Federal identity compliance", "PIV/CAC integration", "FIDO2/WebAuthn"],
+      "related": ["zero-trust", "nist-compliance", "full-stack-dev"]
+    },
+    {
+      "id": "oscal",
+      "name": "OSCAL Automation",
+      "category": "security",
+      "level": 4,
+      "summary": "NIST OSCAL catalog/profile/SSP generation, machine-readable compliance evidence, GRC automation.",
+      "clientValue": "Compliance artifacts generated automatically. No more 200-page Word docs — machine-readable from day one.",
+      "useCases": ["Automated SSP generation", "Control inheritance mapping", "Audit evidence export", "GRC tool integration"],
+      "related": ["fedramp", "nist-compliance", "records-management"]
+    },
+    {
+      "id": "section-508",
+      "name": "Section 508 Compliance",
+      "category": "security",
+      "level": 5,
+      "summary": "Trusted Tester methodology, VPAT 2.5/ACR authoring, remediation planning, procurement language review.",
+      "clientValue": "Your ICT product is legally compliant for federal purchase. VPAT ready for any agency.",
+      "useCases": ["Federal procurement", "VPAT/ACR development", "ICT accessibility evaluation", "Remediation roadmaps"],
+      "related": ["accessibility", "trusted-tester", "content-engineering"]
+    },
+    {
+      "id": "trusted-tester",
+      "name": "DHS Trusted Tester",
+      "category": "security",
+      "level": 4,
+      "summary": "DHS Trusted Tester 5.x baseline conformance testing methodology for Section 508 evaluation.",
+      "clientValue": "Testing performed by the same methodology federal agencies use. Results they trust.",
+      "useCases": ["Federal ICT evaluation", "Conformance testing", "Accessibility audits", "Pre-procurement review"],
+      "related": ["section-508", "accessibility"]
+    },
+    {
+      "id": "servant-leadership",
+      "name": "Servant Leadership",
+      "category": "leadership",
+      "level": 5,
+      "summary": "Military-forged servant leadership practice. Team development, mentoring, conflict resolution, stakeholder alignment.",
+      "clientValue": "I don't just build what you ask for — I make sure it's what you actually need. Your success is the metric.",
+      "useCases": ["Team building", "Stakeholder management", "Change management", "Cross-functional alignment"],
+      "related": ["project-management", "technical-writing", "strategic-planning"]
+    },
+    {
+      "id": "project-management",
+      "name": "Project Management",
+      "category": "leadership",
+      "level": 5,
+      "summary": "Agile/Scrum, kanban, sprint planning, risk management, milestone tracking, delivery assurance.",
+      "clientValue": "Projects ship on time, on budget, with clear communication every step of the way.",
+      "useCases": ["Software delivery", "Migration projects", "Compliance programs", "Multi-team coordination"],
+      "related": ["servant-leadership", "strategic-planning", "devops"]
+    },
+    {
+      "id": "strategic-planning",
+      "name": "Strategic Planning",
+      "category": "leadership",
+      "level": 4,
+      "summary": "Technology roadmapping, gap analysis, ROI modeling, build-vs-buy decisions, digital transformation strategy.",
+      "clientValue": "Stop guessing. Get a roadmap that connects technology decisions to business outcomes.",
+      "useCases": ["Digital transformation", "Technology roadmaps", "M&A technical due diligence", "IT modernization"],
+      "related": ["servant-leadership", "project-management", "mbai-methodology"]
+    },
+    {
+      "id": "mbai-methodology",
+      "name": "MBAi Methodology",
+      "category": "leadership",
+      "level": 5,
+      "summary": "MBA + AI integration: sustainable business strategy, servant leadership, and 35+ years of technology — unified into an enterprise operating system.",
+      "clientValue": "Business strategy meets technical excellence meets AI automation. The whole is greater than the parts.",
+      "useCases": ["Enterprise strategy", "AI adoption planning", "Organizational transformation", "Capability maturity"],
+      "related": ["strategic-planning", "servant-leadership", "agentic-ai"]
+    },
+    {
+      "id": "agentic-ai",
+      "name": "Agentic AI Development",
+      "category": "ai",
+      "level": 4,
+      "summary": "AI agent workflows, LLM integration, prompt engineering, AI-assisted code review, evaluation frameworks.",
+      "clientValue": "AI that doesn't just chat — it takes action. Automate complex workflows with intelligent agents.",
+      "useCases": ["Automated code review", "Document analysis", "Compliance automation", "Intelligent assistants"],
+      "related": ["mbai-methodology", "full-stack-dev", "devops"]
+    },
+    {
+      "id": "ai-governance",
+      "name": "AI Governance & Ethics",
+      "category": "ai",
+      "level": 4,
+      "summary": "Responsible AI frameworks, bias detection, model evaluation, cost management, human-in-the-loop patterns.",
+      "clientValue": "Deploy AI that you can trust, explain, and control. Avoid the pitfalls everyone else hits.",
+      "useCases": ["AI policy development", "Model evaluation", "Cost optimization", "Risk assessment"],
+      "related": ["agentic-ai", "nist-compliance", "strategic-planning"]
+    },
+    {
+      "id": "content-engineering",
+      "name": "Content Engineering",
+      "category": "content",
+      "level": 5,
+      "summary": "Structured content architecture, component-driven authoring, template systems, content reuse strategies.",
+      "clientValue": "Write once, publish everywhere. Content that's structured, searchable, and never goes stale.",
+      "useCases": ["Documentation systems", "Knowledge bases", "Template libraries", "Multi-channel publishing"],
+      "related": ["technical-writing", "seo", "accessibility", "full-stack-dev"]
+    },
+    {
+      "id": "technical-writing",
+      "name": "Technical Writing",
+      "category": "content",
+      "level": 5,
+      "summary": "35+ years of technical communication. SSPs, POA&Ms, user guides, API docs, training materials, readability optimization.",
+      "clientValue": "Complex ideas explained clearly. Documents that people actually read and understand.",
+      "useCases": ["System security plans", "User documentation", "API documentation", "Training materials"],
+      "related": ["content-engineering", "nist-compliance", "section-508"]
+    },
+    {
+      "id": "seo",
+      "name": "SEO & Web Presence",
+      "category": "content",
+      "level": 4,
+      "summary": "Schema.org structured data, Open Graph, semantic HTML, meta optimization, Lighthouse SEO audits.",
+      "clientValue": "People find your site, understand it instantly, and share it beautifully across every platform.",
+      "useCases": ["Search visibility", "Social sharing optimization", "Local SEO", "Content discoverability"],
+      "related": ["content-engineering", "performance", "full-stack-dev"]
+    },
+    {
+      "id": "design-systems",
+      "name": "Design Systems",
+      "category": "content",
+      "level": 4,
+      "summary": "CSS custom property architecture, component libraries, theme systems (dark/light), responsive design, print styles.",
+      "clientValue": "Every page looks intentional. Brand consistency across every screen, every device, every printout.",
+      "useCases": ["Brand guidelines", "Component libraries", "Theme customization", "Cross-platform consistency"],
+      "related": ["full-stack-dev", "accessibility", "content-engineering"]
+    },
+    {
+      "id": "records-management",
+      "name": "Federal Records Management",
+      "category": "government",
+      "level": 4,
+      "summary": "NARA retention schedules, disposition tracking, legal holds, version control, CUI marking, FOIA readiness.",
+      "clientValue": "Never fail a records audit. Every document tracked, retained, and disposed of by the book.",
+      "useCases": ["NARA compliance", "Legal hold management", "CUI protection", "FOIA response preparation"],
+      "related": ["nist-compliance", "database-design", "content-engineering"]
+    },
+    {
+      "id": "usace-cdrl",
+      "name": "USACE CDRL Management",
+      "category": "government",
+      "level": 4,
+      "summary": "Contract Data Requirements List tracking, deliverable workflow, status history, approval chains.",
+      "clientValue": "Every contract deliverable tracked from draft to government acceptance. Never miss a submission.",
+      "useCases": ["Army Corps of Engineers contracts", "DoD deliverable tracking", "Milestone reporting", "Contract compliance"],
+      "related": ["project-management", "records-management", "technical-writing"]
+    },
+    {
+      "id": "gov-contracting",
+      "name": "Government Contracting",
+      "category": "government",
+      "level": 4,
+      "summary": "Federal acquisition knowledge, NAICS/PSC codes, past-performance documentation, proposal support.",
+      "clientValue": "Navigate the federal marketplace. Position your capabilities. Win contracts.",
+      "useCases": ["Proposal support", "Capability statements", "Past-performance documentation", "Market research"],
+      "related": ["strategic-planning", "technical-writing", "cmmc"]
+    }
+  ],
+  "clientJourneys": [
+    {
+      "id": "startup-mvp",
+      "title": "Startup → MVP in 6 Weeks",
+      "description": "Transform your idea into a working product with authentication, data management, and a polished UI.",
+      "skills": ["full-stack-dev", "api-design", "database-design", "design-systems", "pwa"],
+      "outcome": "A deployed, production-ready web app your investors can see and your users can try."
+    },
+    {
+      "id": "gov-compliance",
+      "title": "Pass Your CMMC Assessment",
+      "description": "Close compliance gaps, build your SSP, automate evidence collection, and get assessment-ready.",
+      "skills": ["cmmc", "nist-compliance", "zero-trust", "oscal", "records-management"],
+      "outcome": "Certification achieved. DoD contracts unlocked. Continuous monitoring in place."
+    },
+    {
+      "id": "a11y-remediation",
+      "title": "Achieve Section 508 Compliance",
+      "description": "Full accessibility audit, remediation roadmap, VPAT authoring, and developer training.",
+      "skills": ["accessibility", "section-508", "trusted-tester", "content-engineering", "testing"],
+      "outcome": "VPAT published. Zero critical violations. Federal agencies can buy your product."
+    },
+    {
+      "id": "ai-adoption",
+      "title": "Adopt AI Responsibly",
+      "description": "From strategy to deployment: agentic workflows, governance framework, and cost-controlled AI integration.",
+      "skills": ["agentic-ai", "ai-governance", "mbai-methodology", "strategic-planning", "devops"],
+      "outcome": "AI agents handling real work. Costs under control. Governance in place."
+    },
+    {
+      "id": "modernize-legacy",
+      "title": "Modernize a Legacy System",
+      "description": "Assess, plan, and execute migration from legacy tech to modern architecture without disrupting operations.",
+      "skills": ["strategic-planning", "full-stack-dev", "database-design", "api-design", "project-management"],
+      "outcome": "Modern stack deployed. Data migrated. Users retrained. Zero downtime."
+    },
+    {
+      "id": "fedramp-auth",
+      "title": "Achieve FedRAMP Authorization",
+      "description": "SSP automation, continuous monitoring, POA&M management, and 3PAO audit preparation.",
+      "skills": ["fedramp", "nist-compliance", "zero-trust", "oscal", "devops"],
+      "outcome": "FedRAMP Authorized. Listed in the FedRAMP Marketplace. Selling to every agency."
+    }
+  ]
+}

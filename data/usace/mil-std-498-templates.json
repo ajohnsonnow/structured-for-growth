@@ -1,0 +1,186 @@
+{
+  "standard": "MIL-STD-498",
+  "title": "Software Development and Documentation",
+  "description": "Data Item Descriptions (DIDs) for military software documentation per MIL-STD-498",
+  "templates": {
+    "SDP": {
+      "id": "mil-std-498-sdp",
+      "did": "DI-IPSC-81427",
+      "name": "Software Development Plan",
+      "description": "Describes the developer's plans for conducting software development",
+      "sections": [
+        { "number": "1", "title": "Scope", "required": true, "subsections": [
+          { "number": "1.1", "title": "Identification", "guidance": "Identify the system and software to which this SDP applies" },
+          { "number": "1.2", "title": "System overview", "guidance": "Briefly describe the system and software" },
+          { "number": "1.3", "title": "Document overview", "guidance": "Summarize the purpose and contents of this SDP" }
+        ]},
+        { "number": "2", "title": "Referenced documents", "required": true },
+        { "number": "3", "title": "Overview of required work", "required": true },
+        { "number": "4", "title": "General requirements", "required": true, "subsections": [
+          { "number": "4.1", "title": "Software development process" },
+          { "number": "4.2", "title": "General requirements for software development" },
+          { "number": "4.3", "title": "Standards" }
+        ]},
+        { "number": "5", "title": "Detailed requirements", "required": true, "subsections": [
+          { "number": "5.1", "title": "Project planning and oversight" },
+          { "number": "5.2", "title": "Establishing and following software development processes" },
+          { "number": "5.3", "title": "System requirements analysis" },
+          { "number": "5.4", "title": "System design" },
+          { "number": "5.5", "title": "Software requirements analysis" },
+          { "number": "5.6", "title": "Software design" },
+          { "number": "5.7", "title": "Software implementation and unit testing" },
+          { "number": "5.8", "title": "Unit integration and testing" },
+          { "number": "5.9", "title": "CSCI qualification testing" },
+          { "number": "5.10", "title": "CSCI/HWCI integration and testing" },
+          { "number": "5.11", "title": "System qualification testing" },
+          { "number": "5.12", "title": "Preparing for software use" },
+          { "number": "5.13", "title": "Preparing for software transition" },
+          { "number": "5.14", "title": "Software configuration management" },
+          { "number": "5.15", "title": "Software quality assurance" },
+          { "number": "5.16", "title": "Corrective action" },
+          { "number": "5.17", "title": "Joint technical and management reviews" },
+          { "number": "5.18", "title": "Other software development activities" }
+        ]},
+        { "number": "6", "title": "Schedules and activity network", "required": true },
+        { "number": "7", "title": "Project organization and resources", "required": true },
+        { "number": "8", "title": "Notes", "required": false }
+      ]
+    },
+    "SRS": {
+      "id": "mil-std-498-srs",
+      "did": "DI-IPSC-81433",
+      "name": "Software Requirements Specification",
+      "description": "Specifies the requirements for a Computer Software Configuration Item (CSCI)",
+      "sections": [
+        { "number": "1", "title": "Scope", "required": true },
+        { "number": "2", "title": "Referenced documents", "required": true },
+        { "number": "3", "title": "Requirements", "required": true, "subsections": [
+          { "number": "3.1", "title": "Required states and modes" },
+          { "number": "3.2", "title": "CSCI capability requirements" },
+          { "number": "3.3", "title": "CSCI external interface requirements" },
+          { "number": "3.4", "title": "CSCI internal interface requirements" },
+          { "number": "3.5", "title": "CSCI internal data requirements" },
+          { "number": "3.6", "title": "Adaptation requirements" },
+          { "number": "3.7", "title": "Safety requirements" },
+          { "number": "3.8", "title": "Security and privacy requirements" },
+          { "number": "3.9", "title": "CSCI environment requirements" },
+          { "number": "3.10", "title": "Computer resource requirements" },
+          { "number": "3.11", "title": "Software quality factors" },
+          { "number": "3.12", "title": "Design and implementation constraints" },
+          { "number": "3.13", "title": "Personnel-related requirements" },
+          { "number": "3.14", "title": "Training-related requirements" },
+          { "number": "3.15", "title": "Logistics-related requirements" },
+          { "number": "3.16", "title": "Other requirements" },
+          { "number": "3.17", "title": "Packaging requirements" },
+          { "number": "3.18", "title": "Precedence and criticality of requirements" }
+        ]},
+        { "number": "4", "title": "Qualification requirements", "required": true },
+        { "number": "5", "title": "Requirements traceability", "required": true },
+        { "number": "6", "title": "Notes", "required": false }
+      ]
+    },
+    "SDD": {
+      "id": "mil-std-498-sdd",
+      "did": "DI-IPSC-81435",
+      "name": "Software Design Description",
+      "description": "Describes the design of a CSCI",
+      "sections": [
+        { "number": "1", "title": "Scope", "required": true },
+        { "number": "2", "title": "Referenced documents", "required": true },
+        { "number": "3", "title": "CSCI-wide design decisions", "required": true },
+        { "number": "4", "title": "CSCI architectural design", "required": true, "subsections": [
+          { "number": "4.1", "title": "CSCI components" },
+          { "number": "4.2", "title": "Concept of execution" },
+          { "number": "4.3", "title": "Interface design" }
+        ]},
+        { "number": "5", "title": "CSCI detailed design", "required": true },
+        { "number": "6", "title": "Requirements traceability", "required": true },
+        { "number": "7", "title": "Notes", "required": false }
+      ]
+    },
+    "STP": {
+      "id": "mil-std-498-stp",
+      "did": "DI-IPSC-81438",
+      "name": "Software Test Plan",
+      "description": "Describes plans for qualification testing of a CSCI",
+      "sections": [
+        { "number": "1", "title": "Scope", "required": true },
+        { "number": "2", "title": "Referenced documents", "required": true },
+        { "number": "3", "title": "Test preparations", "required": true, "subsections": [
+          { "number": "3.1", "title": "Hardware preparation" },
+          { "number": "3.2", "title": "Software preparation" },
+          { "number": "3.3", "title": "Other pre-test preparations" }
+        ]},
+        { "number": "4", "title": "Test descriptions", "required": true, "subsections": [
+          { "number": "4.1", "title": "Test identification" },
+          { "number": "4.2", "title": "Test objectives" },
+          { "number": "4.3", "title": "Test levels" },
+          { "number": "4.4", "title": "Test classes" },
+          { "number": "4.5", "title": "General test conditions" },
+          { "number": "4.6", "title": "Planned test schedule" }
+        ]},
+        { "number": "5", "title": "Requirements traceability", "required": true },
+        { "number": "6", "title": "Notes", "required": false }
+      ]
+    },
+    "STR": {
+      "id": "mil-std-498-str",
+      "did": "DI-IPSC-81439",
+      "name": "Software Test Report",
+      "description": "Reports the results of qualification testing of a CSCI",
+      "sections": [
+        { "number": "1", "title": "Scope", "required": true },
+        { "number": "2", "title": "Referenced documents", "required": true },
+        { "number": "3", "title": "Overview of test results", "required": true },
+        { "number": "4", "title": "Detailed test results", "required": true, "subsections": [
+          { "number": "4.1", "title": "Test case results (per test)" },
+          { "number": "4.2", "title": "Expected vs actual results" },
+          { "number": "4.3", "title": "Deviations from test procedures" },
+          { "number": "4.4", "title": "Problems encountered" }
+        ]},
+        { "number": "5", "title": "Test log", "required": true },
+        { "number": "6", "title": "Notes", "required": false }
+      ]
+    },
+    "SVD": {
+      "id": "mil-std-498-svd",
+      "did": "DI-IPSC-81442",
+      "name": "Software Version Description",
+      "description": "Identifies and describes a software version",
+      "sections": [
+        { "number": "1", "title": "Scope", "required": true },
+        { "number": "2", "title": "Referenced documents", "required": true },
+        { "number": "3", "title": "Version description", "required": true, "subsections": [
+          { "number": "3.1", "title": "Inventory of materials released" },
+          { "number": "3.2", "title": "Inventory of software contents" },
+          { "number": "3.3", "title": "Changes installed" },
+          { "number": "3.4", "title": "Adaptation data" },
+          { "number": "3.5", "title": "Related documents" },
+          { "number": "3.6", "title": "Installation instructions" },
+          { "number": "3.7", "title": "Possible problems and known errors" }
+        ]},
+        { "number": "4", "title": "Notes", "required": false }
+      ]
+    },
+    "SUM": {
+      "id": "mil-std-498-sum",
+      "did": "DI-IPSC-81443",
+      "name": "Software User Manual",
+      "description": "Tells a user how to use the software",
+      "sections": [
+        { "number": "1", "title": "Scope", "required": true },
+        { "number": "2", "title": "Referenced documents", "required": true },
+        { "number": "3", "title": "Software summary", "required": true, "subsections": [
+          { "number": "3.1", "title": "Software overview" },
+          { "number": "3.2", "title": "Software inventory" },
+          { "number": "3.3", "title": "Software environment" },
+          { "number": "3.4", "title": "Software organization and overview of operation" },
+          { "number": "3.5", "title": "Contingencies and alternate states" }
+        ]},
+        { "number": "4", "title": "Access to the software", "required": true },
+        { "number": "5", "title": "Processing reference guide", "required": true },
+        { "number": "6", "title": "Notes", "required": false }
+      ]
+    }
+  }
+}

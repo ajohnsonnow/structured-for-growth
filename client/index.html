@@ -5,18 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Structured For Growth - Content Engineering Excellence</title>
     <meta name="description" content="Professional Content Engineering services. Showcasing innovative solutions in web development, content management, and digital experiences.">
+    <link rel="canonical" href="https://structured-for-growth.onrender.com/">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/tooltip.css">
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Structured For Growth - Content Engineering Excellence">
+    <meta property="og:description" content="Professional Content Engineering services. Innovative solutions in web development, content management, and digital experiences.">
+    <meta property="og:url" content="https://structured-for-growth.onrender.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Structured For Growth - Content Engineering Excellence">
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Structured For Growth",
+      "description": "Content Engineering services: web development, compliance automation, template libraries, and agentic AI solutions.",
+      "url": "https://structured-for-growth.onrender.com/",
+      "sameAs": ["https://github.com/ajohnsonnow/structured-for-growth"],
+      "knowsAbout": ["Content Engineering", "WCAG Accessibility", "NIST 800-171", "CMMC", "FedRAMP", "OSCAL", "Full-Stack Development"],
+      "areaServed": { "@type": "Country", "name": "US" },
+      "makesOffer": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Development" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Compliance Automation" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Template Libraries" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Agentic AI Integration" } }
+      ]
+    }
+    </script>
 </head>
 <body>
     <a href="#home" class="skip-link">Skip to content</a>
+
+    <!-- Announcer for screen readers (P1.3.3) -->
+    <div id="liveAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
     <!-- Navigation -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
             <div class="nav-brand">
-                <h1>Structured <span class="highlight">For Growth</span></h1>
+                <a href="/"><span class="nav-brand-title">Structured <span class="highlight">For Growth</span></span></a>
                 <span class="nav-byline">Agentic Solutions that Scale</span>
             </div>
             <ul class="nav-menu" id="nav-menu" role="menubar">
@@ -38,6 +73,7 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container">
@@ -57,7 +93,7 @@
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
             <p class="section-subtitle">A showcase of innovative Content Engineering solutions</p>
-            
+
             <div class="portfolio-grid">
                 <!-- Project 1: Vet-Rate.org -->
                 <a href="https://vet-rate.org" target="_blank" rel="noopener noreferrer" class="project-card-link">
@@ -67,7 +103,7 @@
                             <span class="project-tag">VA Claims Platform</span>
                         </div>
                         <p class="project-description">
-                            Comprehensive platform helping Veterans navigate and manage their VA disability claims. 
+                            Comprehensive platform helping Veterans navigate and manage their VA disability claims.
                             Features claim tracking, rating calculations, and resource guides.
                         </p>
                         <div class="project-tech">
@@ -93,7 +129,7 @@
                             <span class="project-tag">Community Portal</span>
                         </div>
                         <p class="project-description">
-                            Educational platform promoting firearm safety awareness. Currently a static site with 
+                            Educational platform promoting firearm safety awareness. Currently a static site with
                             plans for expanded training resources and community features.
                         </p>
                         <div class="project-tech">
@@ -142,7 +178,7 @@
                         <span class="project-tag">Progressive Web App</span>
                     </div>
                     <p class="project-description">
-                        Inclusive community platform connecting LGBTQ+ organizations and individuals. 
+                        Inclusive community platform connecting LGBTQ+ organizations and individuals.
                         PWA technology enables native-like experience on any device without app store downloads.
                     </p>
                     <div class="project-tech">
@@ -166,7 +202,7 @@
                         <span class="project-tag">Full-Stack PWA</span>
                     </div>
                     <p class="project-description">
-                        62,462-line production PWA built in 48 hours across 21 sessions. End-to-end encrypted messaging, 
+                        62,462-line production PWA built in 48 hours across 21 sessions. End-to-end encrypted messaging,
                         233 RLS policies, 79 database tables, WCAG 2.1 AA accessible - a $381K-$736K traditional equivalent.
                     </p>
                     <div class="project-tech">
@@ -192,48 +228,48 @@
         <div class="container">
             <h2 class="section-title">Services</h2>
             <p class="section-subtitle">Comprehensive Content Engineering solutions</p>
-            
+
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">🎨</div>
                     <h3>Web Development</h3>
                     <p>Custom web applications built with modern technologies and best practices</p>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">🔧</div>
                     <h3>Content Engineering</h3>
                     <p>Structured content systems that scale with your business needs</p>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">📊</div>
                     <h3>Database Design</h3>
                     <p>Efficient data models and database architectures for optimal performance</p>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">🔐</div>
                     <h3>Authentication Systems</h3>
                     <p>Secure user management and authorization frameworks</p>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">🚀</div>
                     <h3>API Development</h3>
                     <p>RESTful APIs and backend services for modern applications</p>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">📚</div>
                     <h3>Code Templates</h3>
                     <p>Reusable components and patterns to accelerate development</p>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">🛡️</div>
                     <h3>Compliance Engineering</h3>
-                    <p>10 frameworks (SOC 2, ISO 27001, HIPAA, GDPR, PCI DSS, DORA, NIS 2, CMMC, NIST AI RMF, ISO 42001) - OSCAL exports, evidence tracking, and AI-assisted review</p>
+                    <p>12 frameworks (SOC 2, ISO 27001, HIPAA, GDPR, PCI DSS, DORA, NIS 2, CMMC, NIST AI RMF, ISO 42001, NIST 800-53, NIST 800-171r3) - OSCAL exports, evidence tracking, and AI-assisted review</p>
                 </div>
             </div>
         </div>
@@ -244,7 +280,7 @@
         <div class="container">
             <h2 class="section-title">Enterprise Methodology</h2>
             <p class="section-subtitle">Three integrated pillars - rooted in real-world military service, technical communication leadership, an MBA in Sustainable Business, and 35+ years of technology</p>
-            
+
             <div class="methodology-grid">
                 <div class="methodology-card">
                     <div class="methodology-icon">🤖</div>
@@ -256,7 +292,7 @@
                         <li>Data-driven strategic decision-making</li>
                     </ul>
                 </div>
-                
+
                 <div class="methodology-card">
                     <div class="methodology-icon">🌍</div>
                     <h3>Sustainable Business</h3>
@@ -267,7 +303,7 @@
                         <li>Sustainable SDLC & GreenOps practices</li>
                     </ul>
                 </div>
-                
+
                 <div class="methodology-card">
                     <div class="methodology-icon">🤝</div>
                     <h3>Servant Leadership</h3>
@@ -279,7 +315,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="methodology-templates">
                 <h3>8 Enterprise Templates</h3>
                 <p>Fully documented business function blueprints spanning Strategic Management, Operations, Finance, Marketing, HR, IT, and GRC - each integrating all three pillars.</p>
@@ -293,7 +329,7 @@
         <div class="container">
             <h2 class="section-title">Template Library</h2>
             <p class="section-subtitle">Reusable code templates and components for rapid development</p>
-            
+
             <div class="template-categories">
                 <div class="category-card">
                     <h3>🎯 Form Components</h3>
@@ -305,7 +341,7 @@
                     </ul>
                     <a href="/templates.html#forms" class="btn btn-small">Explore</a>
                 </div>
-                
+
                 <div class="category-card">
                     <h3>🔐 Authentication</h3>
                     <ul>
@@ -316,7 +352,7 @@
                     </ul>
                     <a href="/templates.html#auth" class="btn btn-small">Explore</a>
                 </div>
-                
+
                 <div class="category-card">
                     <h3>📊 Database Patterns</h3>
                     <ul>
@@ -327,7 +363,7 @@
                     </ul>
                     <a href="/templates.html#database" class="btn btn-small">Explore</a>
                 </div>
-                
+
                 <div class="category-card">
                     <h3>🎨 UI Components</h3>
                     <ul>
@@ -338,11 +374,11 @@
                     </ul>
                     <a href="/templates.html#ui" class="btn btn-small">Explore</a>
                 </div>
-                
+
                 <div class="category-card">
                     <h3>🛡️ Compliance</h3>
                     <ul>
-                        <li>10 frameworks, 214+ controls</li>
+                        <li>12 frameworks, 651+ controls</li>
                         <li>31 audit-ready templates</li>
                         <li>OSCAL exports & evidence tracking</li>
                         <li>AI-assisted compliance review</li>
@@ -358,7 +394,7 @@
         <div class="container">
             <h2 class="section-title">The Value Proposition</h2>
             <p class="section-subtitle">One Content Engineer + AI vs. Traditional Development Team</p>
-            
+
             <div class="value-calculator">
                 <div class="calculator-intro">
                     <h3>A Real Case Study: Fernhill Community PWA</h3>
@@ -495,12 +531,12 @@
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
             <p class="section-subtitle">Let's discuss your next project</p>
-            
+
             <div class="contact-wrapper">
                 <div class="contact-info">
                     <h3>Start a Conversation</h3>
                     <p>Whether you need a custom web application, content engineering services, or just want to discuss your ideas, I'm here to help.</p>
-                    
+
                     <div class="info-items">
                         <div class="info-item">
                             <span class="icon">📧</span>
@@ -509,7 +545,7 @@
                                 <p>contact@structuredforgrowth.com</p>
                             </div>
                         </div>
-                        
+
                         <div class="info-item">
                             <span class="icon">⏰</span>
                             <div>
@@ -517,7 +553,7 @@
                                 <p>Usually within 24 hours</p>
                             </div>
                         </div>
-                        
+
                         <div class="info-item">
                             <span class="icon">💼</span>
                             <div>
@@ -527,47 +563,48 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <form id="contactForm" class="contact-form">
                     <div class="form-group">
                         <label for="name">Name *</label>
                         <input type="text" id="name" name="name" required>
                         <span class="error-message"></span>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="email">Email *</label>
                         <input type="email" id="email" name="email" required>
                         <span class="error-message"></span>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="company">Company</label>
                         <input type="text" id="company" name="company">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="subject">Subject *</label>
                         <input type="text" id="subject" name="subject" required>
                         <span class="error-message"></span>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="message">Message *</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
                         <span class="error-message"></span>
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary btn-block">
                         <span class="btn-text">Send Message</span>
                         <span class="btn-loading hidden">Sending...</span>
                     </button>
-                    
+
                     <div class="form-message hidden"></div>
                 </form>
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -577,7 +614,7 @@
                     <h3>Structured For Growth</h3>
                     <p>Content Engineering Excellence</p>
                 </div>
-                
+
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
@@ -587,7 +624,7 @@
                         <li><a href="#templates">Templates</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-section">
                     <h4>Resources</h4>
                     <ul>
@@ -599,7 +636,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
                 <p>&copy; 2026 Structured For Growth. All rights reserved.</p>
                 <a href="/dashboard" class="admin-login-link">Admin Login</a>
@@ -611,5 +648,22 @@
     <script type="module" src="/scripts/value-calculator.js"></script>
     <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
             async src="https://gc.zgo.at/count.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const worker = reg.installing;
+            worker.addEventListener('statechange', () => {
+              if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('A new version is available. Reload now?')) {
+                  worker.postMessage({ type: 'SKIP_WAITING' });
+                  location.reload();
+                }
+              }
+            });
+          });
+        });
+      }
+    </script>
 </body>
 </html>

@@ -524,3 +524,36 @@
         font-size: 0.65rem;
     }
 }
+
+/* ──────────────────────────────────────────────
+   Print Styles — Compliance Reports
+   ────────────────────────────────────────────── */
+
+@media print {
+  .compliance-search,
+  .compliance-tabs,
+  .compliance-tab {
+    display: none !important;
+  }
+
+  .compliance-tab-content {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+
+  .framework-card {
+    break-inside: avoid;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+  }
+
+  .compliance-matrix {
+    font-size: 0.7rem;
+  }
+
+  .compliance-matrix th,
+  .compliance-matrix td {
+    border: 1px solid #999;
+    padding: 4px 6px;
+  }
+}

@@ -508,9 +508,69 @@ body:has(#loginModal.active) .dashboard-container {
 }
 
 /* Activity Log */
+.activity-filters {
+    padding: var(--spacing-md);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.filter-row {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-sm);
+}
+
+.filter-row:last-child {
+    margin-bottom: 0;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.filter-group label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.filter-actions {
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: var(--spacing-xs);
+}
+
+.activity-summary {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
 .activity-list {
     max-height: 600px;
     overflow-y: auto;
+}
+
+.activity-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+}
+
+.page-info {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    min-width: 100px;
+    text-align: center;
 }
 
 .activity-item {
@@ -638,7 +698,7 @@ body:has(#loginModal.active) .dashboard-container {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .dashboard-grid {
         grid-template-columns: 1fr;
     }
@@ -648,36 +708,36 @@ body:has(#loginModal.active) .dashboard-container {
     .dashboard-container {
         flex-direction: column;
     }
-    
+
     .sidebar {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid var(--border-color);
     }
-    
+
     .sidebar-nav {
         flex-direction: row;
         overflow-x: auto;
     }
-    
+
     .dashboard-filters {
         flex-direction: column;
     }
-    
+
     .dashboard-header {
         flex-direction: column;
         align-items: stretch;
         gap: var(--spacing-md);
     }
-    
+
     .stats-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .form-row {
         grid-template-columns: 1fr;
     }
-    
+
     .project-cards-grid > *,
     .project-cards > * {
         flex: 1 1 100%;
@@ -1165,11 +1225,11 @@ body:has(#loginModal.active) .dashboard-container {
         grid-template-columns: 1fr;
         height: auto;
     }
-    
+
     .conversations-panel {
         max-height: 300px;
     }
-    
+
     .thread-panel {
         min-height: 400px;
     }
@@ -1182,11 +1242,11 @@ body:has(#loginModal.active) .dashboard-container {
         flex: 1 1 100%;
         max-width: 100%;
     }
-    
+
     .campaigns-tabs {
         overflow-x: auto;
     }
-    
+
     .tab-btn {
         white-space: nowrap;
     }
@@ -1660,16 +1720,16 @@ body:has(#loginModal.active) .dashboard-container {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .backup-item {
         flex-direction: column;
         gap: var(--spacing-md);
     }
-    
+
     .demo-actions {
         flex-direction: column;
     }
-    
+
     .stats-mini-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1696,4 +1756,51 @@ body:has(#loginModal.active) .dashboard-container {
         transform: translateX(400px);
         opacity: 0;
     }
+}
+
+/* ──────────────────────────────────────────────
+   Print Styles — Dashboard
+   ────────────────────────────────────────────── */
+
+@media print {
+  .dashboard-sidebar,
+  .dashboard-nav,
+  .nav-user,
+  .modal-overlay,
+  .toast-container,
+  .btn,
+  button:not(th button) {
+    display: none !important;
+  }
+
+  .dashboard-container {
+    display: block;
+  }
+
+  .dashboard-main {
+    margin: 0;
+    padding: 0;
+  }
+
+  .stat-card {
+    break-inside: avoid;
+    border: 1px solid #ccc;
+    background: white !important;
+    color: black !important;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  table {
+    font-size: 0.8rem;
+  }
+
+  th, td {
+    border: 1px solid #999;
+    padding: 4px 6px;
+  }
 }

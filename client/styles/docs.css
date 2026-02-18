@@ -75,6 +75,7 @@
 /* ── Tabs ────────────────────────────────────── */
 .docs-tabs {
     display: flex;
+    justify-content: center;
     gap: 0.25rem;
     border-bottom: 2px solid var(--border-light);
     margin-bottom: var(--spacing-lg);
@@ -464,4 +465,49 @@ mark {
     font-size: 0.85rem;
     border-top: 1px solid var(--border-light);
     margin-top: var(--spacing-2xl);
+}
+
+/* ──────────────────────────────────────────────
+   Print Styles — Documentation
+   ────────────────────────────────────────────── */
+
+@media print {
+  .docs-search,
+  .docs-tabs,
+  .search-kbd {
+    display: none !important;
+  }
+
+  .docs-panel {
+    display: block !important;
+    page-break-before: always;
+  }
+
+  .docs-panel:first-child {
+    page-break-before: auto;
+  }
+
+  .api-table {
+    font-size: 0.75rem;
+  }
+
+  .api-table th,
+  .api-table td {
+    border: 1px solid #999;
+    padding: 4px 6px;
+  }
+
+  .feature-card,
+  .template-doc-card,
+  .doc-file-card {
+    break-inside: avoid;
+    border: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+  }
+
+  code, pre {
+    background: #f5f5f5 !important;
+    color: #333 !important;
+    border: 1px solid #ddd;
+  }
 }

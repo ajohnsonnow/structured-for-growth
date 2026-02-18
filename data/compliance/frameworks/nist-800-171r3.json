@@ -1,0 +1,2623 @@
+{
+  "id": "nist-800-171r3",
+  "name": "NIST 800-171 Rev 3",
+  "fullName": "NIST Special Publication 800-171 Revision 3 — Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations",
+  "version": "Revision 3 (May 2024)",
+  "governingBody": "NIST",
+  "jurisdiction": "United States",
+  "primaryAudience": [
+    "Defense Industrial Base Contractors",
+    "Nonfederal Organizations handling CUI",
+    "CMMC Level 2 Candidates"
+  ],
+  "description": "NIST SP 800-171 Rev 3 specifies security requirements for protecting the confidentiality of Controlled Unclassified Information (CUI) when it resides in nonfederal systems and organizations. Revision 3 aligns the requirements more closely with NIST SP 800-53 Rev 5 and restructures requirements using the 800-53 control family structure. It is the basis for CMMC Level 2 assessments and is mandated by DFARS 252.204-7012 for defense contractors.",
+  "certificationDetails": {
+    "type": "self-assessment or C3PAO assessment",
+    "reportTypes": [
+      "System Security Plan (SSP)",
+      "Plan of Action & Milestones (POA&M)",
+      "NIST SP 800-171A Assessment Report",
+      "SPRS Score Submission"
+    ],
+    "assessor": "Self-assessment for DFARS compliance; C3PAO assessment for CMMC Level 2 certification",
+    "typicalCost": "$10,000 - $200,000+ (depends on scope and assessment type)",
+    "auditCycle": "Triennial assessment with annual affirmation (aligned with CMMC)",
+    "certificationBody": "Cyber AB for CMMC; self-attestation for DFARS standalone"
+  },
+  "lifecycle": [
+    {
+      "phase": 1,
+      "name": "Scoping and CUI Identification",
+      "description": "Identify CUI within the organization, determine system boundaries, and identify applicable security requirements.",
+      "typicalDuration": "3-6 weeks",
+      "keyActivities": [
+        "Identify CUI data types and flows",
+        "Define system boundaries and scope",
+        "Identify applicable security requirements",
+        "Map CUI to storage, processing, and transmission points"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "Gap Assessment",
+      "description": "Assess current security posture against NIST 800-171 Rev 3 requirements. Determine SPRS score and identify gaps.",
+      "typicalDuration": "4-6 weeks",
+      "keyActivities": [
+        "Conduct gap analysis against all 17 families",
+        "Calculate initial SPRS score",
+        "Identify unmet requirements",
+        "Prioritize remediation efforts"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "SSP and POA&M Development",
+      "description": "Document system security architecture in the SSP and create POA&M for requirements not yet fully met.",
+      "typicalDuration": "4-8 weeks",
+      "keyActivities": [
+        "Develop or update SSP",
+        "Document control implementations",
+        "Create POA&M with milestones",
+        "Define remediation timelines"
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "Implementation and Remediation",
+      "description": "Implement security requirements, close POA&M items, and collect evidence of compliance.",
+      "typicalDuration": "12-30 weeks",
+      "keyActivities": [
+        "Implement technical controls",
+        "Deploy security solutions",
+        "Train personnel",
+        "Collect and organize evidence artifacts"
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "Assessment and Validation",
+      "description": "Conduct self-assessment or engage C3PAO for formal assessment. Submit SPRS score to DoD.",
+      "typicalDuration": "4-8 weeks",
+      "keyActivities": [
+        "Conduct internal readiness review",
+        "Final SPRS score calculation",
+        "C3PAO assessment (if CMMC required)",
+        "Submit SPRS score to SPRS portal"
+      ]
+    },
+    {
+      "phase": 6,
+      "name": "Continuous Compliance",
+      "description": "Maintain compliance through ongoing monitoring, periodic reassessment, and annual affirmation.",
+      "typicalDuration": "Ongoing",
+      "keyActivities": [
+        "Continuous monitoring of security controls",
+        "Annual affirmation",
+        "POA&M management and closeout",
+        "Triennial reassessment preparation"
+      ]
+    }
+  ],
+  "domains": [
+    {
+      "id": "03.01-access-control",
+      "name": "03.01 Access Control",
+      "description": "Limit system access to authorized users, processes acting on behalf of authorized users, and devices.",
+      "required": true,
+      "controlCount": 22,
+      "controls": [
+        {
+          "id": "03.01.01",
+          "name": "Account Management",
+          "description": "Manage system accounts, including establishing, activating, modifying, reviewing, disabling, and removing accounts. Define conditions for group and role membership.",
+          "implementationType": "required",
+          "category": "Account Management",
+          "mappings": {
+            "nist-800-53": [
+              "AC-2"
+            ]
+          },
+          "implementationGuidance": "Implement account management controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Account Management policy documentation",
+            "Account Management implementation evidence",
+            "Account Management test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.02",
+          "name": "Access Enforcement",
+          "description": "Enforce approved authorizations for logical access to systems and information in accordance with applicable access control policies.",
+          "implementationType": "required",
+          "category": "Access Enforcement",
+          "mappings": {
+            "nist-800-53": [
+              "AC-3"
+            ]
+          },
+          "implementationGuidance": "Implement access enforcement controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Access Enforcement policy documentation",
+            "Access Enforcement implementation evidence",
+            "Access Enforcement test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.01.03",
+          "name": "Information Flow Enforcement",
+          "description": "Enforce approved authorizations for controlling the flow of CUI within the system and between connected systems.",
+          "implementationType": "required",
+          "category": "Flow Control",
+          "mappings": {
+            "nist-800-53": [
+              "AC-4"
+            ]
+          },
+          "implementationGuidance": "Implement network segmentation to control CUI flows. Use firewalls, VLANs, and ACLs. Encrypt CUI in transit between trust boundaries. Document all approved information flow paths.",
+          "evidenceRequired": [
+            "Information flow policies",
+            "Network architecture diagrams",
+            "Firewall rules and ACLs",
+            "CUI flow documentation"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.01.04",
+          "name": "Separation of Duties",
+          "description": "Separate the duties of individuals to reduce the risk of malevolent activity without collusion.",
+          "implementationType": "required",
+          "category": "Separation of Duties",
+          "mappings": {
+            "nist-800-53": [
+              "AC-5"
+            ]
+          },
+          "implementationGuidance": "Separate administrative functions from operational functions. Ensure no single individual controls all aspects of a critical process. Document duty assignments. Implement technical controls to enforce separation.",
+          "evidenceRequired": [
+            "Duty separation matrix",
+            "Role assignments",
+            "Access control configurations",
+            "Process documentation"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.05",
+          "name": "Least Privilege",
+          "description": "Employ the principle of least privilege, including for specific security functions and privileged accounts.",
+          "implementationType": "required",
+          "category": "Least Privilege",
+          "mappings": {
+            "nist-800-53": [
+              "AC-6",
+              "AC-6(1)",
+              "AC-6(2)",
+              "AC-6(5)"
+            ]
+          },
+          "implementationGuidance": "Implement least privilege controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Least Privilege policy documentation",
+            "Least Privilege implementation evidence",
+            "Least Privilege test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.06",
+          "name": "Unsuccessful Logon Attempts",
+          "description": "Enforce a limit of consecutive invalid logon attempts by a user during a specified time period. Automatically lock the account or node for a specified time period or until released by an administrator.",
+          "implementationType": "required",
+          "category": "Authentication",
+          "mappings": {
+            "nist-800-53": [
+              "AC-7"
+            ]
+          },
+          "implementationGuidance": "Configure a maximum of 3-5 invalid logon attempts within a 15-minute window. Lock accounts for at least 30 minutes or until administrator intervention. Log all failed logon attempts.",
+          "evidenceRequired": [
+            "Account lockout configuration",
+            "Failed logon attempt logs",
+            "Lockout policy documentation",
+            "Testing evidence"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.01.07",
+          "name": "System Use Notification",
+          "description": "Display a system use notification message or banner before granting access to the system that provides privacy and security notices.",
+          "implementationType": "required",
+          "category": "Notification",
+          "mappings": {
+            "nist-800-53": [
+              "AC-8"
+            ]
+          },
+          "implementationGuidance": "Display use notification before login. Include notice that system is for authorized use only, that monitoring occurs, and that use constitutes consent to monitoring. Obtain user acknowledgment.",
+          "evidenceRequired": [
+            "System use notification banner text",
+            "Login banner screenshots",
+            "Use notification policy",
+            "Acknowledgment records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.08",
+          "name": "Device Lock",
+          "description": "Initiate a device lock after a defined period of inactivity. Retain the device lock until the user reestablishes access using established identification and authentication procedures.",
+          "implementationType": "required",
+          "category": "Session",
+          "mappings": {
+            "nist-800-53": [
+              "AC-11",
+              "AC-11(1)"
+            ]
+          },
+          "implementationGuidance": "Configure device locks after 15 minutes of inactivity or less. Require reauthentication to unlock. Conceal previous display content. Consider pattern-hiding for mobile devices.",
+          "evidenceRequired": [
+            "Device lock configuration",
+            "Screen timeout settings",
+            "GPO or MDM policy settings",
+            "Testing evidence"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.01.09",
+          "name": "Session Termination",
+          "description": "Automatically terminate a user session after defined conditions or trigger events.",
+          "implementationType": "required",
+          "category": "Session",
+          "mappings": {
+            "nist-800-53": [
+              "AC-12"
+            ]
+          },
+          "implementationGuidance": "Terminate sessions after a defined period of inactivity (15-30 minutes recommended). Terminate sessions upon user logout. Log session termination events.",
+          "evidenceRequired": [
+            "Session timeout configuration",
+            "Session management policy",
+            "Testing evidence",
+            "Application settings"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.01.10",
+          "name": "Remote Access",
+          "description": "Establish usage restrictions, configuration requirements, and connection requirements for remote access. Authorize each type of remote access prior to establishing the connection. Route remote access via managed access control points.",
+          "implementationType": "required",
+          "category": "Remote Access",
+          "mappings": {
+            "nist-800-53": [
+              "AC-17",
+              "AC-17(1)",
+              "AC-17(2)"
+            ]
+          },
+          "implementationGuidance": "Implement remote access controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Remote Access policy documentation",
+            "Remote Access implementation evidence",
+            "Remote Access test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.11",
+          "name": "Wireless Access",
+          "description": "Protect wireless access using authentication and encryption. Authorize each type of wireless access prior to allowing such connections.",
+          "implementationType": "required",
+          "category": "Wireless",
+          "mappings": {
+            "nist-800-53": [
+              "AC-18",
+              "AC-18(1)"
+            ]
+          },
+          "implementationGuidance": "Implement wireless access controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Wireless Access policy documentation",
+            "Wireless Access implementation evidence",
+            "Wireless Access test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.12",
+          "name": "Access Control for Mobile Devices",
+          "description": "Establish usage restrictions, configuration requirements, and connection requirements for organization-controlled mobile devices. Authorize the connection of mobile devices to organizational systems.",
+          "implementationType": "required",
+          "category": "Mobile",
+          "mappings": {
+            "nist-800-53": [
+              "AC-19"
+            ]
+          },
+          "implementationGuidance": "Implement access control for mobile devices controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Access Control for Mobile Devices policy documentation",
+            "Access Control for Mobile Devices implementation evidence",
+            "Access Control for Mobile Devices test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.13",
+          "name": "Use of External Systems",
+          "description": "Establish terms and conditions for authorized use of external systems. Verify that required security controls are implemented on external systems. Limit use of organization-controlled portable storage devices on external systems.",
+          "implementationType": "required",
+          "category": "External Systems",
+          "mappings": {
+            "nist-800-53": [
+              "AC-20",
+              "AC-20(1)",
+              "AC-20(2)"
+            ]
+          },
+          "implementationGuidance": "Implement use of external systems controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Use of External Systems policy documentation",
+            "Use of External Systems implementation evidence",
+            "Use of External Systems test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.14",
+          "name": "Information Sharing",
+          "description": "Authorize, document, and control the sharing of CUI with individuals or entities. Enforce information-sharing decisions using automated mechanisms.",
+          "implementationType": "required",
+          "category": "Information Sharing",
+          "mappings": {
+            "nist-800-53": [
+              "AC-21"
+            ]
+          },
+          "implementationGuidance": "Document information-sharing agreements. Implement access control mechanisms that enforce sharing decisions. Verify recipient authorization before sharing CUI. Maintain sharing records.",
+          "evidenceRequired": [
+            "Information sharing agreements",
+            "Sharing authorization records",
+            "Access control evidence",
+            "Sharing logs"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.15",
+          "name": "Publicly Accessible Content",
+          "description": "Designate individuals authorized to post information on publicly accessible systems. Review publicly accessible system content for nonpublic information and remove.",
+          "implementationType": "required",
+          "category": "Public Content",
+          "mappings": {
+            "nist-800-53": [
+              "AC-22"
+            ]
+          },
+          "implementationGuidance": "Designate content reviewers. Review all publicly posted information for CUI or nonpublic information. Remove inappropriate content immediately upon identification. Train designated posters on CUI marking.",
+          "evidenceRequired": [
+            "Designated poster list",
+            "Content review procedures",
+            "Review records",
+            "Removal actions taken"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.16",
+          "name": "Permitted Actions Without Identification or Authentication",
+          "description": "Identify specific user actions that can be performed on the system without identification or authentication.",
+          "implementationType": "required",
+          "category": "Authentication",
+          "mappings": {
+            "nist-800-53": [
+              "AC-14"
+            ]
+          },
+          "implementationGuidance": "Identify and document all actions allowed without authentication. Minimize unauthenticated actions to the minimum necessary. Apply additional monitoring to unauthenticated sessions.",
+          "evidenceRequired": [
+            "Unauthenticated actions list",
+            "Risk acceptance documentation",
+            "Monitoring records"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.01.17",
+          "name": "Security and Privacy Attributes",
+          "description": "Provide the means to associate types of security attributes having defined values with information in storage, in process, and in transmission.",
+          "implementationType": "required",
+          "category": "Attributes",
+          "mappings": {
+            "nist-800-53": [
+              "AC-16"
+            ]
+          },
+          "implementationGuidance": "Define security attribute types and values. Associate attributes with CUI data elements. Implement attribute-based access controls where feasible.",
+          "evidenceRequired": [
+            "Attribute definitions",
+            "ABAC policy configurations",
+            "Attribute assignment records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.18",
+          "name": "Access Control Decisions",
+          "description": "Enforce access control decisions based on security attributes that are not associated with the individual user.",
+          "implementationType": "required",
+          "category": "Access Control",
+          "mappings": {
+            "nist-800-53": [
+              "AC-24"
+            ]
+          },
+          "implementationGuidance": "Implement attribute-based access control (ABAC) where appropriate. Use security labels, clearance levels, or other attributes for enforcement. Combine with RBAC for defense in depth.",
+          "evidenceRequired": [
+            "ABAC configurations",
+            "Attribute-based rules",
+            "Access decision logs"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.19",
+          "name": "Concurrent Session Control",
+          "description": "Limit the number of concurrent sessions for each system account to a defined number.",
+          "implementationType": "required",
+          "category": "Session",
+          "mappings": {
+            "nist-800-53": [
+              "AC-10"
+            ]
+          },
+          "implementationGuidance": "Limit concurrent sessions to 1-3 per user based on role and risk. Alert on violations. Implement session management controls to enforce limits.",
+          "evidenceRequired": [
+            "Session limit configurations",
+            "Testing evidence",
+            "Violation reports"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.01.20",
+          "name": "CUI Flow Enforcement",
+          "description": "Use protected mechanism to prevent unauthorized transfer of CUI across trust boundaries.",
+          "implementationType": "required",
+          "category": "Flow Control",
+          "mappings": {
+            "nist-800-53": [
+              "AC-4(4)"
+            ]
+          },
+          "implementationGuidance": "Implement data loss prevention (DLP) controls at trust boundaries. Use encryption and access control at CUI storage locations. Monitor and log cross-boundary transfers.",
+          "evidenceRequired": [
+            "DLP configurations",
+            "CUI flow monitoring logs",
+            "Boundary protection evidence"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.01.21",
+          "name": "Controlled Information on Portable Storage",
+          "description": "Protect and control organization-controlled CUI on portable storage devices.",
+          "implementationType": "required",
+          "category": "Mobile",
+          "mappings": {
+            "nist-800-53": [
+              "AC-19(5)"
+            ]
+          },
+          "implementationGuidance": "Encrypt CUI on all portable storage devices. Restrict portable storage to organization-controlled devices. Implement device whitelisting. Disable unauthorized USB devices.",
+          "evidenceRequired": [
+            "Portable storage encryption evidence",
+            "Device whitelist",
+            "USB policy configurations"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.01.22",
+          "name": "Control of Systems Not Identified in SSP",
+          "description": "Identify and control the use of systems that are not identified in the system security plan.",
+          "implementationType": "required",
+          "category": "External Systems",
+          "mappings": {
+            "nist-800-53": [
+              "AC-20(3)"
+            ]
+          },
+          "implementationGuidance": "Maintain current inventory of all systems. Identify unauthorized systems through scanning. Restrict network access for unidentified systems. Include cloud services in scope.",
+          "evidenceRequired": [
+            "System inventory",
+            "Network scan results",
+            "Unauthorized system detection records"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.02-awareness-training",
+      "name": "03.02 Awareness and Training",
+      "description": "Ensure that managers and users of organizational systems are made aware of security risks and are trained to carry out their responsibilities.",
+      "required": true,
+      "controlCount": 3,
+      "controls": [
+        {
+          "id": "03.02.01",
+          "name": "Literacy Training and Awareness",
+          "description": "Provide security awareness training to all system users including recognizing and reporting potential indicators of insider threat, social engineering, and phishing.",
+          "implementationType": "required",
+          "category": "Awareness",
+          "mappings": {
+            "nist-800-53": [
+              "AT-2",
+              "AT-2(2)",
+              "AT-2(3)"
+            ]
+          },
+          "implementationGuidance": "Implement literacy training and awareness controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Literacy Training and Awareness policy documentation",
+            "Literacy Training and Awareness implementation evidence",
+            "Literacy Training and Awareness test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.02.02",
+          "name": "Role-Based Training",
+          "description": "Provide role-based security training to personnel with assigned security roles and responsibilities before authorizing access and at a defined frequency thereafter.",
+          "implementationType": "required",
+          "category": "Training",
+          "mappings": {
+            "nist-800-53": [
+              "AT-3",
+              "AT-3(5)"
+            ]
+          },
+          "implementationGuidance": "Implement role-based training controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Role-Based Training policy documentation",
+            "Role-Based Training implementation evidence",
+            "Role-Based Training test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.02.03",
+          "name": "Insider Threat Awareness",
+          "description": "Include practical exercises in literacy training that simulate events and incidents, including insider threats.",
+          "implementationType": "required",
+          "category": "Awareness",
+          "mappings": {
+            "nist-800-53": [
+              "AT-2(2)"
+            ]
+          },
+          "implementationGuidance": "Implement insider threat awareness controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Insider Threat Awareness policy documentation",
+            "Insider Threat Awareness implementation evidence",
+            "Insider Threat Awareness test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.03-audit-accountability",
+      "name": "03.03 Audit and Accountability",
+      "description": "Create, protect, and retain system audit records to enable monitoring, analysis, investigation, and reporting.",
+      "required": true,
+      "controlCount": 6,
+      "controls": [
+        {
+          "id": "03.03.01",
+          "name": "Event Logging",
+          "description": "Identify and select events requiring logging. Create, retain, and provide audit logs containing events for after-the-fact investigation of security incidents.",
+          "implementationType": "required",
+          "category": "Audit Logging",
+          "mappings": {
+            "nist-800-53": [
+              "AU-2",
+              "AU-3",
+              "AU-3(1)"
+            ]
+          },
+          "implementationGuidance": "Implement event logging controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Event Logging policy documentation",
+            "Event Logging implementation evidence",
+            "Event Logging test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.03.02",
+          "name": "Audit Record Review, Analysis, and Reporting",
+          "description": "Review and analyze audit records for indications of inappropriate or unusual activity. Report findings to designated officials.",
+          "implementationType": "required",
+          "category": "Monitoring",
+          "mappings": {
+            "nist-800-53": [
+              "AU-6",
+              "AU-6(3)"
+            ]
+          },
+          "implementationGuidance": "Implement audit record review, analysis, and reporting controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Audit Record Review, Analysis, and Reporting policy documentation",
+            "Audit Record Review, Analysis, and Reporting implementation evidence",
+            "Audit Record Review, Analysis, and Reporting test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.03.03",
+          "name": "Audit Record Generation",
+          "description": "Provide a system capability to generate audit records. Allow authorized personnel to select events to be logged. Generate audit records for the selected events.",
+          "implementationType": "required",
+          "category": "Generation",
+          "mappings": {
+            "nist-800-53": [
+              "AU-12",
+              "AU-12(3)"
+            ]
+          },
+          "implementationGuidance": "Enable audit record generation at the OS, application, and database levels. Maintain synchronized timestamps. Ensure audit records include date, time, user, event type, success/failure, and source.",
+          "evidenceRequired": [
+            "Audit generation configurations",
+            "Sample audit records",
+            "Timestamp synchronization evidence"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.03.04",
+          "name": "Audit Log Storage Capacity",
+          "description": "Allocate audit log storage capacity to accommodate the required audit log retention.",
+          "implementationType": "required",
+          "category": "Storage",
+          "mappings": {
+            "nist-800-53": [
+              "AU-4"
+            ]
+          },
+          "implementationGuidance": "Calculate storage requirements based on audit volume and retention period. Configure alerting when storage reaches 80% capacity. Plan for log archival and offsite storage.",
+          "evidenceRequired": [
+            "Storage capacity planning",
+            "Capacity monitoring alerts",
+            "Archival procedures"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.03.05",
+          "name": "Audit Record Protection",
+          "description": "Protect audit information and audit logging tools from unauthorized access, modification, and deletion.",
+          "implementationType": "required",
+          "category": "Log Protection",
+          "mappings": {
+            "nist-800-53": [
+              "AU-9",
+              "AU-9(4)"
+            ]
+          },
+          "implementationGuidance": "Implement audit record protection controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Audit Record Protection policy documentation",
+            "Audit Record Protection implementation evidence",
+            "Audit Record Protection test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.03.06",
+          "name": "Audit Record Retention",
+          "description": "Retain audit records for a defined retention period to support after-the-fact investigation and compliance.",
+          "implementationType": "required",
+          "category": "Retention",
+          "mappings": {
+            "nist-800-53": [
+              "AU-11"
+            ]
+          },
+          "implementationGuidance": "Retain audit records for a minimum retention period consistent with regulatory and contractual requirements (3+ years recommended for CUI). Archive records for long-term storage.",
+          "evidenceRequired": [
+            "Retention policy",
+            "Archive configuration",
+            "Retention period verification"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.04-configuration-management",
+      "name": "03.04 Configuration Management",
+      "description": "Establish and maintain baseline configurations and inventories of organizational systems throughout their life cycles.",
+      "required": true,
+      "controlCount": 9,
+      "controls": [
+        {
+          "id": "03.04.01",
+          "name": "Baseline Configuration",
+          "description": "Establish and maintain baseline configurations and inventories of organizational systems including hardware, software, firmware, and documentation.",
+          "implementationType": "required",
+          "category": "Configuration",
+          "mappings": {
+            "nist-800-53": [
+              "CM-2",
+              "CM-2(7)"
+            ]
+          },
+          "implementationGuidance": "Implement baseline configuration controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Baseline Configuration policy documentation",
+            "Baseline Configuration implementation evidence",
+            "Baseline Configuration test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.04.02",
+          "name": "Configuration Settings",
+          "description": "Establish and enforce security configuration settings for IT products in organizational systems.",
+          "implementationType": "required",
+          "category": "Hardening",
+          "mappings": {
+            "nist-800-53": [
+              "CM-6"
+            ]
+          },
+          "implementationGuidance": "Implement configuration settings controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Configuration Settings policy documentation",
+            "Configuration Settings implementation evidence",
+            "Configuration Settings test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.04.03",
+          "name": "Configuration Change Control",
+          "description": "Track, review, approve or disapprove, and log changes to organizational systems.",
+          "implementationType": "required",
+          "category": "Change Control",
+          "mappings": {
+            "nist-800-53": [
+              "CM-3",
+              "CM-3(4)"
+            ]
+          },
+          "implementationGuidance": "Implement configuration change control controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Configuration Change Control policy documentation",
+            "Configuration Change Control implementation evidence",
+            "Configuration Change Control test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.04.04",
+          "name": "Impact Analyses",
+          "description": "Analyze the security and privacy impact of changes prior to implementation.",
+          "implementationType": "required",
+          "category": "Impact Analysis",
+          "mappings": {
+            "nist-800-53": [
+              "CM-4"
+            ]
+          },
+          "implementationGuidance": "Establish a change management process that includes security impact analysis. Document potential security impacts. Require approval from security personnel for significant changes.",
+          "evidenceRequired": [
+            "Security impact analysis procedures",
+            "Impact analysis records",
+            "Change request forms"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.04.05",
+          "name": "Access Restrictions for Change",
+          "description": "Define, document, approve, and enforce physical and logical access restrictions associated with changes to organizational systems.",
+          "implementationType": "required",
+          "category": "Access Control",
+          "mappings": {
+            "nist-800-53": [
+              "CM-5"
+            ]
+          },
+          "implementationGuidance": "Implement logical access controls for configuration changes (e.g., admin-only access to config management tools). Maintain approval records. Enforce change windows.",
+          "evidenceRequired": [
+            "Physical access controls for systems",
+            "Change management access controls",
+            "Approval records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.04.06",
+          "name": "Least Functionality",
+          "description": "Configure systems to provide only mission-essential capabilities. Restrict, disable, or prevent the use of nonessential programs, functions, ports, protocols, and services.",
+          "implementationType": "required",
+          "category": "Functionality",
+          "mappings": {
+            "nist-800-53": [
+              "CM-7",
+              "CM-7(1)",
+              "CM-7(2)"
+            ]
+          },
+          "implementationGuidance": "Disable unnecessary services, ports, and protocols. Remove or disable nonessential software. Configure host-based firewalls. Document essential functions and justifications for enabled services.",
+          "evidenceRequired": [
+            "Disabled services list",
+            "Port scan results",
+            "Firewall configurations",
+            "Justification documentation"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.04.07",
+          "name": "System Component Inventory",
+          "description": "Develop, document, and maintain a current inventory of system components. Verify that no components are unauthorized.",
+          "implementationType": "required",
+          "category": "Inventory",
+          "mappings": {
+            "nist-800-53": [
+              "CM-8",
+              "CM-8(1)"
+            ]
+          },
+          "implementationGuidance": "Use automated discovery tools to maintain inventory. Include hardware, software, firmware, and network components. Update within 24 hours of changes. Flag unauthorized components.",
+          "evidenceRequired": [
+            "Automated inventory tool output",
+            "Component inventory",
+            "Unauthorized component reports"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.04.08",
+          "name": "Software Usage Restrictions",
+          "description": "Use software and associated documentation in accordance with contract agreements and copyright laws. Track and document licensed use. Control and document the use of peer-to-peer file-sharing technology.",
+          "implementationType": "required",
+          "category": "Software",
+          "mappings": {
+            "nist-800-53": [
+              "CM-10"
+            ]
+          },
+          "implementationGuidance": "Maintain software license inventory. Audit software compliance quarterly. Remove unlicensed software. Restrict peer-to-peer file sharing.",
+          "evidenceRequired": [
+            "Software license inventory",
+            "Compliance audit records",
+            "P2P blocking evidence"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.04.09",
+          "name": "User-Installed Software",
+          "description": "Control and monitor user-installed software. Enforce software installation policies through automated enforcement.",
+          "implementationType": "required",
+          "category": "Software",
+          "mappings": {
+            "nist-800-53": [
+              "CM-11"
+            ]
+          },
+          "implementationGuidance": "Implement application whitelisting where feasible. Require approval for software installation. Monitor for unauthorized software. Scan installed software for vulnerabilities.",
+          "evidenceRequired": [
+            "Application whitelist configurations",
+            "Software installation approvals",
+            "Monitoring reports"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.05-identification-authentication",
+      "name": "03.05 Identification and Authentication",
+      "description": "Identify and authenticate users of organizational systems and devices before granting access.",
+      "required": true,
+      "controlCount": 11,
+      "controls": [
+        {
+          "id": "03.05.01",
+          "name": "User Identification and Authentication",
+          "description": "Identify and authenticate system users, processes, or devices as a prerequisite to allowing access to organizational systems.",
+          "implementationType": "required",
+          "category": "Authentication",
+          "mappings": {
+            "nist-800-53": [
+              "IA-2",
+              "IA-2(1)",
+              "IA-2(2)",
+              "IA-2(8)"
+            ]
+          },
+          "implementationGuidance": "Implement user identification and authentication controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "User Identification and Authentication policy documentation",
+            "User Identification and Authentication implementation evidence",
+            "User Identification and Authentication test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.05.02",
+          "name": "Device Identification and Authentication",
+          "description": "Identify and authenticate devices before establishing a connection.",
+          "implementationType": "required",
+          "category": "Device Auth",
+          "mappings": {
+            "nist-800-53": [
+              "IA-3"
+            ]
+          },
+          "implementationGuidance": "Require device certificates or other authentication mechanism. Authenticate devices before allowing network connections. Implement 802.1X or similar network access control.",
+          "evidenceRequired": [
+            "Device authentication configurations",
+            "802.1X settings",
+            "Certificate deployment evidence"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.05.03",
+          "name": "Identifier Management",
+          "description": "Manage system identifiers by receiving authorization, selecting appropriate identifier type, assigning the identifier, preventing reuse for a defined period, and disabling after a period of inactivity.",
+          "implementationType": "required",
+          "category": "Identifiers",
+          "mappings": {
+            "nist-800-53": [
+              "IA-4"
+            ]
+          },
+          "implementationGuidance": "Assign unique identifiers to all users. Prevent identifier reuse for 2+ years. Disable identifiers after 90 days of inactivity. Use standard naming conventions.",
+          "evidenceRequired": [
+            "Identifier management procedures",
+            "Inactive identifier reports",
+            "Naming convention documentation"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.05.04",
+          "name": "Authenticator Management",
+          "description": "Manage system authenticators by verifying identity before distributing, establishing initial content, ensuring sufficient strength, changing and refreshing authenticators, protecting authenticator content, and requiring change when compromised.",
+          "implementationType": "required",
+          "category": "Authenticators",
+          "mappings": {
+            "nist-800-53": [
+              "IA-5",
+              "IA-5(1)",
+              "IA-5(2)",
+              "IA-5(6)"
+            ]
+          },
+          "implementationGuidance": "Use complex passwords (15+ characters) or passphrases. Protect authenticator content from unauthorized disclosure. Change authenticators upon evidence of compromise. Use approved authenticator types.",
+          "evidenceRequired": [
+            "Password policy configurations",
+            "Authenticator management procedures",
+            "Compromise response records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.05.05",
+          "name": "Authentication Feedback",
+          "description": "Obscure feedback of authentication information during the authentication process.",
+          "implementationType": "required",
+          "category": "Feedback",
+          "mappings": {
+            "nist-800-53": [
+              "IA-6"
+            ]
+          },
+          "implementationGuidance": "Display asterisks or dots instead of actual characters during password entry. Do not echo authentication information in error messages.",
+          "evidenceRequired": [
+            "Authentication feedback configurations",
+            "UI screenshots showing masked input"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.05.06",
+          "name": "Cryptographic Module Authentication",
+          "description": "Employ FIPS-validated cryptographic modules for all authentication mechanisms.",
+          "implementationType": "required",
+          "category": "Cryptography",
+          "mappings": {
+            "nist-800-53": [
+              "IA-7"
+            ]
+          },
+          "implementationGuidance": "Use FIPS 140-2/140-3 validated cryptographic modules. Verify validation certificates. Ensure all authentication-related cryptographic operations use validated modules.",
+          "evidenceRequired": [
+            "FIPS validation certificates",
+            "Cryptographic module inventory",
+            "Configuration evidence"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.05.07",
+          "name": "Non-Organizational User Identification and Authentication",
+          "description": "Identify and authenticate non-organizational users accessing the system.",
+          "implementationType": "required",
+          "category": "External Auth",
+          "mappings": {
+            "nist-800-53": [
+              "IA-8"
+            ]
+          },
+          "implementationGuidance": "Authenticate external users with the same rigor as internal users. Use federated identity solutions where appropriate. Implement appropriate access restrictions for external users.",
+          "evidenceRequired": [
+            "External user authentication configurations",
+            "Federation agreement",
+            "External user access records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.05.08",
+          "name": "Multi-Factor Authentication",
+          "description": "Implement multi-factor authentication for local and network access to privileged accounts and for network access to non-privileged accounts.",
+          "implementationType": "required",
+          "category": "MFA",
+          "mappings": {
+            "nist-800-53": [
+              "IA-2(1)",
+              "IA-2(2)"
+            ]
+          },
+          "implementationGuidance": "Implement multi-factor authentication controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Multi-Factor Authentication policy documentation",
+            "Multi-Factor Authentication implementation evidence",
+            "Multi-Factor Authentication test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.05.09",
+          "name": "Replay-Resistant Authentication",
+          "description": "Implement replay-resistant authentication mechanisms for access to privileged and non-privileged accounts.",
+          "implementationType": "required",
+          "category": "Authentication",
+          "mappings": {
+            "nist-800-53": [
+              "IA-2(8)"
+            ]
+          },
+          "implementationGuidance": "Use authentication protocols resistant to replay attacks (e.g., challenge-response, time-based tokens). Avoid authentication mechanisms susceptible to interception and reuse.",
+          "evidenceRequired": [
+            "Authentication protocol configurations",
+            "Replay resistance mechanism evidence"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.05.10",
+          "name": "Identity Proofing",
+          "description": "Verify identity of individuals, validate documentation, and resolve identity before issuing credentials for access to organizational systems.",
+          "implementationType": "required",
+          "category": "Identity Proofing",
+          "mappings": {
+            "nist-800-53": [
+              "IA-12",
+              "IA-12(2)",
+              "IA-12(3)"
+            ]
+          },
+          "implementationGuidance": "Verify identity through acceptable documents (government-issued ID). Conduct identity proofing in person or via approved remote methods. Maintain proofing records.",
+          "evidenceRequired": [
+            "Identity proofing procedures",
+            "Proofing records",
+            "Accepted document types"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.05.11",
+          "name": "Re-authentication",
+          "description": "Require users to re-authenticate when specified conditions are met including role change, session timeout, or privilege escalation.",
+          "implementationType": "required",
+          "category": "Re-auth",
+          "mappings": {
+            "nist-800-53": [
+              "IA-11"
+            ]
+          },
+          "implementationGuidance": "Define re-authentication triggers including session timeout, privilege escalation, and accessing high-sensitivity CUI. Enforce re-authentication for critical actions.",
+          "evidenceRequired": [
+            "Re-authentication trigger configurations",
+            "Session management policies",
+            "Testing evidence"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.06-incident-response",
+      "name": "03.06 Incident Response",
+      "description": "Establish an operational incident handling capability for organizational systems.",
+      "required": true,
+      "controlCount": 3,
+      "controls": [
+        {
+          "id": "03.06.01",
+          "name": "Incident Handling",
+          "description": "Implement an incident handling capability that includes preparation, detection, analysis, containment, eradication, and recovery.",
+          "implementationType": "required",
+          "category": "Handling",
+          "mappings": {
+            "nist-800-53": [
+              "IR-4"
+            ]
+          },
+          "implementationGuidance": "Implement incident handling controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Incident Handling policy documentation",
+            "Incident Handling implementation evidence",
+            "Incident Handling test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.06.02",
+          "name": "Incident Monitoring and Reporting",
+          "description": "Track, document, and report incidents to designated officials and external authorities. Monitor and analyze indicators of compromise.",
+          "implementationType": "required",
+          "category": "Monitoring",
+          "mappings": {
+            "nist-800-53": [
+              "IR-5",
+              "IR-6",
+              "IR-6(1)",
+              "IR-6(3)"
+            ]
+          },
+          "implementationGuidance": "Implement incident monitoring and reporting controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Incident Monitoring and Reporting policy documentation",
+            "Incident Monitoring and Reporting implementation evidence",
+            "Incident Monitoring and Reporting test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.06.03",
+          "name": "Incident Response Testing",
+          "description": "Test the organizational incident response capability at a defined frequency.",
+          "implementationType": "required",
+          "category": "Testing",
+          "mappings": {
+            "nist-800-53": [
+              "IR-3",
+              "IR-3(2)"
+            ]
+          },
+          "implementationGuidance": "Conduct tabletop exercises or functional tests annually at minimum. Test incident response procedures for CUI-related incidents. Document test results and lessons learned.",
+          "evidenceRequired": [
+            "Test plans and results",
+            "Tabletop exercise records",
+            "After-action reports",
+            "Lessons learned"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.07-maintenance",
+      "name": "03.07 Maintenance",
+      "description": "Perform timely maintenance on organizational systems and provide controls for maintenance tools and personnel.",
+      "required": true,
+      "controlCount": 6,
+      "controls": [
+        {
+          "id": "03.07.01",
+          "name": "System Maintenance",
+          "description": "Perform maintenance on organizational systems. Provide controls on the tools, techniques, mechanisms, and personnel used to conduct maintenance.",
+          "implementationType": "required",
+          "category": "Maintenance",
+          "mappings": {
+            "nist-800-53": [
+              "MA-2"
+            ]
+          },
+          "implementationGuidance": "Implement system maintenance controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "System Maintenance policy documentation",
+            "System Maintenance implementation evidence",
+            "System Maintenance test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.07.02",
+          "name": "Maintenance Tools",
+          "description": "Inspect maintenance tools, test media with malicious code checks, and check equipment for unauthorized modifications prior to use.",
+          "implementationType": "required",
+          "category": "Tools",
+          "mappings": {
+            "nist-800-53": [
+              "MA-3",
+              "MA-3(1)",
+              "MA-3(2)"
+            ]
+          },
+          "implementationGuidance": "Implement maintenance tools controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Maintenance Tools policy documentation",
+            "Maintenance Tools implementation evidence",
+            "Maintenance Tools test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.07.03",
+          "name": "Nonlocal Maintenance",
+          "description": "Require multi-factor authentication and encrypt sessions for nonlocal maintenance activities. Terminate remote sessions when complete.",
+          "implementationType": "required",
+          "category": "Remote Maintenance",
+          "mappings": {
+            "nist-800-53": [
+              "MA-4"
+            ]
+          },
+          "implementationGuidance": "Encrypt all remote maintenance sessions. Use VPN with multi-factor authentication. Monitor all remote maintenance activities. Log all remote maintenance sessions.",
+          "evidenceRequired": [
+            "VPN configurations",
+            "MFA for remote maintenance",
+            "Session encryption evidence",
+            "Maintenance logs"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.07.04",
+          "name": "Maintenance Personnel",
+          "description": "Establish a process for maintenance personnel authorization. Verify that authorized maintenance personnel possess required access authorizations. Supervise maintenance activities of personnel who do not possess required access.",
+          "implementationType": "required",
+          "category": "Personnel",
+          "mappings": {
+            "nist-800-53": [
+              "MA-5"
+            ]
+          },
+          "implementationGuidance": "Verify maintenance personnel qualifications. Require escort for uncleared maintenance staff. Monitor all maintenance activities. Maintain maintenance personnel access records.",
+          "evidenceRequired": [
+            "Maintenance personnel authorization records",
+            "Escort logs",
+            "Access verification records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.07.05",
+          "name": "Timely Maintenance",
+          "description": "Obtain maintenance support and spare parts for system components within a defined time period.",
+          "implementationType": "required",
+          "category": "Timeliness",
+          "mappings": {
+            "nist-800-53": [
+              "MA-6"
+            ]
+          },
+          "implementationGuidance": "Maintain spare parts inventory. Establish maintenance support agreements. Define maximum acceptable downtime. Prioritize critical system components.",
+          "evidenceRequired": [
+            "Spare parts inventory",
+            "Maintenance agreements",
+            "Response time records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.07.06",
+          "name": "Controlled Maintenance",
+          "description": "Ensure equipment removed for off-site maintenance is sanitized of any CUI.",
+          "implementationType": "required",
+          "category": "Controlled Maintenance",
+          "mappings": {
+            "nist-800-53": [
+              "MA-2(2)"
+            ]
+          },
+          "implementationGuidance": "Sanitize all CUI from equipment before off-site maintenance. Verify sanitization before release. Use secure transport methods. Maintain chain of custody records.",
+          "evidenceRequired": [
+            "Sanitization records",
+            "Chain of custody forms",
+            "Transport security evidence"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.08-media-protection",
+      "name": "03.08 Media Protection",
+      "description": "Protect information system media, both paper and digital, containing CUI.",
+      "required": true,
+      "controlCount": 9,
+      "controls": [
+        {
+          "id": "03.08.01",
+          "name": "Media Protection",
+          "description": "Protect system media containing CUI, both paper and digital. Limit access to CUI on system media to authorized users. Sanitize or destroy system media before disposal or release.",
+          "implementationType": "required",
+          "category": "Media Protection",
+          "mappings": {
+            "nist-800-53": [
+              "MP-2",
+              "MP-4",
+              "MP-6"
+            ]
+          },
+          "implementationGuidance": "Implement media protection controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Media Protection policy documentation",
+            "Media Protection implementation evidence",
+            "Media Protection test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.08.02",
+          "name": "Media Access",
+          "description": "Restrict access to digital and non-digital media containing CUI to authorized personnel.",
+          "implementationType": "required",
+          "category": "Access",
+          "mappings": {
+            "nist-800-53": [
+              "MP-2"
+            ]
+          },
+          "implementationGuidance": "Restrict physical access to media storage areas. Implement access logging for media storage. Use locked containers for removable media. Sign out media for use.",
+          "evidenceRequired": [
+            "Media access logs",
+            "Storage area access controls",
+            "Sign-out records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.08.03",
+          "name": "Media Marking",
+          "description": "Mark media with necessary CUI markings and distribution limitations.",
+          "implementationType": "required",
+          "category": "Marking",
+          "mappings": {
+            "nist-800-53": [
+              "MP-3"
+            ]
+          },
+          "implementationGuidance": "Apply CUI marking banner and category. Include distribution limitations. Mark both digital and physical media. Follow 32 CFR Part 2002 marking requirements.",
+          "evidenceRequired": [
+            "Marked media examples",
+            "Marking procedures",
+            "Marking compliance reviews"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.08.04",
+          "name": "Media Storage",
+          "description": "Physically control and securely store digital and non-digital media containing CUI.",
+          "implementationType": "required",
+          "category": "Storage",
+          "mappings": {
+            "nist-800-53": [
+              "MP-4",
+              "MP-4(2)"
+            ]
+          },
+          "implementationGuidance": "Store CUI media in controlled access areas. Use approved encryption for digital media. Use locked containers for physical media. Maintain media inventory.",
+          "evidenceRequired": [
+            "Storage area security",
+            "Encryption configurations",
+            "Media inventory"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.08.05",
+          "name": "Media Transport",
+          "description": "Protect and control digital and non-digital media during transport outside controlled areas. Maintain accountability for media during transport.",
+          "implementationType": "required",
+          "category": "Transport",
+          "mappings": {
+            "nist-800-53": [
+              "MP-5",
+              "MP-5(4)"
+            ]
+          },
+          "implementationGuidance": "Use authorized couriers for transport. Encrypt digital media in transit. Maintain chain of custody documentation. Use tamper-evident packaging.",
+          "evidenceRequired": [
+            "Transport procedures",
+            "Chain of custody forms",
+            "Encryption evidence"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.08.06",
+          "name": "Media Sanitization",
+          "description": "Sanitize system media containing CUI prior to disposal, release, or reuse using NIST SP 800-88 guidelines. Use approved sanitization equipment and procedures.",
+          "implementationType": "required",
+          "category": "Sanitization",
+          "mappings": {
+            "nist-800-53": [
+              "MP-6",
+              "MP-6(1)",
+              "MP-6(2)"
+            ]
+          },
+          "implementationGuidance": "Implement media sanitization controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Media Sanitization policy documentation",
+            "Media Sanitization implementation evidence",
+            "Media Sanitization test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.08.07",
+          "name": "Media Use",
+          "description": "Restrict the use of certain types of digital media on organizational systems. Prohibit the use of portable storage devices when such devices have no identifiable owner.",
+          "implementationType": "required",
+          "category": "Use Restrictions",
+          "mappings": {
+            "nist-800-53": [
+              "MP-7",
+              "MP-7(1)"
+            ]
+          },
+          "implementationGuidance": "Implement device control software. Block unauthorized removable media. Maintain an approved media device list. Monitor for policy violations.",
+          "evidenceRequired": [
+            "Device control configurations",
+            "Approved device list",
+            "Policy violation reports"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.08.08",
+          "name": "CUI on Mobile Devices",
+          "description": "Protect CUI stored on mobile devices and removable media through encryption and physical safeguards.",
+          "implementationType": "required",
+          "category": "Mobile Media",
+          "mappings": {
+            "nist-800-53": [
+              "MP-5",
+              "AC-19(5)"
+            ]
+          },
+          "implementationGuidance": "Require full-disk encryption on mobile devices. Implement remote wipe capability. Use containerization for CUI on mobile devices. Enforce mobile device management policies.",
+          "evidenceRequired": [
+            "Mobile device encryption evidence",
+            "MDM policy configurations",
+            "Remote wipe capability evidence"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.08.09",
+          "name": "Media Disposal",
+          "description": "Ensure CUI is unrecoverable from disposed media through proper destruction or sanitization techniques.",
+          "implementationType": "required",
+          "category": "Disposal",
+          "mappings": {
+            "nist-800-53": [
+              "MP-6(1)"
+            ]
+          },
+          "implementationGuidance": "Follow NIST SP 800-88 guidelines for media sanitization. Use cross-cut shredders for paper media. Degauss or destroy magnetic media. Maintain destruction records.",
+          "evidenceRequired": [
+            "Destruction records",
+            "Sanitization verification",
+            "Certificate of destruction"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.09-personnel-security",
+      "name": "03.09 Personnel Security",
+      "description": "Ensure that individuals occupying positions of responsibility are trustworthy and meet security criteria.",
+      "required": true,
+      "controlCount": 3,
+      "controls": [
+        {
+          "id": "03.09.01",
+          "name": "Personnel Screening",
+          "description": "Screen individuals prior to authorizing access to systems containing CUI. Rescreen at a defined frequency.",
+          "implementationType": "required",
+          "category": "Screening",
+          "mappings": {
+            "nist-800-53": [
+              "PS-3",
+              "PS-3(3)"
+            ]
+          },
+          "implementationGuidance": "Implement personnel screening controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Personnel Screening policy documentation",
+            "Personnel Screening implementation evidence",
+            "Personnel Screening test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.09.02",
+          "name": "Personnel Termination and Transfer",
+          "description": "Protect CUI during and after personnel actions such as terminations and transfers. Disable system access within a defined period of termination. Retrieve all CUI and system-related property. Conduct exit interviews.",
+          "implementationType": "required",
+          "category": "Termination",
+          "mappings": {
+            "nist-800-53": [
+              "PS-4",
+              "PS-5"
+            ]
+          },
+          "implementationGuidance": "Implement personnel termination and transfer controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Personnel Termination and Transfer policy documentation",
+            "Personnel Termination and Transfer implementation evidence",
+            "Personnel Termination and Transfer test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.09.03",
+          "name": "External Personnel Security",
+          "description": "Establish personnel security requirements for third-party providers. Monitor provider compliance. Require providers to notify organization of personnel transfers or terminations.",
+          "implementationType": "required",
+          "category": "External Personnel",
+          "mappings": {
+            "nist-800-53": [
+              "PS-7"
+            ]
+          },
+          "implementationGuidance": "Implement external personnel security controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "External Personnel Security policy documentation",
+            "External Personnel Security implementation evidence",
+            "External Personnel Security test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.10-physical-protection",
+      "name": "03.10 Physical Protection",
+      "description": "Limit physical access to organizational systems, equipment, and operating environments.",
+      "required": true,
+      "controlCount": 6,
+      "controls": [
+        {
+          "id": "03.10.01",
+          "name": "Physical Access Authorizations",
+          "description": "Develop and maintain lists of authorized personnel with physical access.",
+          "implementationType": "required",
+          "category": "Authorization",
+          "mappings": {
+            "nist-800-53": [
+              "PE-2"
+            ]
+          },
+          "implementationGuidance": "Maintain current access lists. Review and update quarterly. Include visitor authorization procedures. Coordinate with HR for personnel changes.",
+          "evidenceRequired": [
+            "Physical access authorization list",
+            "Review and update records",
+            "Authorization procedures"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.10.02",
+          "name": "Physical Access Control",
+          "description": "Control and manage physical access to organizational systems by verifying individual access authorizations before granting access. Control access through physical access devices.",
+          "implementationType": "required",
+          "category": "Access Control",
+          "mappings": {
+            "nist-800-53": [
+              "PE-3",
+              "PE-3(1)"
+            ]
+          },
+          "implementationGuidance": "Use badge readers, biometrics, or cipher locks. Implement mantrap or vestibule for high-security areas. Control keys and access codes. Log all physical access.",
+          "evidenceRequired": [
+            "Physical access control systems",
+            "Access logs",
+            "Key management records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.10.03",
+          "name": "Monitoring Physical Access",
+          "description": "Monitor the physical facility and infrastructure for unauthorized physical access. Review physical access logs at a defined frequency.",
+          "implementationType": "required",
+          "category": "Monitoring",
+          "mappings": {
+            "nist-800-53": [
+              "PE-6",
+              "PE-6(1)"
+            ]
+          },
+          "implementationGuidance": "Implement monitoring physical access controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Monitoring Physical Access policy documentation",
+            "Monitoring Physical Access implementation evidence",
+            "Monitoring Physical Access test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.10.04",
+          "name": "Visitor Management",
+          "description": "Escort visitors, monitor visitor activity, and maintain visitor access records.",
+          "implementationType": "required",
+          "category": "Visitors",
+          "mappings": {
+            "nist-800-53": [
+              "PE-8"
+            ]
+          },
+          "implementationGuidance": "Require visitor sign-in. Escort visitors in controlled areas. Verify visitor identity. Maintain visitor logs for a defined retention period.",
+          "evidenceRequired": [
+            "Visitor sign-in logs",
+            "Escort records",
+            "Visitor identity verification records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.10.05",
+          "name": "Alternate Work Sites",
+          "description": "Enforce security measures at alternate work sites.",
+          "implementationType": "required",
+          "category": "Alternate Sites",
+          "mappings": {
+            "nist-800-53": [
+              "PE-17"
+            ]
+          },
+          "implementationGuidance": "Extend security controls to home offices and alternate sites. Require VPN and encrypted storage. Conduct security reviews of alternate sites.",
+          "evidenceRequired": [
+            "Alternate site security assessments",
+            "Remote work security controls",
+            "Policy documentation"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.10.06",
+          "name": "Delivery and Removal",
+          "description": "Enforce safeguards to control CUI during equipment delivery and removal.",
+          "implementationType": "required",
+          "category": "Delivery",
+          "mappings": {
+            "nist-800-53": [
+              "PE-16"
+            ]
+          },
+          "implementationGuidance": "Inspect equipment upon delivery. Verify equipment against purchase orders. Sanitize equipment before removal. Maintain delivery and removal records.",
+          "evidenceRequired": [
+            "Delivery inspection records",
+            "Equipment removal authorization",
+            "Sanitization records"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.11-risk-assessment",
+      "name": "03.11 Risk Assessment",
+      "description": "Assess risk to organizational operations, assets, and individuals from the operation and use of organizational systems.",
+      "required": true,
+      "controlCount": 3,
+      "controls": [
+        {
+          "id": "03.11.01",
+          "name": "Risk Assessment",
+          "description": "Assess risk to organizational operations, organizational assets, and individuals resulting from operation of organizational systems and the processing, storage, or transmission of CUI.",
+          "implementationType": "required",
+          "category": "Assessment",
+          "mappings": {
+            "nist-800-53": [
+              "RA-3",
+              "RA-3(1)"
+            ]
+          },
+          "implementationGuidance": "Implement risk assessment controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Risk Assessment policy documentation",
+            "Risk Assessment implementation evidence",
+            "Risk Assessment test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.11.02",
+          "name": "Vulnerability Monitoring and Scanning",
+          "description": "Scan for vulnerabilities in organizational systems at a defined frequency and when new vulnerabilities are identified. Remediate vulnerabilities in accordance with risk assessments.",
+          "implementationType": "required",
+          "category": "Vulnerability Scanning",
+          "mappings": {
+            "nist-800-53": [
+              "RA-5",
+              "RA-5(2)",
+              "RA-5(5)"
+            ]
+          },
+          "implementationGuidance": "Implement vulnerability monitoring and scanning controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Vulnerability Monitoring and Scanning policy documentation",
+            "Vulnerability Monitoring and Scanning implementation evidence",
+            "Vulnerability Monitoring and Scanning test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.11.03",
+          "name": "Risk Response",
+          "description": "Respond to findings from security assessments, monitoring, and audits in accordance with organizational risk tolerance.",
+          "implementationType": "required",
+          "category": "Response",
+          "mappings": {
+            "nist-800-53": [
+              "RA-7"
+            ]
+          },
+          "implementationGuidance": "Implement risk response controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Risk Response policy documentation",
+            "Risk Response implementation evidence",
+            "Risk Response test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.12-security-assessment",
+      "name": "03.12 Security Assessment",
+      "description": "Periodically assess security controls, develop and implement plans of action, and monitor corrective actions.",
+      "required": true,
+      "controlCount": 4,
+      "controls": [
+        {
+          "id": "03.12.01",
+          "name": "Security Assessment",
+          "description": "Assess security controls at a defined frequency to determine whether controls are implemented correctly, operating as intended, and producing the desired outcome.",
+          "implementationType": "required",
+          "category": "Assessment",
+          "mappings": {
+            "nist-800-53": [
+              "CA-2",
+              "CA-2(1)"
+            ]
+          },
+          "implementationGuidance": "Implement security assessment controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Security Assessment policy documentation",
+            "Security Assessment implementation evidence",
+            "Security Assessment test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.12.02",
+          "name": "Plan of Action and Milestones",
+          "description": "Develop and implement POA&Ms for the system to document planned remedial actions. Update existing POA&Ms based on assessment findings.",
+          "implementationType": "required",
+          "category": "POA&M",
+          "mappings": {
+            "nist-800-53": [
+              "CA-5"
+            ]
+          },
+          "implementationGuidance": "Implement plan of action and milestones controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Plan of Action and Milestones policy documentation",
+            "Plan of Action and Milestones implementation evidence",
+            "Plan of Action and Milestones test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.12.03",
+          "name": "Continuous Monitoring",
+          "description": "Develop and implement a system-level continuous monitoring strategy. Utilize ongoing assessments to verify compliance.",
+          "implementationType": "required",
+          "category": "Monitoring",
+          "mappings": {
+            "nist-800-53": [
+              "CA-7",
+              "CA-7(4)"
+            ]
+          },
+          "implementationGuidance": "Implement continuous monitoring controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Continuous Monitoring policy documentation",
+            "Continuous Monitoring implementation evidence",
+            "Continuous Monitoring test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.12.04",
+          "name": "System Interconnections",
+          "description": "Authorize and monitor connections to organizational systems including the use of interconnection security agreements.",
+          "implementationType": "required",
+          "category": "Interconnection",
+          "mappings": {
+            "nist-800-53": [
+              "CA-3",
+              "CA-3(6)",
+              "CA-9"
+            ]
+          },
+          "implementationGuidance": "Document all system interconnections. Implement interconnection security agreements (ISAs). Monitor interconnection traffic. Review and update agreements annually.",
+          "evidenceRequired": [
+            "Interconnection agreements",
+            "Connection monitoring records",
+            "Network diagrams"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.13-system-communications-protection",
+      "name": "03.13 System and Communications Protection",
+      "description": "Monitor, control, and protect communications at system boundaries and key internal boundaries.",
+      "required": true,
+      "controlCount": 15,
+      "controls": [
+        {
+          "id": "03.13.01",
+          "name": "Boundary Protection",
+          "description": "Monitor, control, and protect communications at external and key internal boundaries. Implement subnetworks for components with specific security requirements.",
+          "implementationType": "required",
+          "category": "Boundary",
+          "mappings": {
+            "nist-800-53": [
+              "SC-7",
+              "SC-7(5)",
+              "SC-7(29)"
+            ]
+          },
+          "implementationGuidance": "Implement boundary protection controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Boundary Protection policy documentation",
+            "Boundary Protection implementation evidence",
+            "Boundary Protection test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.13.02",
+          "name": "Transmission Confidentiality and Integrity",
+          "description": "Implement cryptographic mechanisms to prevent unauthorized disclosure and detect changes to CUI during transmission.",
+          "implementationType": "required",
+          "category": "Transmission",
+          "mappings": {
+            "nist-800-53": [
+              "SC-8",
+              "SC-8(1)",
+              "SC-8(2)"
+            ]
+          },
+          "implementationGuidance": "Implement transmission confidentiality and integrity controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Transmission Confidentiality and Integrity policy documentation",
+            "Transmission Confidentiality and Integrity implementation evidence",
+            "Transmission Confidentiality and Integrity test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.13.03",
+          "name": "Network Disconnect",
+          "description": "Terminate network connections associated with communications sessions at the end of the sessions or after a defined period of inactivity.",
+          "implementationType": "required",
+          "category": "Session",
+          "mappings": {
+            "nist-800-53": [
+              "SC-10"
+            ]
+          },
+          "implementationGuidance": "Implement network disconnect controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Network Disconnect policy documentation",
+            "Network Disconnect implementation evidence",
+            "Network Disconnect test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.13.04",
+          "name": "Cryptographic Key Management",
+          "description": "Establish and manage cryptographic keys using approved key management technology and processes.",
+          "implementationType": "required",
+          "category": "Key Management",
+          "mappings": {
+            "nist-800-53": [
+              "SC-12",
+              "SC-12(1)"
+            ]
+          },
+          "implementationGuidance": "Implement cryptographic key management controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Cryptographic Key Management policy documentation",
+            "Cryptographic Key Management implementation evidence",
+            "Cryptographic Key Management test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.13.05",
+          "name": "Cryptographic Protection",
+          "description": "Implement FIPS-validated cryptography when used to protect the confidentiality of CUI.",
+          "implementationType": "required",
+          "category": "Cryptography",
+          "mappings": {
+            "nist-800-53": [
+              "SC-13"
+            ]
+          },
+          "implementationGuidance": "Implement cryptographic protection controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Cryptographic Protection policy documentation",
+            "Cryptographic Protection implementation evidence",
+            "Cryptographic Protection test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.13.06",
+          "name": "Collaborative Computing Devices",
+          "description": "Prohibit remote activation of collaborative computing devices and provide an explicit indication of use to users at the device.",
+          "implementationType": "required",
+          "category": "Collaboration",
+          "mappings": {
+            "nist-800-53": [
+              "SC-15"
+            ]
+          },
+          "implementationGuidance": "Disable cameras and microphones when not in use. Provide visual/audible indicator of activation. Require user action to enable. Block remote activation.",
+          "evidenceRequired": [
+            "Collaborative device configurations",
+            "Activation indicator evidence",
+            "Remote activation blocking"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.13.07",
+          "name": "Public Key Certificates",
+          "description": "Issue public key certificates under an appropriate certificate policy or obtain them from an approved service provider.",
+          "implementationType": "required",
+          "category": "PKI",
+          "mappings": {
+            "nist-800-53": [
+              "SC-17"
+            ]
+          },
+          "implementationGuidance": "Use PKI certificates from approved certificate authorities. Follow certificate lifecycle management. Revoke compromised certificates immediately.",
+          "evidenceRequired": [
+            "Certificate policy",
+            "Certificate inventory",
+            "Lifecycle management records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.13.08",
+          "name": "Mobile Code",
+          "description": "Control and monitor the use of mobile code. Establish usage restrictions and implementation guidance.",
+          "implementationType": "required",
+          "category": "Mobile Code",
+          "mappings": {
+            "nist-800-53": [
+              "SC-18"
+            ]
+          },
+          "implementationGuidance": "Block unauthorized mobile code. Implement mobile code policies. Use sandboxing for mobile code execution. Monitor mobile code activity.",
+          "evidenceRequired": [
+            "Mobile code policies",
+            "Blocking configurations",
+            "Monitoring records"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.13.09",
+          "name": "Secure Name Resolution",
+          "description": "Provide secure, authoritative name resolution. Perform data origin authentication and data integrity verification on name resolution responses.",
+          "implementationType": "required",
+          "category": "DNS",
+          "mappings": {
+            "nist-800-53": [
+              "SC-20",
+              "SC-21",
+              "SC-22"
+            ]
+          },
+          "implementationGuidance": "Configure DNSSEC. Use trusted DNS resolvers. Implement DNS filtering. Monitor DNS queries for anomalies.",
+          "evidenceRequired": [
+            "DNSSEC configurations",
+            "DNS resolver settings",
+            "DNS monitoring evidence"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.13.10",
+          "name": "Session Authenticity",
+          "description": "Protect the authenticity of communications sessions.",
+          "implementationType": "required",
+          "category": "Session",
+          "mappings": {
+            "nist-800-53": [
+              "SC-23"
+            ]
+          },
+          "implementationGuidance": "Implement TLS 1.2 or higher. Use session tokens with expiration. Protect against session hijacking. Implement CSRF protections.",
+          "evidenceRequired": [
+            "TLS configurations",
+            "Session token implementation",
+            "CSRF protection evidence"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.13.11",
+          "name": "Protection of Information at Rest",
+          "description": "Protect the confidentiality and integrity of CUI at rest. Employ cryptographic mechanisms to prevent unauthorized disclosure and modification.",
+          "implementationType": "required",
+          "category": "Data at Rest",
+          "mappings": {
+            "nist-800-53": [
+              "SC-28",
+              "SC-28(1)"
+            ]
+          },
+          "implementationGuidance": "Implement protection of information at rest controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Protection of Information at Rest policy documentation",
+            "Protection of Information at Rest implementation evidence",
+            "Protection of Information at Rest test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.13.12",
+          "name": "Separation of System and User Functionality",
+          "description": "Separate user functionality from system management functionality.",
+          "implementationType": "required",
+          "category": "Separation",
+          "mappings": {
+            "nist-800-53": [
+              "SC-2"
+            ]
+          },
+          "implementationGuidance": "Separate admin interfaces from user interfaces. Restrict management functionality to authorized administrators. Use separate network segments for management.",
+          "evidenceRequired": [
+            "Architecture diagrams",
+            "Interface separation evidence",
+            "Network segmentation"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.13.13",
+          "name": "Shared System Resources",
+          "description": "Prevent unauthorized transfer of information via shared system resources.",
+          "implementationType": "required",
+          "category": "Resources",
+          "mappings": {
+            "nist-800-53": [
+              "SC-4"
+            ]
+          },
+          "implementationGuidance": "Clear shared resources between users. Implement memory protection. Prevent data remnants in shared storage. Use separate virtual environments.",
+          "evidenceRequired": [
+            "Memory protection configurations",
+            "Shared resource clearing evidence"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.13.14",
+          "name": "Denial-of-Service Protection",
+          "description": "Protect against or limit the effects of denial-of-service attacks.",
+          "implementationType": "required",
+          "category": "DoS Protection",
+          "mappings": {
+            "nist-800-53": [
+              "SC-5"
+            ]
+          },
+          "implementationGuidance": "Implement rate limiting and throttling. Use load balancers and CDNs. Deploy WAF rules for application-layer attacks. Monitor for DoS patterns.",
+          "evidenceRequired": [
+            "Rate limiting configurations",
+            "WAF rules",
+            "DoS monitoring alerts"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.13.15",
+          "name": "Process Isolation",
+          "description": "Maintain a separate execution domain for each executing system process.",
+          "implementationType": "required",
+          "category": "Isolation",
+          "mappings": {
+            "nist-800-53": [
+              "SC-39"
+            ]
+          },
+          "implementationGuidance": "Use process isolation mechanisms provided by the OS. Implement containerization where appropriate. Use separate address spaces for processes.",
+          "evidenceRequired": [
+            "Process isolation configurations",
+            "Container security settings"
+          ],
+          "automationCapability": "full"
+        }
+      ]
+    },
+    {
+      "id": "03.14-system-information-integrity",
+      "name": "03.14 System and Information Integrity",
+      "description": "Identify, report, and correct system flaws in a timely manner. Protect against malicious code. Monitor system security alerts.",
+      "required": true,
+      "controlCount": 7,
+      "controls": [
+        {
+          "id": "03.14.01",
+          "name": "Flaw Remediation",
+          "description": "Identify, report, and correct system flaws in a timely manner. Test software and firmware updates for effectiveness and potential side effects before installation. Install security-relevant updates within a defined time period.",
+          "implementationType": "required",
+          "category": "Patching",
+          "mappings": {
+            "nist-800-53": [
+              "SI-2",
+              "SI-2(2)"
+            ]
+          },
+          "implementationGuidance": "Implement flaw remediation controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Flaw Remediation policy documentation",
+            "Flaw Remediation implementation evidence",
+            "Flaw Remediation test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.14.02",
+          "name": "Malicious Code Protection",
+          "description": "Implement mechanisms to detect and eradicate malicious code. Update malicious code protection mechanisms when new releases are available. Perform scans at a defined frequency and on files from external sources.",
+          "implementationType": "required",
+          "category": "Antimalware",
+          "mappings": {
+            "nist-800-53": [
+              "SI-3",
+              "SI-3(4)"
+            ]
+          },
+          "implementationGuidance": "Implement malicious code protection controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Malicious Code Protection policy documentation",
+            "Malicious Code Protection implementation evidence",
+            "Malicious Code Protection test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.14.03",
+          "name": "Security Alerts and Advisories",
+          "description": "Receive security alerts, advisories, and directives from designated external organizations on an ongoing basis. Generate internal security alerts and distribute to appropriate personnel.",
+          "implementationType": "required",
+          "category": "Alerts",
+          "mappings": {
+            "nist-800-53": [
+              "SI-5"
+            ]
+          },
+          "implementationGuidance": "Implement security alerts and advisories controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Security Alerts and Advisories policy documentation",
+            "Security Alerts and Advisories implementation evidence",
+            "Security Alerts and Advisories test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.14.04",
+          "name": "System Monitoring",
+          "description": "Monitor the system to detect attacks and indicators of potential attacks. Monitor inbound and outbound communications traffic for unusual or unauthorized activities.",
+          "implementationType": "required",
+          "category": "Monitoring",
+          "mappings": {
+            "nist-800-53": [
+              "SI-4",
+              "SI-4(4)",
+              "SI-4(5)"
+            ]
+          },
+          "implementationGuidance": "Implement system monitoring controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "System Monitoring policy documentation",
+            "System Monitoring implementation evidence",
+            "System Monitoring test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.14.05",
+          "name": "Input Validation",
+          "description": "Check the validity of security-relevant inputs. Identify potentially harmful inputs and handle appropriately.",
+          "implementationType": "required",
+          "category": "Input Validation",
+          "mappings": {
+            "nist-800-53": [
+              "SI-10"
+            ]
+          },
+          "implementationGuidance": "Validate all input fields for type, length, format, and range. Sanitize inputs to prevent injection attacks. Implement both client-side and server-side validation. Reject invalid inputs.",
+          "evidenceRequired": [
+            "Input validation rules",
+            "Validation testing results",
+            "Code review evidence"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.14.06",
+          "name": "Error Handling",
+          "description": "Generate error messages that provide information necessary for corrective actions without revealing information that could be exploited.",
+          "implementationType": "required",
+          "category": "Error Handling",
+          "mappings": {
+            "nist-800-53": [
+              "SI-11"
+            ]
+          },
+          "implementationGuidance": "Display generic error messages to users. Log detailed error information securely. Do not expose stack traces, database queries, or internal paths. Implement custom error pages.",
+          "evidenceRequired": [
+            "Error handling configurations",
+            "Custom error page evidence",
+            "Error logging setup"
+          ],
+          "automationCapability": "full"
+        },
+        {
+          "id": "03.14.07",
+          "name": "Software and Information Integrity",
+          "description": "Employ integrity verification tools to detect unauthorized changes to software, firmware, and information. Detect and address unauthorized changes.",
+          "implementationType": "required",
+          "category": "Integrity",
+          "mappings": {
+            "nist-800-53": [
+              "SI-7",
+              "SI-7(1)",
+              "SI-7(5)"
+            ]
+          },
+          "implementationGuidance": "Implement file integrity monitoring (FIM). Verify software checksums against vendor-published values. Use code signing for internally developed software. Alert on integrity violations.",
+          "evidenceRequired": [
+            "FIM configurations",
+            "Integrity verification records",
+            "Code signing evidence"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.15-planning",
+      "name": "03.15 Planning",
+      "description": "Develop, document, periodically update, and implement security plans for organizational systems.",
+      "required": true,
+      "controlCount": 2,
+      "controls": [
+        {
+          "id": "03.15.01",
+          "name": "System Security Plan",
+          "description": "Develop, document, periodically update, and implement system security plans that describe system boundaries, operating environment, how security requirements are implemented, and relationships with other systems.",
+          "implementationType": "required",
+          "category": "Planning",
+          "mappings": {
+            "nist-800-53": [
+              "PL-2",
+              "PL-2(3)"
+            ]
+          },
+          "implementationGuidance": "Implement system security plan controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "System Security Plan policy documentation",
+            "System Security Plan implementation evidence",
+            "System Security Plan test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.15.02",
+          "name": "Rules of Behavior",
+          "description": "Establish and implement rules of behavior for individuals accessing the system. Include restrictions on use of social media, posting organizational information on public websites, and use of personal devices.",
+          "implementationType": "required",
+          "category": "Rules of Behavior",
+          "mappings": {
+            "nist-800-53": [
+              "PL-4",
+              "PL-4(1)"
+            ]
+          },
+          "implementationGuidance": "Implement rules of behavior controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Rules of Behavior policy documentation",
+            "Rules of Behavior implementation evidence",
+            "Rules of Behavior test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.16-system-services-acquisition",
+      "name": "03.16 System and Services Acquisition",
+      "description": "Ensure third-party providers protect CUI in external systems and services.",
+      "required": true,
+      "controlCount": 3,
+      "controls": [
+        {
+          "id": "03.16.01",
+          "name": "Security Engineering Principles",
+          "description": "Apply systems security engineering principles in the specification, design, development, implementation, and modification of the system.",
+          "implementationType": "required",
+          "category": "Engineering",
+          "mappings": {
+            "nist-800-53": [
+              "SA-8"
+            ]
+          },
+          "implementationGuidance": "Implement security engineering principles controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Security Engineering Principles policy documentation",
+            "Security Engineering Principles implementation evidence",
+            "Security Engineering Principles test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.16.02",
+          "name": "External System Services",
+          "description": "Require external service providers to comply with organizational security requirements and employ appropriate security controls.",
+          "implementationType": "required",
+          "category": "External Services",
+          "mappings": {
+            "nist-800-53": [
+              "SA-9",
+              "SA-9(2)"
+            ]
+          },
+          "implementationGuidance": "Implement external system services controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "External System Services policy documentation",
+            "External System Services implementation evidence",
+            "External System Services test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.16.03",
+          "name": "Developer Security Testing",
+          "description": "Require developers of the system to create a security assessment plan and implement a process for flaw remediation.",
+          "implementationType": "required",
+          "category": "Dev Testing",
+          "mappings": {
+            "nist-800-53": [
+              "SA-11"
+            ]
+          },
+          "implementationGuidance": "Implement developer security testing controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Developer Security Testing policy documentation",
+            "Developer Security Testing implementation evidence",
+            "Developer Security Testing test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "03.17-supply-chain-risk-management",
+      "name": "03.17 Supply Chain Risk Management",
+      "description": "Manage supply chain risks for systems, components, and services.",
+      "required": true,
+      "controlCount": 3,
+      "controls": [
+        {
+          "id": "03.17.01",
+          "name": "Supply Chain Risk Management Plan",
+          "description": "Develop a plan for managing supply chain risks associated with the development, acquisition, maintenance, and disposal of systems, system components, and system services.",
+          "implementationType": "required",
+          "category": "Planning",
+          "mappings": {
+            "nist-800-53": [
+              "SR-2"
+            ]
+          },
+          "implementationGuidance": "Implement supply chain risk management plan controls as required. Document implementation. Collect and maintain evidence of compliance.",
+          "evidenceRequired": [
+            "Supply Chain Risk Management Plan policy documentation",
+            "Supply Chain Risk Management Plan implementation evidence",
+            "Supply Chain Risk Management Plan test records",
+            "Compliance assessment results"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.17.02",
+          "name": "Acquisition Strategies and Tools",
+          "description": "Employ acquisition strategies, contract tools, and procurement methods designed to protect against, detect, and mitigate supply chain risks.",
+          "implementationType": "required",
+          "category": "Acquisition",
+          "mappings": {
+            "nist-800-53": [
+              "SR-5"
+            ]
+          },
+          "implementationGuidance": "Include security requirements in contracts. Verify supplier security practices. Use trusted procurement channels. Require supply chain risk information from suppliers.",
+          "evidenceRequired": [
+            "Contract security requirements",
+            "Supplier security assessments",
+            "Procurement procedures"
+          ],
+          "automationCapability": "partial"
+        },
+        {
+          "id": "03.17.03",
+          "name": "Component Authenticity",
+          "description": "Employ anti-counterfeit techniques. Develop and maintain an approved list of authorized suppliers.",
+          "implementationType": "required",
+          "category": "Authenticity",
+          "mappings": {
+            "nist-800-53": [
+              "SR-11"
+            ]
+          },
+          "implementationGuidance": "Inspect and verify components. Use anti-counterfeit tools. Maintain approved supplier lists. Report suspected counterfeits to authorities.",
+          "evidenceRequired": [
+            "Component inspection records",
+            "Approved supplier list",
+            "Counterfeit reports"
+          ],
+          "automationCapability": "partial"
+        }
+      ]
+    }
+  ],
+  "requiredDocumentation": [
+    "System Security Plan (SSP)",
+    "Plan of Action & Milestones (POA&M)",
+    "Network Architecture Diagrams",
+    "CUI Data Flow Diagrams",
+    "Access Control Policy",
+    "Incident Response Plan",
+    "Configuration Management Plan",
+    "Risk Assessment Report",
+    "Security Awareness Training Records",
+    "Continuous Monitoring Strategy",
+    "SPRS Score Submission"
+  ],
+  "breachNotification": {
+    "required": true,
+    "timeframe": "72 hours to DoD via DIBNet portal for defense contractors",
+    "notifyAuthority": "DoD Cyber Crime Center (DC3) via DIBNet; CISA for non-DoD CUI",
+    "notifyIndividuals": false,
+    "threshold": "Any cyber incident affecting CUI or the covered contractor information system"
+  },
+  "relatedFrameworks": [
+    "nist-800-53",
+    "cmmc",
+    "dfars-252.204-7012",
+    "fisma"
+  ],
+  "tags": [
+    "cui",
+    "defense",
+    "government",
+    "nonfederal",
+    "dib",
+    "united-states",
+    "cmmc-level-2"
+  ],
+  "resources": [
+    {
+      "title": "NIST SP 800-171 Rev 3 Final Publication",
+      "url": "https://csrc.nist.gov/publications/detail/sp/800-171/rev-3/final",
+      "type": "official"
+    },
+    {
+      "title": "NIST SP 800-171A Rev 3 — Assessing Security Requirements",
+      "url": "https://csrc.nist.gov/publications/detail/sp/800-171a/rev-3/final",
+      "type": "official"
+    },
+    {
+      "title": "SPRS (Supplier Performance Risk System)",
+      "url": "https://www.sprs.csd.disa.mil/",
+      "type": "official"
+    }
+  ]
+}

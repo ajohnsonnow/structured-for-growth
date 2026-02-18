@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossary — Structured For Growth</title>
+    <meta name="description" content="Searchable glossary of 241 technical terms covering cybersecurity, compliance, accessibility, government standards, and software development.">
+    <link rel="canonical" href="https://structured-for-growth.onrender.com/glossary">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Glossary — Structured For Growth">
+    <meta property="og:description" content="210+ technical terms defined in plain English. Covers NIST, CMMC, WCAG, OSCAL, and more.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://structured-for-growth.com/glossary">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/tooltip.css">
+    <link rel="stylesheet" href="/styles/glossary.css">
+</head>
+<body>
+    <!-- Skip Navigation -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Nav injected by unifiedNav.js -->
+
+    <main id="main-content">
+        <!-- Breadcrumbs injected by unifiedNav.js -->
+
+        <section class="glossary-hero">
+            <div class="container">
+                <h1 class="section-title">Glossary</h1>
+                <p class="section-subtitle">
+                    <span id="termCount">241</span> terms defined in plain English.
+                    Every acronym and technical term used across Structured for Growth, explained.
+                </p>
+
+                <!-- Search -->
+                <div class="glossary-search-wrapper">
+                    <div class="search-wrapper">
+                        <span data-icon="search" data-icon-size="20" class="search-icon-container"></span>
+                        <input
+                            type="search"
+                            id="glossarySearch"
+                            class="search-input glossary-search"
+                            placeholder="Search terms (e.g., NIST, accessibility, SBOM...)"
+                            aria-label="Search glossary terms"
+                            autocomplete="off"
+                        >
+                        <span class="search-results-count" id="searchResultsCount" aria-live="polite"></span>
+                    </div>
+                </div>
+
+                <!-- Category filters -->
+                <div class="glossary-filters" role="group" aria-label="Filter by category">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="accessibility">Accessibility</button>
+                    <button class="filter-btn" data-category="security">Security</button>
+                    <button class="filter-btn" data-category="compliance">Compliance</button>
+                    <button class="filter-btn" data-category="development">Development</button>
+                    <button class="filter-btn" data-category="government">Government</button>
+                    <button class="filter-btn" data-category="ai">AI</button>
+                    <button class="filter-btn" data-category="networking">Networking</button>
+                    <button class="filter-btn" data-category="documentation">Documentation</button>
+                    <button class="filter-btn" data-category="project-management">Project Mgmt</button>
+                    <button class="filter-btn" data-category="data">Data</button>
+                </div>
+
+                <!-- Alphabetical index -->
+                <nav class="glossary-alpha-index" aria-label="Alphabetical index">
+                    <ul id="alphaIndex">
+                        <!-- Populated dynamically -->
+                    </ul>
+                </nav>
+            </div>
+        </section>
+
+        <section class="glossary-content">
+            <div class="container">
+                <div id="glossaryList" class="glossary-list">
+                    <!-- Populated dynamically by glossary-page.js -->
+                    <div class="glossary-loading" aria-live="polite">
+                        <div class="spinner"></div>
+                        <p>Loading glossary terms...</p>
+                    </div>
+                </div>
+
+                <div id="noResults" class="glossary-no-results" hidden>
+                    <p>No terms match your search. Try a different keyword or clear filters.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="/js/glossary-page.js"></script>
+    <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
+            async src="https://gc.zgo.at/count.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const worker = reg.installing;
+            worker.addEventListener('statechange', () => {
+              if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('A new version is available. Reload now?')) {
+                  worker.postMessage({ type: 'SKIP_WAITING' });
+                  location.reload();
+                }
+              }
+            });
+          });
+        });
+      }
+    </script>
+</body>
+</html>

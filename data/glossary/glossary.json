@@ -1,0 +1,2190 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "updated": "2026-02-15",
+    "termCount": 241,
+    "categories": [
+      "accessibility",
+      "security",
+      "compliance",
+      "development",
+      "government",
+      "ai",
+      "networking",
+      "documentation",
+      "project-management",
+      "data"
+    ]
+  },
+  "terms": [
+    {
+      "id": "oscal",
+      "term": "OSCAL",
+      "fullForm": "Open Security Controls Assessment Language",
+      "definition": "A standardized, machine-readable format developed by NIST for expressing security control catalogs, baselines, system security plans, and assessment results.",
+      "category": "compliance",
+      "related": ["nist", "fisma", "fedramp"],
+      "sources": ["NIST SP 800-53"]
+    },
+    {
+      "id": "cui",
+      "term": "CUI",
+      "fullForm": "Controlled Unclassified Information",
+      "definition": "Government-created or -owned information that requires safeguarding or dissemination controls consistent with applicable laws, regulations, and government-wide policies. Defined by 32 CFR Part 2002.",
+      "category": "security",
+      "related": ["nist-800-171", "cmmc", "dfars"],
+      "sources": ["32 CFR Part 2002", "NARA CUI Registry"]
+    },
+    {
+      "id": "nist",
+      "term": "NIST",
+      "fullForm": "National Institute of Standards and Technology",
+      "definition": "A federal agency within the U.S. Department of Commerce that develops technology standards, measurement methods, and cybersecurity frameworks used across government and industry.",
+      "category": "government",
+      "related": ["nist-800-53", "nist-800-171", "oscal", "fisma"],
+      "sources": ["nist.gov"]
+    },
+    {
+      "id": "vpat",
+      "term": "VPAT",
+      "fullForm": "Voluntary Product Accessibility Template",
+      "definition": "A document that explains how a technology product or service conforms to Section 508 accessibility standards. Required by federal procurement officers to evaluate whether a product meets accessibility requirements.",
+      "category": "accessibility",
+      "related": ["section-508", "wcag", "acr"],
+      "sources": ["ITI VPAT 2.5"]
+    },
+    {
+      "id": "wcag",
+      "term": "WCAG",
+      "fullForm": "Web Content Accessibility Guidelines",
+      "definition": "A set of guidelines published by the W3C Web Accessibility Initiative that define how to make web content more accessible to people with disabilities. WCAG 2.1 AA is the current federal standard.",
+      "category": "accessibility",
+      "related": ["section-508", "vpat", "aria", "w3c"],
+      "sources": ["W3C WCAG 2.1", "W3C WCAG 2.2"]
+    },
+    {
+      "id": "sbom",
+      "term": "SBOM",
+      "fullForm": "Software Bill of Materials",
+      "definition": "A formal, machine-readable inventory of all software components, libraries, and dependencies in a product. Required by Executive Order 14028 for software sold to the federal government.",
+      "category": "security",
+      "related": ["eo-14028", "cyclonedx", "spdx"],
+      "sources": ["EO 14028", "NTIA SBOM"]
+    },
+    {
+      "id": "cmmc",
+      "term": "CMMC",
+      "fullForm": "Cybersecurity Maturity Model Certification",
+      "definition": "A DoD certification framework that measures a contractor's cybersecurity practices across three levels. Required for defense contractors handling CUI (Level 2) or classified information (Level 3).",
+      "category": "compliance",
+      "related": ["nist-800-171", "cui", "dfars", "dod"],
+      "sources": ["CMMC 2.0 Model"]
+    },
+    {
+      "id": "fedramp",
+      "term": "FedRAMP",
+      "fullForm": "Federal Risk and Authorization Management Program",
+      "definition": "A government-wide program that standardizes the security assessment, authorization, and continuous monitoring of cloud products and services used by federal agencies.",
+      "category": "compliance",
+      "related": ["nist-800-53", "ato", "fisma"],
+      "sources": ["fedramp.gov"]
+    },
+    {
+      "id": "aria",
+      "term": "ARIA",
+      "fullForm": "Accessible Rich Internet Applications",
+      "definition": "A set of HTML attributes (roles, states, and properties) defined by WAI-ARIA that make dynamic web content and user interface components more accessible to assistive technologies like screen readers.",
+      "category": "accessibility",
+      "related": ["wcag", "section-508", "w3c"],
+      "sources": ["WAI-ARIA 1.2"]
+    },
+    {
+      "id": "section-508",
+      "term": "Section 508",
+      "fullForm": "Section 508 of the Rehabilitation Act",
+      "definition": "A federal law requiring all information and communications technology (ICT) developed, procured, maintained, or used by federal agencies to be accessible to people with disabilities.",
+      "category": "accessibility",
+      "related": ["wcag", "vpat", "acr", "trusted-tester"],
+      "sources": ["29 U.S.C. § 794d"]
+    },
+    {
+      "id": "nist-800-53",
+      "term": "NIST SP 800-53",
+      "fullForm": "NIST Special Publication 800-53: Security and Privacy Controls",
+      "definition": "A comprehensive catalog of security and privacy controls for federal information systems. Contains over 1,000 controls organized into 20 families. The foundation for FedRAMP and most federal security frameworks.",
+      "category": "compliance",
+      "related": ["nist", "fedramp", "fisma", "oscal"],
+      "sources": ["NIST SP 800-53 Rev 5"]
+    },
+    {
+      "id": "nist-800-171",
+      "term": "NIST SP 800-171",
+      "fullForm": "Protecting Controlled Unclassified Information in Nonfederal Systems",
+      "definition": "Defines 110 security requirements for protecting CUI in nonfederal systems. The security baseline for CMMC Level 2 and DFARS 252.204-7012 compliance.",
+      "category": "compliance",
+      "related": ["cui", "cmmc", "dfars", "nist"],
+      "sources": ["NIST SP 800-171 Rev 2", "NIST SP 800-171 Rev 3"]
+    },
+    {
+      "id": "dfars",
+      "term": "DFARS",
+      "fullForm": "Defense Federal Acquisition Regulation Supplement",
+      "definition": "Supplemental acquisition regulations specific to the Department of Defense. DFARS 252.204-7012 requires defense contractors to implement NIST 800-171 controls and report cyber incidents within 72 hours.",
+      "category": "government",
+      "related": ["cmmc", "nist-800-171", "cui", "far"],
+      "sources": ["DFARS 252.204-7012"]
+    },
+    {
+      "id": "fisma",
+      "term": "FISMA",
+      "fullForm": "Federal Information Security Modernization Act",
+      "definition": "A federal law requiring agencies to develop, document, and implement an information security program to protect their information and information systems.",
+      "category": "compliance",
+      "related": ["nist-800-53", "fedramp", "nist"],
+      "sources": ["44 U.S.C. § 3551"]
+    },
+    {
+      "id": "ato",
+      "term": "ATO",
+      "fullForm": "Authority to Operate",
+      "definition": "A formal declaration by an authorizing official that a system is approved to operate at an acceptable level of risk. Required before any federal system can go live.",
+      "category": "compliance",
+      "related": ["fedramp", "fisma", "nist-800-53", "poam"],
+      "sources": ["NIST SP 800-37"]
+    },
+    {
+      "id": "poam",
+      "term": "POA&M",
+      "fullForm": "Plan of Action and Milestones",
+      "definition": "A document identifying tasks to correct security weaknesses, the resources required, and a scheduled completion timeline. Required for any system with known security deficiencies seeking or maintaining an ATO.",
+      "category": "compliance",
+      "related": ["ato", "fedramp", "fisma"],
+      "sources": ["OMB A-130", "NIST SP 800-53"]
+    },
+    {
+      "id": "ssp",
+      "term": "SSP",
+      "fullForm": "System Security Plan",
+      "definition": "A formal document describing how security controls are implemented in an information system. The cornerstone document for any ATO package.",
+      "category": "compliance",
+      "related": ["ato", "nist-800-53", "fedramp", "poam"],
+      "sources": ["NIST SP 800-18"]
+    },
+    {
+      "id": "acr",
+      "term": "ACR",
+      "fullForm": "Accessibility Conformance Report",
+      "definition": "A completed VPAT documenting how a specific product version conforms to accessibility standards. This is the actual filled-out assessment that procurement officers review.",
+      "category": "accessibility",
+      "related": ["vpat", "wcag", "section-508"],
+      "sources": ["ITI VPAT 2.5"]
+    },
+    {
+      "id": "csp",
+      "term": "CSP",
+      "fullForm": "Content Security Policy",
+      "definition": "An HTTP response header that restricts which resources (scripts, styles, images, etc.) a browser is allowed to load for a page. A critical defense against cross-site scripting (XSS) attacks.",
+      "category": "security",
+      "related": ["xss", "owasp", "helmet"],
+      "sources": ["W3C CSP Level 3", "OWASP"]
+    },
+    {
+      "id": "xss",
+      "term": "XSS",
+      "fullForm": "Cross-Site Scripting",
+      "definition": "A type of security vulnerability where an attacker injects malicious scripts into a trusted website, which then executes in other users' browsers. Consistently in the OWASP Top 10.",
+      "category": "security",
+      "related": ["csp", "owasp", "injection"],
+      "sources": ["OWASP Top 10 A03"]
+    },
+    {
+      "id": "csrf",
+      "term": "CSRF",
+      "fullForm": "Cross-Site Request Forgery",
+      "definition": "An attack that tricks a user's browser into making unwanted requests to a site where they're authenticated. Prevented with anti-CSRF tokens or SameSite cookie attributes.",
+      "category": "security",
+      "related": ["owasp", "cookie", "xss"],
+      "sources": ["OWASP Top 10 A01"]
+    },
+    {
+      "id": "jwt",
+      "term": "JWT",
+      "fullForm": "JSON Web Token",
+      "definition": "A compact, URL-safe token format used for securely transmitting claims between parties. Commonly used for stateless authentication in web applications.",
+      "category": "security",
+      "related": ["oauth", "authentication", "api"],
+      "sources": ["RFC 7519"]
+    },
+    {
+      "id": "owasp",
+      "term": "OWASP",
+      "fullForm": "Open Worldwide Application Security Project",
+      "definition": "A nonprofit foundation that publishes security guidelines, tools, and the widely-referenced OWASP Top 10 list of critical web application security risks.",
+      "category": "security",
+      "related": ["xss", "csrf", "injection", "asvs"],
+      "sources": ["owasp.org"]
+    },
+    {
+      "id": "asvs",
+      "term": "ASVS",
+      "fullForm": "Application Security Verification Standard",
+      "definition": "An OWASP framework that defines three levels of security verification requirements for web applications. Level 2 (Standard) is appropriate for most applications handling sensitive data.",
+      "category": "security",
+      "related": ["owasp", "nist-800-53"],
+      "sources": ["OWASP ASVS 4.0"]
+    },
+    {
+      "id": "mfa",
+      "term": "MFA",
+      "fullForm": "Multi-Factor Authentication",
+      "definition": "An authentication method requiring two or more verification factors (something you know, have, or are). Required by NIST 800-171 and CMMC Level 2 for all CUI access.",
+      "category": "security",
+      "related": ["totp", "authentication", "nist-800-171"],
+      "sources": ["NIST SP 800-63B"]
+    },
+    {
+      "id": "totp",
+      "term": "TOTP",
+      "fullForm": "Time-Based One-Time Password",
+      "definition": "An algorithm that generates a short-lived numeric code from a shared secret and the current time. Used with authenticator apps (Google Authenticator, Authy) for MFA.",
+      "category": "security",
+      "related": ["mfa", "authentication"],
+      "sources": ["RFC 6238"]
+    },
+    {
+      "id": "api",
+      "term": "API",
+      "fullForm": "Application Programming Interface",
+      "definition": "A set of defined rules and protocols that allows different software applications to communicate with each other. REST APIs use HTTP methods (GET, POST, PUT, DELETE) to perform operations.",
+      "category": "development",
+      "related": ["rest", "openapi", "http"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "rest",
+      "term": "REST",
+      "fullForm": "Representational State Transfer",
+      "definition": "An architectural style for designing web services that uses standard HTTP methods and stateless communication. RESTful APIs are the most common approach for web application backends.",
+      "category": "development",
+      "related": ["api", "http", "openapi"],
+      "sources": ["Roy Fielding's dissertation"]
+    },
+    {
+      "id": "openapi",
+      "term": "OpenAPI",
+      "fullForm": "OpenAPI Specification",
+      "definition": "A standard, language-agnostic format for describing REST APIs. Version 3.0+ enables auto-generation of documentation (Swagger UI), client SDKs, and server stubs.",
+      "category": "development",
+      "related": ["api", "rest", "swagger"],
+      "sources": ["OpenAPI 3.0"]
+    },
+    {
+      "id": "pwa",
+      "term": "PWA",
+      "fullForm": "Progressive Web App",
+      "definition": "A web application that uses modern browser features (service workers, manifests, caching) to deliver app-like experiences including offline access, push notifications, and home screen installation.",
+      "category": "development",
+      "related": ["service-worker", "manifest", "offline"],
+      "sources": ["web.dev/progressive-web-apps"]
+    },
+    {
+      "id": "ci-cd",
+      "term": "CI/CD",
+      "fullForm": "Continuous Integration / Continuous Deployment",
+      "definition": "An automated software development practice where code changes are automatically built, tested, and deployed. CI validates every commit; CD pushes validated code to production.",
+      "category": "development",
+      "related": ["github-actions", "testing", "devops"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "sast",
+      "term": "SAST",
+      "fullForm": "Static Application Security Testing",
+      "definition": "Automated analysis of source code to find security vulnerabilities without executing the program. Tools like CodeQL and Semgrep scan code for known vulnerability patterns.",
+      "category": "security",
+      "related": ["dast", "codeql", "security-testing"],
+      "sources": ["OWASP Testing Guide"]
+    },
+    {
+      "id": "dast",
+      "term": "DAST",
+      "fullForm": "Dynamic Application Security Testing",
+      "definition": "Automated security testing that analyzes a running application by sending crafted requests and observing responses. Finds vulnerabilities that only appear at runtime.",
+      "category": "security",
+      "related": ["sast", "owasp-zap", "security-testing"],
+      "sources": ["OWASP Testing Guide"]
+    },
+    {
+      "id": "usace",
+      "term": "USACE",
+      "fullForm": "United States Army Corps of Engineers",
+      "definition": "A major command of the U.S. Army that provides engineering and construction services for military and civilian infrastructure. One of the largest public engineering organizations in the world.",
+      "category": "government",
+      "related": ["dod", "far", "dfars"],
+      "sources": ["usace.army.mil"]
+    },
+    {
+      "id": "dod",
+      "term": "DoD",
+      "fullForm": "Department of Defense",
+      "definition": "The executive branch department responsible for national security and the United States Armed Forces. Sets cybersecurity and acquisition standards for all defense contractors.",
+      "category": "government",
+      "related": ["dfars", "cmmc", "usace", "cui"],
+      "sources": ["defense.gov"]
+    },
+    {
+      "id": "far",
+      "term": "FAR",
+      "fullForm": "Federal Acquisition Regulation",
+      "definition": "The primary set of rules governing federal government procurement. Establishes uniform policies and procedures for acquiring supplies and services by executive agencies.",
+      "category": "government",
+      "related": ["dfars", "dod", "contracting"],
+      "sources": ["48 CFR Chapter 1"]
+    },
+    {
+      "id": "cor",
+      "term": "COR",
+      "fullForm": "Contracting Officer Representative",
+      "definition": "A government employee designated by the contracting officer to assist in managing and monitoring contractor performance on a specific contract.",
+      "category": "government",
+      "related": ["far", "contracting"],
+      "sources": ["FAR 1.602-2"]
+    },
+    {
+      "id": "cdrl",
+      "term": "CDRL",
+      "fullForm": "Contract Data Requirements List",
+      "definition": "A list that identifies all data deliverables required under a government contract. Each item references a Data Item Description (DID) specifying format and content requirements.",
+      "category": "government",
+      "related": ["did", "mil-std-498", "far"],
+      "sources": ["DD Form 1423"]
+    },
+    {
+      "id": "did",
+      "term": "DID",
+      "fullForm": "Data Item Description",
+      "definition": "A standardized document template that specifies the format, content, and preparation instructions for a data deliverable required by a government contract.",
+      "category": "government",
+      "related": ["cdrl", "mil-std-498"],
+      "sources": ["DoD 5010.12-L"]
+    },
+    {
+      "id": "mil-std-498",
+      "term": "MIL-STD-498",
+      "fullForm": "Military Standard for Software Development and Documentation",
+      "definition": "A DoD standard that establishes uniform requirements for software development and documentation. Defines 15 Data Item Descriptions (DIDs) for software lifecycle deliverables.",
+      "category": "government",
+      "related": ["did", "cdrl", "dod"],
+      "sources": ["MIL-STD-498"]
+    },
+    {
+      "id": "sprs",
+      "term": "SPRS",
+      "fullForm": "Supplier Performance Risk System",
+      "definition": "A DoD web application where defense contractors submit their NIST 800-171 self-assessment scores. Required before contract award for contracts requiring DFARS 252.204-7019/7020.",
+      "category": "compliance",
+      "related": ["nist-800-171", "cmmc", "dfars"],
+      "sources": ["sprs.csd.disa.mil"]
+    },
+    {
+      "id": "stigs",
+      "term": "STIGs",
+      "fullForm": "Security Technical Implementation Guides",
+      "definition": "Configuration standards published by DISA that provide technical guidance for hardening information systems. Cover operating systems, databases, web servers, and applications.",
+      "category": "security",
+      "related": ["disa", "dod", "nist-800-53"],
+      "sources": ["DISA STIGs"]
+    },
+    {
+      "id": "disa",
+      "term": "DISA",
+      "fullForm": "Defense Information Systems Agency",
+      "definition": "A DoD combat support agency that provides IT and communications support. Publishes STIGs and manages the DoD Information Network (DoDIN).",
+      "category": "government",
+      "related": ["stigs", "dod", "dodin"],
+      "sources": ["disa.mil"]
+    },
+    {
+      "id": "cve",
+      "term": "CVE",
+      "fullForm": "Common Vulnerabilities and Exposures",
+      "definition": "A standardized system for identifying and naming publicly known cybersecurity vulnerabilities. Each CVE ID (e.g., CVE-2024-1234) uniquely identifies a specific vulnerability.",
+      "category": "security",
+      "related": ["nvd", "cwe", "vulnerability"],
+      "sources": ["cve.org"]
+    },
+    {
+      "id": "cwe",
+      "term": "CWE",
+      "fullForm": "Common Weakness Enumeration",
+      "definition": "A community-developed list of software and hardware weakness types. Unlike CVEs (specific vulnerabilities), CWEs categorize classes of weaknesses (e.g., CWE-79: XSS).",
+      "category": "security",
+      "related": ["cve", "owasp", "sast"],
+      "sources": ["cwe.mitre.org"]
+    },
+    {
+      "id": "nvd",
+      "term": "NVD",
+      "fullForm": "National Vulnerability Database",
+      "definition": "A NIST-maintained repository of security vulnerability data enriched with CVSS severity scores, CWE classifications, and affected product information.",
+      "category": "security",
+      "related": ["cve", "nist", "cvss"],
+      "sources": ["nvd.nist.gov"]
+    },
+    {
+      "id": "cvss",
+      "term": "CVSS",
+      "fullForm": "Common Vulnerability Scoring System",
+      "definition": "A standardized framework for rating the severity of security vulnerabilities on a 0-10 scale. Used to prioritize remediation efforts (Critical: 9.0-10.0, High: 7.0-8.9).",
+      "category": "security",
+      "related": ["cve", "nvd", "vulnerability"],
+      "sources": ["FIRST CVSS v3.1"]
+    },
+    {
+      "id": "cyclonedx",
+      "term": "CycloneDX",
+      "fullForm": "CycloneDX SBOM Standard",
+      "definition": "An OWASP standard for creating Software Bills of Materials in XML or JSON format. Captures component details, licenses, vulnerabilities, and dependency relationships.",
+      "category": "security",
+      "related": ["sbom", "spdx", "owasp"],
+      "sources": ["cyclonedx.org"]
+    },
+    {
+      "id": "spdx",
+      "term": "SPDX",
+      "fullForm": "Software Package Data Exchange",
+      "definition": "A Linux Foundation standard for communicating software component information including licenses, copyrights, and security references. An alternative to CycloneDX for SBOMs.",
+      "category": "security",
+      "related": ["sbom", "cyclonedx", "license"],
+      "sources": ["spdx.dev"]
+    },
+    {
+      "id": "eo-14028",
+      "term": "EO 14028",
+      "fullForm": "Executive Order 14028: Improving the Nation's Cybersecurity",
+      "definition": "A 2021 executive order mandating enhanced cybersecurity practices for federal agencies and their software suppliers, including SBOM requirements, zero trust architecture, and enhanced logging.",
+      "category": "compliance",
+      "related": ["sbom", "zero-trust", "nist"],
+      "sources": ["Executive Order 14028"]
+    },
+    {
+      "id": "zero-trust",
+      "term": "Zero Trust",
+      "fullForm": "Zero Trust Architecture",
+      "definition": "A security model that assumes no implicit trust for any user, device, or network, whether inside or outside the organization's perimeter. Every access request must be verified.",
+      "category": "security",
+      "related": ["nist-800-207", "eo-14028", "authentication"],
+      "sources": ["NIST SP 800-207"]
+    },
+    {
+      "id": "cors",
+      "term": "CORS",
+      "fullForm": "Cross-Origin Resource Sharing",
+      "definition": "A browser security mechanism that controls how web pages in one domain can request resources from another domain. Configured via HTTP headers (Access-Control-Allow-Origin).",
+      "category": "security",
+      "related": ["http", "api", "csp"],
+      "sources": ["W3C CORS"]
+    },
+    {
+      "id": "http",
+      "term": "HTTP",
+      "fullForm": "HyperText Transfer Protocol",
+      "definition": "The foundational protocol for data communication on the web. HTTP/2 adds multiplexing and header compression; HTTP/3 uses QUIC for improved performance.",
+      "category": "networking",
+      "related": ["https", "rest", "api"],
+      "sources": ["RFC 7230"]
+    },
+    {
+      "id": "https",
+      "term": "HTTPS",
+      "fullForm": "HyperText Transfer Protocol Secure",
+      "definition": "HTTP encrypted with TLS (Transport Layer Security). Required for all government websites and any site handling sensitive data. Prevents eavesdropping and tampering.",
+      "category": "networking",
+      "related": ["http", "tls", "ssl"],
+      "sources": ["RFC 2818"]
+    },
+    {
+      "id": "tls",
+      "term": "TLS",
+      "fullForm": "Transport Layer Security",
+      "definition": "A cryptographic protocol that provides secure communication over a network. TLS 1.2 is the minimum for government systems; TLS 1.3 is recommended.",
+      "category": "security",
+      "related": ["https", "ssl", "encryption"],
+      "sources": ["RFC 8446"]
+    },
+    {
+      "id": "dns",
+      "term": "DNS",
+      "fullForm": "Domain Name System",
+      "definition": "The internet's phone book — translates human-readable domain names (example.com) into IP addresses that computers use to route traffic.",
+      "category": "networking",
+      "related": ["http", "cdn", "networking"],
+      "sources": ["RFC 1035"]
+    },
+    {
+      "id": "cdn",
+      "term": "CDN",
+      "fullForm": "Content Delivery Network",
+      "definition": "A geographically distributed network of servers that delivers web content to users from the nearest location, improving load times and reducing server load.",
+      "category": "networking",
+      "related": ["performance", "caching", "dns"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "dom",
+      "term": "DOM",
+      "fullForm": "Document Object Model",
+      "definition": "A programming interface that represents an HTML or XML document as a tree of objects. JavaScript uses the DOM API to dynamically read and modify page content.",
+      "category": "development",
+      "related": ["html", "javascript", "browser"],
+      "sources": ["W3C DOM"]
+    },
+    {
+      "id": "html",
+      "term": "HTML",
+      "fullForm": "HyperText Markup Language",
+      "definition": "The standard markup language for creating web pages. HTML5 added semantic elements (header, nav, main, footer), form controls, multimedia, and accessibility features.",
+      "category": "development",
+      "related": ["css", "dom", "wcag"],
+      "sources": ["WHATWG HTML Living Standard"]
+    },
+    {
+      "id": "css",
+      "term": "CSS",
+      "fullForm": "Cascading Style Sheets",
+      "definition": "A stylesheet language for controlling the visual presentation of HTML documents — layout, colors, typography, animations, and responsive design.",
+      "category": "development",
+      "related": ["html", "responsive", "design-system"],
+      "sources": ["W3C CSS"]
+    },
+    {
+      "id": "json",
+      "term": "JSON",
+      "fullForm": "JavaScript Object Notation",
+      "definition": "A lightweight, human-readable data interchange format that uses key-value pairs and arrays. The standard format for API responses and configuration files.",
+      "category": "data",
+      "related": ["api", "rest", "yaml"],
+      "sources": ["RFC 8259"]
+    },
+    {
+      "id": "yaml",
+      "term": "YAML",
+      "fullForm": "YAML Ain't Markup Language",
+      "definition": "A human-friendly data serialization format commonly used for configuration files (CI/CD pipelines, Kubernetes manifests, Ansible playbooks). Supports comments unlike JSON.",
+      "category": "data",
+      "related": ["json", "ci-cd", "devops"],
+      "sources": ["yaml.org"]
+    },
+    {
+      "id": "sql",
+      "term": "SQL",
+      "fullForm": "Structured Query Language",
+      "definition": "A standard language for managing and querying relational databases. Common operations include SELECT (read), INSERT (create), UPDATE (modify), and DELETE (remove).",
+      "category": "data",
+      "related": ["database", "sqlite", "orm"],
+      "sources": ["ISO/IEC 9075"]
+    },
+    {
+      "id": "sqlite",
+      "term": "SQLite",
+      "fullForm": "SQLite Embedded Database",
+      "definition": "A self-contained, serverless, zero-configuration relational database engine stored in a single file. Ideal for embedded applications, mobile apps, and development databases.",
+      "category": "data",
+      "related": ["sql", "database"],
+      "sources": ["sqlite.org"]
+    },
+    {
+      "id": "orm",
+      "term": "ORM",
+      "fullForm": "Object-Relational Mapping",
+      "definition": "A programming technique that maps database tables to objects in code, allowing developers to interact with databases using their programming language instead of raw SQL.",
+      "category": "development",
+      "related": ["sql", "database", "model"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "npm",
+      "term": "npm",
+      "fullForm": "Node Package Manager",
+      "definition": "The default package manager for Node.js that manages project dependencies. The npm registry hosts over 2 million packages of reusable JavaScript code.",
+      "category": "development",
+      "related": ["node", "package-json", "dependencies"],
+      "sources": ["npmjs.com"]
+    },
+    {
+      "id": "node",
+      "term": "Node.js",
+      "fullForm": "Node.js JavaScript Runtime",
+      "definition": "A JavaScript runtime built on Chrome's V8 engine that allows running JavaScript on servers. Powers the backend of this platform using the Express.js framework.",
+      "category": "development",
+      "related": ["npm", "express", "javascript"],
+      "sources": ["nodejs.org"]
+    },
+    {
+      "id": "express",
+      "term": "Express",
+      "fullForm": "Express.js Web Framework",
+      "definition": "A minimal, flexible Node.js web framework that provides HTTP utilities and middleware for building web applications and APIs. The most popular Node.js framework.",
+      "category": "development",
+      "related": ["node", "middleware", "api"],
+      "sources": ["expressjs.com"]
+    },
+    {
+      "id": "middleware",
+      "term": "Middleware",
+      "fullForm": "Middleware Function",
+      "definition": "A function that sits between a request and response in a web application, performing tasks like authentication, logging, error handling, or data transformation before passing control to the next function.",
+      "category": "development",
+      "related": ["express", "api", "authentication"],
+      "sources": ["Express.js docs"]
+    },
+    {
+      "id": "vite",
+      "term": "Vite",
+      "fullForm": "Vite Build Tool",
+      "definition": "A modern frontend build tool that provides instant dev server startup using native ES modules and optimized production builds using Rollup. Significantly faster than Webpack.",
+      "category": "development",
+      "related": ["bundler", "esm", "rollup"],
+      "sources": ["vitejs.dev"]
+    },
+    {
+      "id": "vitest",
+      "term": "Vitest",
+      "fullForm": "Vitest Testing Framework",
+      "definition": "A Vite-native testing framework that provides a fast, modern alternative to Jest. Supports unit testing, integration testing, and code coverage with a Jest-compatible API.",
+      "category": "development",
+      "related": ["vite", "testing", "coverage"],
+      "sources": ["vitest.dev"]
+    },
+    {
+      "id": "eslint",
+      "term": "ESLint",
+      "fullForm": "ESLint JavaScript Linter",
+      "definition": "A static analysis tool that identifies problematic patterns in JavaScript code. Enforces coding standards, catches bugs early, and improves code quality through configurable rules.",
+      "category": "development",
+      "related": ["linting", "prettier", "code-quality"],
+      "sources": ["eslint.org"]
+    },
+    {
+      "id": "prettier",
+      "term": "Prettier",
+      "fullForm": "Prettier Code Formatter",
+      "definition": "An opinionated code formatter that enforces consistent style by parsing and reprinting code. Supports JavaScript, TypeScript, HTML, CSS, JSON, and Markdown.",
+      "category": "development",
+      "related": ["eslint", "formatting", "code-quality"],
+      "sources": ["prettier.io"]
+    },
+    {
+      "id": "git",
+      "term": "Git",
+      "fullForm": "Git Version Control System",
+      "definition": "A distributed version control system that tracks changes to files and enables collaboration. The industry standard for source code management.",
+      "category": "development",
+      "related": ["github", "version-control", "ci-cd"],
+      "sources": ["git-scm.com"]
+    },
+    {
+      "id": "github-actions",
+      "term": "GitHub Actions",
+      "fullForm": "GitHub Actions CI/CD",
+      "definition": "GitHub's built-in CI/CD platform that automates build, test, and deployment workflows directly from your repository. Triggered by events like pushes and pull requests.",
+      "category": "development",
+      "related": ["ci-cd", "git", "automation"],
+      "sources": ["docs.github.com/actions"]
+    },
+    {
+      "id": "service-worker",
+      "term": "Service Worker",
+      "fullForm": "Service Worker API",
+      "definition": "A JavaScript script that runs in the background, separate from a web page. Enables features like offline caching, push notifications, and background sync for PWAs.",
+      "category": "development",
+      "related": ["pwa", "caching", "offline"],
+      "sources": ["MDN Service Worker API"]
+    },
+    {
+      "id": "oauth",
+      "term": "OAuth",
+      "fullForm": "Open Authorization",
+      "definition": "An authorization framework that enables third-party applications to obtain limited access to a web service without exposing user credentials. OAuth 2.0 is the current version.",
+      "category": "security",
+      "related": ["jwt", "authentication", "api"],
+      "sources": ["RFC 6749"]
+    },
+    {
+      "id": "rbac",
+      "term": "RBAC",
+      "fullForm": "Role-Based Access Control",
+      "definition": "An access control method where permissions are assigned to roles, and users are assigned to roles. Simplifies permission management compared to assigning permissions directly to users.",
+      "category": "security",
+      "related": ["authentication", "authorization", "nist-800-53"],
+      "sources": ["NIST RBAC"]
+    },
+    {
+      "id": "encryption",
+      "term": "Encryption",
+      "fullForm": "Data Encryption",
+      "definition": "The process of converting plaintext data into an unreadable format (ciphertext) using a cryptographic algorithm and key. Data should be encrypted both at rest (stored) and in transit (transmitted).",
+      "category": "security",
+      "related": ["tls", "aes", "hashing"],
+      "sources": ["NIST SP 800-175B"]
+    },
+    {
+      "id": "hashing",
+      "term": "Hashing",
+      "fullForm": "Cryptographic Hashing",
+      "definition": "A one-way function that converts input data into a fixed-length string. Used for password storage (bcrypt) and data integrity verification. Unlike encryption, hashing cannot be reversed.",
+      "category": "security",
+      "related": ["bcrypt", "encryption", "password"],
+      "sources": ["NIST SP 800-107"]
+    },
+    {
+      "id": "bcrypt",
+      "term": "bcrypt",
+      "fullForm": "bcrypt Password Hashing",
+      "definition": "A password hashing algorithm designed to be computationally expensive, making brute-force attacks impractical. Includes automatic salting and configurable cost factors.",
+      "category": "security",
+      "related": ["hashing", "password", "authentication"],
+      "sources": ["OpenBSD"]
+    },
+    {
+      "id": "helmet",
+      "term": "Helmet",
+      "fullForm": "Helmet.js Security Headers",
+      "definition": "An Express.js middleware that sets various HTTP security headers including Content-Security-Policy, X-Content-Type-Options, Strict-Transport-Security, and others.",
+      "category": "security",
+      "related": ["express", "csp", "security-headers"],
+      "sources": ["helmetjs.github.io"]
+    },
+    {
+      "id": "rate-limiting",
+      "term": "Rate Limiting",
+      "fullForm": "API Rate Limiting",
+      "definition": "A technique that controls the number of requests a client can make to an API within a time window. Prevents abuse, brute-force attacks, and ensures fair resource usage.",
+      "category": "security",
+      "related": ["api", "ddos", "express"],
+      "sources": ["OWASP API Security"]
+    },
+    {
+      "id": "a11y",
+      "term": "a11y",
+      "fullForm": "Accessibility (numeronym)",
+      "definition": "A numeronym for 'accessibility' (a + 11 letters + y). Refers to the practice of making technology usable by people with disabilities, including visual, auditory, motor, and cognitive impairments.",
+      "category": "accessibility",
+      "related": ["wcag", "section-508", "aria"],
+      "sources": ["Industry convention"]
+    },
+    {
+      "id": "screen-reader",
+      "term": "Screen Reader",
+      "fullForm": "Screen Reader Assistive Technology",
+      "definition": "Software that converts on-screen text and interface elements into speech or braille output. Popular screen readers include JAWS, NVDA (Windows), and VoiceOver (macOS/iOS).",
+      "category": "accessibility",
+      "related": ["a11y", "aria", "wcag"],
+      "sources": ["W3C WAI"]
+    },
+    {
+      "id": "trusted-tester",
+      "term": "Trusted Tester",
+      "fullForm": "DHS Trusted Tester Process",
+      "definition": "A DHS-developed conformance testing process for Section 508 that provides standardized, repeatable procedures for evaluating ICT accessibility. Testers must pass a certification exam.",
+      "category": "accessibility",
+      "related": ["section-508", "wcag", "dhs"],
+      "sources": ["DHS Trusted Tester v5.1"]
+    },
+    {
+      "id": "axe-core",
+      "term": "axe-core",
+      "fullForm": "axe-core Accessibility Testing Engine",
+      "definition": "An open-source accessibility testing library by Deque Systems that automatically detects common WCAG violations. Can run in browsers, CI/CD pipelines, and testing frameworks.",
+      "category": "accessibility",
+      "related": ["wcag", "a11y", "testing"],
+      "sources": ["github.com/dequelabs/axe-core"]
+    },
+    {
+      "id": "semantic-html",
+      "term": "Semantic HTML",
+      "fullForm": "Semantic HTML Elements",
+      "definition": "HTML elements that carry meaning about the content they contain (header, nav, main, article, section, aside, footer). Improves accessibility, SEO, and code readability compared to generic divs.",
+      "category": "accessibility",
+      "related": ["html", "wcag", "aria"],
+      "sources": ["WHATWG HTML"]
+    },
+    {
+      "id": "color-contrast",
+      "term": "Color Contrast",
+      "fullForm": "WCAG Color Contrast Ratio",
+      "definition": "The ratio of luminance between foreground text and background color. WCAG AA requires 4.5:1 for normal text and 3:1 for large text. WCAG AAA requires 7:1 and 4.5:1.",
+      "category": "accessibility",
+      "related": ["wcag", "a11y", "design-system"],
+      "sources": ["WCAG 2.1 SC 1.4.3"]
+    },
+    {
+      "id": "focus-management",
+      "term": "Focus Management",
+      "fullForm": "Keyboard Focus Management",
+      "definition": "The practice of controlling which element receives keyboard focus during user interactions, especially in dynamic UIs (modals, menus, SPAs). Critical for keyboard and screen reader users.",
+      "category": "accessibility",
+      "related": ["wcag", "aria", "keyboard-navigation"],
+      "sources": ["WCAG 2.1 SC 2.4.3"]
+    },
+    {
+      "id": "skip-nav",
+      "term": "Skip Navigation",
+      "fullForm": "Skip Navigation Link",
+      "definition": "A hidden link at the top of a page that becomes visible on focus, allowing keyboard users to skip repetitive navigation and jump directly to the main content.",
+      "category": "accessibility",
+      "related": ["wcag", "keyboard-navigation", "a11y"],
+      "sources": ["WCAG 2.1 SC 2.4.1"]
+    },
+    {
+      "id": "live-region",
+      "term": "Live Region",
+      "fullForm": "ARIA Live Region",
+      "definition": "An HTML element with aria-live attribute that announces dynamic content changes to screen readers without requiring focus change. Used for status messages, errors, and notifications.",
+      "category": "accessibility",
+      "related": ["aria", "screen-reader", "wcag"],
+      "sources": ["WAI-ARIA 1.2"]
+    },
+    {
+      "id": "adr",
+      "term": "ADR",
+      "fullForm": "Architecture Decision Record",
+      "definition": "A short document capturing an important architectural decision, its context, the options considered, and the rationale for the choice made. Creates a decision trail for future developers.",
+      "category": "documentation",
+      "related": ["documentation", "architecture"],
+      "sources": ["Michael Nygard, 2011"]
+    },
+    {
+      "id": "changelog",
+      "term": "CHANGELOG",
+      "fullForm": "Change Log",
+      "definition": "A file containing a chronologically ordered list of notable changes for each version of a project. Follows the Keep a Changelog format with Added, Changed, Deprecated, Removed, Fixed, Security sections.",
+      "category": "documentation",
+      "related": ["semver", "release", "documentation"],
+      "sources": ["keepachangelog.com"]
+    },
+    {
+      "id": "semver",
+      "term": "SemVer",
+      "fullForm": "Semantic Versioning",
+      "definition": "A versioning scheme using MAJOR.MINOR.PATCH format. MAJOR = breaking changes, MINOR = new features (backward-compatible), PATCH = bug fixes. Example: 2.1.0.",
+      "category": "development",
+      "related": ["changelog", "npm", "release"],
+      "sources": ["semver.org"]
+    },
+    {
+      "id": "responsive-design",
+      "term": "Responsive Design",
+      "fullForm": "Responsive Web Design",
+      "definition": "A design approach where web pages automatically adjust their layout, images, and content to fit different screen sizes and devices. Uses CSS media queries, flexible grids, and fluid images.",
+      "category": "development",
+      "related": ["css", "media-queries", "mobile-first"],
+      "sources": ["Ethan Marcotte, 2010"]
+    },
+    {
+      "id": "design-system",
+      "term": "Design System",
+      "fullForm": "Design System",
+      "definition": "A collection of reusable components, design tokens (colors, spacing, typography), and guidelines that ensure consistency across a product. Think of it as a visual vocabulary for your application.",
+      "category": "development",
+      "related": ["css", "design-tokens", "component-library"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "design-tokens",
+      "term": "Design Tokens",
+      "fullForm": "Design Tokens",
+      "definition": "Named values (colors, spacing, typography, shadows) that represent the visual atoms of a design system. Stored as CSS custom properties, JSON, or YAML and consumed across platforms.",
+      "category": "development",
+      "related": ["design-system", "css", "theming"],
+      "sources": ["W3C Design Tokens"]
+    },
+    {
+      "id": "mbai",
+      "term": "MBAi",
+      "fullForm": "Mission-Based Agentic Intelligence",
+      "definition": "A methodology framework that combines traditional MBA strategic principles with AI-driven agentic workflows. The core intellectual property of the Structured for Growth platform.",
+      "category": "ai",
+      "related": ["agentic-ai", "methodology", "ai-agent"],
+      "sources": ["Structured for Growth"]
+    },
+    {
+      "id": "agentic-ai",
+      "term": "Agentic AI",
+      "fullForm": "Agentic Artificial Intelligence",
+      "definition": "AI systems that can autonomously plan, execute, and adapt multi-step workflows to achieve goals. Unlike chatbots, agentic AI takes actions, uses tools, and makes decisions with minimal human oversight.",
+      "category": "ai",
+      "related": ["mbai", "ai-agent", "llm"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "llm",
+      "term": "LLM",
+      "fullForm": "Large Language Model",
+      "definition": "An AI model trained on vast amounts of text data that can understand and generate human-like text. Examples include GPT-4, Claude, and Gemini. The foundation for modern AI assistants.",
+      "category": "ai",
+      "related": ["agentic-ai", "nlp", "transformer"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "rag",
+      "term": "RAG",
+      "fullForm": "Retrieval-Augmented Generation",
+      "definition": "A technique that enhances LLM responses by first retrieving relevant documents from a knowledge base, then using them as context for generation. Reduces hallucinations and keeps responses grounded in facts.",
+      "category": "ai",
+      "related": ["llm", "vector-db", "embeddings"],
+      "sources": ["Lewis et al., 2020"]
+    },
+    {
+      "id": "prompt-engineering",
+      "term": "Prompt Engineering",
+      "fullForm": "Prompt Engineering",
+      "definition": "The practice of designing and optimizing input prompts to get desired outputs from LLMs. Techniques include few-shot examples, chain-of-thought reasoning, and system prompts.",
+      "category": "ai",
+      "related": ["llm", "agentic-ai"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "vector-db",
+      "term": "Vector Database",
+      "fullForm": "Vector Database",
+      "definition": "A database optimized for storing and querying high-dimensional vectors (embeddings). Used in RAG systems to find semantically similar documents. Examples: Pinecone, Weaviate, Chroma.",
+      "category": "ai",
+      "related": ["rag", "embeddings", "llm"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "embeddings",
+      "term": "Embeddings",
+      "fullForm": "Vector Embeddings",
+      "definition": "Numerical representations (arrays of numbers) that capture the semantic meaning of text, images, or other data. Similar items have similar embeddings, enabling semantic search.",
+      "category": "ai",
+      "related": ["vector-db", "rag", "llm"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "coga",
+      "term": "COGA",
+      "fullForm": "Cognitive and Learning Disabilities Accessibility",
+      "definition": "W3C guidelines for making web content accessible to people with cognitive and learning disabilities. Recommendations include clear language, consistent navigation, error prevention, and reduced complexity.",
+      "category": "accessibility",
+      "related": ["wcag", "a11y", "plain-writing"],
+      "sources": ["W3C COGA Task Force"]
+    },
+    {
+      "id": "plain-writing",
+      "term": "Plain Writing Act",
+      "fullForm": "Plain Writing Act of 2010",
+      "definition": "A U.S. federal law requiring government agencies to write public documents in clear, concise, well-organized language. Applies to regulations, guidance, forms, and web content.",
+      "category": "documentation",
+      "related": ["coga", "readability", "government"],
+      "sources": ["Pub. L. 111-274"]
+    },
+    {
+      "id": "gpo-style",
+      "term": "GPO Style",
+      "fullForm": "Government Publishing Office Style Manual",
+      "definition": "The official style guide for U.S. government publications covering capitalization, abbreviations, numbers, punctuation, and document formatting conventions.",
+      "category": "documentation",
+      "related": ["plain-writing", "documentation"],
+      "sources": ["GPO Style Manual (2016)"]
+    },
+    {
+      "id": "itcss",
+      "term": "ITCSS",
+      "fullForm": "Inverted Triangle CSS",
+      "definition": "A CSS architecture methodology that organizes styles from generic to specific in layers: Settings → Tools → Generic → Elements → Objects → Components → Utilities. Prevents specificity wars.",
+      "category": "development",
+      "related": ["css", "design-system", "bem"],
+      "sources": ["Harry Roberts"]
+    },
+    {
+      "id": "bem",
+      "term": "BEM",
+      "fullForm": "Block Element Modifier",
+      "definition": "A CSS naming convention that creates clear, strict relationships between HTML and CSS. Format: block__element--modifier (e.g., card__title--highlighted).",
+      "category": "development",
+      "related": ["css", "itcss", "design-system"],
+      "sources": ["getbem.com"]
+    },
+    {
+      "id": "schema-org",
+      "term": "Schema.org",
+      "fullForm": "Schema.org Structured Data",
+      "definition": "A collaborative vocabulary for structured data markup on web pages. Search engines use it to understand page content and generate rich results (star ratings, FAQs, breadcrumbs).",
+      "category": "development",
+      "related": ["seo", "json-ld", "rich-results"],
+      "sources": ["schema.org"]
+    },
+    {
+      "id": "json-ld",
+      "term": "JSON-LD",
+      "fullForm": "JSON for Linking Data",
+      "definition": "A method of encoding structured data using JSON. The preferred format by Google for embedding Schema.org markup in web pages via <script type='application/ld+json'> tags.",
+      "category": "development",
+      "related": ["schema-org", "seo", "json"],
+      "sources": ["W3C JSON-LD"]
+    },
+    {
+      "id": "seo",
+      "term": "SEO",
+      "fullForm": "Search Engine Optimization",
+      "definition": "The practice of improving a website's visibility in search engine results through technical optimization, content quality, and link building. Includes meta tags, structured data, and page speed.",
+      "category": "development",
+      "related": ["schema-org", "og-tags", "performance"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "og-tags",
+      "term": "Open Graph",
+      "fullForm": "Open Graph Protocol",
+      "definition": "A protocol (og:title, og:description, og:image) that controls how URLs are displayed when shared on social media. Essential for professional social sharing appearance.",
+      "category": "development",
+      "related": ["seo", "meta-tags", "twitter-cards"],
+      "sources": ["ogp.me"]
+    },
+    {
+      "id": "lighthouse",
+      "term": "Lighthouse",
+      "fullForm": "Google Lighthouse",
+      "definition": "An open-source tool that audits web pages for performance, accessibility, best practices, SEO, and PWA compliance. Scores each category 0-100 and provides actionable improvement suggestions.",
+      "category": "development",
+      "related": ["performance", "a11y", "seo", "pwa"],
+      "sources": ["developer.chrome.com/docs/lighthouse"]
+    },
+    {
+      "id": "w3c",
+      "term": "W3C",
+      "fullForm": "World Wide Web Consortium",
+      "definition": "An international community that develops open standards (HTML, CSS, WCAG, ARIA, etc.) to ensure the long-term growth and interoperability of the World Wide Web.",
+      "category": "development",
+      "related": ["wcag", "aria", "html"],
+      "sources": ["w3.org"]
+    },
+    {
+      "id": "wai-aria-apg",
+      "term": "APG",
+      "fullForm": "ARIA Authoring Practices Guide",
+      "definition": "A W3C guide providing design patterns and examples for building accessible web components using WAI-ARIA. Covers menus, dialogs, tabs, trees, and other interactive patterns.",
+      "category": "accessibility",
+      "related": ["aria", "wcag", "design-patterns"],
+      "sources": ["w3.org/WAI/ARIA/apg"]
+    },
+    {
+      "id": "devops",
+      "term": "DevOps",
+      "fullForm": "Development and Operations",
+      "definition": "A set of practices combining software development (Dev) and IT operations (Ops) to shorten the development lifecycle through automation, continuous delivery, and collaborative culture.",
+      "category": "development",
+      "related": ["ci-cd", "automation", "infrastructure"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "agile",
+      "term": "Agile",
+      "fullForm": "Agile Software Development",
+      "definition": "An iterative development methodology that delivers working software in short cycles (sprints), with frequent feedback and adaptation. Frameworks include Scrum and Kanban.",
+      "category": "project-management",
+      "related": ["scrum", "kanban", "sprint"],
+      "sources": ["Agile Manifesto"]
+    },
+    {
+      "id": "scrum",
+      "term": "Scrum",
+      "fullForm": "Scrum Framework",
+      "definition": "An Agile framework using fixed-length iterations (sprints, typically 2 weeks) with defined roles (Product Owner, Scrum Master, Developers) and ceremonies (standups, reviews, retrospectives).",
+      "category": "project-management",
+      "related": ["agile", "sprint", "kanban"],
+      "sources": ["Scrum Guide"]
+    },
+    {
+      "id": "sprint",
+      "term": "Sprint",
+      "fullForm": "Sprint (Scrum)",
+      "definition": "A fixed time period (usually 1-4 weeks) during which a Scrum team commits to completing a set of work items. At the end, the team demonstrates working software.",
+      "category": "project-management",
+      "related": ["scrum", "agile"],
+      "sources": ["Scrum Guide"]
+    },
+    {
+      "id": "kanban",
+      "term": "Kanban",
+      "fullForm": "Kanban Method",
+      "definition": "A visual workflow management method that uses boards and cards to track work items through stages (To Do → In Progress → Done). Emphasizes continuous flow and limiting work in progress.",
+      "category": "project-management",
+      "related": ["agile", "scrum"],
+      "sources": ["David Anderson"]
+    },
+    {
+      "id": "nara",
+      "term": "NARA",
+      "fullForm": "National Archives and Records Administration",
+      "definition": "The federal agency responsible for preserving government records and maintaining the CUI Registry. NARA defines CUI categories and marking requirements.",
+      "category": "government",
+      "related": ["cui", "records-management"],
+      "sources": ["archives.gov"]
+    },
+    {
+      "id": "ict",
+      "term": "ICT",
+      "fullForm": "Information and Communications Technology",
+      "definition": "An umbrella term for all technologies used to handle information and enable communication. Section 508 applies to all ICT procured or used by federal agencies.",
+      "category": "government",
+      "related": ["section-508", "a11y"],
+      "sources": ["Section 508"]
+    },
+    {
+      "id": "fips",
+      "term": "FIPS",
+      "fullForm": "Federal Information Processing Standards",
+      "definition": "Standards issued by NIST for use in federal computer systems. FIPS 140-2/3 validates cryptographic modules; FIPS 199 categorizes information systems by impact level.",
+      "category": "compliance",
+      "related": ["nist", "encryption", "government"],
+      "sources": ["NIST FIPS"]
+    },
+    {
+      "id": "impact-level",
+      "term": "Impact Level",
+      "fullForm": "FIPS 199 Impact Level",
+      "definition": "A categorization (Low, Moderate, High) of potential impact if a security breach occurred. Determines which security controls apply. Most CUI systems are Moderate impact.",
+      "category": "compliance",
+      "related": ["fips", "nist-800-53", "fedramp"],
+      "sources": ["FIPS 199"]
+    },
+    {
+      "id": "continuous-monitoring",
+      "term": "ConMon",
+      "fullForm": "Continuous Monitoring",
+      "definition": "The ongoing awareness of information security, vulnerabilities, and threats to support organizational risk management decisions. Required by FedRAMP and FISMA for maintaining an ATO.",
+      "category": "compliance",
+      "related": ["fedramp", "ato", "risk-management"],
+      "sources": ["NIST SP 800-137"]
+    },
+    {
+      "id": "risk-management",
+      "term": "RMF",
+      "fullForm": "Risk Management Framework",
+      "definition": "A NIST framework (SP 800-37) for managing security and privacy risk through six steps: Categorize, Select, Implement, Assess, Authorize, Monitor.",
+      "category": "compliance",
+      "related": ["nist-800-53", "ato", "continuous-monitoring"],
+      "sources": ["NIST SP 800-37 Rev 2"]
+    },
+    {
+      "id": "nist-ssdf",
+      "term": "SSDF",
+      "fullForm": "Secure Software Development Framework",
+      "definition": "NIST SP 800-218 — a set of practices for producing secure software. Required by EO 14028 for software suppliers to federal agencies. Covers governance, design, implementation, and response.",
+      "category": "compliance",
+      "related": ["nist", "eo-14028", "sdlc"],
+      "sources": ["NIST SP 800-218"]
+    },
+    {
+      "id": "sdlc",
+      "term": "SDLC",
+      "fullForm": "Software Development Life Cycle",
+      "definition": "The process of planning, creating, testing, and deploying software. Common models include Waterfall, Agile, and DevOps. Security should be integrated at every phase (shift-left).",
+      "category": "development",
+      "related": ["agile", "devops", "testing"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "shift-left",
+      "term": "Shift Left",
+      "fullForm": "Shift-Left Testing",
+      "definition": "The practice of performing testing, security analysis, and quality checks earlier in the development process rather than waiting until deployment. Catches issues when they're cheapest to fix.",
+      "category": "development",
+      "related": ["sdlc", "sast", "ci-cd"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "crud",
+      "term": "CRUD",
+      "fullForm": "Create, Read, Update, Delete",
+      "definition": "The four basic operations for persistent data storage. Most web application features map to CRUD operations on database records via API endpoints.",
+      "category": "development",
+      "related": ["api", "rest", "database"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "spa",
+      "term": "SPA",
+      "fullForm": "Single-Page Application",
+      "definition": "A web application that loads a single HTML page and dynamically updates content without full page reloads. Provides app-like experience but requires careful SEO and accessibility handling.",
+      "category": "development",
+      "related": ["pwa", "dom", "javascript"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "ssr",
+      "term": "SSR",
+      "fullForm": "Server-Side Rendering",
+      "definition": "Rendering web pages on the server before sending them to the browser. Improves initial load time and SEO compared to client-side rendering. Used by Next.js, Nuxt, and SvelteKit.",
+      "category": "development",
+      "related": ["spa", "seo", "performance"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "esm",
+      "term": "ESM",
+      "fullForm": "ECMAScript Modules",
+      "definition": "The official JavaScript module system using import/export syntax. Supported natively in modern browsers and Node.js. Replaces CommonJS (require/module.exports) in modern code.",
+      "category": "development",
+      "related": ["javascript", "node", "vite"],
+      "sources": ["ECMAScript 2015"]
+    },
+    {
+      "id": "typescript",
+      "term": "TypeScript",
+      "fullForm": "TypeScript Programming Language",
+      "definition": "A strict superset of JavaScript that adds static type checking. Catches type errors at compile time, improves IDE support, and makes large codebases more maintainable.",
+      "category": "development",
+      "related": ["javascript", "type-safety", "esm"],
+      "sources": ["typescriptlang.org"]
+    },
+    {
+      "id": "tauri",
+      "term": "Tauri",
+      "fullForm": "Tauri Desktop Framework",
+      "definition": "A Rust-based framework for building desktop applications using web technologies. Produces smaller, faster, more secure apps than Electron by using the OS's native webview.",
+      "category": "development",
+      "related": ["desktop", "rust", "webview"],
+      "sources": ["tauri.app"]
+    },
+    {
+      "id": "expo",
+      "term": "Expo",
+      "fullForm": "Expo React Native Framework",
+      "definition": "A framework and platform for building React Native mobile apps with simplified configuration, OTA updates, and managed build services for iOS and Android.",
+      "category": "development",
+      "related": ["react-native", "mobile", "ios-android"],
+      "sources": ["expo.dev"]
+    },
+    {
+      "id": "codeql",
+      "term": "CodeQL",
+      "fullForm": "CodeQL Static Analysis",
+      "definition": "A semantic code analysis engine by GitHub that treats code as data, querying it like a database to find security vulnerabilities and code quality issues.",
+      "category": "security",
+      "related": ["sast", "github-actions", "security-testing"],
+      "sources": ["codeql.github.com"]
+    },
+    {
+      "id": "ddos",
+      "term": "DDoS",
+      "fullForm": "Distributed Denial of Service",
+      "definition": "An attack that overwhelms a server with traffic from many sources simultaneously, making the service unavailable to legitimate users. Mitigated with rate limiting, CDNs, and WAFs.",
+      "category": "security",
+      "related": ["rate-limiting", "cdn", "waf"],
+      "sources": ["NIST SP 800-61"]
+    },
+    {
+      "id": "waf",
+      "term": "WAF",
+      "fullForm": "Web Application Firewall",
+      "definition": "A security device that monitors, filters, and blocks HTTP traffic to and from a web application. Protects against XSS, SQL injection, and other OWASP Top 10 attacks.",
+      "category": "security",
+      "related": ["xss", "injection", "ddos"],
+      "sources": ["OWASP"]
+    },
+    {
+      "id": "injection",
+      "term": "Injection",
+      "fullForm": "Injection Attack",
+      "definition": "A class of attacks where untrusted data is sent to an interpreter as part of a command or query (SQL injection, command injection, LDAP injection). #1 on OWASP Top 10 for years.",
+      "category": "security",
+      "related": ["xss", "owasp", "sql"],
+      "sources": ["OWASP Top 10 A03"]
+    },
+    {
+      "id": "pen-test",
+      "term": "Pen Test",
+      "fullForm": "Penetration Testing",
+      "definition": "An authorized simulated cyberattack performed to evaluate the security of a system. Required annually for FedRAMP systems and recommended for any system handling sensitive data.",
+      "category": "security",
+      "related": ["dast", "owasp", "security-testing"],
+      "sources": ["NIST SP 800-115"]
+    },
+    {
+      "id": "accessibility-statement",
+      "term": "Accessibility Statement",
+      "fullForm": "Accessibility Statement",
+      "definition": "A public document describing an organization's commitment to accessibility, the level of conformance achieved, known limitations, and contact information for accessibility feedback.",
+      "category": "accessibility",
+      "related": ["vpat", "wcag", "section-508"],
+      "sources": ["W3C WAI"]
+    },
+    {
+      "id": "pdf-ua",
+      "term": "PDF/UA",
+      "fullForm": "PDF Universal Accessibility",
+      "definition": "An ISO standard (ISO 14289) for creating accessible PDF documents with proper tagging, reading order, alternative text, and navigation structure.",
+      "category": "accessibility",
+      "related": ["a11y", "wcag", "document"],
+      "sources": ["ISO 14289"]
+    },
+    {
+      "id": "omb",
+      "term": "OMB",
+      "fullForm": "Office of Management and Budget",
+      "definition": "A White House office that issues policy guidance to federal agencies. OMB M-24-08 mandated WCAG 2.1 AA compliance for all federal websites by June 2025.",
+      "category": "government",
+      "related": ["wcag", "section-508", "government"],
+      "sources": ["whitehouse.gov/omb"]
+    },
+    {
+      "id": "dhs",
+      "term": "DHS",
+      "fullForm": "Department of Homeland Security",
+      "definition": "The federal department responsible for public security. Publishes the Trusted Tester conformance process for Section 508 accessibility testing.",
+      "category": "government",
+      "related": ["trusted-tester", "section-508"],
+      "sources": ["dhs.gov"]
+    },
+    {
+      "id": "view-transitions",
+      "term": "View Transitions",
+      "fullForm": "View Transitions API",
+      "definition": "A browser API that enables smooth animated transitions between different states of a web page or between pages. Creates native-app-like transition effects without JavaScript animation libraries.",
+      "category": "development",
+      "related": ["css", "animation", "ux"],
+      "sources": ["W3C View Transitions"]
+    },
+    {
+      "id": "mega-menu",
+      "term": "Mega Menu",
+      "fullForm": "Mega Menu Navigation Pattern",
+      "definition": "A large dropdown navigation panel that displays multiple groups of links in a structured layout. Useful when a site has many sections that need to be organized into categories.",
+      "category": "development",
+      "related": ["navigation", "aria", "ia"],
+      "sources": ["Nielsen Norman Group"]
+    },
+    {
+      "id": "ia",
+      "term": "IA",
+      "fullForm": "Information Architecture",
+      "definition": "The structural design of shared information environments — organizing, labeling, and navigating content so users can find what they need. The blueprint for a website's structure.",
+      "category": "development",
+      "related": ["ux", "navigation", "sitemap"],
+      "sources": ["Rosenfeld & Morville"]
+    },
+    {
+      "id": "ux",
+      "term": "UX",
+      "fullForm": "User Experience",
+      "definition": "The overall experience a person has when interacting with a product, encompassing usability, accessibility, performance, design aesthetics, and emotional response.",
+      "category": "development",
+      "related": ["ia", "a11y", "ui"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "ui",
+      "term": "UI",
+      "fullForm": "User Interface",
+      "definition": "The visual elements through which a user interacts with a software application — buttons, forms, menus, icons, typography, and layout.",
+      "category": "development",
+      "related": ["ux", "design-system", "a11y"],
+      "sources": ["Industry standard"]
+    },
+    {
+      "id": "hig",
+      "term": "HIG",
+      "fullForm": "Human Interface Guidelines",
+      "definition": "Platform-specific design guidelines published by Apple (iOS/macOS) and Google (Material Design/Android) that define conventions for app design, interaction patterns, and visual style.",
+      "category": "development",
+      "related": ["ui", "ux", "mobile"],
+      "sources": ["Apple HIG", "Material Design"]
+    },
+    {
+      "id": "material-design",
+      "term": "Material Design",
+      "fullForm": "Material Design System",
+      "definition": "Google's design system providing comprehensive guidelines, components, and tools for creating consistent, high-quality digital experiences across Android, web, and other platforms.",
+      "category": "development",
+      "related": ["hig", "design-system", "ui"],
+      "sources": ["material.io"]
+    },
+    {
+      "id": "atomic-design",
+      "term": "Atomic Design",
+      "fullForm": "Atomic Design Methodology",
+      "definition": "A methodology for creating design systems in five levels: Atoms (basic elements) → Molecules (simple groups) → Organisms (complex groups) → Templates (page layouts) → Pages (final designs).",
+      "category": "development",
+      "related": ["design-system", "component-library"],
+      "sources": ["Brad Frost, 2013"]
+    },
+    {
+      "id": "wcag-perceivable",
+      "term": "Perceivable",
+      "fullForm": "WCAG Principle: Perceivable",
+      "definition": "The first WCAG principle — information and UI components must be presentable to users in ways they can perceive. Covers text alternatives, captions, adaptable content, and distinguishable colors.",
+      "category": "accessibility",
+      "related": ["wcag", "operable", "understandable", "robust"],
+      "sources": ["WCAG 2.1"]
+    },
+    {
+      "id": "wcag-operable",
+      "term": "Operable",
+      "fullForm": "WCAG Principle: Operable",
+      "definition": "The second WCAG principle — UI components and navigation must be operable by all users. Covers keyboard access, sufficient time, seizure prevention, and navigation aids.",
+      "category": "accessibility",
+      "related": ["wcag", "perceivable", "understandable", "robust"],
+      "sources": ["WCAG 2.1"]
+    },
+    {
+      "id": "wcag-understandable",
+      "term": "Understandable",
+      "fullForm": "WCAG Principle: Understandable",
+      "definition": "The third WCAG principle — information and operation of the UI must be understandable. Covers readable text, predictable behavior, and input assistance.",
+      "category": "accessibility",
+      "related": ["wcag", "perceivable", "operable", "robust"],
+      "sources": ["WCAG 2.1"]
+    },
+    {
+      "id": "wcag-robust",
+      "term": "Robust",
+      "fullForm": "WCAG Principle: Robust",
+      "definition": "The fourth WCAG principle — content must be robust enough to be interpreted by a wide variety of user agents, including assistive technologies. Covers valid markup and name/role/value.",
+      "category": "accessibility",
+      "related": ["wcag", "perceivable", "operable", "understandable"],
+      "sources": ["WCAG 2.1"]
+    },
+    {
+      "id": "nist-800-207",
+      "term": "NIST SP 800-207",
+      "fullForm": "Zero Trust Architecture",
+      "definition": "A NIST publication defining the principles and deployment models for Zero Trust Architecture. Mandated by EO 14028 for federal agencies.",
+      "category": "compliance",
+      "related": ["zero-trust", "nist", "eo-14028"],
+      "sources": ["NIST SP 800-207"]
+    },
+    {
+      "id": "swagger",
+      "term": "Swagger",
+      "fullForm": "Swagger API Documentation",
+      "definition": "A set of tools for designing, building, and documenting RESTful APIs. Swagger UI provides an interactive API explorer generated from an OpenAPI specification.",
+      "category": "development",
+      "related": ["openapi", "api", "rest"],
+      "sources": ["swagger.io"]
+    },
+    {
+      "id": "cmmi",
+      "term": "CMMI",
+      "fullForm": "Capability Maturity Model Integration",
+      "definition": "A process improvement framework that helps organizations improve performance. Five maturity levels from Initial (chaotic) to Optimizing (continuous improvement).",
+      "category": "compliance",
+      "related": ["quality", "process-improvement"],
+      "sources": ["CMMI Institute"]
+    },
+    {
+      "id": "iso-27001",
+      "term": "ISO 27001",
+      "fullForm": "ISO/IEC 27001 Information Security",
+      "definition": "An international standard for information security management systems (ISMS). Provides a systematic approach to managing sensitive company information to ensure it remains secure.",
+      "category": "compliance",
+      "related": ["nist-800-53", "security", "risk-management"],
+      "sources": ["ISO/IEC 27001:2022"]
+    },
+    {
+      "id": "aes",
+      "term": "AES",
+      "fullForm": "Advanced Encryption Standard",
+      "definition": "A symmetric block cipher adopted by the U.S. government (FIPS 197) for encrypting classified and sensitive data. Uses 128-, 192-, or 256-bit keys and is the most widely used encryption algorithm worldwide.",
+      "category": "security",
+      "related": ["encryption", "fips", "nist"],
+      "sources": ["NIST FIPS 197"]
+    },
+    {
+      "id": "ai-agent",
+      "term": "AI Agent",
+      "fullForm": "Artificial Intelligence Agent",
+      "definition": "An autonomous software entity that perceives its environment, makes decisions, and takes actions to achieve specific goals. In agentic AI systems, agents can plan multi-step tasks, use tools, and collaborate with other agents.",
+      "category": "ai",
+      "related": ["agentic-ai", "llm", "mbai"],
+      "sources": ["Microsoft Autogen", "LangChain"]
+    },
+    {
+      "id": "animation",
+      "term": "Animation",
+      "fullForm": "",
+      "definition": "Visual motion effects applied to UI elements through CSS transitions, keyframes, or JavaScript. Must respect the prefers-reduced-motion media query to remain accessible (WCAG 2.3.3).",
+      "category": "development",
+      "related": ["css", "view-transitions", "responsive-design"],
+      "sources": ["MDN Web Docs"]
+    },
+    {
+      "id": "architecture",
+      "term": "Architecture",
+      "fullForm": "Software Architecture",
+      "definition": "The high-level structure of a software system, defining components, their relationships, and the principles governing their design and evolution. Documented through Architecture Decision Records (ADRs).",
+      "category": "development",
+      "related": ["adr", "design-patterns", "sdlc"],
+      "sources": ["ISO/IEC 42010"]
+    },
+    {
+      "id": "authentication",
+      "term": "Authentication",
+      "fullForm": "",
+      "definition": "The process of verifying the identity of a user, device, or system. Common methods include passwords, multi-factor authentication (MFA), certificates (PIV/CAC), and OAuth tokens.",
+      "category": "security",
+      "related": ["mfa", "oauth", "jwt", "totp", "piv-cac"],
+      "sources": ["NIST SP 800-63"]
+    },
+    {
+      "id": "authorization",
+      "term": "Authorization",
+      "fullForm": "",
+      "definition": "The process of determining what actions an authenticated user or system is permitted to perform. Implemented through role-based access control (RBAC), attribute-based policies, or capability lists.",
+      "category": "security",
+      "related": ["rbac", "authentication", "zero-trust"],
+      "sources": ["NIST SP 800-162"]
+    },
+    {
+      "id": "automation",
+      "term": "Automation",
+      "fullForm": "",
+      "definition": "The use of scripts, pipelines, and tools to perform repetitive tasks without manual intervention. In software development, this includes CI/CD, testing, deployment, and infrastructure provisioning.",
+      "category": "development",
+      "related": ["ci-cd", "devops", "github-actions"],
+      "sources": ["DevOps Handbook"]
+    },
+    {
+      "id": "browser",
+      "term": "Browser",
+      "fullForm": "Web Browser",
+      "definition": "A software application for accessing the World Wide Web. Renders HTML, CSS, and executes JavaScript. Major engines include Chromium (Blink), Firefox (Gecko), and Safari (WebKit).",
+      "category": "development",
+      "related": ["dom", "javascript", "css"],
+      "sources": ["MDN Web Docs"]
+    },
+    {
+      "id": "bundler",
+      "term": "Bundler",
+      "fullForm": "Module Bundler",
+      "definition": "A build tool that combines multiple JavaScript modules and assets into optimized bundles for production deployment. Examples include Vite, Webpack, Rollup, and esbuild.",
+      "category": "development",
+      "related": ["vite", "rollup", "esm", "npm"],
+      "sources": ["Vite documentation"]
+    },
+    {
+      "id": "caching",
+      "term": "Caching",
+      "fullForm": "",
+      "definition": "The practice of storing copies of data in a temporary storage location (cache) so future requests can be served faster. Includes browser caching, CDN caching, service worker cache, and server-side caching.",
+      "category": "development",
+      "related": ["cdn", "service-worker", "performance"],
+      "sources": ["MDN Web Docs"]
+    },
+    {
+      "id": "code-quality",
+      "term": "Code Quality",
+      "fullForm": "",
+      "definition": "A measure of how well source code adheres to coding standards, best practices, and maintainability metrics. Enforced through linters (ESLint), formatters (Prettier), type checkers, and code reviews.",
+      "category": "development",
+      "related": ["eslint", "prettier", "linting", "formatting"],
+      "sources": ["Clean Code (Martin)"]
+    },
+    {
+      "id": "component-library",
+      "term": "Component Library",
+      "fullForm": "",
+      "definition": "A collection of reusable, documented UI components that implement a design system. Ensures visual consistency, accessibility compliance, and development efficiency across an application.",
+      "category": "development",
+      "related": ["design-system", "design-tokens", "atomic-design"],
+      "sources": ["Storybook documentation"]
+    },
+    {
+      "id": "contracting",
+      "term": "Contracting",
+      "fullForm": "Government Contracting",
+      "definition": "The process by which federal agencies procure goods and services, governed by the Federal Acquisition Regulation (FAR) and agency-specific supplements like DFARS. Includes requirements for accessibility (Section 508) and cybersecurity (CMMC).",
+      "category": "government",
+      "related": ["far", "cor", "cmmc"],
+      "sources": ["FAR Part 1"]
+    },
+    {
+      "id": "cookie",
+      "term": "Cookie",
+      "fullForm": "HTTP Cookie",
+      "definition": "A small piece of data stored by the browser and sent with subsequent HTTP requests. Used for session management, authentication tokens, and user preferences. Security flags include HttpOnly, Secure, and SameSite.",
+      "category": "security",
+      "related": ["csrf", "authentication", "https"],
+      "sources": ["RFC 6265"]
+    },
+    {
+      "id": "coverage",
+      "term": "Coverage",
+      "fullForm": "Code Coverage",
+      "definition": "A metric measuring the percentage of source code executed during automated testing. Includes line, branch, function, and statement coverage. Tools include V8 (built into Vitest), Istanbul/NYC, and c8.",
+      "category": "development",
+      "related": ["vitest", "testing", "ci-cd"],
+      "sources": ["Istanbul documentation"]
+    },
+    {
+      "id": "database",
+      "term": "Database",
+      "fullForm": "",
+      "definition": "An organized collection of structured data stored electronically. Types include relational (SQL), document (NoSQL), key-value, and graph databases. This project uses SQLite via sql.js.",
+      "category": "data",
+      "related": ["sql", "sqlite", "orm"],
+      "sources": ["SQLite documentation"]
+    },
+    {
+      "id": "dependencies",
+      "term": "Dependencies",
+      "fullForm": "Software Dependencies",
+      "definition": "External packages or libraries that a project relies on to function. Managed via package managers (npm, pip). Must be audited for vulnerabilities and tracked in an SBOM for supply chain security.",
+      "category": "development",
+      "related": ["npm", "sbom", "package-json"],
+      "sources": ["npm documentation"]
+    },
+    {
+      "id": "design-patterns",
+      "term": "Design Patterns",
+      "fullForm": "",
+      "definition": "Reusable solutions to commonly occurring problems in software design. Includes creational (factory, singleton), structural (adapter, decorator), and behavioral (observer, strategy) patterns.",
+      "category": "development",
+      "related": ["architecture", "wai-aria-apg", "component-library"],
+      "sources": ["Design Patterns (GoF)"]
+    },
+    {
+      "id": "desktop",
+      "term": "Desktop",
+      "fullForm": "Desktop Application",
+      "definition": "A software application that runs natively on a computer's operating system (Windows, macOS, Linux). Modern approaches like Tauri and Electron allow building desktop apps with web technologies.",
+      "category": "development",
+      "related": ["tauri", "webview", "node"],
+      "sources": ["Tauri documentation"]
+    },
+    {
+      "id": "document",
+      "term": "Document",
+      "fullForm": "Digital Document",
+      "definition": "An electronic file containing structured or unstructured information. Accessible document formats include tagged PDF (PDF/UA), HTML, and structured Word documents with proper heading hierarchies.",
+      "category": "documentation",
+      "related": ["pdf-ua", "html", "accessibility"],
+      "sources": ["PDF/UA (ISO 14289)"]
+    },
+    {
+      "id": "documentation",
+      "term": "Documentation",
+      "fullForm": "",
+      "definition": "Written materials that describe a software system's architecture, APIs, usage, and processes. Includes READMEs, ADRs, changelogs, API docs, user guides, and compliance documentation.",
+      "category": "documentation",
+      "related": ["adr", "changelog", "plain-writing"],
+      "sources": ["Divio documentation system"]
+    },
+    {
+      "id": "dodin",
+      "term": "DoDIN",
+      "fullForm": "Department of Defense Information Network",
+      "definition": "The globally interconnected information infrastructure operated by the DoD, including networks, computing resources, and services. DISA manages DoDIN security through STIGs and continuous monitoring.",
+      "category": "government",
+      "related": ["disa", "stig", "zero-trust"],
+      "sources": ["DoD CIO"]
+    },
+    {
+      "id": "formatting",
+      "term": "Formatting",
+      "fullForm": "Code Formatting",
+      "definition": "The automatic application of consistent coding style rules (indentation, spacing, line length, quotes) to source code. Prettier is the standard formatter for JavaScript/TypeScript projects.",
+      "category": "development",
+      "related": ["prettier", "code-quality", "eslint"],
+      "sources": ["Prettier documentation"]
+    },
+    {
+      "id": "github",
+      "term": "GitHub",
+      "fullForm": "",
+      "definition": "A cloud-based platform for version control and collaboration using Git. Provides repositories, pull requests, issues, Actions (CI/CD), Packages, and Copilot AI assistance.",
+      "category": "development",
+      "related": ["git", "github-actions", "version-control"],
+      "sources": ["github.com"]
+    },
+    {
+      "id": "government",
+      "term": "Government",
+      "fullForm": "U.S. Federal Government",
+      "definition": "The national governing body of the United States, comprising executive agencies and departments that procure technology solutions subject to regulations like FedRAMP, Section 508, FISMA, and CMMC.",
+      "category": "government",
+      "related": ["fedramp", "section-508", "cmmc", "far"],
+      "sources": ["USA.gov"]
+    },
+    {
+      "id": "infrastructure",
+      "term": "Infrastructure",
+      "fullForm": "IT Infrastructure",
+      "definition": "The foundational technology components—servers, networks, storage, and cloud services—that support software applications. Infrastructure as Code (IaC) manages these resources through version-controlled configuration files.",
+      "category": "development",
+      "related": ["devops", "automation", "cdn"],
+      "sources": ["AWS Well-Architected Framework"]
+    },
+    {
+      "id": "ios-android",
+      "term": "iOS/Android",
+      "fullForm": "Mobile Operating Systems",
+      "definition": "The two dominant mobile operating systems. iOS (Apple) and Android (Google) power smartphones and tablets. Cross-platform frameworks like React Native and Expo allow targeting both from a single codebase.",
+      "category": "development",
+      "related": ["expo", "react-native", "mobile"],
+      "sources": ["Apple Developer", "Android Developer"]
+    },
+    {
+      "id": "javascript",
+      "term": "JavaScript",
+      "fullForm": "",
+      "definition": "A high-level, interpreted programming language that is one of the core technologies of the World Wide Web. Used for client-side interactivity, server-side development (Node.js), and full-stack applications.",
+      "category": "development",
+      "related": ["node", "typescript", "dom", "esm"],
+      "sources": ["ECMAScript specification"]
+    },
+    {
+      "id": "keyboard-navigation",
+      "term": "Keyboard Navigation",
+      "fullForm": "",
+      "definition": "The ability to operate all interactive elements of a web page using only the keyboard. Required by WCAG 2.1.1 (Keyboard) and essential for users of screen readers, switch devices, and those with motor impairments.",
+      "category": "accessibility",
+      "related": ["focus-management", "skip-nav", "wai-aria-apg", "wcag"],
+      "sources": ["WCAG 2.1 SC 2.1.1"]
+    },
+    {
+      "id": "license",
+      "term": "License",
+      "fullForm": "Software License",
+      "definition": "A legal instrument governing the use, modification, and distribution of software. Common open-source licenses include MIT, Apache 2.0, GPL, and BSD. SPDX identifiers provide standard license naming.",
+      "category": "compliance",
+      "related": ["spdx", "sbom", "npm"],
+      "sources": ["SPDX License List"]
+    },
+    {
+      "id": "linting",
+      "term": "Linting",
+      "fullForm": "Static Code Analysis",
+      "definition": "The automated process of analyzing source code for potential errors, style violations, and anti-patterns without executing it. ESLint is the standard linter for JavaScript/TypeScript projects.",
+      "category": "development",
+      "related": ["eslint", "code-quality", "sast"],
+      "sources": ["ESLint documentation"]
+    },
+    {
+      "id": "manifest",
+      "term": "Manifest",
+      "fullForm": "Web App Manifest",
+      "definition": "A JSON file (manifest.json) that provides metadata about a Progressive Web App—name, icons, theme color, display mode, and start URL. Required for PWA installability.",
+      "category": "development",
+      "related": ["pwa", "service-worker", "offline"],
+      "sources": ["W3C Web App Manifest"]
+    },
+    {
+      "id": "media-queries",
+      "term": "Media Queries",
+      "fullForm": "CSS Media Queries",
+      "definition": "CSS rules that apply styles conditionally based on device characteristics such as viewport width, orientation, color scheme preference, and reduced-motion preference. Foundation of responsive design.",
+      "category": "development",
+      "related": ["responsive-design", "css", "mobile-first"],
+      "sources": ["MDN Web Docs"]
+    },
+    {
+      "id": "meta-tags",
+      "term": "Meta Tags",
+      "fullForm": "HTML Meta Elements",
+      "definition": "HTML elements in the <head> section that provide metadata about a web page—description, viewport settings, character encoding, Open Graph properties, and Twitter Card data.",
+      "category": "development",
+      "related": ["og-tags", "seo", "twitter-cards"],
+      "sources": ["MDN Web Docs"]
+    },
+    {
+      "id": "methodology",
+      "term": "Methodology",
+      "fullForm": "",
+      "definition": "A structured system of practices, techniques, and principles used to guide software development. Includes Agile, Scrum, Kanban, and domain-specific approaches like MBAi for AI-augmented workflows.",
+      "category": "project-management",
+      "related": ["mbai", "sdlc", "agile"],
+      "sources": ["Agile Manifesto"]
+    },
+    {
+      "id": "mobile",
+      "term": "Mobile",
+      "fullForm": "Mobile Development",
+      "definition": "The creation of applications for smartphones and tablets. Approaches include native (Swift/Kotlin), hybrid (React Native/Expo), and progressive web apps (PWAs) that work across platforms.",
+      "category": "development",
+      "related": ["expo", "react-native", "ios-android", "pwa"],
+      "sources": ["React Native documentation"]
+    },
+    {
+      "id": "mobile-first",
+      "term": "Mobile-First",
+      "fullForm": "Mobile-First Design",
+      "definition": "A design strategy that starts with the smallest screen size and progressively enhances for larger viewports. Ensures core content and functionality are available on all devices.",
+      "category": "development",
+      "related": ["responsive-design", "media-queries", "pwa"],
+      "sources": ["Luke Wroblewski, Mobile First"]
+    },
+    {
+      "id": "model",
+      "term": "Model",
+      "fullForm": "Data Model",
+      "definition": "A representation of data structures and their relationships used by an application. In MVC architecture, the model manages data, business logic, and database interactions.",
+      "category": "data",
+      "related": ["orm", "database", "sql"],
+      "sources": ["MVC Pattern"]
+    },
+    {
+      "id": "navigation",
+      "term": "Navigation",
+      "fullForm": "Website Navigation",
+      "definition": "The system of menus, links, and wayfinding elements that help users find content within a website. Must be consistent (WCAG 3.2.3), have multiple ways to find pages (WCAG 2.4.5), and be fully keyboard accessible.",
+      "category": "accessibility",
+      "related": ["mega-menu", "ia", "breadcrumbs", "keyboard-navigation"],
+      "sources": ["WCAG 2.1 SC 3.2.3"]
+    },
+    {
+      "id": "networking",
+      "term": "Networking",
+      "fullForm": "Computer Networking",
+      "definition": "The practice of connecting computing devices to share resources and communicate. Includes protocols (HTTP, DNS, TLS), infrastructure (CDN, load balancers), and security (firewalls, WAF, zero trust).",
+      "category": "networking",
+      "related": ["dns", "https", "tls", "cdn"],
+      "sources": ["RFC 7230"]
+    },
+    {
+      "id": "nlp",
+      "term": "NLP",
+      "fullForm": "Natural Language Processing",
+      "definition": "A branch of artificial intelligence focused on enabling computers to understand, interpret, and generate human language. Underpins chatbots, sentiment analysis, translation, and large language models.",
+      "category": "ai",
+      "related": ["llm", "transformer", "ai-agent"],
+      "sources": ["Stanford NLP Group"]
+    },
+    {
+      "id": "offline",
+      "term": "Offline",
+      "fullForm": "Offline Support",
+      "definition": "The ability of a web application to function without a network connection using cached assets and data. Implemented through service workers, Cache API, and IndexedDB in Progressive Web Apps.",
+      "category": "development",
+      "related": ["service-worker", "pwa", "caching"],
+      "sources": ["MDN Web Docs — Service Worker API"]
+    },
+    {
+      "id": "operable",
+      "term": "Operable",
+      "fullForm": "WCAG Principle: Operable",
+      "definition": "The second WCAG principle requiring that user interface components and navigation must be operable. Covers keyboard access, sufficient time, seizure prevention, and navigability.",
+      "category": "accessibility",
+      "related": ["perceivable", "understandable", "robust", "wcag-operable"],
+      "sources": ["WCAG 2.1 Principle 2"]
+    },
+    {
+      "id": "owasp-zap",
+      "term": "OWASP ZAP",
+      "fullForm": "Zed Attack Proxy",
+      "definition": "An open-source dynamic application security testing (DAST) tool maintained by OWASP. Automatically finds security vulnerabilities in web applications by intercepting and analyzing HTTP traffic.",
+      "category": "security",
+      "related": ["dast", "security-testing", "owasp"],
+      "sources": ["zaproxy.org"]
+    },
+    {
+      "id": "package-json",
+      "term": "package.json",
+      "fullForm": "",
+      "definition": "The manifest file for Node.js projects that defines project metadata, scripts, dependencies, and configuration. Central to the npm ecosystem and used by tools like Vite, ESLint, and Prettier.",
+      "category": "development",
+      "related": ["npm", "dependencies", "node"],
+      "sources": ["npm documentation"]
+    },
+    {
+      "id": "password",
+      "term": "Password",
+      "fullForm": "",
+      "definition": "A secret string used for authentication. Best practices include minimum 12 characters, bcrypt hashing with salt, breach database checking, and pairing with multi-factor authentication per NIST SP 800-63B.",
+      "category": "security",
+      "related": ["bcrypt", "hashing", "authentication", "mfa"],
+      "sources": ["NIST SP 800-63B"]
+    },
+    {
+      "id": "perceivable",
+      "term": "Perceivable",
+      "fullForm": "WCAG Principle: Perceivable",
+      "definition": "The first WCAG principle requiring that information and interface components must be presentable in ways users can perceive. Covers text alternatives, captions, adaptable layout, and distinguishable content.",
+      "category": "accessibility",
+      "related": ["operable", "understandable", "robust", "wcag-perceivable"],
+      "sources": ["WCAG 2.1 Principle 1"]
+    },
+    {
+      "id": "performance",
+      "term": "Performance",
+      "fullForm": "Web Performance",
+      "definition": "The speed and responsiveness of a web application as measured by metrics like Largest Contentful Paint (LCP), First Input Delay (FID), Cumulative Layout Shift (CLS), and Time to Interactive (TTI).",
+      "category": "development",
+      "related": ["lighthouse", "cdn", "caching", "ssr"],
+      "sources": ["web.dev/performance"]
+    },
+    {
+      "id": "process-improvement",
+      "term": "Process Improvement",
+      "fullForm": "",
+      "definition": "The systematic approach to enhancing organizational workflows, reducing waste, and increasing quality. Frameworks include CMMI, Six Sigma, Lean, and continuous improvement (Kaizen) methodologies.",
+      "category": "project-management",
+      "related": ["cmmi", "quality", "methodology"],
+      "sources": ["CMMI Institute"]
+    },
+    {
+      "id": "quality",
+      "term": "Quality",
+      "fullForm": "Software Quality",
+      "definition": "The degree to which a software product meets specified requirements and user expectations. Encompasses functional correctness, reliability, performance efficiency, security, maintainability, and accessibility.",
+      "category": "project-management",
+      "related": ["cmmi", "testing", "code-quality", "process-improvement"],
+      "sources": ["ISO/IEC 25010"]
+    },
+    {
+      "id": "react-native",
+      "term": "React Native",
+      "fullForm": "",
+      "definition": "A JavaScript framework for building native mobile applications using React. Allows sharing business logic across iOS and Android while rendering native platform UI components.",
+      "category": "development",
+      "related": ["expo", "mobile", "ios-android", "javascript"],
+      "sources": ["reactnative.dev"]
+    },
+    {
+      "id": "readability",
+      "term": "Readability",
+      "fullForm": "",
+      "definition": "A measure of how easy text is to read and understand, assessed by formulas like Flesch-Kincaid, Gunning Fog, and SMOG. Federal plain-language guidelines target 6th–8th grade reading level.",
+      "category": "documentation",
+      "related": ["plain-writing", "wcag", "documentation"],
+      "sources": ["plainlanguage.gov"]
+    },
+    {
+      "id": "records-management",
+      "term": "Records Management",
+      "fullForm": "",
+      "definition": "The systematic control of records throughout their lifecycle—creation, maintenance, use, and disposition. Federal agencies must comply with NARA regulations (36 CFR 1220-1239) for electronic records.",
+      "category": "government",
+      "related": ["nara", "compliance", "government"],
+      "sources": ["36 CFR 1220-1239"]
+    },
+    {
+      "id": "release",
+      "term": "Release",
+      "fullForm": "Software Release",
+      "definition": "A specific version of software made available for use. Follows semantic versioning (SemVer) conventions and is documented in changelogs. CI/CD pipelines automate the build, test, and deploy steps.",
+      "category": "development",
+      "related": ["semver", "changelog", "ci-cd"],
+      "sources": ["semver.org"]
+    },
+    {
+      "id": "responsive",
+      "term": "Responsive",
+      "fullForm": "Responsive Web Design",
+      "definition": "An approach to web design that makes pages render well on a variety of devices and screen sizes using fluid grids, flexible images, and CSS media queries.",
+      "category": "development",
+      "related": ["responsive-design", "media-queries", "mobile-first"],
+      "sources": ["Ethan Marcotte, Responsive Web Design"]
+    },
+    {
+      "id": "rich-results",
+      "term": "Rich Results",
+      "fullForm": "Google Rich Results",
+      "definition": "Enhanced search engine results that display additional information (ratings, FAQs, breadcrumbs, events) extracted from structured data markup (schema.org JSON-LD) embedded in web pages.",
+      "category": "development",
+      "related": ["schema-org", "seo", "meta-tags"],
+      "sources": ["Google Search Central"]
+    },
+    {
+      "id": "robust",
+      "term": "Robust",
+      "fullForm": "WCAG Principle: Robust",
+      "definition": "The fourth WCAG principle requiring that content must be robust enough to be interpreted by a wide variety of user agents, including assistive technologies. Covers proper parsing and ARIA usage.",
+      "category": "accessibility",
+      "related": ["perceivable", "operable", "understandable", "wcag-robust"],
+      "sources": ["WCAG 2.1 Principle 4"]
+    },
+    {
+      "id": "rollup",
+      "term": "Rollup",
+      "fullForm": "",
+      "definition": "A JavaScript module bundler that compiles small pieces of code into larger, optimized bundles. Used internally by Vite for production builds. Excels at tree-shaking to eliminate dead code.",
+      "category": "development",
+      "related": ["vite", "bundler", "esm"],
+      "sources": ["rollupjs.org"]
+    },
+    {
+      "id": "rust",
+      "term": "Rust",
+      "fullForm": "",
+      "definition": "A systems programming language focused on safety, speed, and concurrency. Used by Tauri for building lightweight desktop applications and by many security-critical tools due to its memory safety guarantees.",
+      "category": "development",
+      "related": ["tauri", "desktop", "webview"],
+      "sources": ["rust-lang.org"]
+    },
+    {
+      "id": "security",
+      "term": "Security",
+      "fullForm": "Information Security",
+      "definition": "The practice of protecting information systems from unauthorized access, use, disclosure, disruption, modification, or destruction. Encompasses confidentiality, integrity, and availability (CIA triad).",
+      "category": "security",
+      "related": ["nist-800-53", "zero-trust", "encryption", "authentication"],
+      "sources": ["NIST Cybersecurity Framework"]
+    },
+    {
+      "id": "security-headers",
+      "term": "Security Headers",
+      "fullForm": "HTTP Security Headers",
+      "definition": "HTTP response headers that enhance web application security. Includes Content-Security-Policy (CSP), Strict-Transport-Security (HSTS), X-Content-Type-Options, X-Frame-Options, and Referrer-Policy.",
+      "category": "security",
+      "related": ["helmet", "csp", "https"],
+      "sources": ["OWASP Secure Headers"]
+    },
+    {
+      "id": "security-testing",
+      "term": "Security Testing",
+      "fullForm": "",
+      "definition": "The process of identifying vulnerabilities in software through static analysis (SAST), dynamic analysis (DAST), penetration testing, and dependency scanning. Required by CMMC and FedRAMP.",
+      "category": "security",
+      "related": ["sast", "dast", "pen-test", "codeql"],
+      "sources": ["OWASP Testing Guide"]
+    },
+    {
+      "id": "sitemap",
+      "term": "Sitemap",
+      "fullForm": "XML Sitemap",
+      "definition": "A file that lists all important pages of a website to help search engines discover and index content. Also refers to the visual representation of a site's information architecture.",
+      "category": "development",
+      "related": ["seo", "ia", "navigation"],
+      "sources": ["sitemaps.org"]
+    },
+    {
+      "id": "ssl",
+      "term": "SSL/TLS",
+      "fullForm": "Secure Sockets Layer / Transport Layer Security",
+      "definition": "Cryptographic protocols that provide secure communication over a network. SSL is deprecated; TLS 1.2+ is the current standard. Enables HTTPS by encrypting data between client and server.",
+      "category": "security",
+      "related": ["https", "tls", "encryption"],
+      "sources": ["RFC 8446 (TLS 1.3)"]
+    },
+    {
+      "id": "testing",
+      "term": "Testing",
+      "fullForm": "Software Testing",
+      "definition": "The process of evaluating software to detect defects and verify that it meets requirements. Includes unit tests, integration tests, end-to-end tests, accessibility tests, and security tests.",
+      "category": "development",
+      "related": ["vitest", "coverage", "ci-cd", "security-testing"],
+      "sources": ["ISTQB"]
+    },
+    {
+      "id": "theming",
+      "term": "Theming",
+      "fullForm": "",
+      "definition": "The system for applying consistent visual styling across an application using design tokens (CSS custom properties). Supports multiple themes (dark/light mode) through token value overrides.",
+      "category": "development",
+      "related": ["design-tokens", "design-system", "css"],
+      "sources": ["Material Design theming"]
+    },
+    {
+      "id": "transformer",
+      "term": "Transformer",
+      "fullForm": "Transformer Architecture",
+      "definition": "A deep learning model architecture based on self-attention mechanisms, introduced in the 2017 paper 'Attention Is All You Need.' Foundation for GPT, BERT, T5, and all modern large language models.",
+      "category": "ai",
+      "related": ["llm", "nlp", "ai-agent"],
+      "sources": ["Vaswani et al., 2017"]
+    },
+    {
+      "id": "twitter-cards",
+      "term": "Twitter Cards",
+      "fullForm": "",
+      "definition": "Meta tags (twitter:card, twitter:title, twitter:description, twitter:image) that control how a URL appears when shared on Twitter/X. Types include summary, summary_large_image, and player.",
+      "category": "development",
+      "related": ["og-tags", "meta-tags", "seo"],
+      "sources": ["Twitter Developer documentation"]
+    },
+    {
+      "id": "type-safety",
+      "term": "Type Safety",
+      "fullForm": "",
+      "definition": "A programming language feature that prevents type errors by enforcing rules about how data types are used. TypeScript adds optional static type checking to JavaScript, catching bugs at compile time.",
+      "category": "development",
+      "related": ["typescript", "javascript", "code-quality"],
+      "sources": ["TypeScript documentation"]
+    },
+    {
+      "id": "understandable",
+      "term": "Understandable",
+      "fullForm": "WCAG Principle: Understandable",
+      "definition": "The third WCAG principle requiring that information and the operation of the user interface must be understandable. Covers readable text, predictable behavior, and input assistance.",
+      "category": "accessibility",
+      "related": ["perceivable", "operable", "robust", "wcag-understandable"],
+      "sources": ["WCAG 2.1 Principle 3"]
+    },
+    {
+      "id": "version-control",
+      "term": "Version Control",
+      "fullForm": "",
+      "definition": "A system for recording changes to files over time so specific versions can be recalled later. Git is the de facto standard, enabling branching, merging, and collaborative development workflows.",
+      "category": "development",
+      "related": ["git", "github", "release"],
+      "sources": ["Pro Git (Chacon & Straub)"]
+    },
+    {
+      "id": "vulnerability",
+      "term": "Vulnerability",
+      "fullForm": "Security Vulnerability",
+      "definition": "A weakness in a system that can be exploited by a threat actor to perform unauthorized actions. Tracked using CVE identifiers and scored using CVSS. Managed through patching, WAFs, and vulnerability scanning.",
+      "category": "security",
+      "related": ["cve", "cvss", "security-testing", "sbom"],
+      "sources": ["MITRE CVE", "NIST NVD"]
+    },
+    {
+      "id": "webview",
+      "term": "WebView",
+      "fullForm": "",
+      "definition": "A system component that allows applications to display web content within a native app window. Tauri uses the OS WebView (WebView2 on Windows, WebKit on macOS) for rendering, resulting in tiny app bundles.",
+      "category": "development",
+      "related": ["tauri", "desktop", "browser"],
+      "sources": ["Tauri documentation"]
+    },
+    {
+      "id": "accessibility",
+      "term": "Accessibility",
+      "fullForm": "Digital Accessibility (a11y)",
+      "definition": "The practice of designing products, services, and environments so that people with disabilities can perceive, understand, navigate, and interact with them. In web development, governed by WCAG, Section 508, and the ADA.",
+      "category": "accessibility",
+      "related": ["wcag", "section-508", "aria", "vpat"],
+      "sources": ["W3C WAI", "Section508.gov"]
+    },
+    {
+      "id": "breadcrumbs",
+      "term": "Breadcrumbs",
+      "fullForm": "Breadcrumb Navigation",
+      "definition": "A secondary navigation pattern showing the user's location within a site hierarchy (e.g., Home > Resources > Glossary). Improves wayfinding and satisfies WCAG 2.4.8 (Location). Often marked up with schema.org BreadcrumbList.",
+      "category": "accessibility",
+      "related": ["navigation", "schema-org", "ia"],
+      "sources": ["WCAG 2.1 SC 2.4.8"]
+    },
+    {
+      "id": "compliance",
+      "term": "Compliance",
+      "fullForm": "Regulatory Compliance",
+      "definition": "Adherence to laws, regulations, standards, and policies that govern how organizations operate. In federal IT, key frameworks include FedRAMP, CMMC, FISMA, Section 508, and NIST 800-171.",
+      "category": "compliance",
+      "related": ["fedramp", "cmmc", "fisma", "nist-800-171"],
+      "sources": ["NIST Compliance resources"]
+    },
+    {
+      "id": "piv-cac",
+      "term": "PIV/CAC",
+      "fullForm": "Personal Identity Verification / Common Access Card",
+      "definition": "Smart-card credential systems used by U.S. federal agencies (PIV, FIPS 201) and the Department of Defense (CAC) for physical and logical access control. Provides multi-factor authentication via certificate-based identity.",
+      "category": "security",
+      "related": ["authentication", "mfa", "zero-trust", "fips"],
+      "sources": ["NIST FIPS 201-3"]
+    },
+    {
+      "id": "stig",
+      "term": "STIG",
+      "fullForm": "Security Technical Implementation Guide",
+      "definition": "Configuration standards published by DISA for hardening IT systems to meet DoD security requirements. STIGs exist for operating systems, databases, web servers, network devices, and applications.",
+      "category": "security",
+      "related": ["disa", "dodin", "nist-800-53", "compliance"],
+      "sources": ["DISA STIG Library"]
+    }
+  ]
+}

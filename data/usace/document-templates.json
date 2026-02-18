@@ -1,0 +1,230 @@
+{
+  "templates": {
+    "ER": {
+      "id": "usace-er",
+      "name": "Engineer Regulation (ER)",
+      "authority": "ER 25-1-100",
+      "description": "Standard format for USACE Engineer Regulations — policy documents that prescribe mandatory actions",
+      "sections": [
+        {
+          "id": "cover",
+          "title": "Cover Page",
+          "required": true,
+          "fields": [
+            { "name": "regulationNumber", "label": "Regulation Number", "type": "text", "placeholder": "ER XXX-X-XXX", "required": true },
+            { "name": "title", "label": "Title", "type": "text", "required": true },
+            { "name": "publicationDate", "label": "Publication Date", "type": "date", "required": true },
+            { "name": "expirationDate", "label": "Expiration Date", "type": "date", "required": false },
+            { "name": "proponent", "label": "Proponent", "type": "text", "required": true },
+            { "name": "distributionStatement", "label": "Distribution Statement", "type": "select", "options": ["A", "B", "C", "D", "E", "F", "X"], "required": true }
+          ]
+        },
+        {
+          "id": "purpose",
+          "title": "1. Purpose",
+          "required": true,
+          "guidance": "State the purpose of the regulation concisely."
+        },
+        {
+          "id": "applicability",
+          "title": "2. Applicability",
+          "required": true,
+          "guidance": "Identify the USACE commands, staff elements, and organizations to which the regulation applies."
+        },
+        {
+          "id": "distribution",
+          "title": "3. Distribution Statement",
+          "required": true,
+          "guidance": "Include the appropriate distribution statement per DoD Directive 5230.24."
+        },
+        {
+          "id": "references",
+          "title": "4. References",
+          "required": true,
+          "guidance": "List all references in alphanumeric order by issuing agency."
+        },
+        {
+          "id": "policy",
+          "title": "5. Policy",
+          "required": true,
+          "guidance": "State the policy being prescribed. Use clear, directive language."
+        },
+        {
+          "id": "responsibilities",
+          "title": "6. Responsibilities",
+          "required": false,
+          "guidance": "Assign responsibilities to specific organizational elements."
+        },
+        {
+          "id": "procedures",
+          "title": "7. Procedures",
+          "required": false,
+          "guidance": "Detail the procedures required to implement the policy."
+        }
+      ]
+    },
+    "EP": {
+      "id": "usace-ep",
+      "name": "Engineer Pamphlet (EP)",
+      "authority": "EP 25-1-100",
+      "description": "Standard format for USACE Engineer Pamphlets — guidance documents that provide non-mandatory information",
+      "sections": [
+        {
+          "id": "cover",
+          "title": "Cover Page",
+          "required": true,
+          "fields": [
+            { "name": "pamphletNumber", "label": "Pamphlet Number", "type": "text", "placeholder": "EP XXX-X-XXX", "required": true },
+            { "name": "title", "label": "Title", "type": "text", "required": true },
+            { "name": "publicationDate", "label": "Publication Date", "type": "date", "required": true },
+            { "name": "proponent", "label": "Proponent", "type": "text", "required": true }
+          ]
+        },
+        {
+          "id": "foreword",
+          "title": "Foreword",
+          "required": false,
+          "guidance": "Signed by the appropriate authority, typically a General Officer."
+        },
+        {
+          "id": "toc",
+          "title": "Table of Contents",
+          "required": true
+        },
+        {
+          "id": "chapter1",
+          "title": "Chapter 1: Introduction",
+          "required": true,
+          "subsections": ["Purpose", "Applicability", "References", "Background"]
+        },
+        {
+          "id": "body",
+          "title": "Body Chapters",
+          "required": true,
+          "guidance": "Organize content into logically structured chapters. Use figures, tables, and appendices as needed."
+        },
+        {
+          "id": "appendices",
+          "title": "Appendices",
+          "required": false,
+          "guidance": "Include supplementary information, forms, checklists, or detailed procedures."
+        },
+        {
+          "id": "glossary",
+          "title": "Glossary",
+          "required": false,
+          "guidance": "Define terms and abbreviations used in the pamphlet."
+        }
+      ]
+    },
+    "ETL": {
+      "id": "usace-etl",
+      "name": "Engineer Technical Letter (ETL)",
+      "authority": "ER 25-1-100",
+      "description": "Temporary technical guidance with a maximum 2-year lifespan. Used for urgent engineering guidance.",
+      "sections": [
+        {
+          "id": "header",
+          "title": "Header Block",
+          "required": true,
+          "fields": [
+            { "name": "etlNumber", "label": "ETL Number", "type": "text", "placeholder": "ETL XXXX-X-XX", "required": true },
+            { "name": "subject", "label": "Subject", "type": "text", "required": true },
+            { "name": "effectiveDate", "label": "Effective Date", "type": "date", "required": true },
+            { "name": "expirationDate", "label": "Expiration Date", "type": "date", "required": true },
+            { "name": "applicability", "label": "Applicability", "type": "text", "required": true }
+          ]
+        },
+        {
+          "id": "purpose",
+          "title": "1. Purpose",
+          "required": true
+        },
+        {
+          "id": "guidance",
+          "title": "2. Guidance",
+          "required": true,
+          "guidance": "Provide the technical guidance. Be specific and actionable."
+        },
+        {
+          "id": "pointOfContact",
+          "title": "3. Point of Contact",
+          "required": true,
+          "guidance": "Name, office symbol, phone, and email of the technical POC."
+        }
+      ]
+    },
+    "ERDC-TR": {
+      "id": "usace-erdc-tr",
+      "name": "ERDC Technical Report (TR)",
+      "authority": "ERDC Publication Guidelines",
+      "description": "Technical report format for the Engineer Research and Development Center",
+      "sections": [
+        {
+          "id": "sf298",
+          "title": "Standard Form 298 (Report Documentation Page)",
+          "required": true,
+          "guidance": "See SF298 generator for this mandatory first page."
+        },
+        {
+          "id": "cover",
+          "title": "Cover Page",
+          "required": true,
+          "fields": [
+            { "name": "reportNumber", "label": "Report Number", "type": "text", "placeholder": "ERDC/XXX TR-XX-XX", "required": true },
+            { "name": "title", "label": "Title", "type": "text", "required": true },
+            { "name": "authors", "label": "Authors", "type": "textarea", "required": true },
+            { "name": "date", "label": "Date", "type": "date", "required": true },
+            { "name": "laboratory", "label": "Laboratory", "type": "select", "options": ["CHL", "CERL", "CRREL", "EL", "GRL", "ITL"], "required": true },
+            { "name": "distributionStatement", "label": "Distribution Statement", "type": "select", "options": ["A", "B", "C", "D", "E", "F", "X"], "required": true }
+          ]
+        },
+        {
+          "id": "abstract",
+          "title": "Abstract",
+          "required": true,
+          "guidance": "Maximum 200 words. Summarize the purpose, approach, results, and significance."
+        },
+        {
+          "id": "toc",
+          "title": "Table of Contents",
+          "required": true
+        },
+        {
+          "id": "preface",
+          "title": "Preface",
+          "required": true,
+          "guidance": "Identify the study, sponsoring agency, and key personnel."
+        },
+        {
+          "id": "introduction",
+          "title": "1. Introduction",
+          "required": true,
+          "subsections": ["Background", "Objective", "Approach", "Scope"]
+        },
+        {
+          "id": "body",
+          "title": "Body Chapters",
+          "required": true,
+          "guidance": "Present methodology, data, analysis, and results."
+        },
+        {
+          "id": "conclusions",
+          "title": "Conclusions and Recommendations",
+          "required": true
+        },
+        {
+          "id": "references",
+          "title": "References",
+          "required": true,
+          "guidance": "Use the ERDC citation style (modified Chicago)."
+        },
+        {
+          "id": "appendices",
+          "title": "Appendices",
+          "required": false
+        }
+      ]
+    }
+  }
+}

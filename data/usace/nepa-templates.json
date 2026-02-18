@@ -1,0 +1,87 @@
+{
+  "nepaTemplates": {
+    "EIS": {
+      "id": "nepa-eis",
+      "name": "Environmental Impact Statement (EIS)",
+      "authority": "40 CFR 1500-1508 (CEQ Regulations)",
+      "description": "Required for federal actions significantly affecting the quality of the human environment",
+      "sections": [
+        { "number": "1", "title": "Cover Sheet", "required": true, "guidance": "40 CFR 1502.11 — List of agencies, title, location, contacts, abstract, date" },
+        { "number": "2", "title": "Summary", "required": true, "guidance": "40 CFR 1502.12 — Summary of the EIS, not longer than 15 pages" },
+        { "number": "3", "title": "Table of Contents", "required": true },
+        { "number": "4", "title": "Purpose and Need for Action", "required": true, "guidance": "40 CFR 1502.13 — Specify the underlying purpose and need" },
+        { "number": "5", "title": "Alternatives Including the Proposed Action", "required": true, "guidance": "40 CFR 1502.14 — Heart of the EIS. Present all reasonable alternatives.", "subsections": [
+          { "number": "5.1", "title": "No Action Alternative" },
+          { "number": "5.2", "title": "Proposed Action" },
+          { "number": "5.3", "title": "Action Alternatives" },
+          { "number": "5.4", "title": "Alternatives Considered but Eliminated" },
+          { "number": "5.5", "title": "Preferred Alternative" }
+        ]},
+        { "number": "6", "title": "Affected Environment", "required": true, "guidance": "40 CFR 1502.15 — Describe existing environment. Only information relevant to impacts.", "subsections": [
+          { "number": "6.1", "title": "Physical Environment" },
+          { "number": "6.2", "title": "Biological Environment" },
+          { "number": "6.3", "title": "Socioeconomic Environment" },
+          { "number": "6.4", "title": "Cultural Resources" },
+          { "number": "6.5", "title": "Environmental Justice" }
+        ]},
+        { "number": "7", "title": "Environmental Consequences", "required": true, "guidance": "40 CFR 1502.16 — Analytical basis for the alternatives comparison.", "subsections": [
+          { "number": "7.1", "title": "Direct Effects" },
+          { "number": "7.2", "title": "Indirect Effects" },
+          { "number": "7.3", "title": "Cumulative Effects" },
+          { "number": "7.4", "title": "Mitigation Measures" },
+          { "number": "7.5", "title": "Irreversible and Irretrievable Commitments" }
+        ]},
+        { "number": "8", "title": "Consultation and Coordination", "required": true },
+        { "number": "9", "title": "List of Preparers", "required": true },
+        { "number": "10", "title": "References", "required": true },
+        { "number": "11", "title": "Index", "required": true },
+        { "number": "12", "title": "Appendices", "required": false }
+      ]
+    },
+    "EA": {
+      "id": "nepa-ea",
+      "name": "Environmental Assessment (EA)",
+      "authority": "40 CFR 1501.5",
+      "description": "Concise document to determine whether an EIS is needed, or to document a FONSI",
+      "sections": [
+        { "number": "1", "title": "Introduction", "required": true, "subsections": [
+          { "number": "1.1", "title": "Project Description" },
+          { "number": "1.2", "title": "Purpose and Need" },
+          { "number": "1.3", "title": "Authority" },
+          { "number": "1.4", "title": "Scope of Analysis" }
+        ]},
+        { "number": "2", "title": "Proposed Action and Alternatives", "required": true, "subsections": [
+          { "number": "2.1", "title": "Proposed Action" },
+          { "number": "2.2", "title": "No Action Alternative" },
+          { "number": "2.3", "title": "Other Alternatives Considered" }
+        ]},
+        { "number": "3", "title": "Affected Environment", "required": true },
+        { "number": "4", "title": "Environmental Consequences", "required": true },
+        { "number": "5", "title": "Cumulative Effects", "required": true },
+        { "number": "6", "title": "Public Involvement", "required": true },
+        { "number": "7", "title": "Conclusions", "required": true },
+        { "number": "8", "title": "References", "required": true },
+        { "number": "9", "title": "List of Preparers", "required": true }
+      ]
+    },
+    "FONSI": {
+      "id": "nepa-fonsi",
+      "name": "Finding of No Significant Impact (FONSI)",
+      "authority": "40 CFR 1501.6",
+      "description": "Documents the decision that an action will not have a significant effect on the human environment",
+      "sections": [
+        { "number": "1", "title": "Description of Proposed Action", "required": true },
+        { "number": "2", "title": "Purpose and Need", "required": true },
+        { "number": "3", "title": "Alternatives Considered", "required": true },
+        { "number": "4", "title": "Summary of Environmental Effects", "required": true },
+        { "number": "5", "title": "Mitigation Measures", "required": false },
+        { "number": "6", "title": "Finding", "required": true, "guidance": "The finding statement: Based on the EA, the proposed action will not significantly affect the quality of the human environment; therefore, an EIS is not required." },
+        { "number": "7", "title": "Signature Block", "required": true, "fields": [
+          { "name": "signingAuthority", "label": "Signing Authority", "type": "text", "required": true },
+          { "name": "title", "label": "Title", "type": "text", "required": true },
+          { "name": "date", "label": "Date", "type": "date", "required": true }
+        ]}
+      ]
+    }
+  }
+}

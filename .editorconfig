@@ -1,0 +1,35 @@
+# EditorConfig — Cross-IDE formatting consistency (P5.5.2)
+# https://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+[*.py]
+indent_size = 4
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[Makefile]
+indent_style = tab
+
+[*.sql]
+indent_size = 2
+
+[*.{ps1,psm1,psd1}]
+indent_size = 4
+charset = utf-8-bom
+
+[*.{cmd,bat}]
+end_of_line = crlf

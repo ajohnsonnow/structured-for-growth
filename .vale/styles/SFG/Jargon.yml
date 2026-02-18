@@ -1,0 +1,22 @@
+extends: SFG
+message: "Avoid jargon: '%s'. Consider a simpler alternative."
+level: suggestion
+ignorecase: true
+tokens:
+  - synergize
+  - synergy
+  - paradigm shift
+  - operationalize
+  - deliverable
+  - low-hanging fruit
+  - circle back
+  - deep dive
+  - bandwidth
+  - move the needle
+  - boil the ocean
+  - best of breed
+  - bleeding edge
+  - drill down
+  - thought leader
+  - ideate
+  - learnings

@@ -1,0 +1,41 @@
+extends: SFG
+message: "Use '%s' instead of '%s'."
+level: warning
+ignorecase: true
+swap:
+  # Plain Language Act — prefer simple words
+  utilize: use
+  utilization: use
+  in order to: to
+  due to the fact that: because
+  at this point in time: now
+  in the event that: if
+  prior to: before
+  subsequent to: after
+  in accordance with: per
+  in conjunction with: with
+  is able to: can
+  has the ability to: can
+  it is necessary to: must
+  in the near future: soon
+  at the present time: now
+  for the purpose of: to
+  with regard to: about
+  in reference to: about
+  pertaining to: about
+  in the amount of: for
+  a large number of: many
+  a sufficient number of: enough
+  on a daily basis: daily
+  on a monthly basis: monthly
+  # Government-specific replacements
+  promulgate: issue
+  disseminate: share
+  effectuate: carry out
+  aforementioned: this
+  heretofore: until now
+  hereinafter: after this
+  therein: in it
+  thereof: of it
+  whereby: by which
+  notwithstanding: despite

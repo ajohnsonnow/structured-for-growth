@@ -1,0 +1,278 @@
+/* ============================================
+   MOBILE ACCESSIBILITY ENHANCEMENTS (P4.3.4)
+   ISO 21542 / WCAG 2.1 Mobile Accessibility
+   ============================================ */
+
+/* ── Touch Target Sizing (WCAG 2.5.8 — Level AAA targets, 2.5.5 Level AA) ── */
+/* Minimum 44×44 CSS px for all interactive elements */
+button,
+a,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+[role="button"],
+[role="tab"],
+[role="menuitem"],
+[role="link"],
+summary {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Ensure spacing between targets (WCAG 2.5.8) */
+nav a,
+nav button,
+.btn,
+.action-btn,
+.tab-btn {
+  margin: 2px;
+}
+
+/* ── Orientation Support (WCAG 1.3.4) ── */
+/* Content must be usable in both portrait and landscape */
+@media (orientation: landscape) and (max-height: 400px) {
+  /* Prevent fixed headers from eating vertical space on landscape phones */
+  .site-header {
+    position: relative;
+  }
+
+  /* Compact form fields in landscape */
+  .form-group {
+    margin-bottom: var(--spacing-sm, 0.5rem);
+  }
+}
+
+/* ── Content Reflow (WCAG 1.4.10) ── */
+/* Content reflows to 320px without horizontal scroll */
+@media (max-width: 320px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .container,
+  .content-wrapper,
+  main {
+    max-width: 100vw;
+    padding-left: var(--spacing-sm, 8px);
+    padding-right: var(--spacing-sm, 8px);
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  /* Stack form fields */
+  .form-row,
+  .input-group {
+    flex-direction: column;
+  }
+
+  /* Full-width buttons */
+  .btn,
+  button[type="submit"] {
+    width: 100%;
+  }
+}
+
+/* ── Text Spacing Override (WCAG 1.4.12) ── */
+/* Ensure content remains visible with user-overridden spacing */
+/* Test: line-height 1.5×, paragraph spacing 2×, letter spacing 0.12em, word spacing 0.16em */
+@supports (line-height: 1.5) {
+  .text-spacing-test *:not(code):not(pre) {
+    line-height: 1.5em !important;
+    letter-spacing: 0.12em !important;
+    word-spacing: 0.16em !important;
+  }
+
+  .text-spacing-test p {
+    margin-bottom: 2em !important;
+  }
+}
+
+/* ── Focus Visibility (WCAG 2.4.7 / 2.4.13) ── */
+:focus-visible {
+  outline: 3px solid var(--primary-color, #2563eb);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* High-contrast focus for dark backgrounds */
+.dark-section :focus-visible,
+[data-theme="dark"] :focus-visible {
+  outline-color: #fbbf24;
+}
+
+/* ── Motion Reduction (WCAG 2.3.3) ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Target Size Exceptions ── */
+/* Inline links within text blocks are exempt from 44px rule */
+p a,
+li a,
+td a,
+dd a,
+figcaption a {
+  min-height: unset;
+  min-width: unset;
+  /* But add underline + padding for usability */
+  text-decoration: underline;
+  padding: 2px 0;
+}
+
+/* ── Pointer Gestures (WCAG 2.5.1) ── */
+/* Single-pointer alternatives for any multi-touch gesture */
+/* Visual indicator for drag-and-drop alternatives */
+[draggable="true"] {
+  position: relative;
+}
+
+[draggable="true"]::after {
+  content: "↕";
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--text-secondary, #666);
+  pointer-events: none;
+}
+
+/* ── Mobile-Specific Form Improvements ── */
+@media (max-width: 768px) {
+  /* Larger form elements on mobile */
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+    padding: 12px;
+  }
+
+  /* Stack navigation on mobile */
+  nav ul,
+  nav ol,
+  .nav-links {
+    flex-direction: column;
+    gap: var(--spacing-sm, 8px);
+  }
+
+  nav a,
+  nav button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+  }
+
+  /* Card grid single-column */
+  .card-grid,
+  .dashboard-grid,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Modal sizing */
+  .modal,
+  [role="dialog"] {
+    width: 95vw;
+    max-height: 90vh;
+    margin: 5vh auto;
+  }
+
+  /* Button group stacking */
+  .button-group,
+  .btn-group,
+  .action-buttons {
+    flex-direction: column;
+    gap: var(--spacing-sm, 8px);
+  }
+
+  .button-group > *,
+  .btn-group > *,
+  .action-buttons > * {
+    width: 100%;
+  }
+}
+
+/* ── High Contrast Mode (forced-colors) ── */
+@media (forced-colors: active) {
+  button,
+  .btn,
+  input,
+  select,
+  textarea {
+    border: 2px solid ButtonText;
+  }
+
+  :focus-visible {
+    outline: 3px solid Highlight;
+  }
+
+  a {
+    color: LinkText;
+  }
+
+  /* Ensure status indicators are visible */
+  .status-badge,
+  .tag,
+  .chip {
+    border: 2px solid ButtonText;
+  }
+}
+
+/* ── Skip Links & Landmarks (mobile-friendly) ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 10000;
+  padding: 16px 24px;
+  background: var(--primary-color, #2563eb);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Touch Feedback ── */
+@media (pointer: coarse) {
+  /* Larger click areas for touch devices */
+  .btn,
+  button,
+  [role="button"] {
+    padding: 12px 20px;
+  }
+
+  /* Active state feedback */
+  .btn:active,
+  button:active,
+  [role="button"]:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+  }
+
+  /* Disable hover effects on touch (they're sticky on mobile) */
+  .btn:hover,
+  button:hover {
+    /* Keep normal state; hover is unreliable on touch */
+    opacity: 1;
+  }
+}

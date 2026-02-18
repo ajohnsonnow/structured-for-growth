@@ -1,0 +1,26 @@
+extends: SFG
+message: "Use the official project term '%s' instead of '%s'."
+level: error
+ignorecase: true
+swap:
+  # Product name
+  sfg: SFG
+  structured for growth: Structured for Growth
+  # Framework acronyms — ensure consistency
+  nist 800-53: NIST SP 800-53
+  nist sp800-53: NIST SP 800-53
+  nist 800-171: NIST SP 800-171
+  nist sp800-171: NIST SP 800-171
+  fedramp: FedRAMP
+  cmmc l2: CMMC Level 2
+  cmmc level2: CMMC Level 2
+  # Technical terms
+  cui: CUI
+  fouo: FOUO (obsolete, use CUI)
+  poam: POA&M
+  poa&ms: POA&Ms
+  ssp: SSP
+  ato: ATO
+  atos: ATOs
+  bom: BOM
+  sbom: SBOM

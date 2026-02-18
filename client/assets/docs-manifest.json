@@ -1,11 +1,11 @@
 {
-  "generated": "2026-02-14T08:36:29.383Z",
-  "version": "1.4.8",
+  "generated": "2026-02-18T05:50:29.108Z",
+  "version": "1.8.2",
   "summary": {
-    "totalRoutes": 76,
-    "totalPages": 7,
+    "totalRoutes": 166,
+    "totalPages": 10,
     "totalTemplates": 33,
-    "totalFrameworks": 10,
+    "totalFrameworks": 12,
     "totalFeatures": 10,
     "totalDocs": 4
   },
@@ -35,11 +35,14 @@
         "/api/auth/verify",
         "/api/auth/change-password",
         "/api/auth/profile",
+        "/api/auth/refresh",
+        "/api/auth/logout",
         "/api/auth/users",
         "/api/auth/users",
         "/api/auth/users/:id",
         "/api/auth/users/:id",
         "/api/auth/activity",
+        "/api/auth/activity/export",
         "/api/backup/list",
         "/api/backup/create",
         "/api/backup/download/:filename",
@@ -114,12 +117,23 @@
     },
     {
       "name": "Compliance Knowledge Base",
-      "description": "10 regulatory frameworks with cross-mapping, evidence tracking, OSCAL catalogs, and implementation guidance.",
+      "description": "12 regulatory frameworks with cross-mapping, evidence tracking, OSCAL catalogs, and implementation guidance.",
       "category": "frontend",
       "relatedPages": [
         "/compliance"
       ],
       "relatedRoutes": [
+        "/api/compliance-engine/evidence",
+        "/api/compliance-engine/evidence",
+        "/api/compliance-engine/evidence/:id",
+        "/api/compliance-engine/evidence/:id",
+        "/api/compliance-engine/evidence/:id",
+        "/api/compliance-engine/gap-score",
+        "/api/compliance-engine/gap-score/:framework",
+        "/api/compliance-engine/assessments",
+        "/api/compliance-engine/assessments",
+        "/api/compliance-engine/assessments/:id",
+        "/api/compliance-engine/export/poam",
         "/api/compliance/frameworks",
         "/api/compliance/frameworks/:id",
         "/api/compliance/crossmap",
@@ -143,11 +157,14 @@
         "/api/auth/verify",
         "/api/auth/change-password",
         "/api/auth/profile",
+        "/api/auth/refresh",
+        "/api/auth/logout",
         "/api/auth/users",
         "/api/auth/users",
         "/api/auth/users/:id",
         "/api/auth/users/:id",
-        "/api/auth/activity"
+        "/api/auth/activity",
+        "/api/auth/activity/export"
       ],
       "status": "stable"
     },
@@ -228,6 +245,181 @@
       "description": "Health check endpoint"
     },
     {
+      "method": "GET",
+      "path": "/api/accessibility/dashboard",
+      "module": "accessibility",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "POST",
+      "path": "/api/accessibility/scan",
+      "module": "accessibility",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/accessibility/trends",
+      "module": "accessibility",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/accessibility/remediation",
+      "module": "accessibility",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "POST",
+      "path": "/api/accessibility/remediation",
+      "module": "accessibility",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/api/accessibility/remediation/:id",
+      "module": "accessibility",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/accessibility/vpat-data",
+      "module": "accessibility",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai/orchestrate",
+      "module": "ai",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai/generate-document",
+      "module": "ai",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai/gap-analysis",
+      "module": "ai",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/agents",
+      "module": "ai",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/audit",
+      "module": "ai",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/audit/stats",
+      "module": "ai",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/reviews",
+      "module": "ai",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/reviews/stats",
+      "module": "ai",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/reviews/:id",
+      "module": "ai",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai/reviews/:id/approve",
+      "module": "ai",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai/reviews/:id/reject",
+      "module": "ai",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/cost",
+      "module": "ai",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/cost/summary",
+      "module": "ai",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/api/ai/cost/budget",
+      "module": "ai",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/evaluation/suite",
+      "module": "ai",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai/evaluation/run",
+      "module": "ai",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/api-docs/openapi.json",
+      "module": "api-docs",
+      "auth": "None",
+      "description": "Serve OpenAPI spec as JSON"
+    },
+    {
+      "method": "GET",
+      "path": "/api/api-docs",
+      "module": "api-docs",
+      "auth": "None",
+      "description": "Serve a simple Swagger UI-like documentation page"
+    },
+    {
       "method": "POST",
       "path": "/api/auth/register",
       "module": "auth",
@@ -263,6 +455,20 @@
       "description": "Get current user profile"
     },
     {
+      "method": "POST",
+      "path": "/api/auth/refresh",
+      "module": "auth",
+      "auth": "None",
+      "description": "P3.2.3 — Refresh access token using a valid refresh token (rotation)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "module": "auth",
+      "auth": "None",
+      "description": "P3.2.3 — Logout: revoke refresh token(s)"
+    },
+    {
       "method": "GET",
       "path": "/api/auth/users",
       "module": "auth",
@@ -295,7 +501,14 @@
       "path": "/api/auth/activity",
       "module": "auth",
       "auth": "Token",
-      "description": "Get activity log (admin only)"
+      "description": "Get activity log (admin only) — supports search, filter, pagination"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/activity/export",
+      "module": "auth",
+      "auth": "Token",
+      "description": "Export activity log as CSV (admin only)"
     },
     {
       "method": "GET",
@@ -487,6 +700,83 @@
       "description": "Delete client"
     },
     {
+      "method": "POST",
+      "path": "/api/compliance-engine/evidence",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance-engine/evidence",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance-engine/evidence/:id",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/api/compliance-engine/evidence/:id",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/compliance-engine/evidence/:id",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance-engine/gap-score",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance-engine/gap-score/:framework",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/compliance-engine/assessments",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance-engine/assessments",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/api/compliance-engine/assessments/:id",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/compliance-engine/export/poam",
+      "module": "compliance-engine",
+      "auth": "Token",
+      "description": ""
+    },
+    {
       "method": "GET",
       "path": "/api/compliance/frameworks",
       "module": "compliance",
@@ -579,6 +869,118 @@
     },
     {
       "method": "GET",
+      "path": "/api/error-monitor",
+      "module": "error-monitor",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/error-monitor/stats",
+      "module": "error-monitor",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/error-monitor/:fingerprint",
+      "module": "error-monitor",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/error-monitor/:fingerprint/resolve",
+      "module": "error-monitor",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/fedramp/ssp",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/fedramp/ssp/controls",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/fedramp/ssp/control/:controlId",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/fedramp/conmon/dashboard",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/fedramp/conmon/poam",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/fedramp/conmon/poam",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/fedramp/conmon/poam/:id",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/fedramp/conmon/scans",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/fedramp/conmon/scans",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/fedramp/conmon/changes",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/fedramp/conmon/changes",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/fedramp/conmon/changes/:id/approve",
+      "module": "fedramp",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "GET",
       "path": "/api/mbai/manifest",
       "module": "mbai",
       "auth": "None",
@@ -646,6 +1048,41 @@
       "module": "messages",
       "auth": "None",
       "description": "Delete a message"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mfa/setup",
+      "module": "mfa",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/mfa/verify",
+      "module": "mfa",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/mfa/validate",
+      "module": "mfa",
+      "auth": "None",
+      "description": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/mfa",
+      "module": "mfa",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/mfa/status",
+      "module": "mfa",
+      "auth": "Token",
+      "description": ""
     },
     {
       "method": "POST",
@@ -751,6 +1188,216 @@
       "module": "projects",
       "auth": "None",
       "description": "Add time entry"
+    },
+    {
+      "method": "GET",
+      "path": "/api/records",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/records",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/:id",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/api/records/:id",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/records/:id",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/records/:id/hold",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/records/:id/hold",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/holds/active",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/disposition/log",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/retention/schedules",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/:id/versions",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/:id/versions/:version",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/:id/diff/:v1/:v2",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/records/:id/versions",
+      "module": "records",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/usace/templates",
+      "module": "usace",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/usace/templates/:type",
+      "module": "usace",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/usace/sf298",
+      "module": "usace",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "POST",
+      "path": "/api/usace/sf298/generate",
+      "module": "usace",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/usace/distribution-statements",
+      "module": "usace",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "POST",
+      "path": "/api/usace/distribution-statements/mark",
+      "module": "usace",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/usace/drchecks/export",
+      "module": "usace",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/usace/mil-std-498",
+      "module": "usace",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/usace/mil-std-498/:type",
+      "module": "usace",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/usace/cdrl",
+      "module": "usace",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/usace/cdrl",
+      "module": "usace",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/usace/cdrl/:id",
+      "module": "usace",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/api/usace/cdrl/:id",
+      "module": "usace",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/usace/cdrl/:id",
+      "module": "usace",
+      "auth": "Token",
+      "description": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/usace/nepa",
+      "module": "usace",
+      "auth": "Token",
+      "description": "────────────────────────────────────────────────────────────"
+    },
+    {
+      "method": "GET",
+      "path": "/api/usace/nepa/:type",
+      "module": "usace",
+      "auth": "Token",
+      "description": ""
     }
   ],
   "pages": [
@@ -760,13 +1407,12 @@
       "title": "Compliance Knowledge Base - Structured For Growth",
       "sections": 4,
       "forms": 0,
-      "modals": 10,
+      "modals": 13,
       "scripts": [
         "/js/compliance.js",
         "https://gc.zgo.at/count.js"
       ],
       "headings": [
-        "Structured",
         "Compliance",
         "Evidence Collection Dashboard",
         "NIST OSCAL Catalogs",
@@ -785,13 +1431,12 @@
       "title": "Admin Dashboard - Structured For Growth",
       "sections": 0,
       "forms": 10,
-      "modals": 91,
+      "modals": 106,
       "scripts": [
         "/js/dashboard.js",
         "https://gc.zgo.at/count.js"
       ],
       "headings": [
-        "Structured",
         "Dashboard Overview",
         "Recent Clients",
         "Active Projects",
@@ -834,7 +1479,6 @@
         "https://gc.zgo.at/count.js"
       ],
       "headings": [
-        "Structured",
         "Project",
         "Project Documentation Files",
         "Supporting Data",
@@ -843,6 +1487,21 @@
         "Dependencies",
         "Stylesheets",
         "Client Pages"
+      ]
+    },
+    {
+      "file": "client/glossary.html",
+      "slug": "/glossary",
+      "title": "Glossary — Structured For Growth",
+      "sections": 2,
+      "forms": 0,
+      "modals": 0,
+      "scripts": [
+        "/js/glossary-page.js",
+        "https://gc.zgo.at/count.js"
+      ],
+      "headings": [
+        "Glossary"
       ]
     },
     {
@@ -858,7 +1517,6 @@
         "https://gc.zgo.at/count.js"
       ],
       "headings": [
-        "Structured",
         "Content Engineering",
         "Featured Projects",
         "Vet-Rate.org",
@@ -902,18 +1560,31 @@
       "title": "MBAi Methodology - Structured For Growth",
       "sections": 4,
       "forms": 0,
-      "modals": 16,
+      "modals": 18,
       "scripts": [
         "/js/mbai.js",
         "https://gc.zgo.at/count.js"
       ],
       "headings": [
-        "Structured",
         "MBAi",
         "MBAi Paradigm",
         "Sustainable Business",
         "Servant Leadership",
-        "Enterprise Function"
+        "Enterprise Function",
+        "Loading…"
+      ]
+    },
+    {
+      "file": "client/offline.html",
+      "slug": "/offline",
+      "title": "Offline — Structured for Growth",
+      "sections": 0,
+      "forms": 0,
+      "modals": 0,
+      "scripts": [],
+      "headings": [
+        "You're Offline",
+        "Available Offline"
       ]
     },
     {
@@ -922,7 +1593,7 @@
       "title": "Client Portal - Structured For Growth",
       "sections": 5,
       "forms": 1,
-      "modals": 3,
+      "modals": 4,
       "scripts": [
         "/js/portal.js",
         "https://gc.zgo.at/count.js"
@@ -938,19 +1609,38 @@
       ]
     },
     {
+      "file": "client/skills.html",
+      "slug": "/skills",
+      "title": "Skills Web — Structured For Growth",
+      "sections": 6,
+      "forms": 0,
+      "modals": 0,
+      "scripts": [
+        "/js/skills.js",
+        "https://gc.zgo.at/count.js"
+      ],
+      "headings": [
+        "Skills Web",
+        "How This Helps You",
+        "Use Cases",
+        "Connected Skills",
+        "Ready to Bring Your Idea to Life?"
+      ]
+    },
+    {
       "file": "client/templates.html",
       "slug": "/templates",
       "title": "Template Library - Structured For Growth",
       "sections": 2,
       "forms": 0,
-      "modals": 9,
+      "modals": 10,
       "scripts": [
         "/js/templates.js",
         "https://gc.zgo.at/count.js"
       ],
       "headings": [
-        "Structured",
         "Template Library",
+        "Loading…",
         "Interactive Preview"
       ]
     }
@@ -1280,6 +1970,22 @@
         "file": "data/compliance/frameworks/nis2.json"
       },
       {
+        "id": "nist-800-171r3",
+        "name": "NIST 800-171 Rev 3",
+        "description": "NIST SP 800-171 Rev 3 specifies security requirements for protecting the confidentiality of Controlled Unclassified Information (CUI) when it resides in nonfederal systems and organizations. Revision 3 aligns the requirements more closely with NIST SP 800-53 Rev 5 and restructures requirements using the 800-53 control family structure. It is the basis for CMMC Level 2 assessments and is mandated by DFARS 252.204-7012 for defense contractors.",
+        "version": "Revision 3 (May 2024)",
+        "controlCount": 115,
+        "file": "data/compliance/frameworks/nist-800-171r3.json"
+      },
+      {
+        "id": "nist-800-53",
+        "name": "NIST 800-53",
+        "description": "NIST SP 800-53 Rev 5 provides a comprehensive catalog of security and privacy controls for federal information systems and organizations. It serves as the foundational control framework for FISMA compliance, FedRAMP authorization, and is widely adopted across government and private sectors. The framework covers 20 control families spanning management, operational, and technical safeguards.",
+        "version": "Revision 5 (September 2020, updated December 2024)",
+        "controlCount": 322,
+        "file": "data/compliance/frameworks/nist-800-53.json"
+      },
+      {
         "id": "nist-ai-rmf",
         "name": "NIST AI RMF",
         "description": "The NIST AI RMF provides a voluntary framework for managing risks associated with AI systems throughout their lifecycle. It promotes trustworthy AI by addressing validity, reliability, safety, security, explainability, privacy, fairness, and accountability. The framework uses four core functions: Govern, Map, Measure, and Manage. It is technology-agnostic and applicable to all AI system types.",
@@ -1363,7 +2069,7 @@
   },
   "pkg": {
     "name": "structured-for-growth-www",
-    "version": "1.4.8",
+    "version": "1.8.2",
     "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
     "nodeEngine": ">=18.0.0",
     "scripts": [
@@ -1421,11 +2127,103 @@
       },
       {
         "name": "predeploy",
-        "command": "npm run docs:generate && npm run audit:bump"
+        "command": "npm run lint && npm run test && npm run docs:generate && npm run audit:bump"
       },
       {
         "name": "prepush",
-        "command": "npm run docs:generate && npm run audit"
+        "command": "npm run lint && npm run test && npm run docs:generate && npm run audit"
+      },
+      {
+        "name": "test",
+        "command": "vitest run"
+      },
+      {
+        "name": "test:watch",
+        "command": "vitest"
+      },
+      {
+        "name": "test:coverage",
+        "command": "vitest run --coverage"
+      },
+      {
+        "name": "test:a11y",
+        "command": "vitest run tests/accessibility/"
+      },
+      {
+        "name": "report:wcag",
+        "command": "node scripts/generate-wcag-report.js"
+      },
+      {
+        "name": "report:sprs",
+        "command": "node scripts/sprs-score.js"
+      },
+      {
+        "name": "audit:headers",
+        "command": "node scripts/audit-headers.js"
+      },
+      {
+        "name": "report:readability",
+        "command": "node scripts/readability.js"
+      },
+      {
+        "name": "test:ui",
+        "command": "vitest --ui"
+      },
+      {
+        "name": "lint",
+        "command": "eslint server/ client/js/ scripts/ tests/"
+      },
+      {
+        "name": "lint:fix",
+        "command": "eslint server/ client/js/ scripts/ tests/ --fix"
+      },
+      {
+        "name": "format",
+        "command": "prettier --write \"server/**/*.js\" \"client/js/**/*.js\" \"tests/**/*.js\""
+      },
+      {
+        "name": "format:check",
+        "command": "prettier --check \"server/**/*.js\" \"client/js/**/*.js\" \"tests/**/*.js\""
+      },
+      {
+        "name": "sbom",
+        "command": "cyclonedx-npm --output-file sbom.json --output-reproducible"
+      },
+      {
+        "name": "license:check",
+        "command": "license-checker --failOn 'GPL-3.0;AGPL-3.0;SSPL-1.0;EUPL-1.1;CPAL-1.0' --summary"
+      },
+      {
+        "name": "ci",
+        "command": "npm run lint && npm run test && npm run build"
+      },
+      {
+        "name": "migrate",
+        "command": "node server/migrations/run.js"
+      },
+      {
+        "name": "migrate:status",
+        "command": "node server/migrations/run.js --status"
+      },
+      {
+        "name": "migrate:create",
+        "command": "node server/migrations/run.js --create"
+      },
+      {
+        "name": "db:seed",
+        "command": "node scripts/seed-admin.js"
+      },
+      {
+        "name": "generate:nist53",
+        "command": "node scripts/generate-nist-800-53.js"
+      },
+      {
+        "name": "generate:nist171",
+        "command": "node scripts/generate-nist-800-171r3.js"
+      },
+      {
+        "name": "prepare",
+        "command": "husky"
       }
     ],
     "dependencies": [
@@ -1434,8 +2232,16 @@
         "version": "^2.4.3"
       },
       {
+        "name": "cookie-parser",
+        "version": "^1.4.7"
+      },
+      {
         "name": "cors",
         "version": "^2.8.5"
+      },
+      {
+        "name": "csurf",
+        "version": "^1.11.0"
       },
       {
         "name": "dotenv",
@@ -1466,22 +2272,102 @@
         "version": "^6.9.7"
       },
       {
+        "name": "qrcode",
+        "version": "^1.5.4"
+      },
+      {
+        "name": "speakeasy",
+        "version": "^2.0.0"
+      },
+      {
         "name": "sql.js",
         "version": "^1.13.0"
       },
       {
+        "name": "swagger-jsdoc",
+        "version": "^6.2.8"
+      },
+      {
+        "name": "swagger-ui-express",
+        "version": "^5.0.1"
+      },
+      {
         "name": "vite",
         "version": "^5.0.8"
+      },
+      {
+        "name": "winston",
+        "version": "^3.19.0"
       }
     ],
     "devDependencies": [
+      {
+        "name": "@cyclonedx/cyclonedx-npm",
+        "version": "^4.1.2"
+      },
+      {
+        "name": "@eslint/js",
+        "version": "^10.0.1"
+      },
+      {
+        "name": "@vitest/coverage-v8",
+        "version": "^4.0.18"
+      },
+      {
+        "name": "axe-core",
+        "version": "^4.11.1"
+      },
       {
         "name": "concurrently",
         "version": "^8.2.2"
       },
       {
+        "name": "eslint",
+        "version": "^10.0.0"
+      },
+      {
+        "name": "eslint-config-prettier",
+        "version": "^10.1.8"
+      },
+      {
+        "name": "eslint-plugin-node",
+        "version": "^11.1.0"
+      },
+      {
+        "name": "globals",
+        "version": "^17.3.0"
+      },
+      {
+        "name": "husky",
+        "version": "^9.1.7"
+      },
+      {
+        "name": "jsdom",
+        "version": "^28.1.0"
+      },
+      {
+        "name": "license-checker",
+        "version": "^25.0.1"
+      },
+      {
+        "name": "lint-staged",
+        "version": "^16.2.7"
+      },
+      {
         "name": "nodemon",
         "version": "^3.0.2"
+      },
+      {
+        "name": "prettier",
+        "version": "^3.8.1"
+      },
+      {
+        "name": "supertest",
+        "version": "^7.2.2"
+      },
+      {
+        "name": "vitest",
+        "version": "^4.0.18"
       }
     ]
   },
@@ -1489,37 +2375,37 @@
     {
       "file": "README.md",
       "headings": [
-        "Content Engineering Portfolio, Template Library & Compliance Knowledge Base\r",
-        "🎯 Features\r",
-        "Public-Facing\r",
-        "Client Portal\r",
-        "Admin Dashboard\r",
-        "Compliance Knowledge Base\r",
-        "MBAi Paradigm\r",
-        "Developer Tools\r",
-        "🚀 Quick Start\r",
-        "📁 Project Structure\r",
-        "🛠️ Technology Stack\r",
-        "Frontend\r",
-        "Backend\r",
-        "Security\r",
-        "Development\r",
-        "🌐 API Endpoints\r",
-        "📚 Template Library\r",
-        "Frontend Templates\r",
-        "Backend Templates\r",
-        "Utility Templates\r",
-        "🚦 Scripts\r",
-        "📖 Documentation\r",
-        "🎨 Theme\r",
-        "💰 Value Proposition\r",
-        "🔐 Security Features\r",
-        "🚀 Deployment\r",
-        "Production build\r",
-        "Start production server\r",
-        "📧 Contact\r"
+        "Content Engineering Portfolio, Template Library & Compliance Knowledge Base",
+        "🎯 Features",
+        "Public-Facing",
+        "Client Portal",
+        "Admin Dashboard",
+        "Compliance Knowledge Base",
+        "MBAi Paradigm",
+        "Developer Tools",
+        "🚀 Quick Start",
+        "📁 Project Structure",
+        "🛠️ Technology Stack",
+        "Frontend",
+        "Backend",
+        "Security",
+        "Development",
+        "🌐 API Endpoints",
+        "📚 Template Library",
+        "Frontend Templates",
+        "Backend Templates",
+        "Utility Templates",
+        "🚦 Scripts",
+        "📖 Documentation",
+        "🎨 Theme",
+        "💰 Value Proposition",
+        "🔐 Security Features",
+        "🚀 Deployment",
+        "Production build",
+        "Start production server",
+        "📧 Contact"
       ],
-      "wordCount": 1641
+      "wordCount": 1647
     },
     {
       "file": "SETUP.md",
@@ -1659,32 +2545,32 @@
     {
       "file": "docs/CLIENT-GUIDE.md",
       "headings": [
-        "Client User Guide\r",
-        "Welcome to Structured For Growth\r",
-        "Table of Contents\r",
-        "Getting Started\r",
-        "What You Can Do Here\r",
-        "Homepage Navigation\r",
-        "Main Sections\r",
-        "Template Library\r",
-        "Features\r",
-        "Using Templates\r",
-        "Template Categories\r",
-        "Cost Savings\r",
-        "Contact Form\r",
-        "How to Contact Us\r",
-        "Form Validation\r",
-        "What Happens Next\r",
-        "Understanding Value Proposition\r",
-        "Why Structured For Growth?\r",
-        "Cost Comparison Calculator\r",
-        "FAQ\r",
-        "General Questions\r",
-        "Technical Questions\r",
-        "Pricing Questions\r",
-        "Project Questions\r",
-        "Need Help?\r",
-        "Quick Start Checklist\r"
+        "Client User Guide",
+        "Welcome to Structured For Growth",
+        "Table of Contents",
+        "Getting Started",
+        "What You Can Do Here",
+        "Homepage Navigation",
+        "Main Sections",
+        "Template Library",
+        "Features",
+        "Using Templates",
+        "Template Categories",
+        "Cost Savings",
+        "Contact Form",
+        "How to Contact Us",
+        "Form Validation",
+        "What Happens Next",
+        "Understanding Value Proposition",
+        "Why Structured For Growth?",
+        "Cost Comparison Calculator",
+        "FAQ",
+        "General Questions",
+        "Technical Questions",
+        "Pricing Questions",
+        "Project Questions",
+        "Need Help?",
+        "Quick Start Checklist"
       ],
       "wordCount": 1367
     }
@@ -1693,7 +2579,7 @@
     {
       "file": "client/styles/compliance.css",
       "customProperties": 144,
-      "selectors": 76
+      "selectors": 82
     },
     {
       "file": "client/styles/components.css",
@@ -1702,18 +2588,23 @@
     },
     {
       "file": "client/styles/dashboard.css",
-      "customProperties": 378,
-      "selectors": 280
+      "customProperties": 393,
+      "selectors": 297
     },
     {
       "file": "client/styles/docs.css",
       "customProperties": 116,
-      "selectors": 101
+      "selectors": 109
+    },
+    {
+      "file": "client/styles/glossary.css",
+      "customProperties": 123,
+      "selectors": 72
     },
     {
       "file": "client/styles/main.css",
-      "customProperties": 362,
-      "selectors": 211
+      "customProperties": 368,
+      "selectors": 231
     },
     {
       "file": "client/styles/mbai.css",
@@ -1721,14 +2612,39 @@
       "selectors": 86
     },
     {
+      "file": "client/styles/mobile-accessibility.css",
+      "customProperties": 8,
+      "selectors": 40
+    },
+    {
+      "file": "client/styles/nav.css",
+      "customProperties": 58,
+      "selectors": 105
+    },
+    {
       "file": "client/styles/portal.css",
       "customProperties": 138,
       "selectors": 99
     },
     {
+      "file": "client/styles/skills.css",
+      "customProperties": 219,
+      "selectors": 114
+    },
+    {
       "file": "client/styles/templates.css",
       "customProperties": 249,
       "selectors": 164
+    },
+    {
+      "file": "client/styles/tokens.css",
+      "customProperties": 182,
+      "selectors": 6
+    },
+    {
+      "file": "client/styles/tooltip.css",
+      "customProperties": 21,
+      "selectors": 27
     }
   ]
 }

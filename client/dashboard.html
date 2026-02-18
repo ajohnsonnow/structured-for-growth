@@ -4,18 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Structured For Growth</title>
+    <meta name="description" content="Manage clients, projects, revenue tracking, messaging, and campaigns from the Structured For Growth admin dashboard.">
+    <link rel="canonical" href="https://structured-for-growth.onrender.com/dashboard">
+    <meta property="og:title" content="Admin Dashboard — Structured For Growth">
+    <meta property="og:description" content="Full-stack admin dashboard for client and project management.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://structured-for-growth.onrender.com/dashboard">
+    <meta name="twitter:card" content="summary">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/tooltip.css">
     <link rel="stylesheet" href="/styles/dashboard.css">
 </head>
 <body>
+    <!-- Skip Navigation Link (P1.3.1) -->
+    <a href="#dashboardView" class="skip-link">Skip to main content</a>
+
+    <!-- Announcer for screen readers (P1.3.3) -->
+    <div id="liveAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
     <!-- Navigation -->
-    <nav class="navbar dashboard-nav">
+    <nav class="navbar dashboard-nav" role="navigation" aria-label="Main navigation">
         <div class="container">
             <div class="nav-brand">
                 <a href="/">
-                    <h1>Structured <span class="highlight">For Growth</span></h1>
+                    <span class="nav-brand-title">Structured <span class="highlight">For Growth</span></span>
                 </a>
             </div>
             <div class="nav-user">
@@ -29,104 +47,104 @@
     <!-- Main Dashboard -->
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" aria-label="Dashboard sidebar">
             <nav class="sidebar-nav">
                 <a href="#" class="sidebar-link active" data-view="dashboard">
-                    <span class="icon">📊</span>
+                    <span class="icon" aria-hidden="true">📊</span>
                     Dashboard
                 </a>
                 <a href="#" class="sidebar-link" data-view="clients">
-                    <span class="icon">👥</span>
+                    <span class="icon" aria-hidden="true">👥</span>
                     Clients
                 </a>
                 <a href="#" class="sidebar-link" data-view="projects">
-                    <span class="icon">📁</span>
+                    <span class="icon" aria-hidden="true">📁</span>
                     Projects
                 </a>
                 <a href="#" class="sidebar-link" data-view="messages">
-                    <span class="icon">💬</span>
+                    <span class="icon" aria-hidden="true">💬</span>
                     Messages
-                    <span class="badge badge-danger unread-badge hidden" id="unreadBadge">0</span>
+                    <span class="badge badge-danger unread-badge hidden" id="unreadBadge" aria-label="unread messages">0</span>
                 </a>
                 <a href="#" class="sidebar-link" data-view="campaigns">
-                    <span class="icon">📧</span>
+                    <span class="icon" aria-hidden="true">📧</span>
                     Campaigns
                 </a>
                 <div class="sidebar-divider admin-only"></div>
                 <a href="#" class="sidebar-link admin-only" data-view="users">
-                    <span class="icon">🔑</span>
+                    <span class="icon" aria-hidden="true">🔑</span>
                     User Management
                 </a>
                 <a href="#" class="sidebar-link admin-only" data-view="activity">
-                    <span class="icon">📜</span>
+                    <span class="icon" aria-hidden="true">📜</span>
                     Activity Log
                 </a>
                 <a href="#" class="sidebar-link admin-only" data-view="system">
-                    <span class="icon">⚙️</span>
+                    <span class="icon" aria-hidden="true">⚙️</span>
                     System & Backups
                 </a>
                 <div class="sidebar-divider"></div>
                 <a href="/" class="sidebar-link">
-                    <span class="icon">🏠</span>
+                    <span class="icon" aria-hidden="true">🏠</span>
                     Back to Website
                 </a>
             </nav>
         </aside>
 
         <!-- Main Content -->
-        <main class="dashboard-main">
+        <main class="dashboard-main" role="main" aria-label="Dashboard content">
             <!-- Dashboard Overview View -->
             <div id="dashboardView" class="dashboard-view active">
                 <div class="dashboard-header">
                     <h2>Dashboard Overview</h2>
                     <span class="last-updated">Last updated: <span id="lastUpdated">-</span></span>
                 </div>
-                
+
                 <div class="stats-grid">
                     <div class="stat-card stat-primary">
-                        <div class="stat-icon">👥</div>
+                        <div class="stat-icon" aria-hidden="true">👥</div>
                         <div class="stat-content">
                             <p class="stat-value" id="statTotalClients">0</p>
                             <p class="stat-label">Total Clients</p>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card stat-success">
-                        <div class="stat-icon">✅</div>
+                        <div class="stat-icon" aria-hidden="true">✅</div>
                         <div class="stat-content">
                             <p class="stat-value" id="statActiveClients">0</p>
                             <p class="stat-label">Active Clients</p>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card stat-info">
-                        <div class="stat-icon">📁</div>
+                        <div class="stat-icon" aria-hidden="true">📁</div>
                         <div class="stat-content">
                             <p class="stat-value" id="statTotalProjects">0</p>
                             <p class="stat-label">Total Projects</p>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card stat-warning">
-                        <div class="stat-icon">�</div>
+                        <div class="stat-icon" aria-hidden="true">💵</div>
                         <div class="stat-content">
                             <p class="stat-value" id="statMonthlyRevenue">$0</p>
                             <p class="stat-label">Monthly Retainers</p>
                             <p class="stat-sub" id="statRetainerCount">0 retainer clients</p>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card stat-accent">
-                        <div class="stat-icon">💰</div>
+                        <div class="stat-icon" aria-hidden="true">💰</div>
                         <div class="stat-content">
                             <p class="stat-value" id="statProjectRevenue">$0</p>
                             <p class="stat-label">Active Project Revenue</p>
                             <p class="stat-sub" id="statOneOffCount">0 billable projects</p>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card stat-total">
-                        <div class="stat-icon">📊</div>
+                        <div class="stat-icon" aria-hidden="true">📊</div>
                         <div class="stat-content">
                             <p class="stat-value" id="statTotalRevenue">$0</p>
                             <p class="stat-label">Total Pipeline</p>
@@ -134,7 +152,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="dashboard-grid">
                     <div class="dashboard-card">
                         <h3>Recent Clients</h3>
@@ -142,7 +160,7 @@
                             <p class="empty-message">No clients yet</p>
                         </div>
                     </div>
-                    
+
                     <div class="dashboard-card">
                         <h3>Active Projects</h3>
                         <div id="activeProjects" class="list-container">
@@ -160,8 +178,10 @@
                 </div>
 
                 <div class="dashboard-filters">
-                    <input type="text" id="searchClients" placeholder="Search clients..." class="search-input">
-                    <select id="statusFilter" class="filter-select" title="Filter clients by status">
+                    <label for="searchClients" class="sr-only">Search clients</label>
+                    <input type="text" id="searchClients" placeholder="Search clients..." class="search-input" aria-label="Search clients">
+                    <label for="statusFilter" class="sr-only">Filter clients by status</label>
+                    <select id="statusFilter" class="filter-select" aria-label="Filter clients by status">
                         <option value="">All Status</option>
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
@@ -174,7 +194,7 @@
                         <div class="spinner"></div>
                         <p>Loading clients...</p>
                     </div>
-                    
+
                     <div class="data-table hidden" id="clientsTable">
                         <table>
                             <thead>
@@ -219,15 +239,18 @@
                 </div>
 
                 <div class="dashboard-filters">
-                    <input type="text" id="searchProjects" placeholder="Search projects..." class="search-input">
-                    <select id="projectStatusFilter" class="filter-select" title="Filter projects by status">
+                    <label for="searchProjects" class="sr-only">Search projects</label>
+                    <input type="text" id="searchProjects" placeholder="Search projects..." class="search-input" aria-label="Search projects">
+                    <label for="projectStatusFilter" class="sr-only">Filter projects by status</label>
+                    <select id="projectStatusFilter" class="filter-select" aria-label="Filter projects by status">
                         <option value="">All Status</option>
                         <option value="planning">Planning</option>
                         <option value="in-progress">In Progress</option>
                         <option value="on-hold">On Hold</option>
                         <option value="completed">Completed</option>
                     </select>
-                    <select id="projectClientFilter" class="filter-select" title="Filter projects by client">
+                    <label for="projectClientFilter" class="sr-only">Filter projects by client</label>
+                    <select id="projectClientFilter" class="filter-select" aria-label="Filter projects by client">
                         <option value="">All Clients</option>
                     </select>
                 </div>
@@ -236,11 +259,11 @@
                     <div class="project-cards" id="projectCards">
                         <!-- Populated by JavaScript -->
                     </div>
-                    
+
                     <div class="gantt-chart-container hidden" id="ganttChart">
                         <!-- Gantt chart will be populated here -->
                     </div>
-                    
+
                     <div class="empty-state hidden" id="projectsEmptyState">
                         <div class="empty-icon">📁</div>
                         <p>No projects found. Create your first project!</p>
@@ -282,10 +305,60 @@
             <div id="activityView" class="dashboard-view admin-only">
                 <div class="dashboard-header">
                     <h2>Activity Log</h2>
+                    <div class="header-actions">
+                        <button id="exportCsvBtn" class="btn btn-small btn-secondary" title="Export as CSV">📥 CSV</button>
+                        <button id="exportJsonBtn" class="btn btn-small btn-secondary" title="Export as JSON">📥 JSON</button>
+                    </div>
                 </div>
+
+                <!-- Search & Filters -->
+                <div class="activity-filters" role="search" aria-label="Filter activity log">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="activitySearch" class="sr-only">Search activities</label>
+                            <input type="search" id="activitySearch" class="form-input" placeholder="Search by user, action, or details…" autocomplete="off">
+                        </div>
+                        <div class="filter-group">
+                            <label for="activityActionFilter" class="sr-only">Filter by action</label>
+                            <select id="activityActionFilter" class="form-input">
+                                <option value="">All Actions</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="activityUserFilter" class="sr-only">Filter by user</label>
+                            <select id="activityUserFilter" class="form-input">
+                                <option value="">All Users</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="activityStartDate">From</label>
+                            <input type="date" id="activityStartDate" class="form-input">
+                        </div>
+                        <div class="filter-group">
+                            <label for="activityEndDate">To</label>
+                            <input type="date" id="activityEndDate" class="form-input">
+                        </div>
+                        <div class="filter-group filter-actions">
+                            <button id="activityApplyFilters" class="btn btn-small btn-primary">Apply</button>
+                            <button id="activityClearFilters" class="btn btn-small btn-secondary">Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results summary -->
+                <div class="activity-summary" id="activitySummary" aria-live="polite"></div>
 
                 <div class="activity-list" id="activityList">
                     <!-- Populated by JavaScript -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="activity-pagination" id="activityPagination">
+                    <button id="activityPrevPage" class="btn btn-small btn-secondary" disabled>← Previous</button>
+                    <span id="activityPageInfo" class="page-info"></span>
+                    <button id="activityNextPage" class="btn btn-small btn-secondary" disabled>Next →</button>
                 </div>
             </div>
 
@@ -336,7 +409,7 @@
                     <div class="system-section">
                         <h3>Demo Data Controls</h3>
                         <p class="section-description">Generate or clear demo data for testing all features.</p>
-                        
+
                         <div class="demo-stats" id="demoStats">
                             <!-- Populated by JavaScript -->
                         </div>
@@ -400,7 +473,7 @@
                             <p class="empty-message">No conversations yet</p>
                         </div>
                     </div>
-                    
+
                     <div class="message-thread" id="messageThread">
                         <div class="thread-header" id="threadHeader">
                             <h3 id="threadClientName">Select a conversation</h3>
@@ -461,46 +534,46 @@
     </div>
 
     <!-- Add/Edit Client Modal -->
-    <div id="clientModal" class="modal">
+    <div id="clientModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="clientModalTitle">
         <div class="modal-content modal-lg">
             <div class="modal-header">
                 <h2 id="clientModalTitle">Add Client</h2>
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
-            
+
             <form id="clientForm">
                 <input type="hidden" id="clientId">
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="clientName">Name *</label>
                         <input type="text" id="clientName" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="clientEmail">Email *</label>
                         <input type="email" id="clientEmail" required>
                     </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="clientPhone">Phone</label>
                         <input type="tel" id="clientPhone">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="clientCompany">Company</label>
                         <input type="text" id="clientCompany">
                     </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="clientWebsite">Website</label>
                         <input type="url" id="clientWebsite" placeholder="https://">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="clientStatus">Status</label>
                         <select id="clientStatus">
@@ -510,29 +583,29 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="clientRetainer">Monthly Retainer ($)</label>
                         <input type="number" id="clientRetainer" min="0" step="100" placeholder="0">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="clientContractStart">Contract Start</label>
                         <input type="date" id="clientContractStart">
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="clientAddress">Address</label>
                     <input type="text" id="clientAddress">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="clientNotes">Notes</label>
                     <textarea id="clientNotes" rows="3"></textarea>
                 </div>
-                
+
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Client</button>
@@ -542,22 +615,22 @@
     </div>
 
     <!-- Add/Edit Project Modal -->
-    <div id="projectModal" class="modal">
+    <div id="projectModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
         <div class="modal-content modal-lg">
             <div class="modal-header">
                 <h2 id="projectModalTitle">New Project</h2>
                 <button class="modal-close" onclick="closeProjectModal()">&times;</button>
             </div>
-            
+
             <form id="projectForm">
                 <input type="hidden" id="projectId">
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="projectTitle">Project Title *</label>
                         <input type="text" id="projectTitle" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="projectClient">Client *</label>
                         <select id="projectClient" required>
@@ -565,12 +638,12 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="projectDescription">Description</label>
                     <textarea id="projectDescription" rows="3"></textarea>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="projectStatus">Status</label>
@@ -582,7 +655,7 @@
                             <option value="cancelled">Cancelled</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="projectPriority">Priority</label>
                         <select id="projectPriority">
@@ -593,31 +666,31 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="projectBudget">Budget ($)</label>
                         <input type="number" id="projectBudget" min="0" step="100" placeholder="0">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="projectHours">Estimated Hours</label>
                         <input type="number" id="projectHours" min="0" placeholder="0">
                     </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="projectStart">Start Date</label>
                         <input type="date" id="projectStart">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="projectEnd">End Date</label>
                         <input type="date" id="projectEnd">
                     </div>
                 </div>
-                
+
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Project</button>
@@ -627,32 +700,32 @@
     </div>
 
     <!-- Login Modal -->
-    <div id="loginModal" class="modal">
+    <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-label="Admin Login">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>🔐 Admin Login</h2>
             </div>
-            
+
             <form id="loginForm">
                 <div class="form-group">
                     <label for="loginUsername">Username or Email</label>
                     <input type="text" id="loginUsername" required autocomplete="username">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="loginPassword">Password</label>
                     <input type="password" id="loginPassword" required autocomplete="current-password">
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
-                
+
                 <div class="form-message form-message-hidden"></div>
             </form>
-            
+
             <p class="login-footer">
                 Don't have an account? <a href="#" id="showRegisterLink">Register here</a>
             </p>
-            
+
             <p class="back-link-wrapper">
                 <a href="/" class="back-link">← Back to website</a>
             </p>
@@ -660,55 +733,55 @@
     </div>
 
     <!-- Register Modal -->
-    <div id="registerModal" class="modal">
+    <div id="registerModal" class="modal" role="dialog" aria-modal="true" aria-label="Create Account">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Create Account</h2>
                 <button class="modal-close" onclick="closeRegisterModal()">&times;</button>
             </div>
-            
+
             <form id="registerForm">
                 <div class="form-group">
                     <label for="registerUsername">Username</label>
                     <input type="text" id="registerUsername" required minlength="3">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="registerEmail">Email</label>
                     <input type="email" id="registerEmail" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="registerPassword">Password (min 8 characters)</label>
                     <input type="password" id="registerPassword" required minlength="8">
                 </div>
-                
+
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeRegisterModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Register</button>
                 </div>
-                
+
                 <div class="form-message form-message-hidden"></div>
             </form>
         </div>
     </div>
 
     <!-- Campaign Modal -->
-    <div id="campaignModal" class="modal">
+    <div id="campaignModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="campaignModalTitle">
         <div class="modal-content modal-large">
             <div class="modal-header">
                 <h2 id="campaignModalTitle">Create Campaign</h2>
                 <button class="modal-close" onclick="closeCampaignModal()">&times;</button>
             </div>
-            
+
             <form id="campaignForm">
                 <input type="hidden" id="campaignId">
-                
+
                 <div class="form-group">
                     <label for="campaignName">Campaign Name</label>
                     <input type="text" id="campaignName" required placeholder="e.g., Summer Promotion">
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="campaignSegment">Target Segment</label>
@@ -716,7 +789,7 @@
                             <option value="">All Clients</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="campaignTemplate">Use Template</label>
                         <select id="campaignTemplate" onchange="loadTemplate(this.value)">
@@ -724,18 +797,18 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="campaignSubject">Email Subject</label>
                     <input type="text" id="campaignSubject" required placeholder="e.g., Exciting News from Structured for Growth!">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="campaignContent">Email Content</label>
                     <textarea id="campaignContent" rows="10" required placeholder="Hi {{firstName}},&#10;&#10;Write your message here...&#10;&#10;Best regards,&#10;The Team"></textarea>
                     <small class="form-hint">Variables: {{clientName}}, {{firstName}}, {{lastName}}, {{company}}, {{email}}</small>
                 </div>
-                
+
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeCampaignModal()">Cancel</button>
                     <button type="button" class="btn btn-outline" onclick="saveCampaignAsDraft()">Save as Draft</button>
@@ -746,32 +819,32 @@
     </div>
 
     <!-- Segment Modal -->
-    <div id="segmentModal" class="modal">
+    <div id="segmentModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="segmentModalTitle">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="segmentModalTitle">Create Segment</h2>
                 <button class="modal-close" onclick="closeSegmentModal()">&times;</button>
             </div>
-            
+
             <form id="segmentForm">
                 <input type="hidden" id="segmentId">
-                
+
                 <div class="form-group">
                     <label for="segmentName">Segment Name</label>
                     <input type="text" id="segmentName" required placeholder="e.g., VIP Clients">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="segmentDescription">Description</label>
                     <textarea id="segmentDescription" rows="3" placeholder="Describe what this segment represents..."></textarea>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="segmentFilter">Filter Rules (JSON)</label>
                     <textarea id="segmentFilter" rows="4" placeholder='{"tier": "vip"}'></textarea>
                     <small class="form-hint">Use JSON to define filter criteria</small>
                 </div>
-                
+
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeSegmentModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Segment</button>
@@ -781,22 +854,22 @@
     </div>
 
     <!-- Template Modal -->
-    <div id="templateModal" class="modal">
+    <div id="templateModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="templateModalTitle">
         <div class="modal-content modal-large">
             <div class="modal-header">
                 <h2 id="templateModalTitle">Create Template</h2>
                 <button class="modal-close" onclick="closeTemplateModal()">&times;</button>
             </div>
-            
+
             <form id="templateForm">
                 <input type="hidden" id="templateId">
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="templateName">Template Name</label>
                         <input type="text" id="templateName" required placeholder="e.g., Welcome Email">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="templateCategory">Category</label>
                         <select id="templateCategory">
@@ -808,18 +881,18 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="templateSubject">Subject Line</label>
                     <input type="text" id="templateSubject" required placeholder="e.g., Welcome to Structured for Growth, {{firstName}}!">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="templateContent">Template Content</label>
                     <textarea id="templateContent" rows="12" required placeholder="Hi {{firstName}},&#10;&#10;Write your template here...&#10;&#10;Best regards,&#10;The Team"></textarea>
                     <small class="form-hint">Variables: {{clientName}}, {{firstName}}, {{lastName}}, {{company}}, {{email}}</small>
                 </div>
-                
+
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeTemplateModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Template</button>
@@ -829,13 +902,13 @@
     </div>
 
     <!-- Message Modal (for composing new message) -->
-    <div id="messageModal" class="modal">
+    <div id="messageModal" class="modal" role="dialog" aria-modal="true" aria-label="New Message">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>New Message</h2>
                 <button class="modal-close" onclick="closeMessageModal()">&times;</button>
             </div>
-            
+
             <form id="messageForm">
                 <div class="form-group">
                     <label for="messageClient">Select Client</label>
@@ -843,17 +916,17 @@
                         <option value="">Choose a client...</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="messageSubject">Subject</label>
                     <input type="text" id="messageSubject" required placeholder="Message subject">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="messageContent">Message</label>
                     <textarea id="messageContent" rows="6" required placeholder="Write your message..."></textarea>
                 </div>
-                
+
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeMessageModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Send Message</button>
@@ -863,32 +936,32 @@
     </div>
 
     <!-- User Modal (Admin Only) -->
-    <div id="userModal" class="modal">
+    <div id="userModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="userModalTitle">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="userModalTitle">Add User</h2>
                 <button class="modal-close" onclick="closeUserModal()">&times;</button>
             </div>
-            
+
             <form id="userForm">
                 <input type="hidden" id="userId">
-                
+
                 <div class="form-group">
                     <label for="userUsername">Username *</label>
                     <input type="text" id="userUsername" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="userEmail">Email *</label>
                     <input type="email" id="userEmail" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="userPassword">Password *</label>
                     <input type="password" id="userPassword" minlength="8">
                     <small class="form-help">Minimum 8 characters (leave blank when editing to keep current password)</small>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="userRole">Role</label>
                     <select id="userRole">
@@ -896,21 +969,21 @@
                         <option value="admin">Admin</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="userClient">Linked Client (optional)</label>
                     <select id="userClient">
                         <option value="">No client link</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label>
                         <input type="checkbox" id="userActive" checked>
                         Active
                     </label>
                 </div>
-                
+
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save User</button>
@@ -922,5 +995,22 @@
     <script type="module" src="/js/dashboard.js"></script>
     <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
             async src="https://gc.zgo.at/count.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const worker = reg.installing;
+            worker.addEventListener('statechange', () => {
+              if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('A new version is available. Reload now?')) {
+                  worker.postMessage({ type: 'SKIP_WAITING' });
+                  location.reload();
+                }
+              }
+            });
+          });
+        });
+      }
+    </script>
 </body>
 </html>

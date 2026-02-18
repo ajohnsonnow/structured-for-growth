@@ -1,0 +1,213 @@
+{
+  "formTitle": "Standard Form 298 — Report Documentation Page",
+  "authority": "ANSI Z39.18",
+  "description": "Required first page for all DoD technical reports. Provides standardized bibliographic information.",
+  "fields": [
+    {
+      "block": 1,
+      "label": "Report Date",
+      "name": "reportDate",
+      "type": "date",
+      "required": true,
+      "guidance": "Full publication date (DD-MM-YYYY)"
+    },
+    {
+      "block": 2,
+      "label": "Report Type",
+      "name": "reportType",
+      "type": "select",
+      "options": ["Final", "Interim", "Annual", "Technical Report", "Technical Note", "Special Report", "Contractor Report"],
+      "required": true
+    },
+    {
+      "block": 3,
+      "label": "Dates Covered",
+      "name": "datesCovered",
+      "type": "text",
+      "required": false,
+      "guidance": "From — To (e.g., Oct 2024 – Sep 2025)"
+    },
+    {
+      "block": 4,
+      "label": "Title and Subtitle",
+      "name": "title",
+      "type": "text",
+      "required": true,
+      "maxLength": 300
+    },
+    {
+      "block": 5,
+      "subBlocks": [
+        {
+          "label": "Contract Number",
+          "name": "contractNumber",
+          "type": "text",
+          "required": false
+        },
+        {
+          "label": "Grant Number",
+          "name": "grantNumber",
+          "type": "text",
+          "required": false
+        },
+        {
+          "label": "Program Element Number",
+          "name": "programElement",
+          "type": "text",
+          "required": false
+        },
+        {
+          "label": "Project Number",
+          "name": "projectNumber",
+          "type": "text",
+          "required": false
+        },
+        {
+          "label": "Task Number",
+          "name": "taskNumber",
+          "type": "text",
+          "required": false
+        },
+        {
+          "label": "Work Unit Number",
+          "name": "workUnitNumber",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "block": 6,
+      "label": "Author(s)",
+      "name": "authors",
+      "type": "textarea",
+      "required": true,
+      "guidance": "Last name, First name, MI. Separate multiple authors with semicolons."
+    },
+    {
+      "block": 7,
+      "label": "Performing Organization Name(s) and Address(es)",
+      "name": "performingOrg",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "block": 8,
+      "label": "Performing Organization Report Number",
+      "name": "performingOrgReportNumber",
+      "type": "text",
+      "required": true,
+      "guidance": "e.g., ERDC/CHL TR-26-1"
+    },
+    {
+      "block": 9,
+      "label": "Sponsoring/Monitoring Agency Name(s) and Address(es)",
+      "name": "sponsoringAgency",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "block": 10,
+      "label": "Sponsor/Monitor's Acronym(s)",
+      "name": "sponsorAcronym",
+      "type": "text",
+      "required": false
+    },
+    {
+      "block": 11,
+      "label": "Sponsor/Monitor's Report Number(s)",
+      "name": "sponsorReportNumber",
+      "type": "text",
+      "required": false
+    },
+    {
+      "block": 12,
+      "label": "Distribution/Availability Statement",
+      "name": "distributionStatement",
+      "type": "select",
+      "options": [
+        "A — Approved for public release; distribution is unlimited.",
+        "B — Distribution authorized to U.S. Government agencies only.",
+        "C — Distribution authorized to U.S. Government agencies and their contractors.",
+        "D — Distribution authorized to the Department of Defense and U.S. DoD contractors only.",
+        "E — Distribution authorized to DoD Components only.",
+        "F — Further dissemination only as directed by the controlling DoD office.",
+        "X — Distribution authorized to U.S. Government agencies and private individuals or enterprises eligible to obtain export-controlled technical data."
+      ],
+      "required": true
+    },
+    {
+      "block": 13,
+      "label": "Supplementary Notes",
+      "name": "supplementaryNotes",
+      "type": "textarea",
+      "required": false
+    },
+    {
+      "block": 14,
+      "label": "Abstract",
+      "name": "abstract",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 1500,
+      "guidance": "Maximum 200 words. Summarize purpose, methodology, results, and significance."
+    },
+    {
+      "block": 15,
+      "label": "Subject Terms",
+      "name": "subjectTerms",
+      "type": "text",
+      "required": true,
+      "guidance": "Key words or phrases, separated by commas. Include DTIC-standard terms."
+    },
+    {
+      "block": 16,
+      "label": "Security Classification",
+      "subBlocks": [
+        {
+          "label": "Security Classification of Report",
+          "name": "classificationReport",
+          "type": "select",
+          "options": ["Unclassified", "CUI", "Confidential", "Secret", "Top Secret"],
+          "required": true
+        },
+        {
+          "label": "Security Classification of Abstract",
+          "name": "classificationAbstract",
+          "type": "select",
+          "options": ["Unclassified", "CUI", "Confidential", "Secret", "Top Secret"],
+          "required": true
+        },
+        {
+          "label": "Security Classification of This Page",
+          "name": "classificationPage",
+          "type": "select",
+          "options": ["Unclassified", "CUI", "Confidential", "Secret", "Top Secret"],
+          "required": true
+        }
+      ]
+    },
+    {
+      "block": 17,
+      "label": "Limitation of Abstract",
+      "name": "limitationAbstract",
+      "type": "select",
+      "options": ["UU — Unclassified Unlimited", "SAR — Same As Report"],
+      "required": true
+    },
+    {
+      "block": 18,
+      "label": "Number of Pages",
+      "name": "numberOfPages",
+      "type": "number",
+      "required": true
+    },
+    {
+      "block": 19,
+      "label": "Responsible Person (Name, Phone)",
+      "name": "responsiblePerson",
+      "type": "text",
+      "required": true
+    }
+  ]
+}

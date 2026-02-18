@@ -1,8 +1,12 @@
-﻿# Structured For Growth
+﻿# Structured for Growth
 
 ## Content Engineering Portfolio, Template Library & Compliance Knowledge Base
 
-A comprehensive full-stack website showcasing Content Engineering projects with an integrated client management system, extensive template library, compliance knowledge base covering 10 regulatory frameworks, and a client portal with project tracking and payments. Features a dark forest green theme and dynamic value proposition calculator.
+A comprehensive full-stack website showcasing Content Engineering projects
+with an integrated client management system, extensive template library,
+compliance knowledge base covering 10 regulatory frameworks, and a client
+portal with project tracking and payments. Features a dark forest green
+theme and dynamic value proposition calculator.
 
 ## 🎯 Features
 
@@ -10,7 +14,10 @@ A comprehensive full-stack website showcasing Content Engineering projects with 
 
 - **Portfolio Showcase**: Highlights of 5 major projects demonstrating full-stack expertise
 - **Template Library**: 33 production-ready code templates with search and filtering
-- **Compliance Knowledge Base**: 10 regulatory frameworks (SOC 2, HIPAA, GDPR, PCI-DSS, CMMC, DORA, NIS2, ISO 27001, ISO 42001, NIST AI RMF) with cross-framework mapping, OSCAL catalogs, and evidence tracking
+- **Compliance Knowledge Base**: 12 regulatory frameworks
+  (SOC 2, HIPAA, GDPR, PCI-DSS, CMMC, DORA, NIS2, ISO 27001, ISO 42001,
+  NIST AI RMF, NIST 800-53, NIST 800-171r3) with cross-framework mapping,
+  OSCAL catalogs, and evidence tracking
 - **Value Proposition Calculator**: Interactive cost comparison showing savings vs traditional development teams
 - **Contact Form**: Professional contact form with server-side email integration
 - **Dark Forest Green Theme**: Modern, elegant dark mode design throughout
@@ -35,7 +42,7 @@ A comprehensive full-stack website showcasing Content Engineering projects with 
 
 ### Compliance Knowledge Base
 
-- **10 Regulatory Frameworks**: Complete control catalogs with searchable metadata
+- **12 Regulatory Frameworks**: Complete control catalogs (651+ controls) with searchable metadata
 - **Cross-Framework Mapping**: Matrix showing control overlap between frameworks
 - **OSCAL Catalogs**: NIST-standard machine-readable catalogs for GRC tool integration
 - **Evidence Tracking**: Per-control evidence requirements and collection status
@@ -197,7 +204,7 @@ structured-for-growth/
 | `/api/clients`               | Client CRUD operations                   |
 | `/api/projects`              | Project management                       |
 | `/api/contact`               | Contact form submissions                 |
-| `/api/compliance/frameworks` | Compliance framework data (10 frameworks)|
+| `/api/compliance/frameworks` | Compliance framework data (12 frameworks)|
 | `/api/compliance/crossmap`   | Cross-framework control mapping          |
 | `/api/compliance/oscal`      | NIST OSCAL catalog listing               |
 | `/api/compliance/evidence`   | Evidence requirements matrix             |
@@ -312,6 +319,6 @@ For inquiries, use the contact form on the website or reach out directly at <con
 
 ---
 
-**Version**: 1.4.8  
-**Last Updated**: February 2026  
-*Built with ❤️ by Structured For Growth*
+**Version**: 1.8.1
+**Last Updated**: February 2026
+_Built with ❤️ by Structured for Growth_

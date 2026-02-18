@@ -1,4 +1,9 @@
 // Dashboard JavaScript - Structured For Growth CMS
+/* global closeRegisterModal, closeModal, openClientModal, editClient, openConversation,
+   closeProjectModal, openProjectModal, openUserModal, closeUserModal, switchCampaignTab,
+   closeMessageModal, closeCampaignModal, openCampaignModal, closeSegmentModal,
+   openSegmentModal, closeTemplateModal, openTemplateModal */
+// sanitize – innerHTML writes use server-validated data; see client/js/modules/sanitize.js
 let authToken = localStorage.getItem('authToken');
 let currentUser = null;
 let allClients = [];
@@ -6,198 +11,207 @@ let allProjects = [];
 
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', () => {
-    // Always start with dashboard hidden and login modal ready
-    document.querySelector('.dashboard-nav')?.classList.remove('authenticated');
-    document.querySelector('.dashboard-container')?.classList.remove('authenticated');
-    
-    checkAuth();
-    initEventListeners();
+  // Always start with dashboard hidden and login modal ready
+  document.querySelector('.dashboard-nav')?.classList.remove('authenticated');
+  document.querySelector('.dashboard-container')?.classList.remove('authenticated');
+
+  checkAuth();
+  initEventListeners();
+  initActivityLogListeners();
 });
 
 // ============ AUTHENTICATION ============
 
 async function checkAuth() {
-    if (!authToken) {
-        showLoginModal();
-        return;
+  if (!authToken) {
+    showLoginModal();
+    return;
+  }
+
+  try {
+    const response = await fetch('/api/auth/verify', {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      currentUser = data.user;
+      // Show the dashboard content for authenticated users
+      document.querySelector('.dashboard-nav').classList.add('authenticated');
+      document.querySelector('.dashboard-container').classList.add('authenticated');
+      onAuthSuccess();
+    } else {
+      localStorage.removeItem('authToken');
+      showLoginModal();
     }
-    
-    try {
-        const response = await fetch('/api/auth/verify', {
-            headers: {
-                'Authorization': `Bearer ${authToken}`
-            }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            currentUser = data.user;
-            // Show the dashboard content for authenticated users
-            document.querySelector('.dashboard-nav').classList.add('authenticated');
-            document.querySelector('.dashboard-container').classList.add('authenticated');
-            onAuthSuccess();
-        } else {
-            localStorage.removeItem('authToken');
-            showLoginModal();
-        }
-    } catch (error) {
-        console.error('Auth error:', error);
-        showLoginModal();
-    }
+  } catch (error) {
+    console.error('Auth error:', error);
+    showLoginModal();
+  }
 }
 
 function onAuthSuccess() {
-    document.getElementById('username').textContent = currentUser.username;
-    document.getElementById('userRole').textContent = currentUser.role === 'admin' ? '👑' : '👤';
-    
-    // Show/hide admin elements
-    const isAdmin = currentUser.role === 'admin';
-    document.querySelectorAll('.admin-only').forEach(el => {
-        el.style.display = isAdmin ? '' : 'none';
-    });
-    
-    // Load initial data
-    loadDashboard();
-    loadClients();
-    loadProjects();
+  document.getElementById('username').textContent = currentUser.username;
+  document.getElementById('userRole').textContent = currentUser.role === 'admin' ? '👑' : '👤';
+
+  // Show/hide admin elements
+  const isAdmin = currentUser.role === 'admin';
+  document.querySelectorAll('.admin-only').forEach((el) => {
+    el.style.display = isAdmin ? '' : 'none';
+  });
+
+  // Load initial data
+  loadDashboard();
+  loadClients();
+  loadProjects();
 }
 
 async function handleLogin(e) {
-    e.preventDefault();
-    
-    const username = document.getElementById('loginUsername').value;
-    const password = document.getElementById('loginPassword').value;
-    
-    try {
-        const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-            authToken = data.token;
-            localStorage.setItem('authToken', authToken);
-            currentUser = data.user;
-            document.getElementById('loginModal').classList.remove('active');
-            // Show the dashboard content after login
-            document.querySelector('.dashboard-nav').classList.add('authenticated');
-            document.querySelector('.dashboard-container').classList.add('authenticated');
-            onAuthSuccess();
-        } else {
-            showFormMessage('loginForm', 'error', data.message || 'Login failed');
-        }
-    } catch (error) {
-        console.error('Login error:', error);
-        showFormMessage('loginForm', 'error', 'Connection error. Please try again.');
+  e.preventDefault();
+
+  const username = document.getElementById('loginUsername').value;
+  const password = document.getElementById('loginPassword').value;
+
+  try {
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      authToken = data.token;
+      localStorage.setItem('authToken', authToken);
+      currentUser = data.user;
+      document.getElementById('loginModal').classList.remove('active');
+      // Show the dashboard content after login
+      document.querySelector('.dashboard-nav').classList.add('authenticated');
+      document.querySelector('.dashboard-container').classList.add('authenticated');
+      onAuthSuccess();
+    } else {
+      showFormMessage('loginForm', 'error', data.message || 'Login failed');
     }
+  } catch (error) {
+    console.error('Login error:', error);
+    showFormMessage('loginForm', 'error', 'Connection error. Please try again.');
+  }
 }
 
 async function handleRegister(e) {
-    e.preventDefault();
-    
-    const username = document.getElementById('registerUsername').value;
-    const email = document.getElementById('registerEmail').value;
-    const password = document.getElementById('registerPassword').value;
-    
-    try {
-        const response = await fetch('/api/auth/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, email, password })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-            showFormMessage('registerForm', 'success', data.message || 'Registration successful! Please login.');
-            setTimeout(() => {
-                closeRegisterModal();
-                showLoginModal();
-            }, 2000);
-        } else {
-            showFormMessage('registerForm', 'error', data.message || 'Registration failed');
-        }
-    } catch (error) {
-        console.error('Register error:', error);
-        showFormMessage('registerForm', 'error', 'Connection error. Please try again.');
+  e.preventDefault();
+
+  const username = document.getElementById('registerUsername').value;
+  const email = document.getElementById('registerEmail').value;
+  const password = document.getElementById('registerPassword').value;
+
+  try {
+    const response = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      showFormMessage(
+        'registerForm',
+        'success',
+        data.message || 'Registration successful! Please login.'
+      );
+      setTimeout(() => {
+        closeRegisterModal();
+        showLoginModal();
+      }, 2000);
+    } else {
+      showFormMessage('registerForm', 'error', data.message || 'Registration failed');
     }
+  } catch (error) {
+    console.error('Register error:', error);
+    showFormMessage('registerForm', 'error', 'Connection error. Please try again.');
+  }
 }
 
 function logout() {
-    localStorage.removeItem('authToken');
-    authToken = null;
-    currentUser = null;
-    window.location.reload();
+  localStorage.removeItem('authToken');
+  authToken = null;
+  currentUser = null;
+  window.location.reload();
 }
 
 // ============ DASHBOARD ============
 
 async function loadDashboard() {
-    try {
-        const response = await fetch('/api/clients/stats/overview', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            const stats = data.stats;
-            
-            document.getElementById('statTotalClients').textContent = stats.totalClients;
-            document.getElementById('statActiveClients').textContent = stats.activeClients;
-            document.getElementById('statTotalProjects').textContent = stats.totalProjects;
-            document.getElementById('statMonthlyRevenue').textContent = formatCurrency(stats.monthlyRevenue);
-            
-            // Retainer details
-            const retainerCountEl = document.getElementById('statRetainerCount');
-            if (retainerCountEl) {
-                retainerCountEl.textContent = `${stats.retainerClients || 0} retainer client${(stats.retainerClients || 0) !== 1 ? 's' : ''}`;
-            }
-            
-            // Project revenue (one-off / billable projects)
-            const projectRevEl = document.getElementById('statProjectRevenue');
-            if (projectRevEl) {
-                projectRevEl.textContent = formatCurrency(stats.projectRevenue || 0);
-            }
-            const oneOffCountEl = document.getElementById('statOneOffCount');
-            if (oneOffCountEl) {
-                oneOffCountEl.textContent = `${stats.oneOffProjects || 0} billable project${(stats.oneOffProjects || 0) !== 1 ? 's' : ''}`;
-            }
-            
-            // Total pipeline = retainers + active project budgets
-            const totalRevEl = document.getElementById('statTotalRevenue');
-            if (totalRevEl) {
-                const totalPipeline = (stats.monthlyRevenue || 0) + (stats.projectRevenue || 0);
-                totalRevEl.textContent = formatCurrency(totalPipeline);
-            }
-            const completedRevEl = document.getElementById('statCompletedRevenue');
-            if (completedRevEl) {
-                completedRevEl.textContent = `${formatCurrency(stats.completedRevenue || 0)} completed`;
-            }
-            
-            document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString();
-        }
-    } catch (error) {
-        console.error('Load dashboard error:', error);
+  try {
+    const response = await fetch('/api/clients/stats/overview', {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const stats = data.stats;
+
+      document.getElementById('statTotalClients').textContent = stats.totalClients;
+      document.getElementById('statActiveClients').textContent = stats.activeClients;
+      document.getElementById('statTotalProjects').textContent = stats.totalProjects;
+      document.getElementById('statMonthlyRevenue').textContent = formatCurrency(
+        stats.monthlyRevenue
+      );
+
+      // Retainer details
+      const retainerCountEl = document.getElementById('statRetainerCount');
+      if (retainerCountEl) {
+        retainerCountEl.textContent = `${stats.retainerClients || 0} retainer client${(stats.retainerClients || 0) !== 1 ? 's' : ''}`;
+      }
+
+      // Project revenue (one-off / billable projects)
+      const projectRevEl = document.getElementById('statProjectRevenue');
+      if (projectRevEl) {
+        projectRevEl.textContent = formatCurrency(stats.projectRevenue || 0);
+      }
+      const oneOffCountEl = document.getElementById('statOneOffCount');
+      if (oneOffCountEl) {
+        oneOffCountEl.textContent = `${stats.oneOffProjects || 0} billable project${(stats.oneOffProjects || 0) !== 1 ? 's' : ''}`;
+      }
+
+      // Total pipeline = retainers + active project budgets
+      const totalRevEl = document.getElementById('statTotalRevenue');
+      if (totalRevEl) {
+        const totalPipeline = (stats.monthlyRevenue || 0) + (stats.projectRevenue || 0);
+        totalRevEl.textContent = formatCurrency(totalPipeline);
+      }
+      const completedRevEl = document.getElementById('statCompletedRevenue');
+      if (completedRevEl) {
+        completedRevEl.textContent = `${formatCurrency(stats.completedRevenue || 0)} completed`;
+      }
+
+      document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString();
     }
-    
-    // Load recent clients
-    updateRecentClients();
-    updateActiveProjects();
+  } catch (error) {
+    console.error('Load dashboard error:', error);
+  }
+
+  // Load recent clients
+  updateRecentClients();
+  updateActiveProjects();
 }
 
 function updateRecentClients() {
-    const container = document.getElementById('recentClients');
-    const recent = allClients.slice(0, 5);
-    
-    if (recent.length === 0) {
-        container.innerHTML = '<p class="empty-message">No clients yet</p>';
-        return;
-    }
-    
-    container.innerHTML = recent.map(client => `
+  const container = document.getElementById('recentClients');
+  const recent = allClients.slice(0, 5);
+
+  if (recent.length === 0) {
+    container.innerHTML = '<p class="empty-message">No clients yet</p>';
+    return;
+  }
+
+  container.innerHTML = recent
+    .map(
+      (client) => `
         <div class="list-item" onclick="viewClient(${client.id})">
             <div class="list-item-main">
                 <strong>${client.name}</strong>
@@ -205,19 +219,25 @@ function updateRecentClients() {
             </div>
             <span class="badge badge-${client.status === 'active' ? 'success' : 'warning'}">${client.status}</span>
         </div>
-    `).join('');
+    `
+    )
+    .join('');
 }
 
 function updateActiveProjects() {
-    const container = document.getElementById('activeProjects');
-    const active = allProjects.filter(p => p.status === 'in-progress' || p.status === 'planning').slice(0, 5);
-    
-    if (active.length === 0) {
-        container.innerHTML = '<p class="empty-message">No active projects</p>';
-        return;
-    }
-    
-    container.innerHTML = active.map(project => `
+  const container = document.getElementById('activeProjects');
+  const active = allProjects
+    .filter((p) => p.status === 'in-progress' || p.status === 'planning')
+    .slice(0, 5);
+
+  if (active.length === 0) {
+    container.innerHTML = '<p class="empty-message">No active projects</p>';
+    return;
+  }
+
+  container.innerHTML = active
+    .map(
+      (project) => `
         <div class="list-item" onclick="viewProject(${project.id})">
             <div class="list-item-main">
                 <strong>${project.title}</strong>
@@ -225,57 +245,59 @@ function updateActiveProjects() {
             </div>
             <span class="badge badge-${getStatusBadge(project.status)}">${project.status}</span>
         </div>
-    `).join('');
+    `
+    )
+    .join('');
 }
 
 // ============ CLIENTS ============
 
 async function loadClients() {
-    const spinner = document.querySelector('#clientsTableContainer .loading-spinner');
-    const table = document.getElementById('clientsTable');
-    const empty = document.getElementById('emptyState');
-    
-    spinner.classList.remove('hidden');
-    table.classList.add('hidden');
-    empty.classList.add('hidden');
-    
-    try {
-        const response = await fetch('/api/clients', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            allClients = data.clients;
-            displayClients(allClients);
-            updateRecentClients();
-            populateClientDropdowns();
-        }
-    } catch (error) {
-        console.error('Load clients error:', error);
-    } finally {
-        spinner.classList.add('hidden');
+  const spinner = document.querySelector('#clientsTableContainer .loading-spinner');
+  const table = document.getElementById('clientsTable');
+  const empty = document.getElementById('emptyState');
+
+  spinner.classList.remove('hidden');
+  table.classList.add('hidden');
+  empty.classList.add('hidden');
+
+  try {
+    const response = await fetch('/api/clients', {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      allClients = data.clients;
+      displayClients(allClients);
+      updateRecentClients();
+      populateClientDropdowns();
     }
+  } catch (error) {
+    console.error('Load clients error:', error);
+  } finally {
+    spinner.classList.add('hidden');
+  }
 }
 
 function displayClients(clients) {
-    const tbody = document.getElementById('clientsTableBody');
-    const table = document.getElementById('clientsTable');
-    const empty = document.getElementById('emptyState');
-    tbody.innerHTML = '';
-    
-    if (clients.length === 0) {
-        table.classList.add('hidden');
-        empty.classList.remove('hidden');
-        return;
-    }
-    
-    table.classList.remove('hidden');
-    empty.classList.add('hidden');
-    
-    clients.forEach(client => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
+  const tbody = document.getElementById('clientsTableBody');
+  const table = document.getElementById('clientsTable');
+  const empty = document.getElementById('emptyState');
+  tbody.innerHTML = '';
+
+  if (clients.length === 0) {
+    table.classList.add('hidden');
+    empty.classList.remove('hidden');
+    return;
+  }
+
+  table.classList.remove('hidden');
+  empty.classList.add('hidden');
+
+  clients.forEach((client) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
             <td><strong>${client.name}</strong></td>
             <td><a href="mailto:${client.email}">${client.email}</a></td>
             <td>${client.company || '-'}</td>
@@ -288,182 +310,184 @@ function displayClients(clients) {
                 <button class="btn-icon btn-danger" onclick="deleteClient(${client.id})" title="Delete">🗑️</button>
             </td>
         `;
-        tbody.appendChild(row);
-    });
+    tbody.appendChild(row);
+  });
 }
 
 function filterClients() {
-    const searchTerm = document.getElementById('searchClients').value.toLowerCase();
-    const statusFilter = document.getElementById('statusFilter').value;
-    
-    let filtered = allClients.filter(client => {
-        const matchesSearch = 
-            client.name.toLowerCase().includes(searchTerm) ||
-            client.email.toLowerCase().includes(searchTerm) ||
-            (client.company && client.company.toLowerCase().includes(searchTerm));
-        
-        const matchesStatus = !statusFilter || client.status === statusFilter;
-        
-        return matchesSearch && matchesStatus;
-    });
-    
-    displayClients(filtered);
+  const searchTerm = document.getElementById('searchClients').value.toLowerCase();
+  const statusFilter = document.getElementById('statusFilter').value;
+
+  const filtered = allClients.filter((client) => {
+    const matchesSearch =
+      client.name.toLowerCase().includes(searchTerm) ||
+      client.email.toLowerCase().includes(searchTerm) ||
+      (client.company && client.company.toLowerCase().includes(searchTerm));
+
+    const matchesStatus = !statusFilter || client.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  displayClients(filtered);
 }
 
-window.openClientModal = function(clientId = null) {
-    const modal = document.getElementById('clientModal');
-    const form = document.getElementById('clientForm');
-    
-    form.reset();
-    document.getElementById('clientId').value = '';
-    document.getElementById('clientModalTitle').textContent = 'Add Client';
-    
-    if (clientId) {
-        const client = allClients.find(c => c.id === clientId);
-        if (client) {
-            document.getElementById('clientId').value = client.id;
-            document.getElementById('clientName').value = client.name;
-            document.getElementById('clientEmail').value = client.email;
-            document.getElementById('clientPhone').value = client.phone || '';
-            document.getElementById('clientCompany').value = client.company || '';
-            document.getElementById('clientWebsite').value = client.website || '';
-            document.getElementById('clientStatus').value = client.status;
-            document.getElementById('clientRetainer').value = client.monthly_retainer || '';
-            document.getElementById('clientContractStart').value = client.contract_start || '';
-            document.getElementById('clientAddress').value = client.address || '';
-            document.getElementById('clientNotes').value = client.notes || '';
-            document.getElementById('clientModalTitle').textContent = 'Edit Client';
-        }
+window.openClientModal = function (clientId = null) {
+  const modal = document.getElementById('clientModal');
+  const form = document.getElementById('clientForm');
+
+  form.reset();
+  document.getElementById('clientId').value = '';
+  document.getElementById('clientModalTitle').textContent = 'Add Client';
+
+  if (clientId) {
+    const client = allClients.find((c) => c.id === clientId);
+    if (client) {
+      document.getElementById('clientId').value = client.id;
+      document.getElementById('clientName').value = client.name;
+      document.getElementById('clientEmail').value = client.email;
+      document.getElementById('clientPhone').value = client.phone || '';
+      document.getElementById('clientCompany').value = client.company || '';
+      document.getElementById('clientWebsite').value = client.website || '';
+      document.getElementById('clientStatus').value = client.status;
+      document.getElementById('clientRetainer').value = client.monthly_retainer || '';
+      document.getElementById('clientContractStart').value = client.contract_start || '';
+      document.getElementById('clientAddress').value = client.address || '';
+      document.getElementById('clientNotes').value = client.notes || '';
+      document.getElementById('clientModalTitle').textContent = 'Edit Client';
     }
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+  }
 
-window.closeModal = function() {
-    document.getElementById('clientModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeModal = function () {
+  document.getElementById('clientModal').classList.remove('active');
+  document.body.style.overflow = '';
+};
 
 async function handleClientSubmit(e) {
-    e.preventDefault();
-    
-    const clientId = document.getElementById('clientId').value;
-    const clientData = {
-        name: document.getElementById('clientName').value,
-        email: document.getElementById('clientEmail').value,
-        phone: document.getElementById('clientPhone').value || null,
-        company: document.getElementById('clientCompany').value || null,
-        website: document.getElementById('clientWebsite').value || null,
-        status: document.getElementById('clientStatus').value,
-        monthly_retainer: document.getElementById('clientRetainer').value || null,
-        contract_start: document.getElementById('clientContractStart').value || null,
-        address: document.getElementById('clientAddress').value || null,
-        notes: document.getElementById('clientNotes').value || null
-    };
-    
-    try {
-        const url = clientId ? `/api/clients/${clientId}` : '/api/clients';
-        const method = clientId ? 'PUT' : 'POST';
-        
-        const response = await fetch(url, {
-            method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify(clientData)
-        });
-        
-        if (response.ok) {
-            closeModal();
-            loadClients();
-            loadDashboard();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Operation failed');
-        }
-    } catch (error) {
-        console.error('Client submit error:', error);
-        alert('Connection error. Please try again.');
+  e.preventDefault();
+
+  const clientId = document.getElementById('clientId').value;
+  const clientData = {
+    name: document.getElementById('clientName').value,
+    email: document.getElementById('clientEmail').value,
+    phone: document.getElementById('clientPhone').value || null,
+    company: document.getElementById('clientCompany').value || null,
+    website: document.getElementById('clientWebsite').value || null,
+    status: document.getElementById('clientStatus').value,
+    monthly_retainer: document.getElementById('clientRetainer').value || null,
+    contract_start: document.getElementById('clientContractStart').value || null,
+    address: document.getElementById('clientAddress').value || null,
+    notes: document.getElementById('clientNotes').value || null,
+  };
+
+  try {
+    const url = clientId ? `/api/clients/${clientId}` : '/api/clients';
+    const method = clientId ? 'PUT' : 'POST';
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(clientData),
+    });
+
+    if (response.ok) {
+      closeModal();
+      loadClients();
+      loadDashboard();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Operation failed');
     }
+  } catch (error) {
+    console.error('Client submit error:', error);
+    alert('Connection error. Please try again.');
+  }
 }
 
-window.editClient = function(clientId) {
-    openClientModal(clientId);
-}
+window.editClient = function (clientId) {
+  openClientModal(clientId);
+};
 
-window.viewClient = function(clientId) {
-    // Switch to clients view and highlight/edit the client
-    switchView('clients');
-    editClient(clientId);
-}
+window.viewClient = function (clientId) {
+  // Switch to clients view and highlight/edit the client
+  switchView('clients');
+  editClient(clientId);
+};
 
-window.deleteClient = async function(clientId) {
-    const client = allClients.find(c => c.id === clientId);
-    if (!confirm(`Are you sure you want to delete ${client?.name || 'this client'}?`)) {
-        return;
+window.deleteClient = async function (clientId) {
+  const client = allClients.find((c) => c.id === clientId);
+  if (!confirm(`Are you sure you want to delete ${client?.name || 'this client'}?`)) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/clients/${clientId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      loadClients();
+      loadDashboard();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Delete failed');
     }
-    
-    try {
-        const response = await fetch(`/api/clients/${clientId}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            loadClients();
-            loadDashboard();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Delete failed');
-        }
-    } catch (error) {
-        console.error('Delete error:', error);
-        alert('Connection error. Please try again.');
-    }
-}
+  } catch (error) {
+    console.error('Delete error:', error);
+    alert('Connection error. Please try again.');
+  }
+};
 
-window.messageClient = function(clientId) {
-    // Switch to messages view and open conversation with this client
-    switchView('messages');
-    setTimeout(() => {
-        openConversation(clientId);
-    }, 100);
-}
+window.messageClient = function (clientId) {
+  // Switch to messages view and open conversation with this client
+  switchView('messages');
+  setTimeout(() => {
+    openConversation(clientId);
+  }, 100);
+};
 
 // ============ PROJECTS ============
 
 async function loadProjects() {
-    try {
-        const response = await fetch('/api/projects', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            allProjects = data.projects;
-            displayProjects(allProjects);
-            updateActiveProjects();
-        }
-    } catch (error) {
-        console.error('Load projects error:', error);
+  try {
+    const response = await fetch('/api/projects', {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      allProjects = data.projects;
+      displayProjects(allProjects);
+      updateActiveProjects();
     }
+  } catch (error) {
+    console.error('Load projects error:', error);
+  }
 }
 
 function displayProjects(projects) {
-    const container = document.getElementById('projectCards');
-    const emptyState = document.getElementById('projectsEmptyState');
-    
-    if (projects.length === 0) {
-        container.innerHTML = '';
-        emptyState.classList.remove('hidden');
-        return;
-    }
-    
-    emptyState.classList.add('hidden');
-    
-    container.innerHTML = projects.map(project => `
+  const container = document.getElementById('projectCards');
+  const emptyState = document.getElementById('projectsEmptyState');
+
+  if (projects.length === 0) {
+    container.innerHTML = '';
+    emptyState.classList.remove('hidden');
+    return;
+  }
+
+  emptyState.classList.add('hidden');
+
+  container.innerHTML = projects
+    .map(
+      (project) => `
         <div class="project-card" onclick="viewProject(${project.id})">
             <div class="project-card-header">
                 <h3>${project.title}</h3>
@@ -475,89 +499,96 @@ function displayProjects(projects) {
                 <span class="badge badge-${getStatusBadge(project.status)}">${project.status}</span>
                 ${project.budget ? `<span class="project-budget">${formatCurrency(project.budget)}</span>` : ''}
             </div>
-            ${project.task_count ? `
+            ${
+              project.task_count
+                ? `
                 <div class="project-progress">
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: ${Math.round((project.tasks_completed / project.task_count) * 100)}%"></div>
                     </div>
                     <span class="progress-text">${project.tasks_completed}/${project.task_count} tasks</span>
                 </div>
-            ` : ''}
+            `
+                : ''
+            }
         </div>
-    `).join('');
+    `
+    )
+    .join('');
 }
 
 let isGanttView = false;
 
-window.toggleProjectView = function() {
-    isGanttView = !isGanttView;
-    const cardView = document.getElementById('projectCards');
-    const ganttView = document.getElementById('ganttChart');
-    const toggleBtn = document.getElementById('toggleGanttView');
-    const emptyState = document.getElementById('projectsEmptyState');
-    
-    if (isGanttView) {
-        cardView.style.display = 'none';
-        ganttView.classList.remove('hidden');
-        emptyState.classList.add('hidden');
-        toggleBtn.innerHTML = '📇 Card View';
-        renderGanttChart(allProjects);
-    } else {
-        cardView.style.display = 'grid';
-        ganttView.classList.add('hidden');
-        toggleBtn.innerHTML = '📊 Gantt Chart';
-        displayProjects(allProjects);
-    }
-}
+window.toggleProjectView = function () {
+  isGanttView = !isGanttView;
+  const cardView = document.getElementById('projectCards');
+  const ganttView = document.getElementById('ganttChart');
+  const toggleBtn = document.getElementById('toggleGanttView');
+  const emptyState = document.getElementById('projectsEmptyState');
+
+  if (isGanttView) {
+    cardView.style.display = 'none';
+    ganttView.classList.remove('hidden');
+    emptyState.classList.add('hidden');
+    toggleBtn.innerHTML = '📇 Card View';
+    renderGanttChart(allProjects);
+  } else {
+    cardView.style.display = 'grid';
+    ganttView.classList.add('hidden');
+    toggleBtn.innerHTML = '📊 Gantt Chart';
+    displayProjects(allProjects);
+  }
+};
 
 function renderGanttChart(projects) {
-    const container = document.getElementById('ganttChart');
-    
-    // Filter projects with start and end dates
-    const projectsWithDates = projects.filter(p => p.start_date && p.end_date);
-    
-    if (projectsWithDates.length === 0) {
-        container.innerHTML = '<p class="empty-message">No projects with start and end dates to display in Gantt chart.</p>';
-        return;
-    }
-    
-    // Calculate timeline range
-    const dates = projectsWithDates.flatMap(p => [new Date(p.start_date), new Date(p.end_date)]);
-    const minDate = new Date(Math.min(...dates));
-    const maxDate = new Date(Math.max(...dates));
-    
-    // Add padding
-    minDate.setMonth(minDate.getMonth() - 1);
-    maxDate.setMonth(maxDate.getMonth() + 1);
-    
-    const totalDays = Math.ceil((maxDate - minDate) / (1000 * 60 * 60 * 24));
-    
-    // Generate HTML
-    let html = '<div class="gantt-chart">';
-    html += '<div class="gantt-header">';
-    html += '<div class="gantt-project-info"><strong>Project</strong></div>';
-    html += '<div class="gantt-timeline">';
-    
-    // Generate month headers
-    let current = new Date(minDate);
-    while (current <= maxDate) {
-        html += `<div class="gantt-month">${current.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</div>`;
-        current.setMonth(current.getMonth() + 1);
-    }
-    
-    html += '</div></div>';
-    
-    // Generate project rows
-    projectsWithDates.forEach(project => {
-        const startDate = new Date(project.start_date);
-        const endDate = new Date(project.end_date);
-        const startOffset = Math.ceil((startDate - minDate) / (1000 * 60 * 60 * 24));
-        const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-        
-        const leftPercent = (startOffset / totalDays) * 100;
-        const widthPercent = (duration / totalDays) * 100;
-        
-        html += `
+  const container = document.getElementById('ganttChart');
+
+  // Filter projects with start and end dates
+  const projectsWithDates = projects.filter((p) => p.start_date && p.end_date);
+
+  if (projectsWithDates.length === 0) {
+    container.innerHTML =
+      '<p class="empty-message">No projects with start and end dates to display in Gantt chart.</p>';
+    return;
+  }
+
+  // Calculate timeline range
+  const dates = projectsWithDates.flatMap((p) => [new Date(p.start_date), new Date(p.end_date)]);
+  const minDate = new Date(Math.min(...dates));
+  const maxDate = new Date(Math.max(...dates));
+
+  // Add padding
+  minDate.setMonth(minDate.getMonth() - 1);
+  maxDate.setMonth(maxDate.getMonth() + 1);
+
+  const totalDays = Math.ceil((maxDate - minDate) / (1000 * 60 * 60 * 24));
+
+  // Generate HTML
+  let html = '<div class="gantt-chart">';
+  html += '<div class="gantt-header">';
+  html += '<div class="gantt-project-info"><strong>Project</strong></div>';
+  html += '<div class="gantt-timeline">';
+
+  // Generate month headers
+  const current = new Date(minDate);
+  while (current <= maxDate) {
+    html += `<div class="gantt-month">${current.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</div>`;
+    current.setMonth(current.getMonth() + 1);
+  }
+
+  html += '</div></div>';
+
+  // Generate project rows
+  projectsWithDates.forEach((project) => {
+    const startDate = new Date(project.start_date);
+    const endDate = new Date(project.end_date);
+    const startOffset = Math.ceil((startDate - minDate) / (1000 * 60 * 60 * 24));
+    const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+    const leftPercent = (startOffset / totalDays) * 100;
+    const widthPercent = (duration / totalDays) * 100;
+
+    html += `
             <div class="gantt-row">
                 <div class="gantt-project-info">
                     <div class="gantt-project-name">${project.title}</div>
@@ -565,7 +596,7 @@ function renderGanttChart(projects) {
                     <div class="gantt-dates">${formatDate(project.start_date)} - ${formatDate(project.end_date)}</div>
                 </div>
                 <div class="gantt-timeline-area">
-                    <div class="gantt-bar status-${project.status}" 
+                    <div class="gantt-bar status-${project.status}"
                          style="left: ${leftPercent}%; width: ${widthPercent}%"
                          onclick="viewProject(${project.id})"
                          title="${project.title} (${project.status})">
@@ -574,161 +605,169 @@ function renderGanttChart(projects) {
                 </div>
             </div>
         `;
-    });
-    
-    html += '</div>';
-    container.innerHTML = html;
+  });
+
+  html += '</div>';
+  container.innerHTML = html;
 }
 
 function formatDate(dateString) {
-    if (!dateString) return '';
-    return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  if (!dateString) {
+    return '';
+  }
+  return new Date(dateString).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
 }
 
 function filterProjects() {
-    const searchTerm = document.getElementById('searchProjects').value.toLowerCase();
-    const statusFilter = document.getElementById('projectStatusFilter').value;
-    const clientFilter = document.getElementById('projectClientFilter').value;
-    
-    let filtered = allProjects.filter(project => {
-        const matchesSearch = 
-            project.title.toLowerCase().includes(searchTerm) ||
-            (project.description && project.description.toLowerCase().includes(searchTerm)) ||
-            (project.client_name && project.client_name.toLowerCase().includes(searchTerm));
-        
-        const matchesStatus = !statusFilter || project.status === statusFilter;
-        const matchesClient = !clientFilter || project.client_id == clientFilter;
-        
-        return matchesSearch && matchesStatus && matchesClient;
-    });
-    
-    displayProjects(filtered);
+  const searchTerm = document.getElementById('searchProjects').value.toLowerCase();
+  const statusFilter = document.getElementById('projectStatusFilter').value;
+  const clientFilter = document.getElementById('projectClientFilter').value;
+
+  const filtered = allProjects.filter((project) => {
+    const matchesSearch =
+      project.title.toLowerCase().includes(searchTerm) ||
+      (project.description && project.description.toLowerCase().includes(searchTerm)) ||
+      (project.client_name && project.client_name.toLowerCase().includes(searchTerm));
+
+    const matchesStatus = !statusFilter || project.status === statusFilter;
+    const matchesClient = !clientFilter || String(project.client_id) === clientFilter;
+
+    return matchesSearch && matchesStatus && matchesClient;
+  });
+
+  displayProjects(filtered);
 }
 
 function populateClientDropdowns() {
-    const projectClientSelect = document.getElementById('projectClient');
-    const filterSelect = document.getElementById('projectClientFilter');
-    
-    const options = allClients
-        .filter(c => c.status === 'active')
-        .map(c => `<option value="${c.id}">${c.name}${c.company ? ` (${c.company})` : ''}</option>`)
-        .join('');
-    
-    projectClientSelect.innerHTML = '<option value="">Select a client</option>' + options;
-    filterSelect.innerHTML = '<option value="">All Clients</option>' + options;
+  const projectClientSelect = document.getElementById('projectClient');
+  const filterSelect = document.getElementById('projectClientFilter');
+
+  const options = allClients
+    .filter((c) => c.status === 'active')
+    .map((c) => `<option value="${c.id}">${c.name}${c.company ? ` (${c.company})` : ''}</option>`)
+    .join('');
+
+  projectClientSelect.innerHTML = '<option value="">Select a client</option>' + options;
+  filterSelect.innerHTML = '<option value="">All Clients</option>' + options;
 }
 
-window.openProjectModal = function(projectId = null) {
-    const modal = document.getElementById('projectModal');
-    const form = document.getElementById('projectForm');
-    
-    form.reset();
-    document.getElementById('projectId').value = '';
-    document.getElementById('projectModalTitle').textContent = 'New Project';
-    
-    if (projectId) {
-        const project = allProjects.find(p => p.id === projectId);
-        if (project) {
-            document.getElementById('projectId').value = project.id;
-            document.getElementById('projectTitle').value = project.title;
-            document.getElementById('projectClient').value = project.client_id;
-            document.getElementById('projectDescription').value = project.description || '';
-            document.getElementById('projectStatus').value = project.status;
-            document.getElementById('projectPriority').value = project.priority || 'medium';
-            document.getElementById('projectBudget').value = project.budget || '';
-            document.getElementById('projectHours').value = project.hours_estimated || '';
-            document.getElementById('projectStart').value = project.start_date || '';
-            document.getElementById('projectEnd').value = project.end_date || '';
-            document.getElementById('projectModalTitle').textContent = 'Edit Project';
-        }
+window.openProjectModal = function (projectId = null) {
+  const modal = document.getElementById('projectModal');
+  const form = document.getElementById('projectForm');
+
+  form.reset();
+  document.getElementById('projectId').value = '';
+  document.getElementById('projectModalTitle').textContent = 'New Project';
+
+  if (projectId) {
+    const project = allProjects.find((p) => p.id === projectId);
+    if (project) {
+      document.getElementById('projectId').value = project.id;
+      document.getElementById('projectTitle').value = project.title;
+      document.getElementById('projectClient').value = project.client_id;
+      document.getElementById('projectDescription').value = project.description || '';
+      document.getElementById('projectStatus').value = project.status;
+      document.getElementById('projectPriority').value = project.priority || 'medium';
+      document.getElementById('projectBudget').value = project.budget || '';
+      document.getElementById('projectHours').value = project.hours_estimated || '';
+      document.getElementById('projectStart').value = project.start_date || '';
+      document.getElementById('projectEnd').value = project.end_date || '';
+      document.getElementById('projectModalTitle').textContent = 'Edit Project';
     }
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+  }
 
-window.closeProjectModal = function() {
-    document.getElementById('projectModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeProjectModal = function () {
+  document.getElementById('projectModal').classList.remove('active');
+  document.body.style.overflow = '';
+};
 
 async function handleProjectSubmit(e) {
-    e.preventDefault();
-    
-    const projectId = document.getElementById('projectId').value;
-    const projectData = {
-        title: document.getElementById('projectTitle').value,
-        client_id: document.getElementById('projectClient').value,
-        description: document.getElementById('projectDescription').value || null,
-        status: document.getElementById('projectStatus').value,
-        priority: document.getElementById('projectPriority').value,
-        budget: document.getElementById('projectBudget').value || null,
-        hours_estimated: document.getElementById('projectHours').value || null,
-        start_date: document.getElementById('projectStart').value || null,
-        end_date: document.getElementById('projectEnd').value || null
-    };
-    
-    try {
-        const url = projectId ? `/api/projects/${projectId}` : '/api/projects';
-        const method = projectId ? 'PUT' : 'POST';
-        
-        const response = await fetch(url, {
-            method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify(projectData)
-        });
-        
-        if (response.ok) {
-            closeProjectModal();
-            loadProjects();
-            loadDashboard();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Operation failed');
-        }
-    } catch (error) {
-        console.error('Project submit error:', error);
-        alert('Connection error. Please try again.');
+  e.preventDefault();
+
+  const projectId = document.getElementById('projectId').value;
+  const projectData = {
+    title: document.getElementById('projectTitle').value,
+    client_id: document.getElementById('projectClient').value,
+    description: document.getElementById('projectDescription').value || null,
+    status: document.getElementById('projectStatus').value,
+    priority: document.getElementById('projectPriority').value,
+    budget: document.getElementById('projectBudget').value || null,
+    hours_estimated: document.getElementById('projectHours').value || null,
+    start_date: document.getElementById('projectStart').value || null,
+    end_date: document.getElementById('projectEnd').value || null,
+  };
+
+  try {
+    const url = projectId ? `/api/projects/${projectId}` : '/api/projects';
+    const method = projectId ? 'PUT' : 'POST';
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(projectData),
+    });
+
+    if (response.ok) {
+      closeProjectModal();
+      loadProjects();
+      loadDashboard();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Operation failed');
     }
+  } catch (error) {
+    console.error('Project submit error:', error);
+    alert('Connection error. Please try again.');
+  }
 }
 
-window.viewProject = function(projectId) {
-    // For now, open edit modal. Could expand to full project detail view
-    openProjectModal(projectId);
-}
+window.viewProject = function (projectId) {
+  // For now, open edit modal. Could expand to full project detail view
+  openProjectModal(projectId);
+};
 
 // ============ ADMIN: USERS ============
 
 async function loadUsers() {
-    if (currentUser?.role !== 'admin') return;
-    
-    try {
-        const response = await fetch('/api/auth/users', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            displayUsers(data.users);
-        }
-    } catch (error) {
-        console.error('Load users error:', error);
+  if (currentUser?.role !== 'admin') {
+    return;
+  }
+
+  try {
+    const response = await fetch('/api/auth/users', {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      displayUsers(data.users);
     }
+  } catch (error) {
+    console.error('Load users error:', error);
+  }
 }
 
 function displayUsers(users) {
-    const tbody = document.getElementById('usersTableBody');
-    tbody.innerHTML = '';
-    
-    users.forEach(user => {
-        const row = document.createElement('tr');
-        const lastLogin = user.last_login ? new Date(user.last_login).toLocaleDateString() : 'Never';
-        const isCurrentUser = user.id === currentUser.id;
-        
-        row.innerHTML = `
+  const tbody = document.getElementById('usersTableBody');
+  tbody.innerHTML = '';
+
+  users.forEach((user) => {
+    const row = document.createElement('tr');
+    const lastLogin = user.last_login ? new Date(user.last_login).toLocaleDateString() : 'Never';
+    const isCurrentUser = user.id === currentUser.id;
+
+    row.innerHTML = `
             <td><strong>${user.username}</strong>${isCurrentUser ? ' (you)' : ''}</td>
             <td>${user.email}</td>
             <td>${user.client_name ? `<span class="badge badge-info">${user.client_name}</span>` : '-'}</td>
@@ -750,206 +789,294 @@ function displayUsers(users) {
                 <button class="btn-icon btn-danger" onclick="deleteUser(${user.id})" title="Delete" ${isCurrentUser ? 'disabled' : ''}>🗑️</button>
             </td>
         `;
-        tbody.appendChild(row);
+    tbody.appendChild(row);
+  });
+}
+
+window.updateUserRole = async function (userId, role) {
+  try {
+    const response = await fetch(`/api/auth/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ role }),
     });
-}
 
-window.updateUserRole = async function(userId, role) {
-    try {
-        const response = await fetch(`/api/auth/users/${userId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify({ role })
-        });
-        
-        if (!response.ok) {
-            const data = await response.json();
-            alert(data.message || 'Failed to update user');
-            loadUsers();
-        }
-    } catch (error) {
-        console.error('Update user error:', error);
-        loadUsers();
+    if (!response.ok) {
+      const data = await response.json();
+      alert(data.message || 'Failed to update user');
+      loadUsers();
     }
-}
+  } catch (error) {
+    console.error('Update user error:', error);
+    loadUsers();
+  }
+};
 
-window.toggleUserStatus = async function(userId, isActive) {
-    try {
-        const response = await fetch(`/api/auth/users/${userId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify({ is_active: isActive })
-        });
-        
-        if (response.ok) {
-            loadUsers();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Failed to update user');
-        }
-    } catch (error) {
-        console.error('Toggle user status error:', error);
-    }
-}
+window.toggleUserStatus = async function (userId, isActive) {
+  try {
+    const response = await fetch(`/api/auth/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ is_active: isActive }),
+    });
 
-window.deleteUser = async function(userId) {
-    if (!confirm('Are you sure you want to delete this user? This cannot be undone.')) {
-        return;
-    }
-    
-    try {
-        const response = await fetch(`/api/auth/users/${userId}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            loadUsers();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Failed to delete user');
-        }
-    } catch (error) {
-        console.error('Delete user error:', error);
-    }
-}
-
-window.openUserModal = async function(userId = null) {
-    const modal = document.getElementById('userModal');
-    const form = document.getElementById('userForm');
-    const title = document.getElementById('userModalTitle');
-    
-    form.reset();
-    document.getElementById('userId').value = '';
-    title.textContent = userId ? 'Edit User' : 'Add User';
-    
-    // Populate client dropdown
-    const clientSelect = document.getElementById('userClient');
-    clientSelect.innerHTML = '<option value="">No client link</option>' +
-        allClients.map(c => `<option value="${c.id}">${c.name}${c.company ? ` (${c.company})` : ''}</option>`).join('');
-    
-    // If editing, load user data
-    if (userId) {
-        try {
-            const response = await fetch('/api/auth/users', {
-                headers: { 'Authorization': `Bearer ${authToken}` }
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                const user = data.users.find(u => u.id === userId);
-                
-                if (user) {
-                    document.getElementById('userId').value = user.id;
-                    document.getElementById('userUsername').value = user.username;
-                    document.getElementById('userEmail').value = user.email;
-                    document.getElementById('userRole').value = user.role;
-                    document.getElementById('userClient').value = user.client_id || '';
-                    document.getElementById('userActive').checked = user.is_active;
-                    document.getElementById('userPassword').removeAttribute('required');
-                }
-            }
-        } catch (error) {
-            console.error('Load user error:', error);
-        }
+    if (response.ok) {
+      loadUsers();
     } else {
-        document.getElementById('userPassword').setAttribute('required', 'required');
+      const data = await response.json();
+      alert(data.message || 'Failed to update user');
     }
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+  } catch (error) {
+    console.error('Toggle user status error:', error);
+  }
+};
 
-window.editUser = function(userId) {
-    openUserModal(userId);
-}
+window.deleteUser = async function (userId) {
+  if (!confirm('Are you sure you want to delete this user? This cannot be undone.')) {
+    return;
+  }
 
-window.closeUserModal = function() {
-    document.getElementById('userModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
+  try {
+    const response = await fetch(`/api/auth/users/${userId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      loadUsers();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Failed to delete user');
+    }
+  } catch (error) {
+    console.error('Delete user error:', error);
+  }
+};
+
+window.openUserModal = async function (userId = null) {
+  const modal = document.getElementById('userModal');
+  const form = document.getElementById('userForm');
+  const title = document.getElementById('userModalTitle');
+
+  form.reset();
+  document.getElementById('userId').value = '';
+  title.textContent = userId ? 'Edit User' : 'Add User';
+
+  // Populate client dropdown
+  const clientSelect = document.getElementById('userClient');
+  clientSelect.innerHTML =
+    '<option value="">No client link</option>' +
+    allClients
+      .map((c) => `<option value="${c.id}">${c.name}${c.company ? ` (${c.company})` : ''}</option>`)
+      .join('');
+
+  // If editing, load user data
+  if (userId) {
+    try {
+      const response = await fetch('/api/auth/users', {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const user = data.users.find((u) => u.id === userId);
+
+        if (user) {
+          document.getElementById('userId').value = user.id;
+          document.getElementById('userUsername').value = user.username;
+          document.getElementById('userEmail').value = user.email;
+          document.getElementById('userRole').value = user.role;
+          document.getElementById('userClient').value = user.client_id || '';
+          document.getElementById('userActive').checked = user.is_active;
+          document.getElementById('userPassword').removeAttribute('required');
+        }
+      }
+    } catch (error) {
+      console.error('Load user error:', error);
+    }
+  } else {
+    document.getElementById('userPassword').setAttribute('required', 'required');
+  }
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.editUser = function (userId) {
+  openUserModal(userId);
+};
+
+window.closeUserModal = function () {
+  document.getElementById('userModal').classList.remove('active');
+  document.body.style.overflow = '';
+};
 
 async function handleUserSubmit(e) {
-    e.preventDefault();
-    
-    const userId = document.getElementById('userId').value;
-    const userData = {
-        username: document.getElementById('userUsername').value,
-        email: document.getElementById('userEmail').value,
-        role: document.getElementById('userRole').value,
-        client_id: parseInt(document.getElementById('userClient').value) || null,
-        is_active: document.getElementById('userActive').checked
-    };
-    
-    const password = document.getElementById('userPassword').value;
-    if (password) {
-        userData.password = password;
+  e.preventDefault();
+
+  const userId = document.getElementById('userId').value;
+  const userData = {
+    username: document.getElementById('userUsername').value,
+    email: document.getElementById('userEmail').value,
+    role: document.getElementById('userRole').value,
+    client_id: parseInt(document.getElementById('userClient').value) || null,
+    is_active: document.getElementById('userActive').checked,
+  };
+
+  const password = document.getElementById('userPassword').value;
+  if (password) {
+    userData.password = password;
+  }
+
+  try {
+    const url = userId ? `/api/auth/users/${userId}` : '/api/auth/users';
+    const method = userId ? 'PUT' : 'POST';
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (response.ok) {
+      closeUserModal();
+      loadUsers();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Operation failed');
     }
-    
-    try {
-        const url = userId ? `/api/auth/users/${userId}` : '/api/auth/users';
-        const method = userId ? 'PUT' : 'POST';
-        
-        const response = await fetch(url, {
-            method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify(userData)
-        });
-        
-        if (response.ok) {
-            closeUserModal();
-            loadUsers();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Operation failed');
-        }
-    } catch (error) {
-        console.error('User submit error:', error);
-        alert('Connection error. Please try again.');
-    }
+  } catch (error) {
+    console.error('User submit error:', error);
+    alert('Connection error. Please try again.');
+  }
 }
 
 // ============ ADMIN: ACTIVITY LOG ============
 
-async function loadActivity() {
-    if (currentUser?.role !== 'admin') return;
-    
-    try {
-        const response = await fetch('/api/auth/activity?limit=50', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            displayActivity(data.activities);
-        }
-    } catch (error) {
-        console.error('Load activity error:', error);
+let activityPage = 0;
+const activityPageSize = 50;
+let activityFilters = { search: '', action: '', user: '', startDate: '', endDate: '' };
+
+async function loadActivity(page = 0) {
+  if (currentUser?.role !== 'admin') {
+    return;
+  }
+  activityPage = page;
+
+  const params = new URLSearchParams({
+    limit: activityPageSize,
+    offset: page * activityPageSize,
+  });
+  if (activityFilters.search) {
+    params.set('search', activityFilters.search);
+  }
+  if (activityFilters.action) {
+    params.set('action', activityFilters.action);
+  }
+  if (activityFilters.user) {
+    params.set('user', activityFilters.user);
+  }
+  if (activityFilters.startDate) {
+    params.set('startDate', activityFilters.startDate);
+  }
+  if (activityFilters.endDate) {
+    params.set('endDate', activityFilters.endDate);
+  }
+
+  try {
+    const response = await fetch(`/api/auth/activity?${params}`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      displayActivity(data.activities);
+      updateActivityPagination(data.pagination);
+      populateActivityFilterDropdowns(data.filters);
     }
+  } catch (error) {
+    console.error('Load activity error:', error);
+  }
+}
+
+function populateActivityFilterDropdowns(filters) {
+  if (!filters) {
+    return;
+  }
+  const actionSelect = document.getElementById('activityActionFilter');
+  const userSelect = document.getElementById('activityUserFilter');
+
+  // Only populate once (keep user selection)
+  if (actionSelect && actionSelect.options.length <= 1 && filters.actionTypes) {
+    filters.actionTypes.forEach((a) => {
+      const opt = document.createElement('option');
+      opt.value = a;
+      opt.textContent = a.replace(/_/g, ' ');
+      actionSelect.appendChild(opt);
+    });
+  }
+  if (userSelect && userSelect.options.length <= 1 && filters.users) {
+    filters.users.forEach((u) => {
+      const opt = document.createElement('option');
+      opt.value = u;
+      opt.textContent = u;
+      userSelect.appendChild(opt);
+    });
+  }
+}
+
+function updateActivityPagination(pagination) {
+  if (!pagination) {
+    return;
+  }
+  const { total, limit, offset } = pagination;
+  const pageStart = offset + 1;
+  const pageEnd = Math.min(offset + limit, total);
+  const totalPages = Math.ceil(total / limit);
+  const currentPage = Math.floor(offset / limit);
+
+  const info = document.getElementById('activityPageInfo');
+  const prev = document.getElementById('activityPrevPage');
+  const next = document.getElementById('activityNextPage');
+  const summary = document.getElementById('activitySummary');
+
+  if (info) {
+    info.textContent = total > 0 ? `${pageStart}–${pageEnd} of ${total}` : 'No results';
+  }
+  if (prev) {
+    prev.disabled = currentPage <= 0;
+  }
+  if (next) {
+    next.disabled = currentPage >= totalPages - 1;
+  }
+  if (summary) {
+    summary.textContent = `${total} record${total !== 1 ? 's' : ''} found`;
+  }
 }
 
 function displayActivity(activities) {
-    const container = document.getElementById('activityList');
-    
-    if (activities.length === 0) {
-        container.innerHTML = '<p class="empty-message">No activity recorded yet</p>';
-        return;
-    }
-    
-    container.innerHTML = activities.map(activity => {
-        const date = new Date(activity.created_at).toLocaleString();
-        const icon = getActivityIcon(activity.action);
-        
-        return `
+  const container = document.getElementById('activityList');
+
+  if (!activities || activities.length === 0) {
+    container.innerHTML = '<p class="empty-message">No activity recorded yet</p>';
+    return;
+  }
+
+  container.innerHTML = activities
+    .map((activity) => {
+      const date = new Date(activity.created_at).toLocaleString();
+      const icon = getActivityIcon(activity.action);
+
+      return `
             <div class="activity-item">
                 <span class="activity-icon">${icon}</span>
                 <div class="activity-content">
@@ -961,174 +1088,287 @@ function displayActivity(activities) {
                 </div>
             </div>
         `;
-    }).join('');
+    })
+    .join('');
 }
 
 function getActivityIcon(action) {
-    const icons = {
-        'CREATE': '➕',
-        'UPDATE': '✏️',
-        'DELETE': '🗑️',
-        'LOGIN': '🔐',
-        'REGISTER': '👤',
-        'PASSWORD_CHANGE': '🔑',
-        'UPDATE_USER': '👥',
-        'DELETE_USER': '❌'
-    };
-    return icons[action] || '📝';
+  const icons = {
+    CREATE: '➕',
+    UPDATE: '✏️',
+    DELETE: '🗑️',
+    LOGIN: '🔐',
+    REGISTER: '👤',
+    PASSWORD_CHANGE: '🔑',
+    UPDATE_USER: '👥',
+    DELETE_USER: '❌',
+    RECORD_CREATE: '📄',
+    RECORD_UPDATE: '📝',
+    RECORD_DISPOSE: '🗃️',
+    RECORD_VERSION: '📋',
+    LEGAL_HOLD: '⚖️',
+    HOLD_RELEASED: '🔓',
+    PORTAL_LOGIN: '🌐',
+    SEND_MESSAGE: '💬',
+    BULK_MESSAGE: '📨',
+  };
+  return icons[action] || '📝';
+}
+
+function exportActivityLog(format) {
+  const params = new URLSearchParams({ format });
+  if (activityFilters.search) {
+    params.set('search', activityFilters.search);
+  }
+  if (activityFilters.action) {
+    params.set('action', activityFilters.action);
+  }
+  if (activityFilters.user) {
+    params.set('user', activityFilters.user);
+  }
+  if (activityFilters.startDate) {
+    params.set('startDate', activityFilters.startDate);
+  }
+  if (activityFilters.endDate) {
+    params.set('endDate', activityFilters.endDate);
+  }
+
+  // Use a hidden link to trigger download with auth header via fetch
+  fetch(`/api/auth/activity/export?${params}`, {
+    headers: { Authorization: `Bearer ${authToken}` },
+  })
+    .then((resp) => resp.blob())
+    .then((blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `audit-log.${format}`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    })
+    .catch((err) => console.error('Export error:', err));
+}
+
+function initActivityLogListeners() {
+  const applyBtn = document.getElementById('activityApplyFilters');
+  const clearBtn = document.getElementById('activityClearFilters');
+  const prevBtn = document.getElementById('activityPrevPage');
+  const nextBtn = document.getElementById('activityNextPage');
+  const csvBtn = document.getElementById('exportCsvBtn');
+  const jsonBtn = document.getElementById('exportJsonBtn');
+  const searchInput = document.getElementById('activitySearch');
+
+  if (applyBtn) {
+    applyBtn.addEventListener('click', () => {
+      activityFilters.search = document.getElementById('activitySearch')?.value || '';
+      activityFilters.action = document.getElementById('activityActionFilter')?.value || '';
+      activityFilters.user = document.getElementById('activityUserFilter')?.value || '';
+      activityFilters.startDate = document.getElementById('activityStartDate')?.value || '';
+      activityFilters.endDate = document.getElementById('activityEndDate')?.value || '';
+      loadActivity(0);
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      activityFilters = { search: '', action: '', user: '', startDate: '', endDate: '' };
+      if (document.getElementById('activitySearch')) {
+        document.getElementById('activitySearch').value = '';
+      }
+      if (document.getElementById('activityActionFilter')) {
+        document.getElementById('activityActionFilter').value = '';
+      }
+      if (document.getElementById('activityUserFilter')) {
+        document.getElementById('activityUserFilter').value = '';
+      }
+      if (document.getElementById('activityStartDate')) {
+        document.getElementById('activityStartDate').value = '';
+      }
+      if (document.getElementById('activityEndDate')) {
+        document.getElementById('activityEndDate').value = '';
+      }
+      loadActivity(0);
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => loadActivity(activityPage - 1));
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => loadActivity(activityPage + 1));
+  }
+  if (csvBtn) {
+    csvBtn.addEventListener('click', () => exportActivityLog('csv'));
+  }
+  if (jsonBtn) {
+    jsonBtn.addEventListener('click', () => exportActivityLog('json'));
+  }
+
+  // Search on Enter key
+  if (searchInput) {
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        applyBtn?.click();
+      }
+    });
+  }
 }
 
 // ============ UI HELPERS ============
 
 function initEventListeners() {
-    // Sidebar navigation
-    document.querySelectorAll('.sidebar-link[data-view]').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const view = link.dataset.view;
-            switchView(view);
-        });
+  // Sidebar navigation
+  document.querySelectorAll('.sidebar-link[data-view]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const view = link.dataset.view;
+      switchView(view);
     });
-    
-    // Logout
-    document.getElementById('logoutBtn').addEventListener('click', logout);
-    
-    // Add client button
-    document.getElementById('addClientBtn').addEventListener('click', () => openClientModal());
-    
-    // Add project button
-    document.getElementById('addProjectBtn').addEventListener('click', () => openProjectModal());
-    
-    // Client form
-    document.getElementById('clientForm').addEventListener('submit', handleClientSubmit);
-    
-    // Project form
-    document.getElementById('projectForm').addEventListener('submit', handleProjectSubmit);
-    
-    // User form (Admin only)
-    const userForm = document.getElementById('userForm');
-    if (userForm) {
-        userForm.addEventListener('submit', handleUserSubmit);
-    }
-    
-    // Login form
-    document.getElementById('loginForm').addEventListener('submit', handleLogin);
-    
-    // Register form
-    document.getElementById('registerForm').addEventListener('submit', handleRegister);
-    
-    // Show register modal
-    document.getElementById('showRegisterLink').addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('loginModal').classList.remove('active');
-        document.getElementById('registerModal').classList.add('active');
-    });
-    
-    // Search and filter - Clients
-    document.getElementById('searchClients').addEventListener('input', filterClients);
-    document.getElementById('statusFilter').addEventListener('change', filterClients);
-    
-    // Search and filter - Projects
-    document.getElementById('searchProjects').addEventListener('input', filterProjects);
-    document.getElementById('projectStatusFilter').addEventListener('change', filterProjects);
-    document.getElementById('projectClientFilter').addEventListener('change', filterProjects);
-    
-    // Messages
-    const threadForm = document.getElementById('threadComposeForm');
-    if (threadForm) {
-        threadForm.addEventListener('submit', handleThreadReply);
-    }
-    const messageForm = document.getElementById('messageForm');
-    if (messageForm) {
-        messageForm.addEventListener('submit', handleMessageSubmit);
-    }
-    
-    // Campaigns
-    const campaignForm = document.getElementById('campaignForm');
-    if (campaignForm) {
-        campaignForm.addEventListener('submit', handleCampaignSubmit);
-    }
-    const segmentForm = document.getElementById('segmentForm');
-    if (segmentForm) {
-        segmentForm.addEventListener('submit', handleSegmentSubmit);
-    }
-    const templateForm = document.getElementById('templateForm');
-    if (templateForm) {
-        templateForm.addEventListener('submit', handleTemplateSubmit);
-    }
-    
-    // Campaign tabs
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => switchCampaignTab(btn.dataset.tab));
-    });
+  });
+
+  // Logout
+  document.getElementById('logoutBtn').addEventListener('click', logout);
+
+  // Add client button
+  document.getElementById('addClientBtn').addEventListener('click', () => openClientModal());
+
+  // Add project button
+  document.getElementById('addProjectBtn').addEventListener('click', () => openProjectModal());
+
+  // Client form
+  document.getElementById('clientForm').addEventListener('submit', handleClientSubmit);
+
+  // Project form
+  document.getElementById('projectForm').addEventListener('submit', handleProjectSubmit);
+
+  // User form (Admin only)
+  const userForm = document.getElementById('userForm');
+  if (userForm) {
+    userForm.addEventListener('submit', handleUserSubmit);
+  }
+
+  // Login form
+  document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+  // Register form
+  document.getElementById('registerForm').addEventListener('submit', handleRegister);
+
+  // Show register modal
+  document.getElementById('showRegisterLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('loginModal').classList.remove('active');
+    document.getElementById('registerModal').classList.add('active');
+  });
+
+  // Search and filter - Clients
+  document.getElementById('searchClients').addEventListener('input', filterClients);
+  document.getElementById('statusFilter').addEventListener('change', filterClients);
+
+  // Search and filter - Projects
+  document.getElementById('searchProjects').addEventListener('input', filterProjects);
+  document.getElementById('projectStatusFilter').addEventListener('change', filterProjects);
+  document.getElementById('projectClientFilter').addEventListener('change', filterProjects);
+
+  // Messages
+  const threadForm = document.getElementById('threadComposeForm');
+  if (threadForm) {
+    threadForm.addEventListener('submit', handleThreadReply);
+  }
+  const messageForm = document.getElementById('messageForm');
+  if (messageForm) {
+    messageForm.addEventListener('submit', handleMessageSubmit);
+  }
+
+  // Campaigns
+  const campaignForm = document.getElementById('campaignForm');
+  if (campaignForm) {
+    campaignForm.addEventListener('submit', handleCampaignSubmit);
+  }
+  const segmentForm = document.getElementById('segmentForm');
+  if (segmentForm) {
+    segmentForm.addEventListener('submit', handleSegmentSubmit);
+  }
+  const templateForm = document.getElementById('templateForm');
+  if (templateForm) {
+    templateForm.addEventListener('submit', handleTemplateSubmit);
+  }
+
+  // Campaign tabs
+  document.querySelectorAll('.tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => switchCampaignTab(btn.dataset.tab));
+  });
 }
 
 function switchView(view) {
-    document.querySelectorAll('.sidebar-link').forEach(link => {
-        link.classList.remove('active');
-    });
-    document.querySelector(`[data-view="${view}"]`)?.classList.add('active');
-    
-    document.querySelectorAll('.dashboard-view').forEach(v => {
-        v.classList.remove('active');
-    });
-    document.getElementById(`${view}View`)?.classList.add('active');
-    
-    // Load view-specific data
-    if (view === 'dashboard') {
-        loadDashboard();
-    } else if (view === 'users' && currentUser?.role === 'admin') {
-        loadUsers();
-    } else if (view === 'activity' && currentUser?.role === 'admin') {
-        loadActivity();
-    } else if (view === 'messages') {
-        loadMessages();
-    } else if (view === 'campaigns') {
-        loadCampaigns();
-    } else if (view === 'system' && currentUser?.role === 'admin') {
-        loadSystemView();
-    }
+  document.querySelectorAll('.sidebar-link').forEach((link) => {
+    link.classList.remove('active');
+  });
+  document.querySelector(`[data-view="${view}"]`)?.classList.add('active');
+
+  document.querySelectorAll('.dashboard-view').forEach((v) => {
+    v.classList.remove('active');
+  });
+  document.getElementById(`${view}View`)?.classList.add('active');
+
+  // Load view-specific data
+  if (view === 'dashboard') {
+    loadDashboard();
+  } else if (view === 'users' && currentUser?.role === 'admin') {
+    loadUsers();
+  } else if (view === 'activity' && currentUser?.role === 'admin') {
+    loadActivity();
+  } else if (view === 'messages') {
+    loadMessages();
+  } else if (view === 'campaigns') {
+    loadCampaigns();
+  } else if (view === 'system' && currentUser?.role === 'admin') {
+    loadSystemView();
+  }
 }
 
 function showLoginModal() {
-    // Dashboard content is hidden by default via CSS
-    // Just show the login modal
-    document.getElementById('loginModal').classList.add('active');
+  // Dashboard content is hidden by default via CSS
+  // Just show the login modal
+  document.getElementById('loginModal').classList.add('active');
 }
 
-window.closeRegisterModal = function() {
-    document.getElementById('registerModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
+window.closeRegisterModal = function () {
+  document.getElementById('registerModal').classList.remove('active');
+  document.body.style.overflow = '';
+};
 
 function showFormMessage(formId, type, message) {
-    const form = document.getElementById(formId);
-    const messageDiv = form.querySelector('.form-message');
-    if (messageDiv) {
-        messageDiv.textContent = message;
-        messageDiv.className = `form-message ${type}`;
-        messageDiv.classList.remove('form-message-hidden');
-        
-        setTimeout(() => {
-            messageDiv.classList.add('form-message-hidden');
-        }, 5000);
-    }
+  const form = document.getElementById(formId);
+  const messageDiv = form.querySelector('.form-message');
+  if (messageDiv) {
+    messageDiv.textContent = message;
+    messageDiv.className = `form-message ${type}`;
+    messageDiv.classList.remove('form-message-hidden');
+
+    setTimeout(() => {
+      messageDiv.classList.add('form-message-hidden');
+    }, 5000);
+  }
 }
 
 function showNotification(message, type = 'info') {
-    // Create or use existing notification container
-    let container = document.getElementById('notification-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'notification-container';
-        container.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 10000; max-width: 400px;';
-        document.body.appendChild(container);
-    }
-    
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.style.cssText = `
+  // Create or use existing notification container
+  let container = document.getElementById('notification-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'notification-container';
+    container.style.cssText =
+      'position: fixed; top: 20px; right: 20px; z-index: 10000; max-width: 400px;';
+    document.body.appendChild(container);
+  }
+
+  // Create notification element
+  const notification = document.createElement('div');
+  notification.className = `notification notification-${type}`;
+  notification.style.cssText = `
         background: var(--bg-card);
         border: 2px solid var(--border-color);
         border-radius: var(--radius-md);
@@ -1138,57 +1378,57 @@ function showNotification(message, type = 'info') {
         animation: slideInRight 0.3s ease-out;
         color: var(--text-primary);
     `;
-    
-    // Set border color based on type
-    const colors = {
-        'success': '#5a9d7a',
-        'error': '#d4574f',
-        'warning': '#d4a574',
-        'info': '#3d7a5f'
-    };
-    notification.style.borderColor = colors[type] || colors.info;
-    
-    notification.textContent = message;
-    container.appendChild(notification);
-    
-    // Auto-remove after 5 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease-in';
-        setTimeout(() => notification.remove(), 300);
-    }, 5000);
+
+  // Set border color based on type
+  const colors = {
+    success: '#5a9d7a',
+    error: '#d4574f',
+    warning: '#d4a574',
+    info: '#3d7a5f',
+  };
+  notification.style.borderColor = colors[type] || colors.info;
+
+  notification.textContent = message;
+  container.appendChild(notification);
+
+  // Auto-remove after 5 seconds
+  setTimeout(() => {
+    notification.style.animation = 'slideOutRight 0.3s ease-in';
+    setTimeout(() => notification.remove(), 300);
+  }, 5000);
 }
 
 function formatCurrency(amount) {
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    }).format(amount || 0);
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount || 0);
 }
 
 function getStatusBadge(status) {
-    const badges = {
-        'planning': 'info',
-        'in-progress': 'primary',
-        'on-hold': 'warning',
-        'completed': 'success',
-        'cancelled': 'danger',
-        'active': 'success',
-        'inactive': 'warning',
-        'archived': 'secondary'
-    };
-    return badges[status] || 'secondary';
+  const badges = {
+    planning: 'info',
+    'in-progress': 'primary',
+    'on-hold': 'warning',
+    completed: 'success',
+    cancelled: 'danger',
+    active: 'success',
+    inactive: 'warning',
+    archived: 'secondary',
+  };
+  return badges[status] || 'secondary';
 }
 
 function getPriorityBadge(priority) {
-    const badges = {
-        'low': 'secondary',
-        'medium': 'info',
-        'high': 'warning',
-        'urgent': 'danger'
-    };
-    return badges[priority] || 'secondary';
+  const badges = {
+    low: 'secondary',
+    medium: 'info',
+    high: 'warning',
+    urgent: 'danger',
+  };
+  return badges[priority] || 'secondary';
 }
 
 // ============ MESSAGES ============
@@ -1200,56 +1440,61 @@ let allTemplates = [];
 let allCampaigns = [];
 
 async function loadMessages() {
-    try {
-        const response = await fetch('/api/messages', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            allConversations = data.conversations;
-            displayConversations(allConversations);
-            updateUnreadBadge();
-        }
-    } catch (error) {
-        console.error('Load messages error:', error);
+  try {
+    const response = await fetch('/api/messages', {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      allConversations = data.conversations;
+      displayConversations(allConversations);
+      updateUnreadBadge();
     }
+  } catch (error) {
+    console.error('Load messages error:', error);
+  }
 }
 
 async function updateUnreadBadge() {
-    try {
-        const response = await fetch('/api/messages/unread/count', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            const badge = document.getElementById('unreadBadge');
-            if (badge) {
-                badge.textContent = data.count || 0;
-                if (data.count > 0) {
-                    badge.classList.remove('hidden');
-                } else {
-                    badge.classList.add('hidden');
-                }
-            }
+  try {
+    const response = await fetch('/api/messages/unread/count', {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const badge = document.getElementById('unreadBadge');
+      if (badge) {
+        badge.textContent = data.count || 0;
+        if (data.count > 0) {
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
         }
-    } catch (error) {
-        console.error('Unread count error:', error);
+      }
     }
+  } catch (error) {
+    console.error('Unread count error:', error);
+  }
 }
 
 function displayConversations(conversations) {
-    const container = document.getElementById('conversationsListBody');
-    if (!container) return;
-    
-    if (conversations.length === 0) {
-        container.innerHTML = '<p class="empty-message">No conversations yet. Start messaging clients!</p>';
-        return;
-    }
-    
-    container.innerHTML = conversations.map(conv => `
-        <div class="conversation-item ${conv.unread_count > 0 ? 'unread' : ''} ${currentConversationClientId === conv.client_id ? 'active' : ''}" 
+  const container = document.getElementById('conversationsListBody');
+  if (!container) {
+    return;
+  }
+
+  if (conversations.length === 0) {
+    container.innerHTML =
+      '<p class="empty-message">No conversations yet. Start messaging clients!</p>';
+    return;
+  }
+
+  container.innerHTML = conversations
+    .map(
+      (conv) => `
+        <div class="conversation-item ${conv.unread_count > 0 ? 'unread' : ''} ${currentConversationClientId === conv.client_id ? 'active' : ''}"
              onclick="openConversation(${conv.client_id})">
             <div class="conversation-avatar">${conv.client_name.charAt(0).toUpperCase()}</div>
             <div class="conversation-info">
@@ -1261,55 +1506,72 @@ function displayConversations(conversations) {
             </div>
             ${conv.unread_count > 0 ? `<span class="conversation-badge">${conv.unread_count}</span>` : ''}
         </div>
-    `).join('');
+    `
+    )
+    .join('');
 }
 
-window.openConversation = async function(clientId) {
-    currentConversationClientId = clientId;
-    const conv = allConversations.find(c => c.client_id === clientId);
-    
-    // Update UI
-    const clientNameEl = document.getElementById('threadClientName');
-    if (clientNameEl) clientNameEl.textContent = conv?.client_name || 'Client';
-    
-    const threadMessagesEl = document.getElementById('threadMessages');
-    if (threadMessagesEl) threadMessagesEl.innerHTML = '<p class="loading-text">Loading messages...</p>';
-    
-    // Show compose area
-    const composeEl = document.getElementById('threadCompose');
-    if (composeEl) composeEl.classList.remove('hidden');
-    
-    // Highlight active conversation
-    document.querySelectorAll('.conversation-item').forEach(item => item.classList.remove('active'));
-    document.querySelector(`.conversation-item[onclick="openConversation(${clientId})"]`)?.classList.add('active');
-    
-    try {
-        const response = await fetch(`/api/messages/client/${clientId}`, {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            displayThread(data.messages);
-            updateUnreadBadge();
-            loadMessages(); // Refresh conversations to update unread counts
-        }
-    } catch (error) {
-        console.error('Load thread error:', error);
-        document.getElementById('messageThread').innerHTML = '<p class="error-message">Failed to load messages</p>';
+window.openConversation = async function (clientId) {
+  currentConversationClientId = clientId;
+  const conv = allConversations.find((c) => c.client_id === clientId);
+
+  // Update UI
+  const clientNameEl = document.getElementById('threadClientName');
+  if (clientNameEl) {
+    clientNameEl.textContent = conv?.client_name || 'Client';
+  }
+
+  const threadMessagesEl = document.getElementById('threadMessages');
+  if (threadMessagesEl) {
+    threadMessagesEl.innerHTML = '<p class="loading-text">Loading messages...</p>';
+  }
+
+  // Show compose area
+  const composeEl = document.getElementById('threadCompose');
+  if (composeEl) {
+    composeEl.classList.remove('hidden');
+  }
+
+  // Highlight active conversation
+  document
+    .querySelectorAll('.conversation-item')
+    .forEach((item) => item.classList.remove('active'));
+  document
+    .querySelector(`.conversation-item[onclick="openConversation(${clientId})"]`)
+    ?.classList.add('active');
+
+  try {
+    const response = await fetch(`/api/messages/client/${clientId}`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      displayThread(data.messages);
+      updateUnreadBadge();
+      loadMessages(); // Refresh conversations to update unread counts
     }
-}
+  } catch (error) {
+    console.error('Load thread error:', error);
+    document.getElementById('messageThread').innerHTML =
+      '<p class="error-message">Failed to load messages</p>';
+  }
+};
 
 function displayThread(messages) {
-    const container = document.getElementById('threadMessages');
-    if (!container) return;
-    
-    if (messages.length === 0) {
-        container.innerHTML = '<p class="empty-thread">No messages in this conversation yet.</p>';
-        return;
-    }
-    
-    container.innerHTML = messages.map(msg => `
+  const container = document.getElementById('threadMessages');
+  if (!container) {
+    return;
+  }
+
+  if (messages.length === 0) {
+    container.innerHTML = '<p class="empty-thread">No messages in this conversation yet.</p>';
+    return;
+  }
+
+  container.innerHTML = messages
+    .map(
+      (msg) => `
         <div class="message ${msg.direction}">
             <div class="message-bubble">
                 ${msg.subject ? `<div class="message-subject">${msg.subject}</div>` : ''}
@@ -1320,139 +1582,149 @@ function displayThread(messages) {
                 </div>
             </div>
         </div>
-    `).join('');
-    
-    // Scroll to bottom
-    container.scrollTop = container.scrollHeight;
+    `
+    )
+    .join('');
+
+  // Scroll to bottom
+  container.scrollTop = container.scrollHeight;
 }
 
 async function handleThreadReply(e) {
-    e.preventDefault();
-    
-    if (!currentConversationClientId) {
-        alert('Please select a conversation first');
-        return;
+  e.preventDefault();
+
+  if (!currentConversationClientId) {
+    alert('Please select a conversation first');
+    return;
+  }
+
+  const content = document.getElementById('threadReplyContent').value.trim();
+  if (!content) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/messages/client/${currentConversationClientId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ content }),
+    });
+
+    if (response.ok) {
+      document.getElementById('threadReplyContent').value = '';
+      openConversation(currentConversationClientId);
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Failed to send message');
     }
-    
-    const content = document.getElementById('threadReplyContent').value.trim();
-    if (!content) return;
-    
-    try {
-        const response = await fetch(`/api/messages/client/${currentConversationClientId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify({ content })
-        });
-        
-        if (response.ok) {
-            document.getElementById('threadReplyContent').value = '';
-            openConversation(currentConversationClientId);
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Failed to send message');
-        }
-    } catch (error) {
-        console.error('Send message error:', error);
-        alert('Connection error. Please try again.');
-    }
+  } catch (error) {
+    console.error('Send message error:', error);
+    alert('Connection error. Please try again.');
+  }
 }
 
-window.openMessageModal = function() {
-    const modal = document.getElementById('messageModal');
-    const form = document.getElementById('messageForm');
-    form.reset();
-    
-    // Populate client dropdown
-    const select = document.getElementById('messageClient');
-    select.innerHTML = '<option value="">Choose a client...</option>' +
-        allClients.map(c => `<option value="${c.id}">${c.name}${c.company ? ` (${c.company})` : ''}</option>`).join('');
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+window.openMessageModal = function () {
+  const modal = document.getElementById('messageModal');
+  const form = document.getElementById('messageForm');
+  form.reset();
 
-window.closeMessageModal = function() {
-    document.getElementById('messageModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
+  // Populate client dropdown
+  const select = document.getElementById('messageClient');
+  select.innerHTML =
+    '<option value="">Choose a client...</option>' +
+    allClients
+      .map((c) => `<option value="${c.id}">${c.name}${c.company ? ` (${c.company})` : ''}</option>`)
+      .join('');
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeMessageModal = function () {
+  document.getElementById('messageModal').classList.remove('active');
+  document.body.style.overflow = '';
+};
 
 async function handleMessageSubmit(e) {
-    e.preventDefault();
-    
-    const clientId = document.getElementById('messageClient').value;
-    const subject = document.getElementById('messageSubject').value;
-    const content = document.getElementById('messageContent').value;
-    
-    try {
-        const response = await fetch(`/api/messages/client/${clientId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify({ subject, content })
-        });
-        
-        if (response.ok) {
-            closeMessageModal();
-            loadMessages();
-            openConversation(parseInt(clientId));
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Failed to send message');
-        }
-    } catch (error) {
-        console.error('Send message error:', error);
-        alert('Connection error. Please try again.');
+  e.preventDefault();
+
+  const clientId = document.getElementById('messageClient').value;
+  const subject = document.getElementById('messageSubject').value;
+  const content = document.getElementById('messageContent').value;
+
+  try {
+    const response = await fetch(`/api/messages/client/${clientId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ subject, content }),
+    });
+
+    if (response.ok) {
+      closeMessageModal();
+      loadMessages();
+      openConversation(parseInt(clientId));
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Failed to send message');
     }
+  } catch (error) {
+    console.error('Send message error:', error);
+    alert('Connection error. Please try again.');
+  }
 }
 
 // ============ CAMPAIGNS ============
 
 async function loadCampaigns() {
-    try {
-        const [campaignsRes, segmentsRes, templatesRes] = await Promise.all([
-            fetch('/api/campaigns', { headers: { 'Authorization': `Bearer ${authToken}` } }),
-            fetch('/api/campaigns/segments/list', { headers: { 'Authorization': `Bearer ${authToken}` } }),
-            fetch('/api/campaigns/templates/list', { headers: { 'Authorization': `Bearer ${authToken}` } })
-        ]);
-        
-        if (campaignsRes.ok) {
-            const data = await campaignsRes.json();
-            allCampaigns = data.campaigns;
-            displayCampaigns(allCampaigns);
-        }
-        
-        if (segmentsRes.ok) {
-            const data = await segmentsRes.json();
-            allSegments = data.segments;
-            displaySegments(allSegments);
-            populateSegmentDropdowns();
-        }
-        
-        if (templatesRes.ok) {
-            const data = await templatesRes.json();
-            allTemplates = data.templates;
-            displayTemplates(allTemplates);
-            populateTemplateDropdowns();
-        }
-    } catch (error) {
-        console.error('Load campaigns error:', error);
+  try {
+    const [campaignsRes, segmentsRes, templatesRes] = await Promise.all([
+      fetch('/api/campaigns', { headers: { Authorization: `Bearer ${authToken}` } }),
+      fetch('/api/campaigns/segments/list', { headers: { Authorization: `Bearer ${authToken}` } }),
+      fetch('/api/campaigns/templates/list', { headers: { Authorization: `Bearer ${authToken}` } }),
+    ]);
+
+    if (campaignsRes.ok) {
+      const data = await campaignsRes.json();
+      allCampaigns = data.campaigns;
+      displayCampaigns(allCampaigns);
     }
+
+    if (segmentsRes.ok) {
+      const data = await segmentsRes.json();
+      allSegments = data.segments;
+      displaySegments(allSegments);
+      populateSegmentDropdowns();
+    }
+
+    if (templatesRes.ok) {
+      const data = await templatesRes.json();
+      allTemplates = data.templates;
+      displayTemplates(allTemplates);
+      populateTemplateDropdowns();
+    }
+  } catch (error) {
+    console.error('Load campaigns error:', error);
+  }
 }
 
 function displayCampaigns(campaigns) {
-    const container = document.getElementById('campaignsGrid');
-    
-    if (campaigns.length === 0) {
-        container.innerHTML = '<p class="empty-message">No campaigns yet. Create your first campaign!</p>';
-        return;
-    }
-    
-    container.innerHTML = campaigns.map(campaign => `
+  const container = document.getElementById('campaignsGrid');
+
+  if (campaigns.length === 0) {
+    container.innerHTML =
+      '<p class="empty-message">No campaigns yet. Create your first campaign!</p>';
+    return;
+  }
+
+  container.innerHTML = campaigns
+    .map(
+      (campaign) => `
         <div class="campaign-card">
             <div class="campaign-header">
                 <h4>${campaign.name}</h4>
@@ -1469,25 +1741,34 @@ function displayCampaigns(campaigns) {
                 <span class="campaign-date">${campaign.sent_at ? formatRelativeTime(campaign.sent_at) : 'Not sent'}</span>
             </div>
             <div class="campaign-actions">
-                ${campaign.status === 'draft' ? `
+                ${
+                  campaign.status === 'draft'
+                    ? `
                     <button class="btn btn-sm btn-primary" onclick="sendCampaign(${campaign.id})">Send Now</button>
                     <button class="btn btn-sm btn-outline" onclick="editCampaign(${campaign.id})">Edit</button>
-                ` : ''}
+                `
+                    : ''
+                }
                 <button class="btn btn-sm btn-danger" onclick="deleteCampaign(${campaign.id})">Delete</button>
             </div>
         </div>
-    `).join('');
+    `
+    )
+    .join('');
 }
 
 function displaySegments(segments) {
-    const container = document.getElementById('segmentsGrid');
-    
-    if (segments.length === 0) {
-        container.innerHTML = '<p class="empty-message">No segments yet. Create segments to target specific clients!</p>';
-        return;
-    }
-    
-    container.innerHTML = segments.map(segment => `
+  const container = document.getElementById('segmentsGrid');
+
+  if (segments.length === 0) {
+    container.innerHTML =
+      '<p class="empty-message">No segments yet. Create segments to target specific clients!</p>';
+    return;
+  }
+
+  container.innerHTML = segments
+    .map(
+      (segment) => `
         <div class="segment-card">
             <h4>${segment.name}</h4>
             <p class="segment-description">${segment.description || 'No description'}</p>
@@ -1499,18 +1780,23 @@ function displaySegments(segments) {
                 <button class="btn btn-sm btn-danger" onclick="deleteSegment(${segment.id})">Delete</button>
             </div>
         </div>
-    `).join('');
+    `
+    )
+    .join('');
 }
 
 function displayTemplates(templates) {
-    const container = document.getElementById('templatesGrid');
-    
-    if (templates.length === 0) {
-        container.innerHTML = '<p class="empty-message">No templates yet. Create reusable email templates!</p>';
-        return;
-    }
-    
-    container.innerHTML = templates.map(template => `
+  const container = document.getElementById('templatesGrid');
+
+  if (templates.length === 0) {
+    container.innerHTML =
+      '<p class="empty-message">No templates yet. Create reusable email templates!</p>';
+    return;
+  }
+
+  container.innerHTML = templates
+    .map(
+      (template) => `
         <div class="template-card">
             <div class="template-header">
                 <h4>${template.name}</h4>
@@ -1523,443 +1809,474 @@ function displayTemplates(templates) {
                 <button class="btn btn-sm btn-danger" onclick="deleteTemplate(${template.id})">Delete</button>
             </div>
         </div>
-    `).join('');
+    `
+    )
+    .join('');
 }
 
 function populateSegmentDropdowns() {
-    const select = document.getElementById('campaignSegment');
-    if (select) {
-        select.innerHTML = '<option value="">All Clients</option>' +
-            allSegments.map(s => `<option value="${s.id}">${s.name} (${s.client_count || 0} clients)</option>`).join('');
-    }
+  const select = document.getElementById('campaignSegment');
+  if (select) {
+    select.innerHTML =
+      '<option value="">All Clients</option>' +
+      allSegments
+        .map((s) => `<option value="${s.id}">${s.name} (${s.client_count || 0} clients)</option>`)
+        .join('');
+  }
 }
 
 function populateTemplateDropdowns() {
-    const select = document.getElementById('campaignTemplate');
-    if (select) {
-        select.innerHTML = '<option value="">None (Write Custom)</option>' +
-            allTemplates.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
-    }
+  const select = document.getElementById('campaignTemplate');
+  if (select) {
+    select.innerHTML =
+      '<option value="">None (Write Custom)</option>' +
+      allTemplates.map((t) => `<option value="${t.id}">${t.name}</option>`).join('');
+  }
 }
 
-window.loadTemplate = function(templateId) {
-    if (!templateId) return;
-    
-    const template = allTemplates.find(t => t.id == templateId);
-    if (template) {
-        document.getElementById('campaignSubject').value = template.subject;
-        document.getElementById('campaignContent').value = template.content;
-    }
-}
+window.loadTemplate = function (templateId) {
+  if (!templateId) {
+    return;
+  }
 
-window.switchCampaignTab = function(tab) {
-    // Get parent container to scope tab switching
-    const activeView = document.querySelector('.dashboard-view.active');
-    if (!activeView) return;
-    
-    // Update tab buttons within this view
-    activeView.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.tab === tab);
-    });
-    
-    // Update tab content within this view
-    activeView.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.toggle('active', content.id === tab);
-    });
-}
+  const template = allTemplates.find((t) => String(t.id) === String(templateId));
+  if (template) {
+    document.getElementById('campaignSubject').value = template.subject;
+    document.getElementById('campaignContent').value = template.content;
+  }
+};
+
+window.switchCampaignTab = function (tab) {
+  // Get parent container to scope tab switching
+  const activeView = document.querySelector('.dashboard-view.active');
+  if (!activeView) {
+    return;
+  }
+
+  // Update tab buttons within this view
+  activeView.querySelectorAll('.tab-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+
+  // Update tab content within this view
+  activeView.querySelectorAll('.tab-content').forEach((content) => {
+    content.classList.toggle('active', content.id === tab);
+  });
+};
 
 // Campaign Modal
-window.openCampaignModal = function(campaignId = null) {
-    const modal = document.getElementById('campaignModal');
-    const form = document.getElementById('campaignForm');
-    
-    form.reset();
-    document.getElementById('campaignId').value = '';
-    document.getElementById('campaignModalTitle').textContent = 'Create Campaign';
-    
-    if (campaignId) {
-        const campaign = allCampaigns.find(c => c.id === campaignId);
-        if (campaign) {
-            document.getElementById('campaignId').value = campaign.id;
-            document.getElementById('campaignName').value = campaign.name;
-            document.getElementById('campaignSegment').value = campaign.segment_id || '';
-            document.getElementById('campaignSubject').value = campaign.subject;
-            document.getElementById('campaignContent').value = campaign.content;
-            document.getElementById('campaignModalTitle').textContent = 'Edit Campaign';
-        }
+window.openCampaignModal = function (campaignId = null) {
+  const modal = document.getElementById('campaignModal');
+  const form = document.getElementById('campaignForm');
+
+  form.reset();
+  document.getElementById('campaignId').value = '';
+  document.getElementById('campaignModalTitle').textContent = 'Create Campaign';
+
+  if (campaignId) {
+    const campaign = allCampaigns.find((c) => c.id === campaignId);
+    if (campaign) {
+      document.getElementById('campaignId').value = campaign.id;
+      document.getElementById('campaignName').value = campaign.name;
+      document.getElementById('campaignSegment').value = campaign.segment_id || '';
+      document.getElementById('campaignSubject').value = campaign.subject;
+      document.getElementById('campaignContent').value = campaign.content;
+      document.getElementById('campaignModalTitle').textContent = 'Edit Campaign';
     }
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+  }
 
-window.closeCampaignModal = function() {
-    document.getElementById('campaignModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
 
-window.saveCampaignAsDraft = async function() {
-    await submitCampaign('draft');
-}
+window.closeCampaignModal = function () {
+  document.getElementById('campaignModal').classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.saveCampaignAsDraft = async function () {
+  await submitCampaign('draft');
+};
 
 async function handleCampaignSubmit(e) {
-    e.preventDefault();
-    await submitCampaign('sending');
+  e.preventDefault();
+  await submitCampaign('sending');
 }
 
 async function submitCampaign(status) {
-    const campaignId = document.getElementById('campaignId').value;
-    const campaignData = {
-        name: document.getElementById('campaignName').value,
-        subject: document.getElementById('campaignSubject').value,
-        content: document.getElementById('campaignContent').value,
-        segment_id: document.getElementById('campaignSegment').value || null,
-        status
-    };
-    
-    try {
-        let response;
-        
-        if (campaignId) {
-            // Update existing campaign
-            response = await fetch(`/api/campaigns/${campaignId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`
-                },
-                body: JSON.stringify(campaignData)
-            });
-        } else {
-            // Create new campaign
-            response = await fetch('/api/campaigns', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`
-                },
-                body: JSON.stringify(campaignData)
-            });
-        }
-        
-        if (response.ok) {
-            const data = await response.json();
-            
-            // If sending, actually send the campaign
-            if (status === 'sending') {
-                const sendRes = await fetch(`/api/campaigns/${data.campaign?.id || campaignId}/send`, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                
-                if (sendRes.ok) {
-                    const sendData = await sendRes.json();
-                    alert(`Campaign sent to ${sendData.sent_count} recipients!`);
-                } else {
-                    alert('Campaign saved but sending failed');
-                }
-            }
-            
-            closeCampaignModal();
-            loadCampaigns();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Operation failed');
-        }
-    } catch (error) {
-        console.error('Campaign submit error:', error);
-        alert('Connection error. Please try again.');
+  const campaignId = document.getElementById('campaignId').value;
+  const campaignData = {
+    name: document.getElementById('campaignName').value,
+    subject: document.getElementById('campaignSubject').value,
+    content: document.getElementById('campaignContent').value,
+    segment_id: document.getElementById('campaignSegment').value || null,
+    status,
+  };
+
+  try {
+    let response;
+
+    if (campaignId) {
+      // Update existing campaign
+      response = await fetch(`/api/campaigns/${campaignId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(campaignData),
+      });
+    } else {
+      // Create new campaign
+      response = await fetch('/api/campaigns', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(campaignData),
+      });
     }
-}
 
-window.editCampaign = function(campaignId) {
-    openCampaignModal(campaignId);
-}
+    if (response.ok) {
+      const data = await response.json();
 
-window.sendCampaign = async function(campaignId) {
-    if (!confirm('Are you sure you want to send this campaign now?')) return;
-    
-    try {
-        const response = await fetch(`/api/campaigns/${campaignId}/send`, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${authToken}` }
+      // If sending, actually send the campaign
+      if (status === 'sending') {
+        const sendRes = await fetch(`/api/campaigns/${data.campaign?.id || campaignId}/send`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${authToken}` },
         });
-        
-        if (response.ok) {
-            const data = await response.json();
-            alert(`Campaign sent to ${data.sent_count} recipients!`);
-            loadCampaigns();
+
+        if (sendRes.ok) {
+          const sendData = await sendRes.json();
+          alert(`Campaign sent to ${sendData.sent_count} recipients!`);
         } else {
-            const data = await response.json();
-            alert(data.message || 'Failed to send campaign');
+          alert('Campaign saved but sending failed');
         }
-    } catch (error) {
-        console.error('Send campaign error:', error);
-        alert('Connection error. Please try again.');
+      }
+
+      closeCampaignModal();
+      loadCampaigns();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Operation failed');
     }
+  } catch (error) {
+    console.error('Campaign submit error:', error);
+    alert('Connection error. Please try again.');
+  }
 }
 
-window.deleteCampaign = async function(campaignId) {
-    if (!confirm('Are you sure you want to delete this campaign?')) return;
-    
-    try {
-        const response = await fetch(`/api/campaigns/${campaignId}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            loadCampaigns();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Failed to delete campaign');
-        }
-    } catch (error) {
-        console.error('Delete campaign error:', error);
-        alert('Connection error. Please try again.');
+window.editCampaign = function (campaignId) {
+  openCampaignModal(campaignId);
+};
+
+window.sendCampaign = async function (campaignId) {
+  if (!confirm('Are you sure you want to send this campaign now?')) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/campaigns/${campaignId}/send`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      alert(`Campaign sent to ${data.sent_count} recipients!`);
+      loadCampaigns();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Failed to send campaign');
     }
-}
+  } catch (error) {
+    console.error('Send campaign error:', error);
+    alert('Connection error. Please try again.');
+  }
+};
+
+window.deleteCampaign = async function (campaignId) {
+  if (!confirm('Are you sure you want to delete this campaign?')) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/campaigns/${campaignId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      loadCampaigns();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Failed to delete campaign');
+    }
+  } catch (error) {
+    console.error('Delete campaign error:', error);
+    alert('Connection error. Please try again.');
+  }
+};
 
 // Segment Modal
-window.openSegmentModal = function(segmentId = null) {
-    const modal = document.getElementById('segmentModal');
-    const form = document.getElementById('segmentForm');
-    
-    form.reset();
-    document.getElementById('segmentId').value = '';
-    document.getElementById('segmentModalTitle').textContent = 'Create Segment';
-    
-    if (segmentId) {
-        const segment = allSegments.find(s => s.id === segmentId);
-        if (segment) {
-            document.getElementById('segmentId').value = segment.id;
-            document.getElementById('segmentName').value = segment.name;
-            document.getElementById('segmentDescription').value = segment.description || '';
-            document.getElementById('segmentFilter').value = segment.filter_rules || '';
-            document.getElementById('segmentModalTitle').textContent = 'Edit Segment';
-        }
-    }
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+window.openSegmentModal = function (segmentId = null) {
+  const modal = document.getElementById('segmentModal');
+  const form = document.getElementById('segmentForm');
 
-window.closeSegmentModal = function() {
-    document.getElementById('segmentModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
+  form.reset();
+  document.getElementById('segmentId').value = '';
+  document.getElementById('segmentModalTitle').textContent = 'Create Segment';
+
+  if (segmentId) {
+    const segment = allSegments.find((s) => s.id === segmentId);
+    if (segment) {
+      document.getElementById('segmentId').value = segment.id;
+      document.getElementById('segmentName').value = segment.name;
+      document.getElementById('segmentDescription').value = segment.description || '';
+      document.getElementById('segmentFilter').value = segment.filter_rules || '';
+      document.getElementById('segmentModalTitle').textContent = 'Edit Segment';
+    }
+  }
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeSegmentModal = function () {
+  document.getElementById('segmentModal').classList.remove('active');
+  document.body.style.overflow = '';
+};
 
 async function handleSegmentSubmit(e) {
-    e.preventDefault();
-    
-    const segmentId = document.getElementById('segmentId').value;
-    const segmentData = {
-        name: document.getElementById('segmentName').value,
-        description: document.getElementById('segmentDescription').value || null,
-        filter_rules: document.getElementById('segmentFilter').value || null
-    };
-    
-    try {
-        const url = segmentId ? `/api/campaigns/segments/${segmentId}` : '/api/campaigns/segments';
-        const method = segmentId ? 'PUT' : 'POST';
-        
-        const response = await fetch(url, {
-            method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify(segmentData)
-        });
-        
-        if (response.ok) {
-            closeSegmentModal();
-            loadCampaigns();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Operation failed');
-        }
-    } catch (error) {
-        console.error('Segment submit error:', error);
-        alert('Connection error. Please try again.');
+  e.preventDefault();
+
+  const segmentId = document.getElementById('segmentId').value;
+  const segmentData = {
+    name: document.getElementById('segmentName').value,
+    description: document.getElementById('segmentDescription').value || null,
+    filter_rules: document.getElementById('segmentFilter').value || null,
+  };
+
+  try {
+    const url = segmentId ? `/api/campaigns/segments/${segmentId}` : '/api/campaigns/segments';
+    const method = segmentId ? 'PUT' : 'POST';
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(segmentData),
+    });
+
+    if (response.ok) {
+      closeSegmentModal();
+      loadCampaigns();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Operation failed');
     }
+  } catch (error) {
+    console.error('Segment submit error:', error);
+    alert('Connection error. Please try again.');
+  }
 }
 
-window.editSegment = function(segmentId) {
-    openSegmentModal(segmentId);
-}
+window.editSegment = function (segmentId) {
+  openSegmentModal(segmentId);
+};
 
-window.deleteSegment = async function(segmentId) {
-    if (!confirm('Are you sure you want to delete this segment?')) return;
-    
-    try {
-        const response = await fetch(`/api/campaigns/segments/${segmentId}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            loadCampaigns();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Failed to delete segment');
-        }
-    } catch (error) {
-        console.error('Delete segment error:', error);
-        alert('Connection error. Please try again.');
+window.deleteSegment = async function (segmentId) {
+  if (!confirm('Are you sure you want to delete this segment?')) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/campaigns/segments/${segmentId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      loadCampaigns();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Failed to delete segment');
     }
-}
+  } catch (error) {
+    console.error('Delete segment error:', error);
+    alert('Connection error. Please try again.');
+  }
+};
 
 // Template Modal
-window.openTemplateModal = function(templateId = null) {
-    const modal = document.getElementById('templateModal');
-    const form = document.getElementById('templateForm');
-    
-    form.reset();
-    document.getElementById('templateId').value = '';
-    document.getElementById('templateModalTitle').textContent = 'Create Template';
-    
-    if (templateId) {
-        const template = allTemplates.find(t => t.id === templateId);
-        if (template) {
-            document.getElementById('templateId').value = template.id;
-            document.getElementById('templateName').value = template.name;
-            document.getElementById('templateCategory').value = template.category || 'general';
-            document.getElementById('templateSubject').value = template.subject;
-            document.getElementById('templateContent').value = template.content;
-            document.getElementById('templateModalTitle').textContent = 'Edit Template';
-        }
-    }
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+window.openTemplateModal = function (templateId = null) {
+  const modal = document.getElementById('templateModal');
+  const form = document.getElementById('templateForm');
 
-window.closeTemplateModal = function() {
-    document.getElementById('templateModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
+  form.reset();
+  document.getElementById('templateId').value = '';
+  document.getElementById('templateModalTitle').textContent = 'Create Template';
+
+  if (templateId) {
+    const template = allTemplates.find((t) => t.id === templateId);
+    if (template) {
+      document.getElementById('templateId').value = template.id;
+      document.getElementById('templateName').value = template.name;
+      document.getElementById('templateCategory').value = template.category || 'general';
+      document.getElementById('templateSubject').value = template.subject;
+      document.getElementById('templateContent').value = template.content;
+      document.getElementById('templateModalTitle').textContent = 'Edit Template';
+    }
+  }
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeTemplateModal = function () {
+  document.getElementById('templateModal').classList.remove('active');
+  document.body.style.overflow = '';
+};
 
 async function handleTemplateSubmit(e) {
-    e.preventDefault();
-    
-    const templateId = document.getElementById('templateId').value;
-    const templateData = {
-        name: document.getElementById('templateName').value,
-        subject: document.getElementById('templateSubject').value,
-        content: document.getElementById('templateContent').value,
-        category: document.getElementById('templateCategory').value
-    };
-    
-    try {
-        const url = templateId ? `/api/campaigns/templates/${templateId}` : '/api/campaigns/templates';
-        const method = templateId ? 'PUT' : 'POST';
-        
-        const response = await fetch(url, {
-            method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify(templateData)
-        });
-        
-        if (response.ok) {
-            closeTemplateModal();
-            loadCampaigns();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Operation failed');
-        }
-    } catch (error) {
-        console.error('Template submit error:', error);
-        alert('Connection error. Please try again.');
+  e.preventDefault();
+
+  const templateId = document.getElementById('templateId').value;
+  const templateData = {
+    name: document.getElementById('templateName').value,
+    subject: document.getElementById('templateSubject').value,
+    content: document.getElementById('templateContent').value,
+    category: document.getElementById('templateCategory').value,
+  };
+
+  try {
+    const url = templateId ? `/api/campaigns/templates/${templateId}` : '/api/campaigns/templates';
+    const method = templateId ? 'PUT' : 'POST';
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(templateData),
+    });
+
+    if (response.ok) {
+      closeTemplateModal();
+      loadCampaigns();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Operation failed');
     }
+  } catch (error) {
+    console.error('Template submit error:', error);
+    alert('Connection error. Please try again.');
+  }
 }
 
-window.editTemplate = function(templateId) {
-    openTemplateModal(templateId);
-}
+window.editTemplate = function (templateId) {
+  openTemplateModal(templateId);
+};
 
-window.deleteTemplate = async function(templateId) {
-    if (!confirm('Are you sure you want to delete this template?')) return;
-    
-    try {
-        const response = await fetch(`/api/campaigns/templates/${templateId}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (response.ok) {
-            loadCampaigns();
-        } else {
-            const data = await response.json();
-            alert(data.message || 'Failed to delete template');
-        }
-    } catch (error) {
-        console.error('Delete template error:', error);
-        alert('Connection error. Please try again.');
+window.deleteTemplate = async function (templateId) {
+  if (!confirm('Are you sure you want to delete this template?')) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/campaigns/templates/${templateId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (response.ok) {
+      loadCampaigns();
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Failed to delete template');
     }
-}
+  } catch (error) {
+    console.error('Delete template error:', error);
+    alert('Connection error. Please try again.');
+  }
+};
 
 // Helper functions
 function getCampaignStatusBadge(status) {
-    const badges = {
-        'draft': 'secondary',
-        'scheduled': 'info',
-        'sending': 'warning',
-        'sent': 'success',
-        'failed': 'danger'
-    };
-    return badges[status] || 'secondary';
+  const badges = {
+    draft: 'secondary',
+    scheduled: 'info',
+    sending: 'warning',
+    sent: 'success',
+    failed: 'danger',
+  };
+  return badges[status] || 'secondary';
 }
 
 function getTemplateCategoryBadge(category) {
-    const badges = {
-        'general': 'secondary',
-        'welcome': 'success',
-        'follow-up': 'info',
-        'promotional': 'warning',
-        'newsletter': 'primary'
-    };
-    return badges[category] || 'secondary';
+  const badges = {
+    general: 'secondary',
+    welcome: 'success',
+    'follow-up': 'info',
+    promotional: 'warning',
+    newsletter: 'primary',
+  };
+  return badges[category] || 'secondary';
 }
 
 function formatRelativeTime(dateString) {
-    if (!dateString) return '';
-    
-    const date = new Date(dateString);
-    const now = new Date();
-    const diff = now - date;
-    
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
-    
-    if (minutes < 1) return 'Just now';
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    if (days < 7) return `${days}d ago`;
-    
-    return date.toLocaleDateString();
+  if (!dateString) {
+    return '';
+  }
+
+  const date = new Date(dateString);
+  const now = new Date();
+  const diff = now - date;
+
+  const minutes = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+
+  if (minutes < 1) {
+    return 'Just now';
+  }
+  if (minutes < 60) {
+    return `${minutes}m ago`;
+  }
+  if (hours < 24) {
+    return `${hours}h ago`;
+  }
+  if (days < 7) {
+    return `${days}d ago`;
+  }
+
+  return date.toLocaleDateString();
 }
 
 // ============ BACKUP & RESTORE ============
 
 async function loadBackups() {
-    try {
-        const response = await fetch('/api/backup/list', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        const data = await response.json();
-        
-        const container = document.getElementById('backupsList');
-        if (!data.success || !data.backups || data.backups.length === 0) {
-            container.innerHTML = '<p class="empty-message">No backups found. Create your first backup!</p>';
-            return;
-        }
-        
-        container.innerHTML = data.backups.map(backup => `
+  try {
+    const response = await fetch('/api/backup/list', {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+    const data = await response.json();
+
+    const container = document.getElementById('backupsList');
+    if (!data.success || !data.backups || data.backups.length === 0) {
+      container.innerHTML =
+        '<p class="empty-message">No backups found. Create your first backup!</p>';
+      return;
+    }
+
+    container.innerHTML = data.backups
+      .map(
+        (backup) => `
             <div class="backup-item">
                 <div class="backup-info">
                     <span class="backup-name">${backup.filename}</span>
@@ -1971,188 +2288,208 @@ async function loadBackups() {
                     <button class="btn btn-small btn-danger" onclick="deleteBackup('${backup.filename}')">🗑️</button>
                 </div>
             </div>
-        `).join('');
-    } catch (error) {
-        console.error('Load backups error:', error);
-        document.getElementById('backupsList').innerHTML = '<p class="error-message">Failed to load backups</p>';
-    }
+        `
+      )
+      .join('');
+  } catch (error) {
+    console.error('Load backups error:', error);
+    document.getElementById('backupsList').innerHTML =
+      '<p class="error-message">Failed to load backups</p>';
+  }
 }
 
 async function createBackup() {
-    const name = document.getElementById('backupName').value.trim();
-    
-    try {
-        showNotification('Creating backup...', 'info');
-        
-        const response = await fetch('/api/backup/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify({ name })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            showNotification(`Backup created: ${data.filename} (${data.size})`, 'success');
-            document.getElementById('backupName').value = '';
-            loadBackups();
-        } else {
-            showNotification(data.message || 'Backup failed', 'error');
-        }
-    } catch (error) {
-        console.error('Create backup error:', error);
-        showNotification('Failed to create backup', 'error');
+  const name = document.getElementById('backupName').value.trim();
+
+  try {
+    showNotification('Creating backup...', 'info');
+
+    const response = await fetch('/api/backup/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ name }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      showNotification(`Backup created: ${data.filename} (${data.size})`, 'success');
+      document.getElementById('backupName').value = '';
+      loadBackups();
+    } else {
+      showNotification(data.message || 'Backup failed', 'error');
     }
+  } catch (error) {
+    console.error('Create backup error:', error);
+    showNotification('Failed to create backup', 'error');
+  }
 }
 
 async function exportDatabaseDirect() {
-    try {
-        showNotification('Preparing export...', 'info');
-        
-        const response = await fetch('/api/backup/export', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        if (!response.ok) throw new Error('Export failed');
-        
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `sfg-export-${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove();
-        
-        showNotification('Export downloaded', 'success');
-    } catch (error) {
-        console.error('Export error:', error);
-        showNotification('Failed to export database', 'error');
+  try {
+    showNotification('Preparing export...', 'info');
+
+    const response = await fetch('/api/backup/export', {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    if (!response.ok) {
+      throw new Error('Export failed');
     }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `sfg-export-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+
+    showNotification('Export downloaded', 'success');
+  } catch (error) {
+    console.error('Export error:', error);
+    showNotification('Failed to export database', 'error');
+  }
 }
 
-async function downloadBackup(filename) {
-    try {
-        window.open(`/api/backup/download/${filename}?token=${authToken}`, '_blank');
-    } catch (error) {
-        console.error('Download error:', error);
-        showNotification('Failed to download backup', 'error');
-    }
+function downloadBackup(filename) {
+  try {
+    window.open(`/api/backup/download/${filename}?token=${authToken}`, '_blank');
+  } catch (error) {
+    console.error('Download error:', error);
+    showNotification('Failed to download backup', 'error');
+  }
 }
 
 async function restoreFromBackup(filename) {
-    if (!confirm(`Are you sure you want to restore from "${filename}"?\n\nThis will replace ALL current data. A safety backup will be created first.`)) {
-        return;
+  if (
+    !confirm(
+      `Are you sure you want to restore from "${filename}"?\n\nThis will replace ALL current data. A safety backup will be created first.`
+    )
+  ) {
+    return;
+  }
+
+  try {
+    showNotification('Restoring...', 'info');
+
+    const response = await fetch('/api/backup/restore', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ filename }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      showNotification(
+        `Restored ${data.totalRecords} records. Safety backup: ${data.preRestoreBackup}`,
+        'success'
+      );
+      // Reload the page to reflect changes
+      setTimeout(() => window.location.reload(), 2000);
+    } else {
+      showNotification(data.message || 'Restore failed', 'error');
     }
-    
-    try {
-        showNotification('Restoring...', 'info');
-        
-        const response = await fetch('/api/backup/restore', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify({ filename })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            showNotification(`Restored ${data.totalRecords} records. Safety backup: ${data.preRestoreBackup}`, 'success');
-            // Reload the page to reflect changes
-            setTimeout(() => window.location.reload(), 2000);
-        } else {
-            showNotification(data.message || 'Restore failed', 'error');
-        }
-    } catch (error) {
-        console.error('Restore error:', error);
-        showNotification('Failed to restore backup', 'error');
-    }
+  } catch (error) {
+    console.error('Restore error:', error);
+    showNotification('Failed to restore backup', 'error');
+  }
 }
 
 async function handleRestoreFile(input) {
-    const file = input.files[0];
-    if (!file) return;
-    
-    if (!confirm(`Are you sure you want to restore from "${file.name}"?\n\nThis will replace ALL current data. A safety backup will be created first.`)) {
-        input.value = '';
-        return;
-    }
-    
-    try {
-        showNotification('Reading and restoring...', 'info');
-        
-        const text = await file.text();
-        const jsonData = JSON.parse(text);
-        
-        const response = await fetch('/api/backup/restore', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify({ data: jsonData })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            showNotification(`Restored ${data.totalRecords} records from file.`, 'success');
-            setTimeout(() => window.location.reload(), 2000);
-        } else {
-            showNotification(data.message || 'Restore failed', 'error');
-        }
-    } catch (error) {
-        console.error('Restore file error:', error);
-        showNotification('Failed to parse or restore backup file', 'error');
-    }
-    
+  const file = input.files[0];
+  if (!file) {
+    return;
+  }
+
+  if (
+    !confirm(
+      `Are you sure you want to restore from "${file.name}"?\n\nThis will replace ALL current data. A safety backup will be created first.`
+    )
+  ) {
     input.value = '';
+    return;
+  }
+
+  try {
+    showNotification('Reading and restoring...', 'info');
+
+    const text = await file.text();
+    const jsonData = JSON.parse(text);
+
+    const response = await fetch('/api/backup/restore', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ data: jsonData }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      showNotification(`Restored ${data.totalRecords} records from file.`, 'success');
+      setTimeout(() => window.location.reload(), 2000);
+    } else {
+      showNotification(data.message || 'Restore failed', 'error');
+    }
+  } catch (error) {
+    console.error('Restore file error:', error);
+    showNotification('Failed to parse or restore backup file', 'error');
+  }
+
+  input.value = '';
 }
 
 async function deleteBackup(filename) {
-    if (!confirm(`Delete backup "${filename}"?`)) return;
-    
-    try {
-        const response = await fetch(`/api/backup/${filename}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            showNotification('Backup deleted', 'success');
-            loadBackups();
-        } else {
-            showNotification(data.message || 'Delete failed', 'error');
-        }
-    } catch (error) {
-        console.error('Delete backup error:', error);
-        showNotification('Failed to delete backup', 'error');
+  if (!confirm(`Delete backup "${filename}"?`)) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/backup/${filename}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      showNotification('Backup deleted', 'success');
+      loadBackups();
+    } else {
+      showNotification(data.message || 'Delete failed', 'error');
     }
+  } catch (error) {
+    console.error('Delete backup error:', error);
+    showNotification('Failed to delete backup', 'error');
+  }
 }
 
 // ============ DEMO DATA ============
 
 async function loadDemoStats() {
-    try {
-        const response = await fetch('/api/demo/stats', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        const data = await response.json();
-        
-        if (data.success) {
-            const { total, demo, real, totalRecords, demoRecords, realRecords } = data.stats;
-            const container = document.getElementById('demoStats');
-            if (container) {
-                container.innerHTML = `
+  try {
+    const response = await fetch('/api/demo/stats', {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+    const data = await response.json();
+
+    if (data.success) {
+      const { total, demo, real, totalRecords, demoRecords, realRecords } = data.stats;
+      const container = document.getElementById('demoStats');
+      if (container) {
+        container.innerHTML = `
                     <div class="demo-stats-summary">
                         <div class="summary-box demo-box">
                             <div class="summary-value">${demoRecords}</div>
@@ -2179,134 +2516,152 @@ async function loadDemoStats() {
                         <div class="stat-mini">📝 <strong>${total.contactSubmissions}</strong> Submissions <span class="demo-tag">(${demo.contactSubmissions} demo)</span></div>
                     </div>
                 `;
-            }
-            
-            // Also update DB stats tab
-            const dbContainer = document.getElementById('dbStats');
-            if (dbContainer) {
-                dbContainer.innerHTML = Object.entries(total)
-                    .map(([key, value]) => `
+      }
+
+      // Also update DB stats tab
+      const dbContainer = document.getElementById('dbStats');
+      if (dbContainer) {
+        dbContainer.innerHTML = Object.entries(total)
+          .map(
+            ([key, value]) => `
                         <div class="db-stat-card">
                             <div class="db-stat-value">${value}</div>
                             <div class="db-stat-label">${formatTableName(key)}</div>
                             <div class="db-stat-demo">${demo[key]} demo / ${real[key]} real</div>
                         </div>
-                    `).join('');
-            }
-        }
-    } catch (error) {
-        console.error('Load demo stats error:', error);
+                    `
+          )
+          .join('');
+      }
     }
+  } catch (error) {
+    console.error('Load demo stats error:', error);
+  }
 }
 
 function formatTableName(name) {
-    return name.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+  return name.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase());
 }
 
 async function generateDemoData(clearExisting = false) {
-    const action = clearExisting ? 'reset and regenerate' : 'add';
-    if (!confirm(`This will ${action} demo data. Continue?`)) return;
-    
-    try {
-        showNotification('Generating demo data...', 'info');
-        
-        const response = await fetch('/api/demo/generate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify({ clearExisting })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            const created = Object.entries(data.results.created)
-                .map(([k, v]) => `${v} ${k}`)
-                .join(', ');
-            showNotification(`Demo data created: ${created}`, 'success');
-            loadDemoStats();
-            loadDashboard();
-            loadClients();
-            loadProjects();
-        } else {
-            showNotification(data.message || 'Failed to generate demo data', 'error');
-        }
-    } catch (error) {
-        console.error('Generate demo data error:', error);
-        showNotification('Failed to generate demo data', 'error');
+  const action = clearExisting ? 'reset and regenerate' : 'add';
+  if (!confirm(`This will ${action} demo data. Continue?`)) {
+    return;
+  }
+
+  try {
+    showNotification('Generating demo data...', 'info');
+
+    const response = await fetch('/api/demo/generate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ clearExisting }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      const created = Object.entries(data.results.created)
+        .map(([k, v]) => `${v} ${k}`)
+        .join(', ');
+      showNotification(`Demo data created: ${created}`, 'success');
+      loadDemoStats();
+      loadDashboard();
+      loadClients();
+      loadProjects();
+    } else {
+      showNotification(data.message || 'Failed to generate demo data', 'error');
     }
+  } catch (error) {
+    console.error('Generate demo data error:', error);
+    showNotification('Failed to generate demo data', 'error');
+  }
 }
 
 async function clearDemoData(clearAll = false) {
-    const warningMsg = clearAll 
-        ? '⚠️ WARNING: This will DELETE ALL data except your admin account!\n\nAre you absolutely sure?'
-        : 'This will DELETE only demo data (marked with demo tag).\nYour real client data will be preserved.\n\nContinue?';
-    
-    if (!confirm(warningMsg)) return;
-    
-    if (clearAll && !confirm('Final confirmation: Delete ALL clients, projects, messages, and other data?')) return;
-    
-    try {
-        showNotification(clearAll ? 'Clearing all data...' : 'Clearing demo data...', 'info');
-        
-        const response = await fetch('/api/demo/clear', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify({ clearAll })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            showNotification(`${data.message} (${data.clearedCount} records)`, 'success');
-            loadDemoStats();
-            loadDashboard();
-            loadClients();
-            loadProjects();
-        } else {
-            showNotification(data.message || 'Failed to clear data', 'error');
-        }
-    } catch (error) {
-        console.error('Clear data error:', error);
-        showNotification('Failed to clear data', 'error');
+  const warningMsg = clearAll
+    ? '⚠️ WARNING: This will DELETE ALL data except your admin account!\n\nAre you absolutely sure?'
+    : 'This will DELETE only demo data (marked with demo tag).\nYour real client data will be preserved.\n\nContinue?';
+
+  if (!confirm(warningMsg)) {
+    return;
+  }
+
+  if (
+    clearAll &&
+    !confirm('Final confirmation: Delete ALL clients, projects, messages, and other data?')
+  ) {
+    return;
+  }
+
+  try {
+    showNotification(clearAll ? 'Clearing all data...' : 'Clearing demo data...', 'info');
+
+    const response = await fetch('/api/demo/clear', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ clearAll }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      showNotification(`${data.message} (${data.clearedCount} records)`, 'success');
+      loadDemoStats();
+      loadDashboard();
+      loadClients();
+      loadProjects();
+    } else {
+      showNotification(data.message || 'Failed to clear data', 'error');
     }
+  } catch (error) {
+    console.error('Clear data error:', error);
+    showNotification('Failed to clear data', 'error');
+  }
 }
 
 // Load system view data when viewing
 function loadSystemView() {
-    loadBackups();
-    loadDemoStats();
+  loadBackups();
+  loadDemoStats();
 }
 
-// Expose demo functions globally for onclick handlers
+// Expose functions globally for onclick handlers
 window.generateDemoData = generateDemoData;
 window.clearDemoData = clearDemoData;
+window.createBackup = createBackup;
+window.exportDatabaseDirect = exportDatabaseDirect;
+window.downloadBackup = downloadBackup;
+window.restoreFromBackup = restoreFromBackup;
+window.handleRestoreFile = handleRestoreFile;
+window.deleteBackup = deleteBackup;
 
 // Close modals on escape key
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        closeModal();
-        closeProjectModal();
-        closeRegisterModal();
-        closeCampaignModal();
-        closeSegmentModal();
-        closeTemplateModal();
-        closeMessageModal();
-        document.body.style.overflow = '';
-    }
+  if (e.key === 'Escape') {
+    closeModal();
+    closeProjectModal();
+    closeRegisterModal();
+    closeCampaignModal();
+    closeSegmentModal();
+    closeTemplateModal();
+    closeMessageModal();
+    document.body.style.overflow = '';
+  }
 });
 
 // Close modals on overlay click
-document.querySelectorAll('.modal').forEach(modal => {
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal && modal.id !== 'loginModal') {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
+document.querySelectorAll('.modal').forEach((modal) => {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal && modal.id !== 'loginModal') {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
 });

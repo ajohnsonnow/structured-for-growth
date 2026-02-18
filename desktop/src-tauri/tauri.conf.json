@@ -1,0 +1,80 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nicegui/tauri-schema/main/tauri.conf.json",
+  "productName": "Structured for Growth",
+  "version": "1.0.0",
+  "identifier": "com.structuredforgrowth.desktop",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "npm run dev:frontend",
+    "beforeBuildCommand": "npm run build:frontend"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "windows": [
+      {
+        "title": "Structured for Growth",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 900,
+        "minHeight": 600,
+        "resizable": true,
+        "center": true,
+        "decorations": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://structuredforgrowth.com https://api.structuredforgrowth.com"
+    },
+    "trayIcon": {
+      "iconPath": "icons/icon.png",
+      "tooltip": "Structured for Growth"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": "http://timestamp.digicert.com",
+      "wix": null,
+      "nsis": {
+        "installMode": "currentUser",
+        "displayLanguageSelector": false
+      }
+    },
+    "macOS": {
+      "minimumSystemVersion": "10.15",
+      "signingIdentity": null,
+      "entitlements": null
+    },
+    "linux": {
+      "deb": {
+        "depends": ["libssl-dev", "libgtk-3-dev", "libwebkit2gtk-4.1-dev"]
+      },
+      "appimage": {
+        "bundleMediaFramework": true
+      }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "endpoints": ["https://releases.structuredforgrowth.com/{{target}}/{{arch}}/{{current_version}}"],
+      "pubkey": "REPLACE_WITH_PUBLIC_KEY"
+    },
+    "sql": {
+      "preload": {
+        "db": "sqlite:sfg_local.db"
+      }
+    }
+  }
+}

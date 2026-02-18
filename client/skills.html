@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Web — Structured For Growth</title>
+    <meta name="description" content="Interactive skills visualization showing 29 interconnected capabilities across engineering, security, AI, leadership, content, and government — and how they bring your ideas to life.">
+    <link rel="canonical" href="https://structured-for-growth.onrender.com/skills">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Skills Web — Structured For Growth">
+    <meta property="og:description" content="29 interconnected capabilities across 6 domains. See how engineering, security, AI, and leadership combine to bring your ideas to life.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://structured-for-growth.com/skills">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/tooltip.css">
+    <link rel="stylesheet" href="/styles/skills.css">
+</head>
+<body>
+    <!-- Skip Navigation -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Nav injected by unifiedNav.js -->
+
+    <main id="main-content">
+        <!-- Breadcrumbs injected by unifiedNav.js -->
+
+        <!-- Hero -->
+        <section class="skills-hero">
+            <div class="container">
+                <h1 class="section-title">Skills Web</h1>
+                <p class="section-subtitle">
+                    <span id="skillCount">29</span> interconnected capabilities across
+                    <span id="categoryCount">6</span> domains.
+                    Click any node to see how it helps bring your ideas to life.
+                </p>
+            </div>
+        </section>
+
+        <!-- Category filters -->
+        <section class="skills-controls" aria-label="Skill filters">
+            <div class="container">
+                <div class="skills-filters" role="group" aria-label="Filter by domain">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <!-- Populated dynamically from skills.json categories -->
+                </div>
+
+                <div class="skills-view-toggle" role="radiogroup" aria-label="Visualization view">
+                    <button class="view-btn active" data-view="web" role="radio" aria-checked="true">
+                        <span data-icon="layout" data-icon-size="16"></span>
+                        Map View
+                    </button>
+                    <button class="view-btn" data-view="grid" role="radio" aria-checked="false">
+                        <span data-icon="grid" data-icon-size="16"></span>
+                        Grid View
+                    </button>
+                    <button class="view-btn" data-view="journeys" role="radio" aria-checked="false">
+                        <span data-icon="map" data-icon-size="16"></span>
+                        Client Journeys
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map visualization (category clusters) -->
+        <section id="skillsWebView" class="skills-map-section" aria-label="Skills map visualization">
+            <div class="container skills-map-container">
+                <div id="skillsNodes" class="skills-map-grid">
+                    <!-- Cluster grid rendered by JS -->
+                </div>
+
+                <!-- Detail panel (appears on chip click) -->
+                <aside id="skillDetail" class="skill-detail-panel" aria-live="polite" hidden>
+                    <button class="skill-detail-close" aria-label="Close detail panel">&times;</button>
+                    <div class="skill-detail-header">
+                        <span class="skill-detail-category-badge" id="detailCategory"></span>
+                        <h2 id="detailName" class="skill-detail-title"></h2>
+                        <div class="skill-detail-level" id="detailLevel" aria-label="Proficiency level"></div>
+                    </div>
+                    <p id="detailSummary" class="skill-detail-summary"></p>
+                    <div class="skill-detail-value">
+                        <h3>How This Helps You</h3>
+                        <p id="detailClientValue"></p>
+                    </div>
+                    <div class="skill-detail-uses">
+                        <h3>Use Cases</h3>
+                        <ul id="detailUseCases"></ul>
+                    </div>
+                    <div class="skill-detail-related">
+                        <h3>Connected Skills</h3>
+                        <div id="detailRelated" class="skill-related-chips"></div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Grid view (accessible alternative) -->
+        <section id="skillsGridView" class="skills-grid-section" hidden aria-label="Skills grid view">
+            <div class="container">
+                <div id="skillsGrid" class="skills-grid">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Client journeys view -->
+        <section id="skillsJourneysView" class="skills-journeys-section" hidden aria-label="Client journeys">
+            <div class="container">
+                <div id="journeysList" class="journeys-list">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="skills-cta">
+            <div class="container">
+                <h2>Ready to Bring Your Idea to Life?</h2>
+                <p>Every skill in this web exists to solve a real problem. Let's talk about yours.</p>
+                <a href="/#contact" class="btn btn-primary">Start the Conversation</a>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="/js/skills.js"></script>
+    <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
+            async src="https://gc.zgo.at/count.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const worker = reg.installing;
+            worker.addEventListener('statechange', () => {
+              if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('A new version is available. Reload now?')) {
+                  worker.postMessage({ type: 'SKIP_WAITING' });
+                  location.reload();
+                }
+              }
+            });
+          });
+        });
+      }
+    </script>
+</body>
+</html>

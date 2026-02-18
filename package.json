@@ -1,6 +1,6 @@
 {
   "name": "structured-for-growth-www",
-  "version": "1.4.8",
+  "version": "1.8.2",
   "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
   "main": "server/index.js",
   "type": "module",
@@ -21,8 +21,31 @@
     "audit:bump": "node scripts/audit.js --bump",
     "audit:major": "node scripts/audit.js --bump major",
     "audit:minor": "node scripts/audit.js --bump minor",
-    "predeploy": "npm run docs:generate && npm run audit:bump",
-    "prepush": "npm run docs:generate && npm run audit"
+    "predeploy": "npm run lint && npm run test && npm run docs:generate && npm run audit:bump",
+    "prepush": "npm run lint && npm run test && npm run docs:generate && npm run audit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:a11y": "vitest run tests/accessibility/",
+    "report:wcag": "node scripts/generate-wcag-report.js",
+    "report:sprs": "node scripts/sprs-score.js",
+    "audit:headers": "node scripts/audit-headers.js",
+    "report:readability": "node scripts/readability.js",
+    "test:ui": "vitest --ui",
+    "lint": "eslint server/ client/js/ scripts/ tests/",
+    "lint:fix": "eslint server/ client/js/ scripts/ tests/ --fix",
+    "format": "prettier --write \"server/**/*.js\" \"client/js/**/*.js\" \"tests/**/*.js\"",
+    "format:check": "prettier --check \"server/**/*.js\" \"client/js/**/*.js\" \"tests/**/*.js\"",
+    "sbom": "cyclonedx-npm --output-file sbom.json --output-reproducible",
+    "license:check": "license-checker --failOn 'GPL-3.0;AGPL-3.0;SSPL-1.0;EUPL-1.1;CPAL-1.0' --summary",
+    "ci": "npm run lint && npm run test && npm run build",
+    "migrate": "node server/migrations/run.js",
+    "migrate:status": "node server/migrations/run.js --status",
+    "migrate:create": "node server/migrations/run.js --create",
+    "db:seed": "node scripts/seed-admin.js",
+    "generate:nist53": "node scripts/generate-nist-800-53.js",
+    "generate:nist171": "node scripts/generate-nist-800-171r3.js",
+    "prepare": "husky"
   },
   "keywords": [
     "content-engineering",
@@ -32,9 +55,17 @@
   ],
   "author": "Structured For Growth",
   "license": "MIT",
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "csurf": "^1.11.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-rate-limit": "^7.1.5",
@@ -42,11 +73,31 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.7",
+    "qrcode": "^1.5.4",
+    "speakeasy": "^2.0.0",
     "sql.js": "^1.13.0",
-    "vite": "^5.0.8"
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "vite": "^5.0.8",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
+    "@cyclonedx/cyclonedx-npm": "^4.1.2",
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "axe-core": "^4.11.1",
     "concurrently": "^8.2.2",
-    "nodemon": "^3.0.2"
+    "eslint": "^10.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-node": "^11.1.0",
+    "globals": "^17.3.0",
+    "husky": "^9.1.7",
+    "jsdom": "^28.1.0",
+    "license-checker": "^25.0.1",
+    "lint-staged": "^16.2.7",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.8.1",
+    "supertest": "^7.2.2",
+    "vitest": "^4.0.18"
   }
 }

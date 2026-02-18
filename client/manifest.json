@@ -1,0 +1,53 @@
+{
+  "name": "Structured for Growth",
+  "short_name": "SFG",
+  "description": "Compliance management platform for government contractors — NIST, CUI, USACE, WCAG, and more.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "url": "/dashboard.html",
+      "description": "Go to the admin dashboard"
+    },
+    {
+      "name": "Templates",
+      "short_name": "Templates",
+      "url": "/templates.html",
+      "description": "Browse compliance templates"
+    },
+    {
+      "name": "Compliance",
+      "short_name": "Compliance",
+      "url": "/compliance.html",
+      "description": "Compliance framework tracker"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+sfg",
+      "url": "/?action=%s"
+    }
+  ],
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}

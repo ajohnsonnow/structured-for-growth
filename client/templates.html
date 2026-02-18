@@ -4,19 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Template Library - Structured For Growth</title>
+    <meta name="description" content="Reusable code patterns and components for rapid development. Authentication, CRUD, forms, API integration, and accessibility templates.">
+    <link rel="canonical" href="https://structured-for-growth.onrender.com/templates">
+    <meta property="og:title" content="Template Library — Structured For Growth">
+    <meta property="og:description" content="Reusable code patterns and components for rapid development.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://structured-for-growth.onrender.com/templates">
+    <meta name="twitter:card" content="summary">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/tooltip.css">
     <link rel="stylesheet" href="/styles/templates.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
 
+    <!-- Announcer for screen readers (P1.3.3) -->
+    <div id="liveAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
     <!-- Navigation -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
             <div class="nav-brand">
-                <a href="/"><h1>Structured <span class="highlight">For Growth</span></h1></a>
+                <a href="/"><span class="nav-brand-title">Structured <span class="highlight">For Growth</span></span></a>
                 <span class="nav-byline">Agentic Solutions that Scale</span>
             </div>
             <ul class="nav-menu" id="nav-menu" role="menubar">
@@ -35,8 +50,9 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <!-- Hero -->
-    <section id="main-content" class="hero-small">
+    <section class="hero-small">
         <div class="container">
             <h1>Template Library</h1>
             <p>Reusable code patterns and components for rapid development</p>
@@ -64,7 +80,7 @@
             <div class="template-search">
                 <div class="search-wrapper">
                     <span class="search-icon">🔍</span>
-                    <input type="text" id="templateSearch" placeholder="Search templates by name, tag, or feature..." class="search-input">
+                    <input type="text" id="templateSearch" placeholder="Search templates by name, tag, or feature..." class="search-input" aria-label="Search templates">
                 </div>
             </div>
 
@@ -74,31 +90,32 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Template Detail Modal -->
-    <div id="templateModal" class="modal">
+    <div id="templateModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="templateTitle">
         <div class="modal-content modal-large">
             <div class="modal-header">
                 <div>
-                    <h2 id="templateTitle"></h2>
+                    <h2 id="templateTitle" aria-label="Template details">Loading…</h2>
                     <p id="templateDescription" class="template-modal-desc"></p>
                 </div>
                 <button class="modal-close" onclick="closeTemplateModal()">&times;</button>
             </div>
-            
+
             <div class="template-details">
                 <div class="template-meta">
                     <span class="badge" id="templateCategory"></span>
                     <span class="badge badge-primary" id="templateLanguage"></span>
                     <span class="badge badge-time" id="templateTimeSaved"></span>
                 </div>
-                
+
                 <div class="template-tabs">
                     <button class="tab active" data-tab="demo">🎮 Live Demo</button>
                     <button class="tab" data-tab="usage">📖 Usage</button>
                     <button class="tab" data-tab="notes">📋 Notes</button>
                 </div>
-                
+
                 <div class="template-tab-content">
                     <div id="demoTab" class="tab-content active">
                         <div class="demo-container">
@@ -114,11 +131,11 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div id="usageTab" class="tab-content">
                         <div id="templateUsage" class="template-prose"></div>
                     </div>
-                    
+
                     <div id="notesTab" class="tab-content">
                         <div id="templateNotes" class="template-prose"></div>
                     </div>
@@ -130,5 +147,22 @@
     <script type="module" src="/js/templates.js"></script>
     <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
             async src="https://gc.zgo.at/count.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const worker = reg.installing;
+            worker.addEventListener('statechange', () => {
+              if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('A new version is available. Reload now?')) {
+                  worker.postMessage({ type: 'SKIP_WAITING' });
+                  location.reload();
+                }
+              }
+            });
+          });
+        });
+      }
+    </script>
 </body>
 </html>

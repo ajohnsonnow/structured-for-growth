@@ -5,18 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MBAi Methodology - Structured For Growth</title>
     <meta name="description" content="The MBAi Methodology: an MBA in Sustainable Business, Servant Leadership forged through military service and technical communication leadership, and 35+ years of technology - unified through Agentic AI across every enterprise function.">
+    <link rel="canonical" href="https://structuredforgrowth.com/mbai">
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MBAi Methodology - Structured For Growth">
+    <meta property="og:description" content="The MBAi Methodology: an MBA in Sustainable Business, Servant Leadership, and 35+ years of technology — unified through Agentic AI.">
+    <meta property="og:url" content="https://structuredforgrowth.com/mbai">
+    <meta name="twitter:card" content="summary">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/tooltip.css">
     <link rel="stylesheet" href="/styles/mbai.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
 
+    <!-- Announcer for screen readers (P1.3.3) -->
+    <div id="liveAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
             <div class="nav-brand">
-                <a href="/"><h1>Structured <span class="highlight">For Growth</span></h1></a>
+                <a href="/"><span class="nav-brand-title">Structured <span class="highlight">For Growth</span></span></a>
                 <span class="nav-byline">Agentic Solutions that Scale</span>
             </div>
             <ul class="nav-menu" id="nav-menu" role="menubar">
@@ -35,8 +50,9 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <!-- Hero -->
-    <section id="main-content" class="hero-small mbai-hero">
+    <section class="hero-small mbai-hero">
         <div class="container">
             <h1>MBAi <span class="highlight">Methodology</span></h1>
             <p class="hero-subtitle">Built on an MBA in Sustainable Business, a Servant Leadership practice forged through military service and technical communication leadership, and 35+ years of hands-on technology - integrated through Agentic AI into a unified enterprise operating system.</p>
@@ -49,17 +65,17 @@
             <div class="mbai-pillars">
                 <div class="mbai-pillar" data-pillar="mbai">
                     <div class="pillar-icon">🤖</div>
-                    <h3>MBAi Paradigm</h3>
+                    <h2>MBAi Paradigm</h2>
                     <p>35+ years of hands-on technology - from a 286 running DOS to building full-stack agentic systems - fused with formal business administration and AI governance.</p>
                 </div>
                 <div class="mbai-pillar" data-pillar="sustainable">
                     <div class="pillar-icon">🌍</div>
-                    <h3>Sustainable Business</h3>
+                    <h2>Sustainable Business</h2>
                     <p>Rooted in an MBA concentration in Sustainable Business - Triple Bottom Line accounting, circular economy, and ESG-driven operations as practiced disciplines, not theory.</p>
                 </div>
                 <div class="mbai-pillar" data-pillar="servant">
                     <div class="pillar-icon">🤝</div>
-                    <h3>Servant Leadership</h3>
+                    <h2>Servant Leadership</h2>
                     <p>Forged through 11 years of military service including two combat deployments, and seven years of technical writer-editor leadership - people-first governance built on empathy and accountability.</p>
                 </div>
             </div>
@@ -105,7 +121,7 @@
             <div class="mbai-search">
                 <div class="search-wrapper">
                     <span class="search-icon">🔍</span>
-                    <input type="text" id="mbaiSearch" placeholder="Search MBAi templates..." class="search-input">
+                    <input type="text" id="mbaiSearch" placeholder="Search MBAi templates..." class="search-input" aria-label="Search MBAi templates">
                 </div>
             </div>
 
@@ -118,13 +134,14 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Template Detail Modal -->
-    <div id="mbaiModal" class="modal">
+    <div id="mbaiModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="mbaiModalTitle">
         <div class="modal-content modal-large mbai-modal-content">
             <div class="modal-header">
                 <div>
-                    <h2 id="mbaiModalTitle"></h2>
+                    <h2 id="mbaiModalTitle">Loading…</h2>
                     <p id="mbaiModalDesc" class="template-modal-desc"></p>
                 </div>
                 <button class="modal-close" id="mbaiModalClose">&times;</button>
@@ -137,5 +154,22 @@
     <script type="module" src="/js/mbai.js"></script>
     <script data-goatcounter="https://structured-for-growth.goatcounter.com/count"
             async src="https://gc.zgo.at/count.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const worker = reg.installing;
+            worker.addEventListener('statechange', () => {
+              if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('A new version is available. Reload now?')) {
+                  worker.postMessage({ type: 'SKIP_WAITING' });
+                  location.reload();
+                }
+              }
+            });
+          });
+        });
+      }
+    </script>
 </body>
 </html>

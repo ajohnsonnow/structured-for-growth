@@ -1,0 +1,4526 @@
+{
+  "id": "nist-800-53",
+  "name": "NIST 800-53",
+  "fullName": "NIST Special Publication 800-53 Revision 5 — Security and Privacy Controls for Information Systems and Organizations",
+  "version": "Revision 5 (September 2020, updated December 2024)",
+  "governingBody": "NIST (National Institute of Standards and Technology)",
+  "jurisdiction": "United States",
+  "primaryAudience": [
+    "Federal Agencies",
+    "Government Contractors",
+    "FedRAMP Cloud Service Providers",
+    "Critical Infrastructure Operators"
+  ],
+  "description": "NIST SP 800-53 Rev 5 provides a comprehensive catalog of security and privacy controls for federal information systems and organizations. It serves as the foundational control framework for FISMA compliance, FedRAMP authorization, and is widely adopted across government and private sectors. The framework covers 20 control families spanning management, operational, and technical safeguards.",
+  "certificationDetails": {
+    "type": "authorization",
+    "reportTypes": [
+      "System Security Plan (SSP)",
+      "Security Assessment Report (SAR)",
+      "Plan of Action & Milestones (POA&M)",
+      "Authorization to Operate (ATO) Package"
+    ],
+    "assessor": "3PAO for FedRAMP; Agency ATO authority for FISMA",
+    "typicalCost": "$50,000 - $500,000+ (depends on system complexity and authorization type)",
+    "auditCycle": "Continuous monitoring with annual assessment",
+    "certificationBody": "Authorizing Official (AO) within sponsoring Federal Agency; FedRAMP PMO for cloud services"
+  },
+  "lifecycle": [
+    {
+      "phase": 1,
+      "name": "Categorize",
+      "description": "Categorize the information system and the information processed, stored, and transmitted based on FIPS 199 impact levels (Low, Moderate, High).",
+      "typicalDuration": "2-4 weeks",
+      "keyActivities": [
+        "Identify information types",
+        "Determine impact levels (confidentiality, integrity, availability)",
+        "Assign system categorization per FIPS 199",
+        "Document in SSP"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "Select",
+      "description": "Select an initial set of controls (baseline) for the system based on its categorization and tailor as needed.",
+      "typicalDuration": "2-4 weeks",
+      "keyActivities": [
+        "Select control baseline (Low, Moderate, High)",
+        "Apply scoping guidance",
+        "Tailor controls based on risk assessment",
+        "Supplement with additional controls as needed"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Implement",
+      "description": "Implement the selected security and privacy controls and document how they are deployed within the system and operating environment.",
+      "typicalDuration": "12-36 weeks",
+      "keyActivities": [
+        "Implement technical controls",
+        "Implement operational controls",
+        "Implement management controls",
+        "Document implementation details in SSP"
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "Assess",
+      "description": "Assess the security and privacy controls to determine if they are implemented correctly, operating as intended, and producing the desired outcomes.",
+      "typicalDuration": "4-12 weeks",
+      "keyActivities": [
+        "Develop Security Assessment Plan (SAP)",
+        "Conduct control assessment",
+        "Document findings in SAR",
+        "Identify weaknesses and deficiencies"
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "Authorize",
+      "description": "Authorize the system based on the determination that the risk to organizational operations and assets is acceptable.",
+      "typicalDuration": "2-4 weeks",
+      "keyActivities": [
+        "Prepare authorization package",
+        "Submit to Authorizing Official",
+        "Receive ATO decision",
+        "Document authorization terms and conditions"
+      ]
+    },
+    {
+      "phase": 6,
+      "name": "Monitor",
+      "description": "Continuously monitor the security and privacy controls, report on system security posture, and respond to changes in risk.",
+      "typicalDuration": "Ongoing",
+      "keyActivities": [
+        "Continuous control monitoring",
+        "Ongoing vulnerability management",
+        "Configuration change tracking",
+        "Annual assessment and ATO reauthorization"
+      ]
+    }
+  ],
+  "domains": [
+    {
+      "id": "access-control",
+      "name": "Access Control (AC)",
+      "description": "Policy and procedures for limiting system access to authorized users, processes, and devices.",
+      "required": true,
+      "controlCount": 25,
+      "controls": [
+        {
+          "id": "AC-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "AC-2",
+          "name": "Account Management",
+          "description": "Implement account management controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Account Management",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-3",
+          "name": "Access Enforcement",
+          "description": "Implement access enforcement controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Access Enforcement",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-4",
+          "name": "Information Flow Enforcement",
+          "description": "Implement information flow enforcement controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Flow Control",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-5",
+          "name": "Separation of Duties",
+          "description": "Implement separation of duties controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Separation of Duties",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-6",
+          "name": "Least Privilege",
+          "description": "Implement least privilege controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Least Privilege",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-7",
+          "name": "Unsuccessful Logon Attempts",
+          "description": "Implement unsuccessful logon attempts controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Authentication",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-8",
+          "name": "System Use Notification",
+          "description": "Implement system use notification controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Notification",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-9",
+          "name": "Previous Logon Notification",
+          "description": "Implement previous logon notification controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Notification",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-10",
+          "name": "Concurrent Session Control",
+          "description": "Implement concurrent session control controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Session",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-11",
+          "name": "Device Lock",
+          "description": "Implement device lock controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Device Lock",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-12",
+          "name": "Session Termination",
+          "description": "Implement session termination controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Session",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-13",
+          "name": "Supervision and Review — Access Control",
+          "description": "Implement supervision and review — access control controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-14",
+          "name": "Permitted Actions without Identification or Authentication",
+          "description": "Implement permitted actions without identification or authentication controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Authentication",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-15",
+          "name": "Automated Marking",
+          "description": "Implement automated marking controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-16",
+          "name": "Security and Privacy Attributes",
+          "description": "Implement security and privacy attributes controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Attributes",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-17",
+          "name": "Remote Access",
+          "description": "Implement remote access controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Remote Access",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-18",
+          "name": "Wireless Access",
+          "description": "Implement wireless access controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Wireless",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-19",
+          "name": "Access Control for Mobile Devices",
+          "description": "Implement access control for mobile devices controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Mobile",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-20",
+          "name": "Use of External Systems",
+          "description": "Implement use of external systems controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "External Systems",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-21",
+          "name": "Information Sharing",
+          "description": "Implement information sharing controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Information Sharing",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-22",
+          "name": "Publicly Accessible Content",
+          "description": "Implement publicly accessible content controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Public Content",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-23",
+          "name": "Data Mining Protection",
+          "description": "Implement data mining protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Data Mining",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-24",
+          "name": "Access Control Decisions",
+          "description": "Implement access control decisions controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Access Control",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AC-25",
+          "name": "Reference Monitor",
+          "description": "Implement reference monitor controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Reference Monitor",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "awareness-training",
+      "name": "Awareness and Training (AT)",
+      "description": "Ensure personnel are aware of security risks and adequately trained.",
+      "required": true,
+      "controlCount": 6,
+      "controls": [
+        {
+          "id": "AT-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "AT-2",
+          "name": "Literacy Training and Awareness",
+          "description": "Implement literacy training and awareness controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Awareness",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AT-3",
+          "name": "Role-Based Training",
+          "description": "Implement role-based training controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Training",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "AT-4",
+          "name": "Training Records",
+          "description": "Implement training records controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Records",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AT-5",
+          "name": "Contacts with Security Groups and Associations",
+          "description": "Implement contacts with security groups and associations controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AT-6",
+          "name": "Training Feedback",
+          "description": "Implement training feedback controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Feedback",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "audit-accountability",
+      "name": "Audit and Accountability (AU)",
+      "description": "Create, protect, and retain audit records for monitoring and investigation.",
+      "required": true,
+      "controlCount": 16,
+      "controls": [
+        {
+          "id": "AU-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "AU-2",
+          "name": "Event Logging",
+          "description": "Implement event logging controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Logging",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-3",
+          "name": "Content of Audit Records",
+          "description": "Implement content of audit records controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Logging",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-4",
+          "name": "Audit Log Storage Capacity",
+          "description": "Implement audit log storage capacity controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Storage",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-5",
+          "name": "Response to Audit Logging Process Failures",
+          "description": "Implement response to audit logging process failures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Failure Response",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-6",
+          "name": "Audit Record Review, Analysis, and Reporting",
+          "description": "Implement audit record review, analysis, and reporting controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Review",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-7",
+          "name": "Audit Record Reduction and Report Generation",
+          "description": "Implement audit record reduction and report generation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Analysis",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-8",
+          "name": "Time Stamps",
+          "description": "Implement time stamps controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Timestamps",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-9",
+          "name": "Protection of Audit Information",
+          "description": "Implement protection of audit information controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Protection",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-10",
+          "name": "Non-repudiation",
+          "description": "Implement non-repudiation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Non-repudiation",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-11",
+          "name": "Audit Record Retention",
+          "description": "Implement audit record retention controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Retention",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-12",
+          "name": "Audit Record Generation",
+          "description": "Implement audit record generation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Generation",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-13",
+          "name": "Monitoring for Information Disclosure",
+          "description": "Implement monitoring for information disclosure controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Monitoring",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-14",
+          "name": "Session Audit",
+          "description": "Implement session audit controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Session Audit",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-15",
+          "name": "Alternate Audit Logging Capability",
+          "description": "Implement alternate audit logging capability controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "AU-16",
+          "name": "Cross-Organizational Audit Logging",
+          "description": "Implement cross-organizational audit logging controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Cross-Org",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "assessment-authorization-monitoring",
+      "name": "Assessment, Authorization, and Monitoring (CA)",
+      "description": "Periodically assess controls, authorize systems, and monitor on an ongoing basis.",
+      "required": true,
+      "controlCount": 9,
+      "controls": [
+        {
+          "id": "CA-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "CA-2",
+          "name": "Control Assessments",
+          "description": "Implement control assessments controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Assessment",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "CA-3",
+          "name": "Information Exchange",
+          "description": "Implement information exchange controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Interconnection",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CA-4",
+          "name": "Security Certification",
+          "description": "Implement security certification controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CA-5",
+          "name": "Plan of Action and Milestones",
+          "description": "Implement plan of action and milestones controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "POA&M",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CA-6",
+          "name": "Authorization",
+          "description": "Implement authorization controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Authorization",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CA-7",
+          "name": "Continuous Monitoring",
+          "description": "Implement continuous monitoring controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Monitoring",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CA-8",
+          "name": "Penetration Testing",
+          "description": "Implement penetration testing controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Testing",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CA-9",
+          "name": "Internal System Connections",
+          "description": "Implement internal system connections controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Connections",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "configuration-management",
+      "name": "Configuration Management (CM)",
+      "description": "Establish and maintain baseline configurations and inventories.",
+      "required": true,
+      "controlCount": 14,
+      "controls": [
+        {
+          "id": "CM-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "CM-2",
+          "name": "Baseline Configuration",
+          "description": "Implement baseline configuration controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Baseline",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-3",
+          "name": "Configuration Change Control",
+          "description": "Implement configuration change control controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Change Control",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-4",
+          "name": "Impact Analyses",
+          "description": "Implement impact analyses controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Impact Analysis",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-5",
+          "name": "Access Restrictions for Change",
+          "description": "Implement access restrictions for change controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Access Control",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-6",
+          "name": "Configuration Settings",
+          "description": "Implement configuration settings controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Settings",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-7",
+          "name": "Least Functionality",
+          "description": "Implement least functionality controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Functionality",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-8",
+          "name": "System Component Inventory",
+          "description": "Implement system component inventory controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Inventory",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-9",
+          "name": "Configuration Management Plan",
+          "description": "Implement configuration management plan controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Planning",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "CM-10",
+          "name": "Software Usage Restrictions",
+          "description": "Implement software usage restrictions controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Software",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-11",
+          "name": "User-Installed Software",
+          "description": "Implement user-installed software controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Software",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-12",
+          "name": "Information Location",
+          "description": "Implement information location controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Data Location",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-13",
+          "name": "Data Action Mapping",
+          "description": "Implement data action mapping controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Data Mapping",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CM-14",
+          "name": "Signed Components",
+          "description": "Implement signed components controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Integrity",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "contingency-planning",
+      "name": "Contingency Planning (CP)",
+      "description": "Establish plans for emergency response, backup operations, and post-disaster recovery.",
+      "required": true,
+      "controlCount": 13,
+      "controls": [
+        {
+          "id": "CP-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "CP-2",
+          "name": "Contingency Plan",
+          "description": "Implement contingency plan controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Planning",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "CP-3",
+          "name": "Contingency Training",
+          "description": "Implement contingency training controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Training",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "CP-4",
+          "name": "Contingency Plan Testing",
+          "description": "Implement contingency plan testing controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Testing",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CP-5",
+          "name": "Contingency Plan Update",
+          "description": "Implement contingency plan update controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CP-6",
+          "name": "Alternate Storage Site",
+          "description": "Implement alternate storage site controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Storage",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CP-7",
+          "name": "Alternate Processing Site",
+          "description": "Implement alternate processing site controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Processing",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CP-8",
+          "name": "Telecommunications Services",
+          "description": "Implement telecommunications services controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Telecom",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CP-9",
+          "name": "System Backup",
+          "description": "Implement system backup controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Backup",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CP-10",
+          "name": "System Recovery and Reconstitution",
+          "description": "Implement system recovery and reconstitution controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Recovery",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CP-11",
+          "name": "Alternate Communications Protocols",
+          "description": "Implement alternate communications protocols controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Communications",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CP-12",
+          "name": "Safe Mode",
+          "description": "Implement safe mode controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Safe Mode",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "CP-13",
+          "name": "Alternative Security Mechanisms",
+          "description": "Implement alternative security mechanisms controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Alternatives",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "identification-authentication",
+      "name": "Identification and Authentication (IA)",
+      "description": "Identify and authenticate users, processes, and devices before granting access.",
+      "required": true,
+      "controlCount": 12,
+      "controls": [
+        {
+          "id": "IA-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "IA-2",
+          "name": "Identification and Authentication (Organizational Users)",
+          "description": "Implement identification and authentication (organizational users) controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Authentication",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IA-3",
+          "name": "Device Identification and Authentication",
+          "description": "Implement device identification and authentication controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Device Auth",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IA-4",
+          "name": "Identifier Management",
+          "description": "Implement identifier management controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Identifiers",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IA-5",
+          "name": "Authenticator Management",
+          "description": "Implement authenticator management controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Authenticators",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IA-6",
+          "name": "Authentication Feedback",
+          "description": "Implement authentication feedback controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Feedback",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IA-7",
+          "name": "Cryptographic Module Authentication",
+          "description": "Implement cryptographic module authentication controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Cryptography",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IA-8",
+          "name": "Identification and Authentication (Non-Organizational Users)",
+          "description": "Implement identification and authentication (non-organizational users) controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "External Auth",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IA-9",
+          "name": "Service Identification and Authentication",
+          "description": "Implement service identification and authentication controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Service Auth",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IA-10",
+          "name": "Adaptive Authentication",
+          "description": "Implement adaptive authentication controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Adaptive Auth",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IA-11",
+          "name": "Re-authentication",
+          "description": "Implement re-authentication controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Re-auth",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IA-12",
+          "name": "Identity Proofing",
+          "description": "Implement identity proofing controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Identity Proofing",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "incident-response",
+      "name": "Incident Response (IR)",
+      "description": "Establish operational incident handling capability for detecting, analyzing, and responding to incidents.",
+      "required": true,
+      "controlCount": 10,
+      "controls": [
+        {
+          "id": "IR-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "IR-2",
+          "name": "Incident Response Training",
+          "description": "Implement incident response training controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Training",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "IR-3",
+          "name": "Incident Response Testing",
+          "description": "Implement incident response testing controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Testing",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IR-4",
+          "name": "Incident Handling",
+          "description": "Implement incident handling controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Handling",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IR-5",
+          "name": "Incident Monitoring",
+          "description": "Implement incident monitoring controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Monitoring",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IR-6",
+          "name": "Incident Reporting",
+          "description": "Implement incident reporting controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Reporting",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IR-7",
+          "name": "Incident Response Assistance",
+          "description": "Implement incident response assistance controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Assistance",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IR-8",
+          "name": "Incident Response Plan",
+          "description": "Implement incident response plan controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Planning",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "IR-9",
+          "name": "Information Spillage Response",
+          "description": "Implement information spillage response controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Spillage",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "IR-10",
+          "name": "Integrated Information Security Analysis Team",
+          "description": "Implement integrated information security analysis team controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "maintenance",
+      "name": "Maintenance (MA)",
+      "description": "Perform timely maintenance on systems and provide controls for maintenance tools and personnel.",
+      "required": true,
+      "controlCount": 7,
+      "controls": [
+        {
+          "id": "MA-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "MA-2",
+          "name": "Controlled Maintenance",
+          "description": "Implement controlled maintenance controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Maintenance",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MA-3",
+          "name": "Maintenance Tools",
+          "description": "Implement maintenance tools controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Tools",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MA-4",
+          "name": "Nonlocal Maintenance",
+          "description": "Implement nonlocal maintenance controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Remote Maintenance",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MA-5",
+          "name": "Maintenance Personnel",
+          "description": "Implement maintenance personnel controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Personnel",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MA-6",
+          "name": "Timely Maintenance",
+          "description": "Implement timely maintenance controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Timeliness",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MA-7",
+          "name": "Field Maintenance",
+          "description": "Implement field maintenance controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Field Maintenance",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "media-protection",
+      "name": "Media Protection (MP)",
+      "description": "Protect information system media, both paper and digital.",
+      "required": true,
+      "controlCount": 8,
+      "controls": [
+        {
+          "id": "MP-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "MP-2",
+          "name": "Media Access",
+          "description": "Implement media access controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Access",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MP-3",
+          "name": "Media Marking",
+          "description": "Implement media marking controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Marking",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MP-4",
+          "name": "Media Storage",
+          "description": "Implement media storage controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Storage",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MP-5",
+          "name": "Media Transport",
+          "description": "Implement media transport controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Transport",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MP-6",
+          "name": "Media Sanitization",
+          "description": "Implement media sanitization controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Sanitization",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MP-7",
+          "name": "Media Use",
+          "description": "Implement media use controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Use Restrictions",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "MP-8",
+          "name": "Media Downgrading",
+          "description": "Implement media downgrading controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Downgrading",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "physical-environmental",
+      "name": "Physical and Environmental Protection (PE)",
+      "description": "Limit physical access to systems and protect the physical plant and support infrastructure.",
+      "required": true,
+      "controlCount": 23,
+      "controls": [
+        {
+          "id": "PE-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "PE-2",
+          "name": "Physical Access Authorizations",
+          "description": "Implement physical access authorizations controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Authorization",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-3",
+          "name": "Physical Access Control",
+          "description": "Implement physical access control controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Access Control",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-4",
+          "name": "Access Control for Transmission",
+          "description": "Implement access control for transmission controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Transmission",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-5",
+          "name": "Access Control for Output Devices",
+          "description": "Implement access control for output devices controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Output Devices",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-6",
+          "name": "Monitoring Physical Access",
+          "description": "Implement monitoring physical access controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Monitoring",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-7",
+          "name": "Visitor Control",
+          "description": "Implement visitor control controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-8",
+          "name": "Visitor Access Records",
+          "description": "Implement visitor access records controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Visitor Records",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-9",
+          "name": "Power Equipment and Cabling",
+          "description": "Implement power equipment and cabling controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Power",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-10",
+          "name": "Emergency Shutoff",
+          "description": "Implement emergency shutoff controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Emergency",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-11",
+          "name": "Emergency Power",
+          "description": "Implement emergency power controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Emergency Power",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-12",
+          "name": "Emergency Lighting",
+          "description": "Implement emergency lighting controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Lighting",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-13",
+          "name": "Fire Protection",
+          "description": "Implement fire protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Fire",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-14",
+          "name": "Environmental Controls",
+          "description": "Implement environmental controls controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Environmental",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-15",
+          "name": "Water Damage Protection",
+          "description": "Implement water damage protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Water Protection",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-16",
+          "name": "Delivery and Removal",
+          "description": "Implement delivery and removal controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Delivery",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-17",
+          "name": "Alternate Work Site",
+          "description": "Implement alternate work site controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Alternate Site",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-18",
+          "name": "Location of System Components",
+          "description": "Implement location of system components controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Location",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-19",
+          "name": "Information Leakage",
+          "description": "Implement information leakage controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Leakage",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-20",
+          "name": "Asset Monitoring and Tracking",
+          "description": "Implement asset monitoring and tracking controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Monitoring",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-21",
+          "name": "Electromagnetic Pulse Protection",
+          "description": "Implement electromagnetic pulse protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "EMP",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-22",
+          "name": "Component Marking",
+          "description": "Implement component marking controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Marking",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PE-23",
+          "name": "Facility Location",
+          "description": "Implement facility location controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Location",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "planning",
+      "name": "Planning (PL)",
+      "description": "Develop, document, periodically update, and implement security and privacy plans.",
+      "required": true,
+      "controlCount": 11,
+      "controls": [
+        {
+          "id": "PL-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "PL-2",
+          "name": "System Security and Privacy Plans",
+          "description": "Implement system security and privacy plans controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Planning",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "PL-3",
+          "name": "Rules of Behavior Update",
+          "description": "Implement rules of behavior update controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PL-4",
+          "name": "Rules of Behavior",
+          "description": "Implement rules of behavior controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Rules of Behavior",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PL-5",
+          "name": "Privacy Impact Assessment",
+          "description": "Implement privacy impact assessment controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PL-6",
+          "name": "Security-Related Activity Planning",
+          "description": "Implement security-related activity planning controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PL-7",
+          "name": "Concept of Operations",
+          "description": "Implement concept of operations controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "CONOPS",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PL-8",
+          "name": "Security and Privacy Architectures",
+          "description": "Implement security and privacy architectures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Architecture",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PL-9",
+          "name": "Central Management",
+          "description": "Implement central management controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Central Management",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PL-10",
+          "name": "Baseline Selection",
+          "description": "Implement baseline selection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Baselines",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PL-11",
+          "name": "Baseline Tailoring",
+          "description": "Implement baseline tailoring controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Tailoring",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "program-management",
+      "name": "Program Management (PM)",
+      "description": "Organization-level controls for managing information security and privacy programs.",
+      "required": true,
+      "controlCount": 32,
+      "controls": [
+        {
+          "id": "PM-1",
+          "name": "Information Security Program Plan",
+          "description": "Implement information security program plan controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Program Plan",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-2",
+          "name": "Information Security Program Leadership Role",
+          "description": "Implement information security program leadership role controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Leadership",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-3",
+          "name": "Information Security and Privacy Resources",
+          "description": "Implement information security and privacy resources controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Resources",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-4",
+          "name": "Plan of Action and Milestones Process",
+          "description": "Implement plan of action and milestones process controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "POA&M",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-5",
+          "name": "System Inventory",
+          "description": "Implement system inventory controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Inventory",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-6",
+          "name": "Measures of Performance",
+          "description": "Implement measures of performance controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Metrics",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-7",
+          "name": "Enterprise Architecture",
+          "description": "Implement enterprise architecture controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Architecture",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-8",
+          "name": "Critical Infrastructure Plan",
+          "description": "Implement critical infrastructure plan controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Critical Infra",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-9",
+          "name": "Risk Management Strategy",
+          "description": "Implement risk management strategy controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Risk Management",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-10",
+          "name": "Authorization Process",
+          "description": "Implement authorization process controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Authorization",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-11",
+          "name": "Mission and Business Process Definition",
+          "description": "Implement mission and business process definition controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Mission",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-12",
+          "name": "Insider Threat Program",
+          "description": "Implement insider threat program controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Insider Threat",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-13",
+          "name": "Security and Privacy Workforce",
+          "description": "Implement security and privacy workforce controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Workforce",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-14",
+          "name": "Testing, Training, and Monitoring",
+          "description": "Implement testing, training, and monitoring controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "TTM",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-15",
+          "name": "Security and Privacy Groups and Associations",
+          "description": "Implement security and privacy groups and associations controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Groups",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-16",
+          "name": "Threat Awareness Program",
+          "description": "Implement threat awareness program controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Threat Awareness",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-17",
+          "name": "Protecting Controlled Unclassified Information on External Systems",
+          "description": "Implement protecting controlled unclassified information on external systems controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "CUI",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-18",
+          "name": "Privacy Program Plan",
+          "description": "Implement privacy program plan controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Privacy",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-19",
+          "name": "Privacy Program Leadership Role",
+          "description": "Implement privacy program leadership role controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Privacy",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-20",
+          "name": "Dissemination of Privacy Program Information",
+          "description": "Implement dissemination of privacy program information controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Privacy",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-21",
+          "name": "Accounting of Disclosures",
+          "description": "Implement accounting of disclosures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Privacy",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-22",
+          "name": "Personally Identifiable Information Quality Management",
+          "description": "Implement personally identifiable information quality management controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "PII",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-23",
+          "name": "Data Governance Body",
+          "description": "Implement data governance body controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Governance",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-24",
+          "name": "Data Integrity Board",
+          "description": "Implement data integrity board controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Data Integrity",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-25",
+          "name": "Minimization of Personally Identifiable Information Used in Testing, Training, and Research",
+          "description": "Implement minimization of personally identifiable information used in testing, training, and research controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "PII Minimization",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-26",
+          "name": "Complaint Management",
+          "description": "Implement complaint management controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Complaints",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-27",
+          "name": "Privacy Reporting",
+          "description": "Implement privacy reporting controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Privacy Reporting",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-28",
+          "name": "Risk Framing",
+          "description": "Implement risk framing controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Risk Framing",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-29",
+          "name": "Risk Management Program Leadership Roles",
+          "description": "Implement risk management program leadership roles controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Leadership",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-30",
+          "name": "Supply Chain Risk Management Strategy",
+          "description": "Implement supply chain risk management strategy controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Supply Chain",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-31",
+          "name": "Continuous Monitoring Strategy",
+          "description": "Implement continuous monitoring strategy controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "ConMon",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PM-32",
+          "name": "Purposing",
+          "description": "Implement purposing controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Purposing",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "personnel-security",
+      "name": "Personnel Security (PS)",
+      "description": "Ensure that individuals occupying positions of responsibility are trustworthy and meet security criteria.",
+      "required": true,
+      "controlCount": 9,
+      "controls": [
+        {
+          "id": "PS-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "PS-2",
+          "name": "Position Risk Designation",
+          "description": "Implement position risk designation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Risk Designation",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PS-3",
+          "name": "Personnel Screening",
+          "description": "Implement personnel screening controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Screening",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PS-4",
+          "name": "Personnel Termination",
+          "description": "Implement personnel termination controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Termination",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PS-5",
+          "name": "Personnel Transfer",
+          "description": "Implement personnel transfer controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Transfer",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PS-6",
+          "name": "Access Agreements",
+          "description": "Implement access agreements controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Agreements",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PS-7",
+          "name": "External Personnel Security",
+          "description": "Implement external personnel security controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "External",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PS-8",
+          "name": "Personnel Sanctions",
+          "description": "Implement personnel sanctions controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Sanctions",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PS-9",
+          "name": "Position Descriptions",
+          "description": "Implement position descriptions controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Positions",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "personally-identifiable-information",
+      "name": "Personally Identifiable Information Processing and Transparency (PT)",
+      "description": "Apply privacy principles to PII processing and provide transparency.",
+      "required": true,
+      "controlCount": 8,
+      "controls": [
+        {
+          "id": "PT-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "PT-2",
+          "name": "Authority to Process Personally Identifiable Information",
+          "description": "Implement authority to process personally identifiable information controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Authority",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PT-3",
+          "name": "Personally Identifiable Information Processing Purposes",
+          "description": "Implement personally identifiable information processing purposes controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Purpose",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PT-4",
+          "name": "Consent",
+          "description": "Implement consent controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Consent",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PT-5",
+          "name": "Privacy Notice",
+          "description": "Implement privacy notice controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Notice",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PT-6",
+          "name": "System of Records Notice",
+          "description": "Implement system of records notice controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "SORN",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PT-7",
+          "name": "Specific Categories of Personally Identifiable Information",
+          "description": "Implement specific categories of personally identifiable information controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Categories",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "PT-8",
+          "name": "Computer Matching Requirements",
+          "description": "Implement computer matching requirements controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Matching",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "risk-assessment",
+      "name": "Risk Assessment (RA)",
+      "description": "Assess risk to organizational operations, assets, individuals, and other organizations.",
+      "required": true,
+      "controlCount": 10,
+      "controls": [
+        {
+          "id": "RA-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "RA-2",
+          "name": "Security Categorization",
+          "description": "Implement security categorization controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Categorization",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "RA-3",
+          "name": "Risk Assessment",
+          "description": "Implement risk assessment controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Assessment",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "RA-4",
+          "name": "Risk Assessment Update",
+          "description": "Implement risk assessment update controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "RA-5",
+          "name": "Vulnerability Monitoring and Scanning",
+          "description": "Implement vulnerability monitoring and scanning controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Vulnerability Scanning",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "RA-6",
+          "name": "Technical Surveillance Countermeasures Survey",
+          "description": "Implement technical surveillance countermeasures survey controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "TSCM",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "RA-7",
+          "name": "Risk Response",
+          "description": "Implement risk response controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Response",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "RA-8",
+          "name": "Privacy Impact Assessments",
+          "description": "Implement privacy impact assessments controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "PIA",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "RA-9",
+          "name": "Criticality Analysis",
+          "description": "Implement criticality analysis controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Criticality",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "RA-10",
+          "name": "Threat Hunting",
+          "description": "Implement threat hunting controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Threat Hunting",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "system-services-acquisition",
+      "name": "System and Services Acquisition (SA)",
+      "description": "Allocate resources, employ development lifecycle, and manage supply chain for system security.",
+      "required": true,
+      "controlCount": 23,
+      "controls": [
+        {
+          "id": "SA-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "SA-2",
+          "name": "Allocation of Resources",
+          "description": "Implement allocation of resources controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Resources",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-3",
+          "name": "System Development Life Cycle",
+          "description": "Implement system development life cycle controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "SDLC",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-4",
+          "name": "Acquisition Process",
+          "description": "Implement acquisition process controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Acquisition",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-5",
+          "name": "System Documentation",
+          "description": "Implement system documentation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Documentation",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-6",
+          "name": "Software Usage Restrictions",
+          "description": "Implement software usage restrictions controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-7",
+          "name": "User-Installed Software",
+          "description": "Implement user-installed software controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-8",
+          "name": "Security and Privacy Engineering Principles",
+          "description": "Implement security and privacy engineering principles controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Engineering",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-9",
+          "name": "External System Services",
+          "description": "Implement external system services controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "External Services",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-10",
+          "name": "Developer Configuration Management",
+          "description": "Implement developer configuration management controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Dev CM",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-11",
+          "name": "Developer Testing and Evaluation",
+          "description": "Implement developer testing and evaluation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Dev Testing",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-12",
+          "name": "Supply Chain Protection",
+          "description": "Implement supply chain protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-13",
+          "name": "Trustworthiness",
+          "description": "Implement trustworthiness controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-14",
+          "name": "Criticality Analysis",
+          "description": "Implement criticality analysis controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-15",
+          "name": "Development Process, Standards, and Tools",
+          "description": "Implement development process, standards, and tools controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Dev Process",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-16",
+          "name": "Developer-Provided Training",
+          "description": "Implement developer-provided training controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Training",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "SA-17",
+          "name": "Developer Security and Privacy Architecture and Design",
+          "description": "Implement developer security and privacy architecture and design controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Architecture",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-18",
+          "name": "Tamper Resistance and Detection",
+          "description": "Implement tamper resistance and detection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-19",
+          "name": "Component Authenticity",
+          "description": "Implement component authenticity controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-20",
+          "name": "Customized Development of Critical Components",
+          "description": "Implement customized development of critical components controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Custom Dev",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-21",
+          "name": "Developer Screening",
+          "description": "Implement developer screening controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Screening",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-22",
+          "name": "Unsupported System Components",
+          "description": "Implement unsupported system components controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Unsupported",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SA-23",
+          "name": "Specialization",
+          "description": "Implement specialization controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Specialization",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "system-communications-protection",
+      "name": "System and Communications Protection (SC)",
+      "description": "Monitor, control, and protect communications at system boundaries.",
+      "required": true,
+      "controlCount": 51,
+      "controls": [
+        {
+          "id": "SC-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "SC-2",
+          "name": "Separation of System and User Functionality",
+          "description": "Implement separation of system and user functionality controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Separation",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-3",
+          "name": "Security Function Isolation",
+          "description": "Implement security function isolation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Isolation",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-4",
+          "name": "Information in Shared System Resources",
+          "description": "Implement information in shared system resources controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Shared Resources",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-5",
+          "name": "Denial-of-Service Protection",
+          "description": "Implement denial-of-service protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "DoS Protection",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-6",
+          "name": "Resource Availability",
+          "description": "Implement resource availability controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Availability",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-7",
+          "name": "Boundary Protection",
+          "description": "Implement boundary protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Boundary",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-8",
+          "name": "Transmission Confidentiality and Integrity",
+          "description": "Implement transmission confidentiality and integrity controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Transmission",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-9",
+          "name": "Transmission Confidentiality",
+          "description": "Implement transmission confidentiality controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-10",
+          "name": "Network Disconnect",
+          "description": "Implement network disconnect controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Disconnect",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-11",
+          "name": "Trusted Path",
+          "description": "Implement trusted path controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Trusted Path",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-12",
+          "name": "Cryptographic Key Establishment and Management",
+          "description": "Implement cryptographic key establishment and management controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Key Management",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-13",
+          "name": "Cryptographic Protection",
+          "description": "Implement cryptographic protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Cryptography",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-14",
+          "name": "Public Access Protections",
+          "description": "Implement public access protections controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-15",
+          "name": "Collaborative Computing Devices and Applications",
+          "description": "Implement collaborative computing devices and applications controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Collaboration",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-16",
+          "name": "Transmission of Security and Privacy Attributes",
+          "description": "Implement transmission of security and privacy attributes controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Attributes",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-17",
+          "name": "Public Key Infrastructure Certificates",
+          "description": "Implement public key infrastructure certificates controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "PKI",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-18",
+          "name": "Mobile Code",
+          "description": "Implement mobile code controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Mobile Code",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-19",
+          "name": "Voice over Internet Protocol",
+          "description": "Implement voice over internet protocol controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-20",
+          "name": "Secure Name/Address Resolution Service (Authoritative Source)",
+          "description": "Implement secure name/address resolution service (authoritative source) controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "DNS",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-21",
+          "name": "Secure Name/Address Resolution Service (Recursive or Caching Resolver)",
+          "description": "Implement secure name/address resolution service (recursive or caching resolver) controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "DNS",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-22",
+          "name": "Architecture and Provisioning for Name/Address Resolution Service",
+          "description": "Implement architecture and provisioning for name/address resolution service controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "DNS",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-23",
+          "name": "Session Authenticity",
+          "description": "Implement session authenticity controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Session",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-24",
+          "name": "Fail in Known State",
+          "description": "Implement fail in known state controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Fail Safe",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-25",
+          "name": "Thin Nodes",
+          "description": "Implement thin nodes controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Thin Nodes",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-26",
+          "name": "Honeypots",
+          "description": "Implement honeypots controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Honeypots",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-27",
+          "name": "Platform-Independent Applications",
+          "description": "Implement platform-independent applications controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Platform Independence",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-28",
+          "name": "Protection of Information at Rest",
+          "description": "Implement protection of information at rest controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Data at Rest",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-29",
+          "name": "Heterogeneity",
+          "description": "Implement heterogeneity controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Diversity",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-30",
+          "name": "Concealment and Misdirection",
+          "description": "Implement concealment and misdirection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Concealment",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-31",
+          "name": "Covert Channel Analysis",
+          "description": "Implement covert channel analysis controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Covert Channels",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-32",
+          "name": "System Partitioning",
+          "description": "Implement system partitioning controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Partitioning",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-33",
+          "name": "Transmission Preparation Integrity",
+          "description": "Implement transmission preparation integrity controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-34",
+          "name": "Non-Modifiable Executable Programs",
+          "description": "Implement non-modifiable executable programs controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Integrity",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-35",
+          "name": "External Malicious Code Identification",
+          "description": "Implement external malicious code identification controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Honeyclients",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-36",
+          "name": "Distributed Processing and Storage",
+          "description": "Implement distributed processing and storage controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Distributed",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-37",
+          "name": "Out-of-Band Channels",
+          "description": "Implement out-of-band channels controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "OOB",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-38",
+          "name": "Operations Security",
+          "description": "Implement operations security controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "OPSEC",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-39",
+          "name": "Process Isolation",
+          "description": "Implement process isolation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Isolation",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-40",
+          "name": "Wireless Link Protection",
+          "description": "Implement wireless link protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Wireless",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-41",
+          "name": "Port and I/O Device Access",
+          "description": "Implement port and i/o device access controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Port Access",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-42",
+          "name": "Sensor Capability and Data",
+          "description": "Implement sensor capability and data controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Sensors",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-43",
+          "name": "Usage Restrictions",
+          "description": "Implement usage restrictions controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Usage",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-44",
+          "name": "Detonation Chambers",
+          "description": "Implement detonation chambers controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Sandboxing",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-45",
+          "name": "System Time Synchronization",
+          "description": "Implement system time synchronization controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Time Sync",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-46",
+          "name": "Cross Domain Policy Enforcement",
+          "description": "Implement cross domain policy enforcement controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Cross Domain",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-47",
+          "name": "Alternate Communications Paths",
+          "description": "Implement alternate communications paths controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Alternate Paths",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-48",
+          "name": "Sensor Relocation",
+          "description": "Implement sensor relocation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Sensor Relocation",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-49",
+          "name": "Hardware-Enforced Separation and Policy Enforcement",
+          "description": "Implement hardware-enforced separation and policy enforcement controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Hardware Security",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-50",
+          "name": "Software-Enforced Separation and Policy Enforcement",
+          "description": "Implement software-enforced separation and policy enforcement controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Software Security",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SC-51",
+          "name": "Hardware-Based Protection",
+          "description": "Implement hardware-based protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Hardware Protection",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "system-information-integrity",
+      "name": "System and Information Integrity (SI)",
+      "description": "Identify, report, and correct system flaws in a timely manner.",
+      "required": true,
+      "controlCount": 23,
+      "controls": [
+        {
+          "id": "SI-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "SI-2",
+          "name": "Flaw Remediation",
+          "description": "Implement flaw remediation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Patching",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-3",
+          "name": "Malicious Code Protection",
+          "description": "Implement malicious code protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Antimalware",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-4",
+          "name": "System Monitoring",
+          "description": "Implement system monitoring controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Monitoring",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-5",
+          "name": "Security Alerts, Advisories, and Directives",
+          "description": "Implement security alerts, advisories, and directives controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Alerts",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-6",
+          "name": "Security and Privacy Function Verification",
+          "description": "Implement security and privacy function verification controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Verification",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-7",
+          "name": "Software, Firmware, and Information Integrity",
+          "description": "Implement software, firmware, and information integrity controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Integrity",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-8",
+          "name": "Spam Protection",
+          "description": "Implement spam protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Spam",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-9",
+          "name": "Information Input Restrictions",
+          "description": "Implement information input restrictions controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Withdrawn",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-10",
+          "name": "Information Input Validation",
+          "description": "Implement information input validation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Input Validation",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-11",
+          "name": "Error Handling",
+          "description": "Implement error handling controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Error Handling",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-12",
+          "name": "Information Management and Retention",
+          "description": "Implement information management and retention controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Retention",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-13",
+          "name": "Predictable Failure Prevention",
+          "description": "Implement predictable failure prevention controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Failure Prevention",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-14",
+          "name": "Non-Persistence",
+          "description": "Implement non-persistence controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Non-Persistence",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-15",
+          "name": "Information Output Filtering",
+          "description": "Implement information output filtering controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Output Filtering",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-16",
+          "name": "Memory Protection",
+          "description": "Implement memory protection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Memory Protection",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-17",
+          "name": "Fail-Safe Procedures",
+          "description": "Implement fail-safe procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Fail-Safe",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-18",
+          "name": "Personally Identifiable Information Quality Operations",
+          "description": "Implement personally identifiable information quality operations controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "PII Quality",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-19",
+          "name": "De-identification",
+          "description": "Implement de-identification controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "De-identification",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-20",
+          "name": "Tainting",
+          "description": "Implement tainting controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Tainting",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-21",
+          "name": "Information Refresh",
+          "description": "Implement information refresh controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Refresh",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-22",
+          "name": "Information Diversity",
+          "description": "Implement information diversity controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Diversity",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SI-23",
+          "name": "Information Fragmentation",
+          "description": "Implement information fragmentation controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Fragmentation",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    },
+    {
+      "id": "supply-chain-risk-management",
+      "name": "Supply Chain Risk Management (SR)",
+      "description": "Manage supply chain risks to federal information systems and organizations.",
+      "required": true,
+      "controlCount": 12,
+      "controls": [
+        {
+          "id": "SR-1",
+          "name": "Policy and Procedures",
+          "description": "Implement policy and procedures controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Policy",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "SR-2",
+          "name": "Supply Chain Risk Management Plan",
+          "description": "Implement supply chain risk management plan controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Planning",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "SR-3",
+          "name": "Supply Chain Controls and Processes",
+          "description": "Implement supply chain controls and processes controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Controls",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SR-4",
+          "name": "Provenance",
+          "description": "Implement provenance controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Provenance",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SR-5",
+          "name": "Acquisition Strategies, Tools, and Methods",
+          "description": "Implement acquisition strategies, tools, and methods controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Acquisition",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SR-6",
+          "name": "Supplier Assessments and Reviews",
+          "description": "Implement supplier assessments and reviews controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Assessment",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "manual"
+        },
+        {
+          "id": "SR-7",
+          "name": "Supply Chain Operations Security",
+          "description": "Implement supply chain operations security controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "OPSEC",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SR-8",
+          "name": "Notification Agreements",
+          "description": "Implement notification agreements controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "recommended",
+          "category": "Notification",
+          "baselines": {
+            "low": false,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SR-9",
+          "name": "Tamper Resistance and Detection",
+          "description": "Implement tamper resistance and detection controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Tamper",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SR-10",
+          "name": "Inspection of Systems or Components",
+          "description": "Implement inspection of systems or components controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "optional",
+          "category": "Inspection",
+          "baselines": {
+            "low": false,
+            "moderate": false,
+            "high": false
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SR-11",
+          "name": "Component Authenticity",
+          "description": "Implement component authenticity controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Authenticity",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        },
+        {
+          "id": "SR-12",
+          "name": "Component Disposal",
+          "description": "Implement component disposal controls as required by NIST SP 800-53 Rev 5.",
+          "implementationType": "required",
+          "category": "Disposal",
+          "baselines": {
+            "low": true,
+            "moderate": true,
+            "high": true
+          },
+          "automationCapability": "partial"
+        }
+      ]
+    }
+  ],
+  "requiredDocumentation": [
+    "System Security Plan (SSP)",
+    "Security Assessment Report (SAR)",
+    "Plan of Action & Milestones (POA&M)",
+    "Authorization to Operate (ATO) Package",
+    "Continuous Monitoring Strategy",
+    "Configuration Management Plan",
+    "Contingency Plan",
+    "Incident Response Plan",
+    "Network Architecture Diagrams",
+    "Data Flow Diagrams",
+    "Risk Assessment Report",
+    "Privacy Impact Assessment (PIA)",
+    "Business Impact Analysis (BIA)",
+    "Security Awareness Training Records"
+  ],
+  "breachNotification": {
+    "required": true,
+    "timeframe": "1 hour for major incidents to CISA; agency-specific timelines per OMB M-24-04",
+    "notifyAuthority": "CISA (Cybersecurity and Infrastructure Security Agency)",
+    "notifyIndividuals": true,
+    "threshold": "Any incident involving confirmed or suspected unauthorized access to PII or sensitive government information"
+  },
+  "relatedFrameworks": [
+    "nist-800-171",
+    "cmmc",
+    "fedramp",
+    "fisma",
+    "iso27001"
+  ],
+  "tags": [
+    "federal",
+    "government",
+    "fisma",
+    "fedramp",
+    "security-controls",
+    "united-states",
+    "ato"
+  ],
+  "resources": [
+    {
+      "title": "NIST SP 800-53 Rev 5 Full Publication",
+      "url": "https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final",
+      "type": "official"
+    },
+    {
+      "title": "NIST SP 800-53A Rev 5 — Assessment Procedures",
+      "url": "https://csrc.nist.gov/publications/detail/sp/800-53a/rev-5/final",
+      "type": "official"
+    },
+    {
+      "title": "NIST SP 800-53B — Control Baselines",
+      "url": "https://csrc.nist.gov/publications/detail/sp/800-53b/final",
+      "type": "official"
+    }
+  ]
+}

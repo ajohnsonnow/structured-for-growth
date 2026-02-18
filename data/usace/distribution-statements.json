@@ -1,0 +1,121 @@
+{
+  "distributionStatements": {
+    "A": {
+      "letter": "A",
+      "label": "Distribution Statement A",
+      "text": "Approved for public release; distribution is unlimited.",
+      "authority": "DoD Directive 5230.24",
+      "requiresReason": false,
+      "requiresDate": false,
+      "requiresOffice": false,
+      "description": "No restrictions on distribution. Typically applied to publicly funded, non-sensitive research.",
+      "usageGuidance": "Use when the information is cleared for public release by the appropriate authority."
+    },
+    "B": {
+      "letter": "B",
+      "label": "Distribution Statement B",
+      "text": "Distribution authorized to U.S. Government agencies only",
+      "authority": "DoD Directive 5230.24",
+      "requiresReason": true,
+      "requiresDate": true,
+      "requiresOffice": true,
+      "reasons": [
+        "Foreign Government Information",
+        "Proprietary Information",
+        "Critical Technology",
+        "Test and Evaluation",
+        "Contractor Performance Evaluation",
+        "Premature Dissemination",
+        "Administrative/Operational Use",
+        "Software Documentation",
+        "Specific Authority"
+      ],
+      "description": "Limited to U.S. Government agencies. Others must request through the controlling DoD office.",
+      "usageGuidance": "Include the reason for the restriction, the date of determination, and the controlling DoD office."
+    },
+    "C": {
+      "letter": "C",
+      "label": "Distribution Statement C",
+      "text": "Distribution authorized to U.S. Government agencies and their contractors",
+      "authority": "DoD Directive 5230.24",
+      "requiresReason": true,
+      "requiresDate": true,
+      "requiresOffice": true,
+      "reasons": [
+        "Foreign Government Information",
+        "Critical Technology",
+        "Administrative/Operational Use",
+        "Software Documentation",
+        "Specific Authority"
+      ],
+      "description": "Available to U.S. Government agencies and their contractors for official use."
+    },
+    "D": {
+      "letter": "D",
+      "label": "Distribution Statement D",
+      "text": "Distribution authorized to the Department of Defense and U.S. DoD contractors only",
+      "authority": "DoD Directive 5230.24",
+      "requiresReason": true,
+      "requiresDate": true,
+      "requiresOffice": true,
+      "reasons": [
+        "Foreign Government Information",
+        "Critical Technology",
+        "Administrative/Operational Use",
+        "Software Documentation",
+        "Specific Authority"
+      ],
+      "description": "Restricted to DoD and DoD contractors. Other government agencies must request access."
+    },
+    "E": {
+      "letter": "E",
+      "label": "Distribution Statement E",
+      "text": "Distribution authorized to DoD Components only",
+      "authority": "DoD Directive 5230.24",
+      "requiresReason": true,
+      "requiresDate": true,
+      "requiresOffice": true,
+      "reasons": [
+        "Foreign Government Information",
+        "Proprietary Information",
+        "Critical Technology",
+        "Direct Military Operations",
+        "Test and Evaluation",
+        "Premature Dissemination",
+        "Specific Authority"
+      ],
+      "description": "Most restrictive standard statement. Limited to DoD components only."
+    },
+    "F": {
+      "letter": "F",
+      "label": "Distribution Statement F",
+      "text": "Further dissemination only as directed by the controlling DoD office",
+      "authority": "DoD Directive 5230.24",
+      "requiresReason": true,
+      "requiresDate": true,
+      "requiresOffice": true,
+      "reasons": [
+        "Controlled by the originating office"
+      ],
+      "description": "The controlling office determines all further distribution. Each request is evaluated individually."
+    },
+    "X": {
+      "letter": "X",
+      "label": "Distribution Statement X",
+      "text": "Distribution authorized to U.S. Government agencies and private individuals or enterprises eligible to obtain export-controlled technical data",
+      "authority": "DoD Directive 5230.25",
+      "requiresReason": true,
+      "requiresDate": true,
+      "requiresOffice": true,
+      "reasons": [
+        "Export-controlled technical data subject to ITAR/EAR"
+      ],
+      "description": "For export-controlled technical data. Recipients must be eligible to receive such data."
+    }
+  },
+  "markingFormat": {
+    "banner": "DISTRIBUTION STATEMENT {letter}. {text} {reason_suffix}. {date}. {office}.",
+    "reason_suffix_format": "Reason: {reason}",
+    "example": "DISTRIBUTION STATEMENT B. Distribution authorized to U.S. Government agencies only. Reason: Critical Technology. 15 Feb 2026. USACE HQ."
+  }
+}
