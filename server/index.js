@@ -182,7 +182,9 @@ app.use('/api/', csrfProtection);
 app.use(pivCacAuth);
 
 // P4.4.1 — Zero Trust enforcement (continuous trust evaluation)
-app.use(zeroTrustEnforce);
+// Scoped to API routes — HTML pages and static assets are public.
+// Auth is enforced when pages make /api/* calls, not on page load.
+app.use('/api', zeroTrustEnforce);
 
 // API Routes
 app.use('/api/contact', contactRoutes);
