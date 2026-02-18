@@ -174,7 +174,7 @@ const DEFAULT_POLICIES = {
  * Associates URL patterns with policy levels.
  */
 const ROUTE_POLICIES = [
-  // Public routes
+  // Public routes — no auth required (data feeds for public pages)
   { pattern: /^\/api\/health$/, policy: 'public' },
   { pattern: /^\/healthz$/, policy: 'public' },
   { pattern: /^\/livez$/, policy: 'public' },
@@ -183,9 +183,13 @@ const ROUTE_POLICIES = [
   { pattern: /^\/api\/auth\/register$/, policy: 'public' },
   { pattern: /^\/api\/csrf-token$/, policy: 'public' },
   { pattern: /^\/api\/docs/, policy: 'public' },
+  { pattern: /^\/api\/glossary$/, policy: 'public' },
+  { pattern: /^\/api\/skills$/, policy: 'public' },
+  { pattern: /^\/api\/contact$/, policy: 'public' },
+  { pattern: /^\/api\/compliance\/frameworks/, policy: 'public' },
+  { pattern: /^\/api\/mbai/, policy: 'public' },
 
   // Standard authenticated routes
-  { pattern: /^\/api\/contact/, policy: 'standard' },
   { pattern: /^\/api\/messages/, policy: 'standard' },
   { pattern: /^\/api\/portal/, policy: 'standard' },
   { pattern: /^\/api\/ai\//, policy: 'standard' },

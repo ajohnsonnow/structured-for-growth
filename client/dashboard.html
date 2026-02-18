@@ -217,7 +217,7 @@
                     <div class="empty-state hidden" id="emptyState">
                         <div class="empty-icon">👥</div>
                         <p>No clients found. Add your first client to get started!</p>
-                        <button class="btn btn-primary" onclick="document.getElementById('addClientBtn').click()">
+                        <button class="btn btn-primary" data-action="clickAddClient">
                             Add Client
                         </button>
                     </div>
@@ -230,7 +230,7 @@
                     <h2>Project Management</h2>
                     <div class="header-actions">
                         <div class="view-toggle">
-                            <button class="btn btn-small btn-outline" id="toggleGanttView" onclick="toggleProjectView()">
+                            <button class="btn btn-small btn-outline" id="toggleGanttView" data-action="toggleProjectView">
                                 📊 Gantt Chart
                             </button>
                         </div>
@@ -267,7 +267,7 @@
                     <div class="empty-state hidden" id="projectsEmptyState">
                         <div class="empty-icon">📁</div>
                         <p>No projects found. Create your first project!</p>
-                        <button class="btn btn-primary" onclick="document.getElementById('addProjectBtn').click()">
+                        <button class="btn btn-primary" data-action="clickAddProject">
                             New Project
                         </button>
                     </div>
@@ -278,7 +278,7 @@
             <div id="usersView" class="dashboard-view admin-only">
                 <div class="dashboard-header">
                     <h2>User Management</h2>
-                    <button id="addUserBtn" class="btn btn-primary" onclick="openUserModal()">+ Add User</button>
+                    <button id="addUserBtn" class="btn btn-primary" data-action="openUserModal">+ Add User</button>
                 </div>
 
                 <div class="data-table" id="usersTable">
@@ -381,8 +381,8 @@
                         <p class="section-description">Download a complete backup of all your data.</p>
                         <div class="backup-actions">
                             <input type="text" id="backupName" placeholder="Backup name (optional)" class="backup-name-input">
-                            <button class="btn btn-primary" onclick="createBackup()">📥 Create Backup</button>
-                            <button class="btn btn-secondary" onclick="exportDatabaseDirect()">⬇️ Quick Export</button>
+                            <button class="btn btn-primary" data-action="createBackup">📥 Create Backup</button>
+                            <button class="btn btn-secondary" data-action="exportDatabaseDirect">⬇️ Quick Export</button>
                         </div>
                     </div>
 
@@ -390,8 +390,8 @@
                         <h3>Restore from Backup</h3>
                         <p class="section-description">Upload a backup file to restore your data. A safety backup will be created first.</p>
                         <div class="backup-actions">
-                            <input type="file" id="restoreFile" accept=".json" class="file-input-hidden" aria-label="Select backup file to restore" onchange="handleRestoreFile(this)">
-                            <button class="btn btn-warning" onclick="document.getElementById('restoreFile').click()">📤 Upload & Restore</button>
+                            <input type="file" id="restoreFile" accept=".json" class="file-input-hidden" aria-label="Select backup file to restore">
+                            <button class="btn btn-warning" data-action="clickRestoreFile">📤 Upload & Restore</button>
                         </div>
                     </div>
 
@@ -415,16 +415,16 @@
                         </div>
 
                         <div class="demo-actions">
-                            <button class="btn btn-primary btn-large" onclick="generateDemoData(false)">
+                            <button class="btn btn-primary btn-large" data-action="generateDemoData">
                                 ➕ Add Demo Data
                             </button>
-                            <button class="btn btn-warning btn-large" onclick="generateDemoData(true)">
+                            <button class="btn btn-warning btn-large" data-action="generateDemoDataReset">
                                 🔄 Reset & Generate
                             </button>
-                            <button class="btn btn-secondary btn-large" onclick="clearDemoData(false)">
+                            <button class="btn btn-secondary btn-large" data-action="clearDemoData">
                                 🧹 Clear Demo Only
                             </button>
-                            <button class="btn btn-danger btn-large" onclick="clearDemoData(true)">
+                            <button class="btn btn-danger btn-large" data-action="clearAllData">
                                 🗑️ Clear ALL Data
                             </button>
                         </div>
@@ -495,7 +495,7 @@
             <div id="campaignsView" class="dashboard-view">
                 <div class="dashboard-header">
                     <h2>Email Campaigns</h2>
-                    <button id="addCampaignBtn" class="btn btn-primary" onclick="openCampaignModal()">+ New Campaign</button>
+                    <button id="addCampaignBtn" class="btn btn-primary" data-action="openCampaignModal">+ New Campaign</button>
                 </div>
 
                 <div class="campaigns-tabs">
@@ -513,7 +513,7 @@
                 <div class="tab-content" id="segments-list">
                     <div class="dashboard-header mb-md">
                         <h3>Client Segments</h3>
-                        <button class="btn btn-secondary btn-small" onclick="openSegmentModal()">+ New Segment</button>
+                        <button class="btn btn-secondary btn-small" data-action="openSegmentModal">+ New Segment</button>
                     </div>
                     <div class="segments-grid" id="segmentsGrid">
                         <p class="empty-message">No segments defined</p>
@@ -523,7 +523,7 @@
                 <div class="tab-content" id="templates-list">
                     <div class="dashboard-header mb-md">
                         <h3>Email Templates</h3>
-                        <button class="btn btn-secondary btn-small" onclick="openTemplateModal()">+ New Template</button>
+                        <button class="btn btn-secondary btn-small" data-action="openTemplateModal">+ New Template</button>
                     </div>
                     <div class="templates-grid" id="templatesGrid">
                         <p class="empty-message">No templates yet</p>
@@ -538,7 +538,7 @@
         <div class="modal-content modal-lg">
             <div class="modal-header">
                 <h2 id="clientModalTitle">Add Client</h2>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" data-action="closeModal">&times;</button>
             </div>
 
             <form id="clientForm">
@@ -607,7 +607,7 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-action="closeModal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Client</button>
                 </div>
             </form>
@@ -619,7 +619,7 @@
         <div class="modal-content modal-lg">
             <div class="modal-header">
                 <h2 id="projectModalTitle">New Project</h2>
-                <button class="modal-close" onclick="closeProjectModal()">&times;</button>
+                <button class="modal-close" data-action="closeProjectModal">&times;</button>
             </div>
 
             <form id="projectForm">
@@ -692,7 +692,7 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-action="closeProjectModal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Project</button>
                 </div>
             </form>
@@ -737,7 +737,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Create Account</h2>
-                <button class="modal-close" onclick="closeRegisterModal()">&times;</button>
+                <button class="modal-close" data-action="closeRegisterModal">&times;</button>
             </div>
 
             <form id="registerForm">
@@ -757,7 +757,7 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeRegisterModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-action="closeRegisterModal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Register</button>
                 </div>
 
@@ -771,7 +771,7 @@
         <div class="modal-content modal-large">
             <div class="modal-header">
                 <h2 id="campaignModalTitle">Create Campaign</h2>
-                <button class="modal-close" onclick="closeCampaignModal()">&times;</button>
+                <button class="modal-close" data-action="closeCampaignModal">&times;</button>
             </div>
 
             <form id="campaignForm">
@@ -792,7 +792,7 @@
 
                     <div class="form-group">
                         <label for="campaignTemplate">Use Template</label>
-                        <select id="campaignTemplate" onchange="loadTemplate(this.value)">
+                        <select id="campaignTemplate">
                             <option value="">None (Write Custom)</option>
                         </select>
                     </div>
@@ -810,8 +810,8 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeCampaignModal()">Cancel</button>
-                    <button type="button" class="btn btn-outline" onclick="saveCampaignAsDraft()">Save as Draft</button>
+                    <button type="button" class="btn btn-secondary" data-action="closeCampaignModal">Cancel</button>
+                    <button type="button" class="btn btn-outline" data-action="saveCampaignAsDraft">Save as Draft</button>
                     <button type="submit" class="btn btn-primary">Send Now</button>
                 </div>
             </form>
@@ -823,7 +823,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="segmentModalTitle">Create Segment</h2>
-                <button class="modal-close" onclick="closeSegmentModal()">&times;</button>
+                <button class="modal-close" data-action="closeSegmentModal">&times;</button>
             </div>
 
             <form id="segmentForm">
@@ -846,7 +846,7 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeSegmentModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-action="closeSegmentModal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Segment</button>
                 </div>
             </form>
@@ -858,7 +858,7 @@
         <div class="modal-content modal-large">
             <div class="modal-header">
                 <h2 id="templateModalTitle">Create Template</h2>
-                <button class="modal-close" onclick="closeTemplateModal()">&times;</button>
+                <button class="modal-close" data-action="closeTemplateModal">&times;</button>
             </div>
 
             <form id="templateForm">
@@ -894,7 +894,7 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeTemplateModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-action="closeTemplateModal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Template</button>
                 </div>
             </form>
@@ -906,7 +906,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>New Message</h2>
-                <button class="modal-close" onclick="closeMessageModal()">&times;</button>
+                <button class="modal-close" data-action="closeMessageModal">&times;</button>
             </div>
 
             <form id="messageForm">
@@ -928,7 +928,7 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeMessageModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-action="closeMessageModal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </div>
             </form>
@@ -940,7 +940,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="userModalTitle">Add User</h2>
-                <button class="modal-close" onclick="closeUserModal()">&times;</button>
+                <button class="modal-close" data-action="closeUserModal">&times;</button>
             </div>
 
             <form id="userForm">
@@ -985,7 +985,7 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-action="closeUserModal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save User</button>
                 </div>
             </form>

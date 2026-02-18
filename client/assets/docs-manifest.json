@@ -1,6 +1,6 @@
 {
-  "generated": "2026-02-18T06:51:18.363Z",
-  "version": "1.8.2",
+  "generated": "2026-02-18T08:13:46.686Z",
+  "version": "1.8.7",
   "summary": {
     "totalRoutes": 166,
     "totalPages": 10,
@@ -2069,7 +2069,7 @@
   },
   "pkg": {
     "name": "structured-for-growth-www",
-    "version": "1.8.2",
+    "version": "1.8.7",
     "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
     "nodeEngine": ">=18.0.0",
     "scripts": [
@@ -2128,6 +2128,22 @@
       {
         "name": "predeploy",
         "command": "npm run lint && npm run test && npm run docs:generate && npm run audit:bump"
+      },
+      {
+        "name": "deploy",
+        "command": "node scripts/deploy.js"
+      },
+      {
+        "name": "deploy:minor",
+        "command": "node scripts/deploy.js --minor"
+      },
+      {
+        "name": "deploy:major",
+        "command": "node scripts/deploy.js --major"
+      },
+      {
+        "name": "deploy:dry",
+        "command": "node scripts/deploy.js --dry-run"
       },
       {
         "name": "prepush",

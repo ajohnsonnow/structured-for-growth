@@ -127,6 +127,22 @@ app.get('/favicon.ico', (req, res) => {
   });
 });
 
+// Serve service worker from root path (must be at / scope for SW registration)
+app.get('/sw.js', (_req, res) => {
+  const swPath =
+    process.env.NODE_ENV === 'production'
+      ? path.join(__dirname, '../dist/sw.js')
+      : path.join(__dirname, '../client/assets/sw.js');
+  res.setHeader('Content-Type', 'application/javascript');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Service-Worker-Allowed', '/');
+  res.sendFile(swPath, (err) => {
+    if (err) {
+      res.status(404).end();
+    }
+  });
+});
+
 // Silently handle Chrome DevTools .well-known probe
 app.use('/.well-known', (req, res) => {
   res.status(204).end();

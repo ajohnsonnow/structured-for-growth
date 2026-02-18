@@ -2665,3 +2665,45 @@ document.querySelectorAll('.modal').forEach((modal) => {
     }
   });
 });
+
+// ── CSP-compatible event delegation (replaces inline onclick handlers) ──
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) {
+    return;
+  }
+  const actions = {
+    clickAddClient: () => document.getElementById('addClientBtn')?.click(),
+    toggleProjectView: () => window.toggleProjectView(),
+    clickAddProject: () => document.getElementById('addProjectBtn')?.click(),
+    openUserModal: () => window.openUserModal(),
+    createBackup: () => window.createBackup(),
+    exportDatabaseDirect: () => window.exportDatabaseDirect(),
+    clickRestoreFile: () => document.getElementById('restoreFile')?.click(),
+    generateDemoData: () => window.generateDemoData(false),
+    generateDemoDataReset: () => window.generateDemoData(true),
+    clearDemoData: () => window.clearDemoData(false),
+    clearAllData: () => window.clearDemoData(true),
+    openCampaignModal: () => window.openCampaignModal(),
+    openSegmentModal: () => window.openSegmentModal(),
+    openTemplateModal: () => window.openTemplateModal(),
+    closeModal: () => window.closeModal(),
+    closeProjectModal: () => window.closeProjectModal(),
+    closeRegisterModal: () => window.closeRegisterModal(),
+    closeCampaignModal: () => window.closeCampaignModal(),
+    saveCampaignAsDraft: () => window.saveCampaignAsDraft(),
+    closeSegmentModal: () => window.closeSegmentModal(),
+    closeTemplateModal: () => window.closeTemplateModal(),
+    closeMessageModal: () => window.closeMessageModal(),
+    closeUserModal: () => window.closeUserModal(),
+  };
+  actions[btn.dataset.action]?.();
+});
+
+// ── CSP-compatible change listeners (replaces inline onchange handlers) ──
+document.getElementById('restoreFile')?.addEventListener('change', function () {
+  window.handleRestoreFile(this);
+});
+document.getElementById('campaignTemplate')?.addEventListener('change', function () {
+  window.loadTemplate(this.value);
+});

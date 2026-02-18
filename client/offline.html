@@ -140,7 +140,7 @@
       <ul id="cachedList"></ul>
     </div>
 
-    <button class="retry-btn" onclick="location.reload()" aria-label="Retry connection">
+    <button class="retry-btn" data-action="reload" aria-label="Retry connection">
       Retry Connection
     </button>
 
@@ -190,6 +190,11 @@
       document.getElementById('statusDot').style.background = '#22c55e';
       document.getElementById('statusText').textContent = 'Back online! Reloading...';
       setTimeout(() => location.reload(), 1500);
+    });
+
+    // CSP-compatible retry button (replaces inline onclick)
+    document.querySelector('[data-action="reload"]')?.addEventListener('click', () => {
+      location.reload();
     });
   </script>
 </body>

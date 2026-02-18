@@ -1,6 +1,6 @@
 # WCAG 2.1 AA Accessibility Audit Results
 
-**Generated:** 2026-02-16  
+**Generated:** 2026-02-18  
 **Tool:** axe-core (Deque) via jsdom  
 **Standard:** WCAG 2.1 Level AA + Section 508 + Best Practices  
 **System:** Structured for Growth — Consulting & Compliance Platform  
@@ -18,7 +18,7 @@
 | Metric | Value |
 |--------|-------|
 | Pages Scanned | 10 |
-| Total Rules Passed | 348 |
+| Total Rules Passed | 345 |
 | Total Violations | 0 |
 | — 🔴 Critical | 0 |
 | — 🟠 Serious | 0 |
@@ -37,9 +37,9 @@
 | glossary.html | 0 | 30 | 2 | ✅ Pass |
 | index.html | 0 | 37 | 2 | ✅ Pass |
 | mbai.html | 0 | 35 | 0 | ✅ Pass |
-| offline.html | 0 | 27 | 2 | ✅ Pass |
+| offline.html | 0 | 26 | 2 | ✅ Pass |
 | portal.html | 0 | 39 | 0 | ✅ Pass |
-| skills.html | 0 | 27 | 2 | ✅ Pass |
+| skills.html | 0 | 25 | 2 | ✅ Pass |
 | templates.html | 0 | 35 | 0 | ✅ Pass |
 
 ---
@@ -396,7 +396,7 @@
 **✅ No violations detected.**
 
 <details>
-<summary>Rules passed (27)</summary>
+<summary>Rules passed (26)</summary>
 
 | Rule | Description |
 |------|-------------|
@@ -411,7 +411,6 @@
 | aria-roles | ARIA roles used must conform to valid values |
 | aria-valid-attr-value | ARIA attributes must conform to valid values |
 | aria-valid-attr | ARIA attributes must conform to valid names |
-| avoid-inline-spacing | Inline text spacing must be adjustable with custom stylesheets |
 | button-name | Buttons must have discernible text |
 | bypass | Page must have means to bypass repeated blocks |
 | document-title | Documents must have <title> element to aid in navigation |
@@ -500,7 +499,7 @@
 **✅ No violations detected.**
 
 <details>
-<summary>Rules passed (27)</summary>
+<summary>Rules passed (25)</summary>
 
 | Rule | Description |
 |------|-------------|
@@ -509,7 +508,6 @@
 | aria-conditional-attr | ARIA attributes must be used as specified for the element's role |
 | aria-deprecated-role | Deprecated ARIA roles must not be used |
 | aria-hidden-body | aria-hidden="true" must not be present on the document body |
-| aria-hidden-focus | ARIA hidden element must not be focusable or contain focusable elements |
 | aria-prohibited-attr | Elements must only use permitted ARIA attributes |
 | aria-required-attr | Required ARIA attributes must be provided |
 | aria-roles | ARIA roles used must conform to valid values |
@@ -530,7 +528,6 @@
 | meta-viewport | Zooming and scaling must not be disabled |
 | nested-interactive | Interactive controls must not be nested |
 | region | All page content should be contained by landmarks |
-| role-img-alt | [role="img"] elements must have alternative text |
 
 </details>
 

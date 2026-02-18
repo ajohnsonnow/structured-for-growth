@@ -17,11 +17,16 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 // ── Resolve data root: local bundle first, sibling repo second ──
 const PROJECT_ROOT = resolve(__dirname, '..', '..');
-const LOCAL_DATA   = join(PROJECT_ROOT, 'data', 'compliance');
-const CAC_DATA     = resolve(PROJECT_ROOT, '..', 'Compliance-as-Code', 'data');
+const LOCAL_DATA = join(PROJECT_ROOT, 'data', 'compliance');
+const CAC_DATA = resolve(PROJECT_ROOT, '..', 'Compliance-as-Code', 'data');
 
 async function dirExists(p) {
-  try { await access(p); return true; } catch { return false; }
+  try {
+    await access(p);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 let DATA_ROOT;
@@ -32,14 +37,14 @@ if (await dirExists(LOCAL_DATA)) {
   DATA_ROOT = CAC_DATA;
   console.log('[compliance] Using sibling Compliance-as-Code repo:', CAC_DATA);
 } else {
-  DATA_ROOT = LOCAL_DATA;           // will fail gracefully per-endpoint
+  DATA_ROOT = LOCAL_DATA; // will fail gracefully per-endpoint
   console.warn('[compliance] No compliance data found - endpoints will return empty results');
 }
 
 const FRAMEWORKS_DIR = join(DATA_ROOT, 'frameworks');
-const MAPPINGS_DIR   = join(DATA_ROOT, 'mappings');
-const OSCAL_DIR      = join(DATA_ROOT, 'oscal');
-const KB_DIR         = resolve(PROJECT_ROOT, '..', 'Compliance-as-Code', 'knowledge-base');
+const MAPPINGS_DIR = join(DATA_ROOT, 'mappings');
+const OSCAL_DIR = join(DATA_ROOT, 'oscal');
+const KB_DIR = resolve(PROJECT_ROOT, '..', 'Compliance-as-Code', 'knowledge-base');
 
 const router = Router();
 
@@ -48,9 +53,9 @@ const router = Router();
 router.get('/frameworks', async (_req, res) => {
   try {
     const files = await readdir(FRAMEWORKS_DIR);
-    const jsonFiles = files.filter(f => f.endsWith('.json'));
+    const jsonFiles = files.filter((f) => f.endsWith('.json'));
     const frameworks = await Promise.all(
-      jsonFiles.map(async f => {
+      jsonFiles.map(async (f) => {
         const raw = await readFile(join(FRAMEWORKS_DIR, f), 'utf-8');
         return JSON.parse(raw);
       })
@@ -115,10 +120,12 @@ router.get('/templates', async (_req, res) => {
 router.get('/oscal', async (_req, res) => {
   try {
     const files = await readdir(OSCAL_DIR);
-    const catalogs = files.filter(f => f.endsWith('.json')).map(f => {
-      const id = f.replace('catalog-', '').replace('.json', '');
-      return { id, filename: f, downloadUrl: `/api/compliance/oscal/${id}` };
-    });
+    const catalogs = files
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => {
+        const id = f.replace('catalog-', '').replace('.json', '');
+        return { id, filename: f, downloadUrl: `/api/compliance/oscal/${id}` };
+      });
     res.json({ catalogs });
   } catch (err) {
     if (err.code === 'ENOENT') {
@@ -152,7 +159,7 @@ router.get('/oscal/:framework', async (req, res) => {
 router.get('/evidence', async (_req, res) => {
   try {
     const files = await readdir(FRAMEWORKS_DIR);
-    const jsonFiles = files.filter(f => f.endsWith('.json'));
+    const jsonFiles = files.filter((f) => f.endsWith('.json'));
     const evidence = [];
 
     for (const f of jsonFiles) {
@@ -168,7 +175,7 @@ router.get('/evidence', async (_req, res) => {
               controlId: ctrl.id,
               controlName: ctrl.name,
               evidenceRequired: ctrl.evidenceRequired,
-              automationCapability: ctrl.automationCapability || 'manual'
+              automationCapability: ctrl.automationCapability || 'manual',
             });
           }
         }

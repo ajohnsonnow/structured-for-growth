@@ -1,6 +1,6 @@
 {
   "name": "structured-for-growth-www",
-  "version": "1.8.2",
+  "version": "1.8.8",
   "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
   "main": "server/index.js",
   "type": "module",
@@ -22,6 +22,10 @@
     "audit:major": "node scripts/audit.js --bump major",
     "audit:minor": "node scripts/audit.js --bump minor",
     "predeploy": "npm run lint && npm run test && npm run docs:generate && npm run audit:bump",
+    "deploy": "node scripts/deploy.js",
+    "deploy:minor": "node scripts/deploy.js --minor",
+    "deploy:major": "node scripts/deploy.js --major",
+    "deploy:dry": "node scripts/deploy.js --dry-run",
     "prepush": "npm run lint && npm run test && npm run docs:generate && npm run audit",
     "test": "vitest run",
     "test:watch": "vitest",

@@ -513,13 +513,11 @@ router.post(
         `Assessment scheduled: ${title} for ${framework}`
       );
 
-      res
-        .status(201)
-        .json({
-          success: true,
-          message: 'Assessment scheduled',
-          assessmentId: result.lastInsertRowid,
-        });
+      res.status(201).json({
+        success: true,
+        message: 'Assessment scheduled',
+        assessmentId: result.lastInsertRowid,
+      });
     } catch (error) {
       console.error('Schedule assessment error:', error);
       res.status(500).json({ success: false, message: 'Failed to schedule assessment' });

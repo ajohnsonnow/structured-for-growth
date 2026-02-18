@@ -35,9 +35,9 @@ router.get('/manifest', async (_req, res) => {
 router.get('/templates', async (_req, res) => {
   try {
     const files = await readdir(TEMPLATES_DIR);
-    const jsonFiles = files.filter(f => f.endsWith('.json'));
+    const jsonFiles = files.filter((f) => f.endsWith('.json'));
     const templates = await Promise.all(
-      jsonFiles.map(async f => {
+      jsonFiles.map(async (f) => {
         const raw = await readFile(join(TEMPLATES_DIR, f), 'utf-8');
         return JSON.parse(raw);
       })

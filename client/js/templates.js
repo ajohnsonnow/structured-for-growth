@@ -3178,3 +3178,16 @@ function initMobileMenu() {
 
 // Initialize mobile menu
 initMobileMenu();
+
+// ── CSP-compatible event delegation (replaces inline onclick handlers) ──
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) {
+    return;
+  }
+  const handlers = {
+    closeTemplateModal: () => window.closeTemplateModal(),
+    resetDemo: () => window.resetDemo(),
+  };
+  handlers[btn.dataset.action]?.();
+});

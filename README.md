@@ -4,7 +4,7 @@
 
 A comprehensive full-stack website showcasing Content Engineering projects
 with an integrated client management system, extensive template library,
-compliance knowledge base covering 10 regulatory frameworks, and a client
+compliance knowledge base covering 12 regulatory frameworks, and a client
 portal with project tracking and payments. Features a dark forest green
 theme and dynamic value proposition calculator.
 
