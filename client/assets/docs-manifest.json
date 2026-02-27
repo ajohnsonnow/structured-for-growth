@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-27T02:39:49.645Z",
+  "generated": "2026-02-27T02:50:23.890Z",
   "version": "1.8.9",
   "summary": {
     "totalRoutes": 166,
@@ -2239,7 +2239,7 @@
       },
       {
         "name": "prepare",
-        "command": "husky"
+        "command": "husky || true"
       }
     ],
     "dependencies": [

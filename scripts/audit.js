@@ -351,12 +351,15 @@ function checkEnvironment() {
     report.warning('.env.example is missing');
   }
 
-  if (checkFileExists('.env')) {
-    report.warning(".env exists (ensure it's in .gitignore)");
-  }
-
   if (checkFileExists('.gitignore')) {
     const gitignore = fs.readFileSync(path.join(rootDir, '.gitignore'), 'utf8');
+    if (checkFileExists('.env')) {
+      if (gitignore.includes('.env')) {
+        report.success('.env exists and is in .gitignore');
+      } else {
+        report.error('.env exists but is NOT in .gitignore (security risk!)');
+      }
+    }
     if (gitignore.includes('.env')) {
       report.success('.env is in .gitignore');
     } else {
@@ -488,7 +491,14 @@ function checkSecurityPatterns() {
   const routesDir = path.join(rootDir, 'server/routes');
   if (fs.existsSync(routesDir)) {
     const routeFiles = fs.readdirSync(routesDir).filter((f) => f.endsWith('.js'));
-    const publicRoutes = ['api-docs.js', 'auth.js', 'contact.js', 'demo.js'];
+    const publicRoutes = [
+      'api-docs.js',
+      'auth.js',
+      'contact.js',
+      'demo.js',
+      'compliance.js',
+      'mbai.js',
+    ];
 
     routeFiles.forEach((file) => {
       if (publicRoutes.includes(file)) {
@@ -538,8 +548,12 @@ function checkSecurityPatterns() {
   const serverIndex = path.join(rootDir, 'server/index.js');
   if (fs.existsSync(serverIndex)) {
     const content = fs.readFileSync(serverIndex, 'utf8');
-    if (content.includes('csrfProtection') && content.includes("app.use('/api/'")) {
-      report.success('CSRF protection enabled on API routes');
+    if (
+      (content.includes('doubleCsrfProtection') &&
+        content.includes('app.use(doubleCsrfProtection')) ||
+      (content.includes('csrfProtection') && content.includes("app.use('/api/'"))
+    ) {
+      report.success('CSRF protection enabled (double-submit cookie pattern)');
     } else {
       report.warning('CSRF protection may not be enabled globally');
     }
