@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **`isSafeUrl(url)`** — New exported function in `client/js/modules/sanitize.js` that validates URLs against the `SAFE_PROTOCOLS` allow-list (`http:`, `https:`, `mailto:`, `#`, `/`). Blocks `javascript:` and `data:` URIs. Backed by 9 new tests.
+- **`isSafeUrl(url)`** — New exported function in `client/js/modules/sanitize.js` that
+  validates URLs against the `SAFE_PROTOCOLS` allow-list (`http:`, `https:`, `mailto:`, `#`, `/`).
+  Blocks `javascript:` and `data:` URIs. Backed by 9 new tests.
 
 ### Fixed
 
@@ -25,7 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- **esbuild GHSA-67mh-4wv8-2f99** — Fixed via `npm overrides`; forced esbuild to >=0.25.0 (installed 0.27.3). Vite 5 declared `esbuild <=0.24.2` in its range; the override installs the patched version. Build and all 520 tests verified passing.
+- **esbuild GHSA-67mh-4wv8-2f99** — Fixed via `npm overrides`; forced esbuild to >=0.25.0 (installed 0.27.3).
+  Vite 5 declared `esbuild <=0.24.2` in its range; the override installs the patched version. Build and all 520 tests verified passing.
 - **ajv ReDoS GHSA-2g4f-4pwh-qvx6** — Resolved via `npm audit fix` (eslint transitive dep updated)
 - `npm audit --production`: 0 vulnerabilities
 

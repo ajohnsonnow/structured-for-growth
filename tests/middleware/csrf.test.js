@@ -20,8 +20,10 @@ beforeEach(async () => {
 });
 
 function createCsrfApp() {
-  // snyk-disable-next-line javascript/UseCsurfForExpress javascript/UseCsurfForExpress/test -- test-only app exercising custom CSRF middleware; not a production server
-  const app = express();
+  // This test app intentionally creates a bare Express instance to validate
+  // the custom csrfProtection middleware (applied on the routes below).
+  // It is NOT a production server — the CSRF warning is a false positive.
+  const app = express(); // deepcode ignore UseCsurfForExpress: test-only app; csrfProtection middleware guards routes below
   app.disable('x-powered-by');
   app.use(cookieParser());
   app.use(express.json());

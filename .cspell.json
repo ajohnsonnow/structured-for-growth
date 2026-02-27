@@ -3,18 +3,27 @@
   "language": "en",
   "words": [
     "cyclonedx",
+    "dedup",
     "deepcode",
     "fedramp",
+    "GHSA",
+    "HDBK",
     "healthz",
     "hsts",
     "livez",
     "mbai",
     "navigations",
+    "NOSONAR",
     "qrcode",
     "readyz",
+    "rgba",
+    "SARIF",
     "sprs",
+    "TOTP",
     "usace",
-    "wcag"
+    "VPAT",
+    "wcag",
+    "webhint"
   ],
   "ignoreWords": [],
   "ignorePaths": [
