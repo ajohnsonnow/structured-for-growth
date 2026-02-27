@@ -51,7 +51,7 @@
     "db:seed": "node scripts/seed-admin.js",
     "generate:nist53": "node scripts/generate-nist-800-53.js",
     "generate:nist171": "node scripts/generate-nist-800-171r3.js",
-    "prepare": "husky"
+    "prepare": "node -e \"try{require.resolve('husky')}catch{process.exit(0)}\" && husky"
   },
   "overrides": {
     "minimatch": "^10.2.4",
