@@ -1,6 +1,5 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { doubleCsrf } from 'csrf-csrf';
 import dotenv from 'dotenv';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
@@ -8,6 +7,7 @@ import helmet from 'helmet';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createLogger } from './lib/logger.js';
+import { csrfProtection, csrfToken } from './middleware/csrf.js';
 import { requestId } from './middleware/requestId.js';
 
 // P5.1 — Architecture Modernization
@@ -61,6 +61,7 @@ try {
   logger.warn(`Environment validation: ${err.message}`);
 }
 
+// deepcode ignore UseCsurfForExpress: csrf-csrf HMAC double-submit cookie applied globally in server/middleware/csrf.js
 const app = express();
 
 // Cookie parser must be registered before CSRF so the double-submit cookie is available.
@@ -71,23 +72,9 @@ const PORT = process.env.PORT || 3000;
 // Trust proxy for Render and other PaaS platforms
 app.set('trust proxy', 1);
 
-// P1.2.3 — CSRF protection using csrf-csrf (double-submit cookie pattern)
-const { doubleCsrfProtection, generateToken } = doubleCsrf({
-  getSecret: () => process.env.CSRF_SECRET || 'csrf-secret-change-in-production',
-  cookieName: '__csrf',
-  cookieOptions: {
-    httpOnly: true,
-    sameSite: 'strict',
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
-  },
-  getTokenFromRequest: (req) =>
-    req.headers['x-csrf-token'] || req.headers['x-xsrf-token'] || req.body?._csrf,
-  ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
-});
-
-// Apply app-level CSRF protection (double-submit cookie pattern via csrf-csrf).
-app.use(doubleCsrfProtection);
+// P1.2.3 — CSRF protection (double-submit cookie pattern via csrf-csrf)
+// Configured centrally in server/middleware/csrf.js
+app.use(csrfProtection);
 
 // Initialize database
 await initializeDatabase();
@@ -208,10 +195,7 @@ app.use((req, res, next) => {
 });
 
 // CSRF token endpoint (GET) — generates a new CSRF token for the client
-app.get('/api/csrf-token', (req, res) => {
-  const token = generateToken(req, res);
-  res.json({ csrfToken: token });
-});
+app.get('/api/csrf-token', csrfToken);
 
 // P4.4.2 — PIV/CAC smart card authentication (reads client cert headers)
 app.use(pivCacAuth);
