@@ -36,12 +36,18 @@ export function initContactForm() {
     submitBtn.disabled = true;
 
     try {
-      // Send form data to API
+      // Fetch a fresh CSRF token before the state-changing POST
+      const csrfRes = await fetch('/api/csrf-token', { credentials: 'same-origin' });
+      const { csrfToken } = await csrfRes.json();
+
+      // Send form data to API with CSRF token header
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken,
         },
+        credentials: 'same-origin',
         body: JSON.stringify(formData),
       });
 

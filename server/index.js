@@ -112,7 +112,11 @@ app.use(
         ],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'https:'],
-        connectSrc: ["'self'", 'https://structured-for-growth.goatcounter.com'],
+        connectSrc: [
+          "'self'",
+          'https://structured-for-growth.goatcounter.com',
+          'https://gc.zgo.at',
+        ],
         frameSrc: ["'none'"],
         objectSrc: ["'none'"],
         baseUri: ["'self'"],

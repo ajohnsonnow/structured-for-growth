@@ -94,6 +94,12 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Skip cross-origin requests (third-party analytics, CDNs, etc.)
+  // Let them pass through natively without SW interception.
+  if (url.origin !== self.location.origin) {
+    return;
+  }
+
   // API calls → Network First with cache fallback
   if (url.pathname.startsWith('/api/')) {
     event.respondWith(networkFirst(request, API_CACHE));
