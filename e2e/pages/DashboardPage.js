@@ -6,6 +6,9 @@
  */
 import { BasePage } from './BasePage.js';
 
+const E2E_ADMIN_EMAIL = process.env.E2E_ADMIN_EMAIL || 'admin@structuredforgrowth.com';
+const E2E_ADMIN_PASSWORD = process.env.E2E_ADMIN_PASSWORD || 'Admin123!@#$';
+
 export class DashboardPage extends BasePage {
   constructor(page) {
     super(page);
@@ -35,7 +38,7 @@ export class DashboardPage extends BasePage {
     await super.goto('/dashboard.html');
   }
 
-  async login(email = 'admin@structuredforgrowth.com', password = 'Admin123!@#$') {
+  async login(email = E2E_ADMIN_EMAIL, password = E2E_ADMIN_PASSWORD) {
     // Wait for login modal to appear
     await this.loginModal.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
 

@@ -1,4 +1,5 @@
 ﻿// Templates Page JavaScript
+import { safeInnerHTML } from './modules/sanitize.js';
 import { initUnifiedNav } from './modules/unifiedNav.js';
 import { templates } from './templateData.js';
 
@@ -121,19 +122,25 @@ const demoConfigs = {
       document.getElementById('loginForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const result = document.getElementById('authResult');
-        result.innerHTML = `
+        safeInnerHTML(
+          result,
+          `
                     <div class="success-msg">
                         ✓ Login successful!<br>
                         <code>JWT Token: eyJhbGciOiJIUzI1NiIs...</code><br>
                         <small>Token expires in 7 days</small>
                     </div>
-                `;
+                `
+        );
       });
 
       document.getElementById('registerForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const result = document.getElementById('authResult');
-        result.innerHTML = '<div class="success-msg">✓ Account created! You can now login.</div>';
+        safeInnerHTML(
+          result,
+          '<div class="success-msg">✓ Account created! You can now login.</div>'
+        );
       });
     },
   },
@@ -156,10 +163,13 @@ const demoConfigs = {
         const container = document.getElementById('toastContainer');
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
-        toast.innerHTML = `
+        safeInnerHTML(
+          toast,
+          `
                     <span class="toast-message">${message}</span>
                     <button class="toast-close" onclick="this.parentElement.remove()">×</button>
-                `;
+                `
+        );
         container.appendChild(toast);
 
         // Animate in
@@ -208,19 +218,29 @@ const demoConfigs = {
 
         if (type === 'basic') {
           title.textContent = 'Basic Modal';
-          body.innerHTML =
-            '<p>This is a basic modal with simple content. Modals are great for displaying focused information or actions.</p>';
-          footer.innerHTML =
-            '<button class="btn btn-primary" onclick="closeDemoModal()">Got it!</button>';
+          safeInnerHTML(
+            body,
+            '<p>This is a basic modal with simple content. Modals are great for displaying focused information or actions.</p>'
+          );
+          safeInnerHTML(
+            footer,
+            '<button class="btn btn-primary" onclick="closeDemoModal()">Got it!</button>'
+          );
         } else if (type === 'confirm') {
           title.textContent = 'Confirm Action';
-          body.innerHTML =
-            '<p>Are you sure you want to proceed with this action? This cannot be undone.</p>';
-          footer.innerHTML =
-            '<button class="btn btn-secondary" onclick="closeDemoModal()">Cancel</button><button class="btn btn-danger" onclick="alert(\'Confirmed!\'); closeDemoModal()">Delete</button>';
+          safeInnerHTML(
+            body,
+            '<p>Are you sure you want to proceed with this action? This cannot be undone.</p>'
+          );
+          safeInnerHTML(
+            footer,
+            '<button class="btn btn-secondary" onclick="closeDemoModal()">Cancel</button><button class="btn btn-danger" onclick="alert(\'Confirmed!\'); closeDemoModal()">Delete</button>'
+          );
         } else if (type === 'form') {
           title.textContent = 'Add New Item';
-          body.innerHTML = `
+          safeInnerHTML(
+            body,
+            `
                         <form class="demo-form">
                             <div class="form-group">
                                 <label>Item Name</label>
@@ -231,9 +251,12 @@ const demoConfigs = {
                                 <textarea placeholder="Enter description" rows="2"></textarea>
                             </div>
                         </form>
-                    `;
-          footer.innerHTML =
-            '<button class="btn btn-secondary" onclick="closeDemoModal()">Cancel</button><button class="btn btn-primary" onclick="alert(\'Item saved!\'); closeDemoModal()">Save</button>';
+                    `
+          );
+          safeInnerHTML(
+            footer,
+            '<button class="btn btn-secondary" onclick="closeDemoModal()">Cancel</button><button class="btn btn-primary" onclick="alert(\'Item saved!\'); closeDemoModal()">Save</button>'
+          );
         }
 
         overlay.classList.add('show');
@@ -282,9 +305,11 @@ const demoConfigs = {
 
       window.renderDemoTable = (items) => {
         const tbody = document.getElementById('tableBody');
-        tbody.innerHTML = items
-          .map(
-            (item) => `
+        safeInnerHTML(
+          tbody,
+          items
+            .map(
+              (item) => `
                     <tr>
                         <td>${item.name}</td>
                         <td>${item.email}</td>
@@ -295,8 +320,9 @@ const demoConfigs = {
                         </td>
                     </tr>
                 `
-          )
-          .join('');
+            )
+            .join('')
+        );
       };
 
       window.filterDemoTable = () => {
@@ -450,21 +476,24 @@ demoConfigs['rbac-middleware'] = {
       const perm = document.getElementById('rbacPerm').value;
       const granted = check(role, perm);
       const eff = getEffective(role);
-      document.getElementById('rbacResult').innerHTML = granted
-        ? '<div style="color:#10b981;font-weight:600;font-size:1.1rem;">✓ ACCESS GRANTED</div><div style="color:var(--text-secondary);margin-top:var(--spacing-xs);font-size:0.85rem;">Role <strong>' +
-          role +
-          '</strong> has permission <strong>' +
-          perm +
-          '</strong></div><div style="color:var(--text-muted);font-size:0.75rem;margin-top:var(--spacing-xs);">Effective roles: ' +
-          eff.join(', ') +
-          '</div>'
-        : '<div style="color:#ef4444;font-weight:600;font-size:1.1rem;">✗ ACCESS DENIED</div><div style="color:var(--text-secondary);margin-top:var(--spacing-xs);font-size:0.85rem;">Role <strong>' +
-          role +
-          '</strong> lacks permission <strong>' +
-          perm +
-          '</strong></div><div style="color:var(--text-muted);font-size:0.75rem;margin-top:var(--spacing-xs);">Effective roles: ' +
-          eff.join(', ') +
-          '</div>';
+      safeInnerHTML(
+        document.getElementById('rbacResult'),
+        granted
+          ? '<div style="color:#10b981;font-weight:600;font-size:1.1rem;">✓ ACCESS GRANTED</div><div style="color:var(--text-secondary);margin-top:var(--spacing-xs);font-size:0.85rem;">Role <strong>' +
+              role +
+              '</strong> has permission <strong>' +
+              perm +
+              '</strong></div><div style="color:var(--text-muted);font-size:0.75rem;margin-top:var(--spacing-xs);">Effective roles: ' +
+              eff.join(', ') +
+              '</div>'
+          : '<div style="color:#ef4444;font-weight:600;font-size:1.1rem;">✗ ACCESS DENIED</div><div style="color:var(--text-secondary);margin-top:var(--spacing-xs);font-size:0.85rem;">Role <strong>' +
+              role +
+              '</strong> lacks permission <strong>' +
+              perm +
+              '</strong></div><div style="color:var(--text-muted);font-size:0.75rem;margin-top:var(--spacing-xs);">Effective roles: ' +
+              eff.join(', ') +
+              '</div>'
+      );
     });
   },
 };
@@ -499,34 +528,39 @@ demoConfigs['chain-hashed-audit-logger'] = {
     }
     function render() {
       if (!entries.length) {
-        document.getElementById('auditChain').innerHTML =
-          '<span style="color:var(--text-muted);">No entries yet.</span>';
+        safeInnerHTML(
+          document.getElementById('auditChain'),
+          '<span style="color:var(--text-muted);">No entries yet.</span>'
+        );
         return;
       }
-      document.getElementById('auditChain').innerHTML = entries
-        .map(
-          (e, i) =>
-            '<div style="padding:var(--spacing-sm);border-bottom:1px solid var(--border-light);font-size:0.82rem;' +
-            (e.tampered ? 'background:rgba(239,68,68,0.1);' : '') +
-            '">' +
-            '<div style="display:flex;justify-content:space-between;"><strong style="color:var(--text-primary);">#' +
-            (i + 1) +
-            ' ' +
-            e.action +
-            '</strong><span style="color:var(--text-muted);">' +
-            e.timestamp +
-            '</span></div>' +
-            '<div style="color:var(--text-secondary);">User: ' +
-            e.userId +
-            '</div>' +
-            '<div style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.7rem;">Hash: ' +
-            e.hash +
-            ' | Prev: ' +
-            e.prevHash +
-            '</div>' +
-            '</div>'
-        )
-        .join('');
+      safeInnerHTML(
+        document.getElementById('auditChain'),
+        entries
+          .map(
+            (e, i) =>
+              '<div style="padding:var(--spacing-sm);border-bottom:1px solid var(--border-light);font-size:0.82rem;' +
+              (e.tampered ? 'background:rgba(239,68,68,0.1);' : '') +
+              '">' +
+              '<div style="display:flex;justify-content:space-between;"><strong style="color:var(--text-primary);">#' +
+              (i + 1) +
+              ' ' +
+              e.action +
+              '</strong><span style="color:var(--text-muted);">' +
+              e.timestamp +
+              '</span></div>' +
+              '<div style="color:var(--text-secondary);">User: ' +
+              e.userId +
+              '</div>' +
+              '<div style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.7rem;">Hash: ' +
+              e.hash +
+              ' | Prev: ' +
+              e.prevHash +
+              '</div>' +
+              '</div>'
+          )
+          .join('')
+      );
     }
     document.getElementById('auditLogBtn').addEventListener('click', () => {
       const action = document.getElementById('auditAction').value.trim() || 'USER_ACTION';
@@ -570,7 +604,7 @@ demoConfigs['chain-hashed-audit-logger'] = {
       const msg = valid
         ? '<div style="padding:var(--spacing-sm);background:rgba(16,185,129,0.15);border-radius:var(--radius-md);color:#10b981;font-weight:600;margin-bottom:var(--spacing-sm);">✓ Chain integrity verified - all hashes valid</div>'
         : '<div style="padding:var(--spacing-sm);background:rgba(239,68,68,0.15);border-radius:var(--radius-md);color:#ef4444;font-weight:600;margin-bottom:var(--spacing-sm);">✗ Chain integrity BROKEN - tampering detected!</div>';
-      el.innerHTML = msg + el.innerHTML;
+      safeInnerHTML(el, msg + el.innerHTML);
     });
   },
 };
@@ -684,11 +718,13 @@ demoConfigs['pii-data-masking'] = {
         count++;
         return '***.***.***.***';
       });
-      document.getElementById('piiResult').innerHTML =
+      safeInnerHTML(
+        document.getElementById('piiResult'),
         '<div style="color:#10b981;font-weight:600;margin-bottom:var(--spacing-xs);">✓ ' +
-        count +
-        ' PII pattern(s) masked</div>' +
-        text;
+          count +
+          ' PII pattern(s) masked</div>' +
+          text
+      );
     });
   },
 };
@@ -734,14 +770,17 @@ demoConfigs['breach-notification-engine'] = {
     const fwDiv = document.getElementById('breachFrameworks');
     Object.keys(FW).forEach((fw) => {
       const checked = ['gdpr', 'hipaa'].includes(fw) ? 'checked' : '';
-      fwDiv.innerHTML +=
-        '<label style="display:flex;align-items:center;gap:4px;padding:4px 10px;background:var(--bg-tertiary);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" value="' +
-        fw +
-        '" ' +
-        checked +
-        ' style="accent-color:var(--forest-green-accent);">' +
-        fw.toUpperCase() +
-        '</label>';
+      safeInnerHTML(
+        fwDiv,
+        fwDiv.innerHTML +
+          '<label style="display:flex;align-items:center;gap:4px;padding:4px 10px;background:var(--bg-tertiary);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" value="' +
+          fw +
+          '" ' +
+          checked +
+          ' style="accent-color:var(--forest-green-accent);">' +
+          fw.toUpperCase() +
+          '</label>'
+      );
     });
     document.getElementById('breachReportBtn').addEventListener('click', () => {
       const count = parseInt(document.getElementById('breachCount').value) || 100;
@@ -817,7 +856,7 @@ demoConfigs['breach-notification-engine'] = {
           html += '</div>';
         });
       }
-      document.getElementById('breachResult').innerHTML = html;
+      safeInnerHTML(document.getElementById('breachResult'), html);
     });
   },
 };
@@ -868,7 +907,7 @@ demoConfigs['mfa-middleware'] = {
       attempts = 0;
       locked = false;
       document.getElementById('mfaAttempts').textContent = 'Attempts: 0/5';
-      document.getElementById('mfaResult').innerHTML = '-';
+      safeInnerHTML(document.getElementById('mfaResult'), '-');
       const secret = genSecret();
       document.getElementById('mfaSecret').textContent = 'Secret: ' + secret;
       currentCode = genCode();
@@ -890,29 +929,39 @@ demoConfigs['mfa-middleware'] = {
     });
     document.getElementById('mfaVerifyBtn').addEventListener('click', () => {
       if (locked) {
-        document.getElementById('mfaResult').innerHTML =
-          '<span style="color:#ef4444;font-weight:600;">🔒 Account locked - too many failed attempts (30min cooldown)</span>';
+        safeInnerHTML(
+          document.getElementById('mfaResult'),
+          '<span style="color:#ef4444;font-weight:600;">🔒 Account locked - too many failed attempts (30min cooldown)</span>'
+        );
         return;
       }
       if (!currentCode) {
-        document.getElementById('mfaResult').innerHTML =
-          '<span style="color:var(--text-muted);">Enroll first to generate a code.</span>';
+        safeInnerHTML(
+          document.getElementById('mfaResult'),
+          '<span style="color:var(--text-muted);">Enroll first to generate a code.</span>'
+        );
         return;
       }
       const input = document.getElementById('mfaInput').value.trim();
       if (input === currentCode) {
-        document.getElementById('mfaResult').innerHTML =
-          '<span style="color:#10b981;font-weight:600;">✓ MFA VERIFIED - session authenticated</span>';
+        safeInnerHTML(
+          document.getElementById('mfaResult'),
+          '<span style="color:#10b981;font-weight:600;">✓ MFA VERIFIED - session authenticated</span>'
+        );
         attempts = 0;
       } else {
         attempts++;
         if (attempts >= 5) {
           locked = true;
-          document.getElementById('mfaResult').innerHTML =
-            '<span style="color:#ef4444;font-weight:600;">🔒 LOCKED - 5 failed attempts (PCI DSS 8.3.4)</span>';
+          safeInnerHTML(
+            document.getElementById('mfaResult'),
+            '<span style="color:#ef4444;font-weight:600;">🔒 LOCKED - 5 failed attempts (PCI DSS 8.3.4)</span>'
+          );
         } else {
-          document.getElementById('mfaResult').innerHTML =
-            '<span style="color:#ef4444;">✗ Invalid code. Try again.</span>';
+          safeInnerHTML(
+            document.getElementById('mfaResult'),
+            '<span style="color:#ef4444;">✗ Invalid code. Try again.</span>'
+          );
         }
       }
       document.getElementById('mfaAttempts').textContent =
@@ -980,31 +1029,33 @@ demoConfigs['session-timeout-manager'] = {
     function showProfile(key) {
       activeProfile = key;
       const p = profiles[key];
-      document.getElementById('sesInfo').innerHTML =
+      safeInnerHTML(
+        document.getElementById('sesInfo'),
         '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--spacing-sm);"><span style="font-weight:700;color:' +
-        p.color +
-        ';font-size:1.1rem;">' +
-        p.label +
-        ' Profile</span></div>' +
-        '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-sm);margin-bottom:var(--spacing-sm);">' +
-        '<div style="text-align:center;padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-sm);"><div style="font-size:1.2rem;font-weight:700;color:' +
-        p.color +
-        ';">' +
-        p.idle +
-        'min</div><div style="font-size:0.75rem;color:var(--text-muted);">Idle Timeout</div></div>' +
-        '<div style="text-align:center;padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-sm);"><div style="font-size:1.2rem;font-weight:700;color:' +
-        p.color +
-        ';">' +
-        p.absolute / 60 +
-        'hr</div><div style="font-size:0.75rem;color:var(--text-muted);">Max Session</div></div>' +
-        '<div style="text-align:center;padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-sm);"><div style="font-size:1.2rem;font-weight:700;color:' +
-        p.color +
-        ';">' +
-        p.warn +
-        'min</div><div style="font-size:0.75rem;color:var(--text-muted);">Warning</div></div></div>' +
-        '<div style="font-size:0.85rem;color:var(--text-secondary);">🎯 <strong>Use case:</strong> ' +
-        p.use +
-        '</div>';
+          p.color +
+          ';font-size:1.1rem;">' +
+          p.label +
+          ' Profile</span></div>' +
+          '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-sm);margin-bottom:var(--spacing-sm);">' +
+          '<div style="text-align:center;padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-sm);"><div style="font-size:1.2rem;font-weight:700;color:' +
+          p.color +
+          ';">' +
+          p.idle +
+          'min</div><div style="font-size:0.75rem;color:var(--text-muted);">Idle Timeout</div></div>' +
+          '<div style="text-align:center;padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-sm);"><div style="font-size:1.2rem;font-weight:700;color:' +
+          p.color +
+          ';">' +
+          p.absolute / 60 +
+          'hr</div><div style="font-size:0.75rem;color:var(--text-muted);">Max Session</div></div>' +
+          '<div style="text-align:center;padding:var(--spacing-sm);background:var(--bg-tertiary);border-radius:var(--radius-sm);"><div style="font-size:1.2rem;font-weight:700;color:' +
+          p.color +
+          ';">' +
+          p.warn +
+          'min</div><div style="font-size:0.75rem;color:var(--text-muted);">Warning</div></div></div>' +
+          '<div style="font-size:0.85rem;color:var(--text-secondary);">🎯 <strong>Use case:</strong> ' +
+          p.use +
+          '</div>'
+      );
     }
     document.getElementById('sesStd').addEventListener('click', () => showProfile('standard'));
     document.getElementById('sesSens').addEventListener('click', () => showProfile('sensitive'));
@@ -1028,17 +1079,23 @@ demoConfigs['session-timeout-manager'] = {
         const expired = idleSeconds >= maxIdle;
         if (expired) {
           clearInterval(sessionTimer);
-          document.getElementById('sesStatus').innerHTML =
-            '<span style="color:#ef4444;font-weight:600;">🔒 SESSION EXPIRED - auto-logout triggered</span>';
+          safeInnerHTML(
+            document.getElementById('sesStatus'),
+            '<span style="color:#ef4444;font-weight:600;">🔒 SESSION EXPIRED - auto-logout triggered</span>'
+          );
           document.getElementById('sesActivityBtn').disabled = true;
         } else if (warning) {
-          document.getElementById('sesStatus').innerHTML =
+          safeInnerHTML(
+            document.getElementById('sesStatus'),
             '<span style="color:#f59e0b;font-weight:600;">⚠ WARNING: Session expiring in ' +
-            (maxIdle - idleSeconds) +
-            's - click activity to extend</span>';
+              (maxIdle - idleSeconds) +
+              's - click activity to extend</span>'
+          );
         } else {
-          document.getElementById('sesStatus').innerHTML =
-            '<span style="color:#10b981;">Active session</span>';
+          safeInnerHTML(
+            document.getElementById('sesStatus'),
+            '<span style="color:#10b981;">Active session</span>'
+          );
         }
         document.getElementById('sesTimer').textContent =
           'Idle: ' + idleSeconds + 's / ' + maxIdle + 's (' + pct.toFixed(0) + '%)';
@@ -1046,8 +1103,10 @@ demoConfigs['session-timeout-manager'] = {
     });
     document.getElementById('sesActivityBtn').addEventListener('click', () => {
       idleSeconds = 0;
-      document.getElementById('sesStatus').innerHTML =
-        '<span style="color:#10b981;">✓ Activity detected - idle timer reset</span>';
+      safeInnerHTML(
+        document.getElementById('sesStatus'),
+        '<span style="color:#10b981;">✓ Activity detected - idle timer reset</span>'
+      );
     });
   },
 };
@@ -1138,7 +1197,7 @@ demoConfigs['hipaa-phi-filter'] = {
         ' of ' +
         Object.keys(record).length +
         ' fields accessible</div>';
-      document.getElementById('phiResult').innerHTML = html;
+      safeInnerHTML(document.getElementById('phiResult'), html);
     });
   },
 };
@@ -1175,45 +1234,50 @@ demoConfigs['gdpr-consent-manager'] = {
     });
     function render() {
       const el = document.getElementById('consentPurposes');
-      el.innerHTML = purposes
-        .map((p) => {
-          const granted = state[p.id];
-          const basisColors = {
-            contract: '#3b82f6',
-            consent: '#10b981',
-            legitimate_interest: '#f59e0b',
-          };
-          return (
-            '<div style="display:flex;justify-content:space-between;align-items:center;padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">' +
-            '<div><div style="font-weight:600;color:var(--text-primary);">' +
-            p.name +
-            (p.required ? ' <span style="color:#ef4444;font-size:0.75rem;">REQUIRED</span>' : '') +
-            '</div>' +
-            '<div style="font-size:0.75rem;color:var(--text-muted);">Legal basis: <span style="color:' +
-            (basisColors[p.basis] || 'var(--text-muted)') +
-            ';">' +
-            p.basis.replace(/_/g, ' ') +
-            '</span></div></div>' +
-            '<label style="position:relative;display:inline-block;width:48px;height:26px;cursor:' +
-            (p.required ? 'not-allowed' : 'pointer') +
-            ';">' +
-            '<input type="checkbox" data-purpose="' +
-            p.id +
-            '" ' +
-            (granted ? 'checked' : '') +
-            ' ' +
-            (p.required ? 'disabled' : '') +
-            ' style="opacity:0;width:0;height:0;">' +
-            '<span style="position:absolute;top:0;left:0;right:0;bottom:0;background:' +
-            (granted ? '#10b981' : '#6b7280') +
-            ';border-radius:13px;transition:0.3s;"></span>' +
-            '<span style="position:absolute;top:3px;left:' +
-            (granted ? '25px' : '3px') +
-            ';width:20px;height:20px;background:#fff;border-radius:50%;transition:0.3s;"></span>' +
-            '</label></div>'
-          );
-        })
-        .join('');
+      safeInnerHTML(
+        el,
+        purposes
+          .map((p) => {
+            const granted = state[p.id];
+            const basisColors = {
+              contract: '#3b82f6',
+              consent: '#10b981',
+              legitimate_interest: '#f59e0b',
+            };
+            return (
+              '<div style="display:flex;justify-content:space-between;align-items:center;padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">' +
+              '<div><div style="font-weight:600;color:var(--text-primary);">' +
+              p.name +
+              (p.required
+                ? ' <span style="color:#ef4444;font-size:0.75rem;">REQUIRED</span>'
+                : '') +
+              '</div>' +
+              '<div style="font-size:0.75rem;color:var(--text-muted);">Legal basis: <span style="color:' +
+              (basisColors[p.basis] || 'var(--text-muted)') +
+              ';">' +
+              p.basis.replace(/_/g, ' ') +
+              '</span></div></div>' +
+              '<label style="position:relative;display:inline-block;width:48px;height:26px;cursor:' +
+              (p.required ? 'not-allowed' : 'pointer') +
+              ';">' +
+              '<input type="checkbox" data-purpose="' +
+              p.id +
+              '" ' +
+              (granted ? 'checked' : '') +
+              ' ' +
+              (p.required ? 'disabled' : '') +
+              ' style="opacity:0;width:0;height:0;">' +
+              '<span style="position:absolute;top:0;left:0;right:0;bottom:0;background:' +
+              (granted ? '#10b981' : '#6b7280') +
+              ';border-radius:13px;transition:0.3s;"></span>' +
+              '<span style="position:absolute;top:3px;left:' +
+              (granted ? '25px' : '3px') +
+              ';width:20px;height:20px;background:#fff;border-radius:50%;transition:0.3s;"></span>' +
+              '</label></div>'
+            );
+          })
+          .join('')
+      );
       el.querySelectorAll('input[type=checkbox]').forEach((cb) => {
         cb.addEventListener('change', (e) => {
           state[e.target.dataset.purpose] = e.target.checked;
@@ -1227,30 +1291,32 @@ demoConfigs['gdpr-consent-manager'] = {
       receipt.style.display = 'block';
       const granted = purposes.filter((p) => state[p.id]);
       const withdrawn = purposes.filter((p) => !state[p.id]);
-      receipt.innerHTML =
+      safeInnerHTML(
+        receipt,
         '<div style="font-weight:600;color:var(--text-primary);margin-bottom:var(--spacing-sm);">📄 Kantara Consent Receipt</div>' +
-        '<div style="font-size:0.82rem;color:var(--text-secondary);">' +
-        '<div><strong>Receipt ID:</strong> CR-' +
-        Date.now() +
-        '</div>' +
-        '<div><strong>Timestamp:</strong> ' +
-        new Date().toISOString() +
-        '</div>' +
-        '<div><strong>Data Subject:</strong> user-demo@example.com</div>' +
-        '<div><strong>Policy Version:</strong> 2.1</div>' +
-        '<div style="margin-top:var(--spacing-xs);"><strong style="color:#10b981;">Granted (' +
-        granted.length +
-        '):</strong> ' +
-        granted.map((p) => p.name).join(', ') +
-        '</div>' +
-        (withdrawn.length
-          ? '<div><strong style="color:#ef4444;">Withdrawn (' +
-            withdrawn.length +
-            '):</strong> ' +
-            withdrawn.map((p) => p.name).join(', ') +
-            '</div>'
-          : '') +
-        '</div>';
+          '<div style="font-size:0.82rem;color:var(--text-secondary);">' +
+          '<div><strong>Receipt ID:</strong> CR-' +
+          Date.now() +
+          '</div>' +
+          '<div><strong>Timestamp:</strong> ' +
+          new Date().toISOString() +
+          '</div>' +
+          '<div><strong>Data Subject:</strong> user-demo@example.com</div>' +
+          '<div><strong>Policy Version:</strong> 2.1</div>' +
+          '<div style="margin-top:var(--spacing-xs);"><strong style="color:#10b981;">Granted (' +
+          granted.length +
+          '):</strong> ' +
+          granted.map((p) => p.name).join(', ') +
+          '</div>' +
+          (withdrawn.length
+            ? '<div><strong style="color:#ef4444;">Withdrawn (' +
+              withdrawn.length +
+              '):</strong> ' +
+              withdrawn.map((p) => p.name).join(', ') +
+              '</div>'
+            : '') +
+          '</div>'
+      );
     });
     document.getElementById('consentExportBtn').addEventListener('click', () => {
       const data = {
@@ -1368,7 +1434,7 @@ demoConfigs['pci-card-sanitizer'] = {
             '</span></div>';
         });
       }
-      document.getElementById('pciResult').innerHTML = html;
+      safeInnerHTML(document.getElementById('pciResult'), html);
     });
 
     document.getElementById('pciScrubBtn').addEventListener('click', () => {
@@ -1382,11 +1448,13 @@ demoConfigs['pci-card-sanitizer'] = {
         }
         return match;
       });
-      document.getElementById('pciScrubResult').innerHTML =
+      safeInnerHTML(
+        document.getElementById('pciScrubResult'),
         '<span style="color:#10b981;font-weight:600;">✓ ' +
-        count +
-        ' PAN(s) scrubbed:</span> ' +
-        text;
+          count +
+          ' PAN(s) scrubbed:</span> ' +
+          text
+      );
     });
   },
 };
@@ -1474,52 +1542,57 @@ demoConfigs['mbai-sbsc'] = {
         ],
       },
     ];
-    document.getElementById('sbscPerspectives').innerHTML = perspectives
-      .map(
-        (p, i) =>
-          '<div class="sbsc-card" data-idx="' +
-          i +
-          '" style="padding:var(--spacing-md);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);cursor:pointer;transition:all 0.2s;text-align:center;" onmouseover="this.style.borderColor=\'' +
-          p.color +
-          '\'" onmouseout="this.style.borderColor=\'var(--border-light)\'">' +
-          '<div style="font-size:1.8rem;">' +
-          p.icon +
-          '</div>' +
-          '<div style="font-weight:600;color:var(--text-primary);margin-top:var(--spacing-xs);">' +
-          p.name +
-          '</div>' +
-          '<div style="font-size:0.75rem;color:var(--text-muted);">' +
-          p.objectives.length +
-          ' objectives</div></div>'
-      )
-      .join('');
+    safeInnerHTML(
+      document.getElementById('sbscPerspectives'),
+      perspectives
+        .map(
+          (p, i) =>
+            '<div class="sbsc-card" data-idx="' +
+            i +
+            '" style="padding:var(--spacing-md);background:var(--bg-tertiary);border:1px solid var(--border-light);border-radius:var(--radius-md);cursor:pointer;transition:all 0.2s;text-align:center;" onmouseover="this.style.borderColor=\'' +
+            p.color +
+            '\'" onmouseout="this.style.borderColor=\'var(--border-light)\'">' +
+            '<div style="font-size:1.8rem;">' +
+            p.icon +
+            '</div>' +
+            '<div style="font-weight:600;color:var(--text-primary);margin-top:var(--spacing-xs);">' +
+            p.name +
+            '</div>' +
+            '<div style="font-size:0.75rem;color:var(--text-muted);">' +
+            p.objectives.length +
+            ' objectives</div></div>'
+        )
+        .join('')
+    );
     document.querySelectorAll('.sbsc-card').forEach((card) => {
       card.addEventListener('click', () => {
         const p = perspectives[parseInt(card.dataset.idx)];
-        document.getElementById('sbscDetail').innerHTML =
+        safeInnerHTML(
+          document.getElementById('sbscDetail'),
           '<h5 style="color:' +
-          p.color +
-          ';margin-bottom:var(--spacing-sm);">' +
-          p.icon +
-          ' ' +
-          p.name +
-          ' Perspective</h5>' +
-          p.objectives
-            .map(
-              (o) =>
-                '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);margin-bottom:var(--spacing-xs);font-size:0.85rem;">' +
-                '<div style="color:var(--text-primary);font-weight:600;">' +
-                o.obj +
-                '</div>' +
-                '<div style="display:flex;gap:var(--spacing-md);margin-top:4px;flex-wrap:wrap;">' +
-                '<span style="color:var(--text-secondary);font-size:0.78rem;">📏 ' +
-                o.kpi +
-                '</span>' +
-                '<span style="color:var(--text-muted);font-size:0.78rem;">🤖 ' +
-                o.ai +
-                '</span></div></div>'
-            )
-            .join('');
+            p.color +
+            ';margin-bottom:var(--spacing-sm);">' +
+            p.icon +
+            ' ' +
+            p.name +
+            ' Perspective</h5>' +
+            p.objectives
+              .map(
+                (o) =>
+                  '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);margin-bottom:var(--spacing-xs);font-size:0.85rem;">' +
+                  '<div style="color:var(--text-primary);font-weight:600;">' +
+                  o.obj +
+                  '</div>' +
+                  '<div style="display:flex;gap:var(--spacing-md);margin-top:4px;flex-wrap:wrap;">' +
+                  '<span style="color:var(--text-secondary);font-size:0.78rem;">📏 ' +
+                  o.kpi +
+                  '</span>' +
+                  '<span style="color:var(--text-muted);font-size:0.78rem;">🤖 ' +
+                  o.ai +
+                  '</span></div></div>'
+              )
+              .join('')
+        );
       });
     });
   },
@@ -1581,39 +1654,44 @@ demoConfigs['mbai-circular-supply-chain'] = {
         kpi: 'Closed-loop economic value',
       },
     ];
-    document.getElementById('circularPhases').innerHTML = phases
-      .map(
-        (p, i) =>
-          '<button class="btn btn-secondary circular-phase-btn" data-idx="' +
-          i +
-          '" style="font-size:0.85rem;"> ' +
-          p.icon +
-          ' ' +
-          p.name +
-          '</button>'
-      )
-      .join('');
+    safeInnerHTML(
+      document.getElementById('circularPhases'),
+      phases
+        .map(
+          (p, i) =>
+            '<button class="btn btn-secondary circular-phase-btn" data-idx="' +
+            i +
+            '" style="font-size:0.85rem;"> ' +
+            p.icon +
+            ' ' +
+            p.name +
+            '</button>'
+        )
+        .join('')
+    );
     document.querySelectorAll('.circular-phase-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.circular-phase-btn').forEach((b) => (b.style.background = ''));
         btn.style.background = 'var(--primary-color)';
         const p = phases[parseInt(btn.dataset.idx)];
-        document.getElementById('circularDetail').innerHTML =
+        safeInnerHTML(
+          document.getElementById('circularDetail'),
           '<h5 style="color:var(--forest-green-accent);margin-bottom:var(--spacing-sm);">' +
-          p.icon +
-          ' Phase: ' +
-          p.name +
-          '</h5>' +
-          '<div style="display:grid;gap:var(--spacing-sm);">' +
-          '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">Action:</strong> <span style="color:var(--text-secondary);">' +
-          p.action +
-          '</span></div>' +
-          '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">🤖 AI Enablement:</strong> <span style="color:var(--text-secondary);">' +
-          p.ai +
-          '</span></div>' +
-          '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">📏 KPI:</strong> <span style="color:var(--text-secondary);">' +
-          p.kpi +
-          '</span></div></div>';
+            p.icon +
+            ' Phase: ' +
+            p.name +
+            '</h5>' +
+            '<div style="display:grid;gap:var(--spacing-sm);">' +
+            '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">Action:</strong> <span style="color:var(--text-secondary);">' +
+            p.action +
+            '</span></div>' +
+            '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">🤖 AI Enablement:</strong> <span style="color:var(--text-secondary);">' +
+            p.ai +
+            '</span></div>' +
+            '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">📏 KPI:</strong> <span style="color:var(--text-secondary);">' +
+            p.kpi +
+            '</span></div></div>'
+        );
       });
     });
   },
@@ -1657,35 +1735,38 @@ demoConfigs['mbai-tbl-impact'] = {
         ],
       },
     ];
-    document.getElementById('tblDimensions').innerHTML = dims
-      .map(
-        (d) =>
-          '<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:var(--spacing-md);">' +
-          '<h5 style="color:' +
-          d.color +
-          ';margin-bottom:var(--spacing-sm);">' +
-          d.icon +
-          ' ' +
-          d.name +
-          '</h5>' +
-          '<table style="width:100%;border-collapse:collapse;font-size:0.85rem;">' +
-          '<thead><tr><th style="text-align:left;padding:4px 8px;color:var(--text-secondary);border-bottom:1px solid var(--border-light);">Metric</th><th style="padding:4px 8px;color:#ef4444;border-bottom:1px solid var(--border-light);">Baseline</th><th style="padding:4px 8px;color:#10b981;border-bottom:1px solid var(--border-light);">Projected</th></tr></thead>' +
-          '<tbody>' +
-          d.metrics
-            .map(
-              (m) =>
-                '<tr><td style="padding:6px 8px;color:var(--text-primary);">' +
-                m.label +
-                '</td><td style="padding:6px 8px;text-align:center;color:var(--text-muted);">' +
-                m.baseline +
-                '</td><td style="padding:6px 8px;text-align:center;color:var(--forest-green-accent);font-weight:600;">' +
-                m.projected +
-                '</td></tr>'
-            )
-            .join('') +
-          '</tbody></table></div>'
-      )
-      .join('');
+    safeInnerHTML(
+      document.getElementById('tblDimensions'),
+      dims
+        .map(
+          (d) =>
+            '<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:var(--spacing-md);">' +
+            '<h5 style="color:' +
+            d.color +
+            ';margin-bottom:var(--spacing-sm);">' +
+            d.icon +
+            ' ' +
+            d.name +
+            '</h5>' +
+            '<table style="width:100%;border-collapse:collapse;font-size:0.85rem;">' +
+            '<thead><tr><th style="text-align:left;padding:4px 8px;color:var(--text-secondary);border-bottom:1px solid var(--border-light);">Metric</th><th style="padding:4px 8px;color:#ef4444;border-bottom:1px solid var(--border-light);">Baseline</th><th style="padding:4px 8px;color:#10b981;border-bottom:1px solid var(--border-light);">Projected</th></tr></thead>' +
+            '<tbody>' +
+            d.metrics
+              .map(
+                (m) =>
+                  '<tr><td style="padding:6px 8px;color:var(--text-primary);">' +
+                  m.label +
+                  '</td><td style="padding:6px 8px;text-align:center;color:var(--text-muted);">' +
+                  m.baseline +
+                  '</td><td style="padding:6px 8px;text-align:center;color:var(--forest-green-accent);font-weight:600;">' +
+                  m.projected +
+                  '</td></tr>'
+              )
+              .join('') +
+            '</tbody></table></div>'
+        )
+        .join('')
+    );
   },
 };
 
@@ -1723,37 +1804,42 @@ demoConfigs['mbai-marketing-audit'] = {
     ];
     const checked = new Array(phases.length).fill(false);
     function renderMkt() {
-      document.getElementById('mktPhases').innerHTML = phases
-        .map(
-          (p, i) =>
-            '<label style="display:flex;gap:var(--spacing-sm);align-items:flex-start;padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);cursor:pointer;' +
-            (checked[i] ? 'border-color:var(--forest-green-accent);' : '') +
-            '">' +
-            '<input type="checkbox" class="mkt-check" data-idx="' +
-            i +
-            '" ' +
-            (checked[i] ? 'checked' : '') +
-            ' style="margin-top:2px;">' +
-            '<div><div style="font-weight:600;color:var(--text-primary);font-size:0.9rem;">' +
-            p.name +
-            '</div><div style="font-size:0.8rem;color:var(--text-secondary);">' +
-            p.criteria +
-            '</div></div></label>'
-        )
-        .join('');
+      safeInnerHTML(
+        document.getElementById('mktPhases'),
+        phases
+          .map(
+            (p, i) =>
+              '<label style="display:flex;gap:var(--spacing-sm);align-items:flex-start;padding:var(--spacing-sm);background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);cursor:pointer;' +
+              (checked[i] ? 'border-color:var(--forest-green-accent);' : '') +
+              '">' +
+              '<input type="checkbox" class="mkt-check" data-idx="' +
+              i +
+              '" ' +
+              (checked[i] ? 'checked' : '') +
+              ' style="margin-top:2px;">' +
+              '<div><div style="font-weight:600;color:var(--text-primary);font-size:0.9rem;">' +
+              p.name +
+              '</div><div style="font-size:0.8rem;color:var(--text-secondary);">' +
+              p.criteria +
+              '</div></div></label>'
+          )
+          .join('')
+      );
       const done = checked.filter(Boolean).length;
       const pct = Math.round((done / phases.length) * 100);
-      document.getElementById('mktProgress').innerHTML =
+      safeInnerHTML(
+        document.getElementById('mktProgress'),
         '<div style="background:var(--bg-card);border-radius:var(--radius-md);height:8px;overflow:hidden;margin-bottom:var(--spacing-xs);"><div style="height:100%;width:' +
-        pct +
-        '%;background:var(--forest-green-accent);transition:width 0.3s;border-radius:var(--radius-md);"></div></div>' +
-        '<span style="font-size:0.85rem;color:var(--text-secondary);">' +
-        done +
-        '/' +
-        phases.length +
-        ' phases complete (' +
-        pct +
-        '%)</span>';
+          pct +
+          '%;background:var(--forest-green-accent);transition:width 0.3s;border-radius:var(--radius-md);"></div></div>' +
+          '<span style="font-size:0.85rem;color:var(--text-secondary);">' +
+          done +
+          '/' +
+          phases.length +
+          ' phases complete (' +
+          pct +
+          '%)</span>'
+      );
       document.querySelectorAll('.mkt-check').forEach((cb) => {
         cb.addEventListener('change', () => {
           checked[parseInt(cb.dataset.idx)] = cb.checked;
@@ -1808,34 +1894,37 @@ demoConfigs['mbai-servant-leadership'] = {
     ];
     let activeIdx = -1;
     function renderCoaching() {
-      document.getElementById('coachingSegments').innerHTML = segments
-        .map(
-          (s, i) =>
-            '<div class="coaching-seg" data-idx="' +
-            i +
-            '" style="padding:var(--spacing-md);background:' +
-            (i === activeIdx ? 'var(--bg-tertiary)' : 'var(--bg-card)') +
-            ';border:1px solid ' +
-            (i === activeIdx ? 'var(--forest-green-accent)' : 'var(--border-light)') +
-            ';border-radius:var(--radius-md);cursor:pointer;transition:all 0.2s;">' +
-            '<div style="display:flex;justify-content:space-between;align-items:center;">' +
-            '<strong style="color:var(--text-primary);">' +
-            s.name +
-            '</strong>' +
-            '<span style="font-size:0.75rem;color:var(--text-muted);">⏱ ' +
-            s.time +
-            '</span></div>' +
-            '<div style="font-size:0.8rem;color:var(--forest-green-accent);margin-top:2px;">' +
-            s.focus +
-            '</div>' +
-            (i === activeIdx
-              ? '<div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text-secondary);font-style:italic;">"' +
-                s.prompt +
-                '"</div>'
-              : '') +
-            '</div>'
-        )
-        .join('');
+      safeInnerHTML(
+        document.getElementById('coachingSegments'),
+        segments
+          .map(
+            (s, i) =>
+              '<div class="coaching-seg" data-idx="' +
+              i +
+              '" style="padding:var(--spacing-md);background:' +
+              (i === activeIdx ? 'var(--bg-tertiary)' : 'var(--bg-card)') +
+              ';border:1px solid ' +
+              (i === activeIdx ? 'var(--forest-green-accent)' : 'var(--border-light)') +
+              ';border-radius:var(--radius-md);cursor:pointer;transition:all 0.2s;">' +
+              '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+              '<strong style="color:var(--text-primary);">' +
+              s.name +
+              '</strong>' +
+              '<span style="font-size:0.75rem;color:var(--text-muted);">⏱ ' +
+              s.time +
+              '</span></div>' +
+              '<div style="font-size:0.8rem;color:var(--forest-green-accent);margin-top:2px;">' +
+              s.focus +
+              '</div>' +
+              (i === activeIdx
+                ? '<div style="margin-top:var(--spacing-sm);padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text-secondary);font-style:italic;">"' +
+                  s.prompt +
+                  '"</div>'
+                : '') +
+              '</div>'
+          )
+          .join('')
+      );
       document.querySelectorAll('.coaching-seg').forEach((seg) => {
         seg.addEventListener('click', () => {
           activeIdx = activeIdx === parseInt(seg.dataset.idx) ? -1 : parseInt(seg.dataset.idx);
@@ -1896,24 +1985,27 @@ demoConfigs['mbai-greenops-sdlc'] = {
         green: 'Real-time PUE & carbon per GB',
       },
     ];
-    document.getElementById('sdlcPhases').innerHTML = phases
-      .map(
-        (p, i) =>
-          '<button class="sdlc-btn" data-idx="' +
-          i +
-          '" style="flex:1;padding:var(--spacing-sm) 4px;background:var(--bg-tertiary);border:1px solid var(--border-light);color:var(--text-primary);cursor:pointer;font-size:0.78rem;text-align:center;' +
-          (i === 0
-            ? 'border-radius:var(--radius-md) 0 0 var(--radius-md);'
-            : i === phases.length - 1
-              ? 'border-radius:0 var(--radius-md) var(--radius-md) 0;'
-              : '') +
-          '">' +
-          p.icon +
-          '<br>' +
-          p.name +
-          '</button>'
-      )
-      .join('');
+    safeInnerHTML(
+      document.getElementById('sdlcPhases'),
+      phases
+        .map(
+          (p, i) =>
+            '<button class="sdlc-btn" data-idx="' +
+            i +
+            '" style="flex:1;padding:var(--spacing-sm) 4px;background:var(--bg-tertiary);border:1px solid var(--border-light);color:var(--text-primary);cursor:pointer;font-size:0.78rem;text-align:center;' +
+            (i === 0
+              ? 'border-radius:var(--radius-md) 0 0 var(--radius-md);'
+              : i === phases.length - 1
+                ? 'border-radius:0 var(--radius-md) var(--radius-md) 0;'
+                : '') +
+            '">' +
+            p.icon +
+            '<br>' +
+            p.name +
+            '</button>'
+        )
+        .join('')
+    );
     document.querySelectorAll('.sdlc-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.sdlc-btn').forEach((b) => {
@@ -1923,22 +2015,24 @@ demoConfigs['mbai-greenops-sdlc'] = {
         btn.style.background = 'var(--primary-color)';
         btn.style.borderColor = 'var(--forest-green-accent)';
         const p = phases[parseInt(btn.dataset.idx)];
-        document.getElementById('sdlcDetail').innerHTML =
+        safeInnerHTML(
+          document.getElementById('sdlcDetail'),
           '<h5 style="color:var(--forest-green-accent);margin-bottom:var(--spacing-sm);">' +
-          p.icon +
-          ' ' +
-          p.name +
-          '</h5>' +
-          '<div style="display:grid;gap:var(--spacing-sm);">' +
-          '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><span style="font-weight:600;color:var(--text-primary);">📌 Action:</span> <span style="color:var(--text-secondary);">' +
-          p.action +
-          '</span></div>' +
-          '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><span style="font-weight:600;color:var(--text-primary);">🤖 AI Vector:</span> <span style="color:var(--text-secondary);">' +
-          p.ai +
-          '</span></div>' +
-          '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><span style="font-weight:600;color:var(--text-primary);">🌿 GreenOps:</span> <span style="color:var(--text-secondary);">' +
-          p.green +
-          '</span></div></div>';
+            p.icon +
+            ' ' +
+            p.name +
+            '</h5>' +
+            '<div style="display:grid;gap:var(--spacing-sm);">' +
+            '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><span style="font-weight:600;color:var(--text-primary);">📌 Action:</span> <span style="color:var(--text-secondary);">' +
+            p.action +
+            '</span></div>' +
+            '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><span style="font-weight:600;color:var(--text-primary);">🤖 AI Vector:</span> <span style="color:var(--text-secondary);">' +
+            p.ai +
+            '</span></div>' +
+            '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><span style="font-weight:600;color:var(--text-primary);">🌿 GreenOps:</span> <span style="color:var(--text-secondary);">' +
+            p.green +
+            '</span></div></div>'
+        );
       });
     });
   },
@@ -1990,22 +2084,25 @@ demoConfigs['mbai-grc-ai'] = {
         docs: 'Incident Response → Monitoring dashboards',
       },
     ];
-    document.getElementById('grcFunctions').innerHTML = funcs
-      .map(
-        (f, i) =>
-          '<div class="grc-card" data-idx="' +
-          i +
-          '" style="padding:var(--spacing-md);background:var(--bg-tertiary);border:2px solid var(--border-light);border-radius:var(--radius-md);cursor:pointer;text-align:center;transition:all 0.2s;">' +
-          '<div style="font-size:1.5rem;">' +
-          f.icon +
-          '</div>' +
-          '<div style="font-weight:700;color:' +
-          f.color +
-          ';font-size:1.1rem;">' +
-          f.name +
-          '</div></div>'
-      )
-      .join('');
+    safeInnerHTML(
+      document.getElementById('grcFunctions'),
+      funcs
+        .map(
+          (f, i) =>
+            '<div class="grc-card" data-idx="' +
+            i +
+            '" style="padding:var(--spacing-md);background:var(--bg-tertiary);border:2px solid var(--border-light);border-radius:var(--radius-md);cursor:pointer;text-align:center;transition:all 0.2s;">' +
+            '<div style="font-size:1.5rem;">' +
+            f.icon +
+            '</div>' +
+            '<div style="font-weight:700;color:' +
+            f.color +
+            ';font-size:1.1rem;">' +
+            f.name +
+            '</div></div>'
+        )
+        .join('')
+    );
     document.querySelectorAll('.grc-card').forEach((card) => {
       card.addEventListener('click', () => {
         document
@@ -2013,24 +2110,26 @@ demoConfigs['mbai-grc-ai'] = {
           .forEach((c) => (c.style.borderColor = 'var(--border-light)'));
         const f = funcs[parseInt(card.dataset.idx)];
         card.style.borderColor = f.color;
-        document.getElementById('grcDetail').innerHTML =
+        safeInnerHTML(
+          document.getElementById('grcDetail'),
           '<h5 style="color:' +
-          f.color +
-          ';margin-bottom:var(--spacing-sm);">' +
-          f.icon +
-          ' ' +
-          f.name +
-          '</h5>' +
-          '<div style="display:grid;gap:var(--spacing-sm);">' +
-          '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">📌 Action:</strong> <span style="color:var(--text-secondary);">' +
-          f.action +
-          '</span></div>' +
-          '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">🤖 AI Enablement:</strong> <span style="color:var(--text-secondary);">' +
-          f.ai +
-          '</span></div>' +
-          '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">📄 Documentation:</strong> <span style="color:var(--text-secondary);">' +
-          f.docs +
-          '</span></div></div>';
+            f.color +
+            ';margin-bottom:var(--spacing-sm);">' +
+            f.icon +
+            ' ' +
+            f.name +
+            '</h5>' +
+            '<div style="display:grid;gap:var(--spacing-sm);">' +
+            '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">📌 Action:</strong> <span style="color:var(--text-secondary);">' +
+            f.action +
+            '</span></div>' +
+            '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">🤖 AI Enablement:</strong> <span style="color:var(--text-secondary);">' +
+            f.ai +
+            '</span></div>' +
+            '<div style="padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-sm);"><strong style="color:var(--text-primary);">📄 Documentation:</strong> <span style="color:var(--text-secondary);">' +
+            f.docs +
+            '</span></div></div>'
+        );
       });
     });
   },
@@ -2166,30 +2265,33 @@ demoConfigs['crud-database-model'] = {
     function renderCrudList() {
       const list = document.getElementById('crudList');
       if (items.length === 0) {
-        list.innerHTML = '<p class="empty-state">No items yet. Create one above!</p>';
+        safeInnerHTML(list, '<p class="empty-state">No items yet. Create one above!</p>');
         return;
       }
-      list.innerHTML = items
-        .map(
-          (item) =>
-            '<div class="crud-item">' +
-            '<span class="item-name">' +
-            item.name +
-            '</span>' +
-            '<span class="item-meta">ID: ' +
-            item.id +
-            '</span>' +
-            '<div class="item-actions">' +
-            '<button class="btn-icon" onclick="crudUpdate(' +
-            item.id +
-            ')">✏️</button>' +
-            '<button class="btn-icon" onclick="crudDelete(' +
-            item.id +
-            ')">🗑️</button>' +
-            '</div>' +
-            '</div>'
-        )
-        .join('');
+      safeInnerHTML(
+        list,
+        items
+          .map(
+            (item) =>
+              '<div class="crud-item">' +
+              '<span class="item-name">' +
+              item.name +
+              '</span>' +
+              '<span class="item-meta">ID: ' +
+              item.id +
+              '</span>' +
+              '<div class="item-actions">' +
+              '<button class="btn-icon" onclick="crudUpdate(' +
+              item.id +
+              ')">✏️</button>' +
+              '<button class="btn-icon" onclick="crudDelete(' +
+              item.id +
+              ')">🗑️</button>' +
+              '</div>' +
+              '</div>'
+          )
+          .join('')
+      );
     }
   },
 };
@@ -2215,26 +2317,30 @@ demoConfigs['loading-state-manager'] = {
     window.simulateLoad = (btn, duration) => {
       const originalText = btn.textContent;
       btn.disabled = true;
-      btn.innerHTML = '<span class="spinner"></span> Loading...';
+      safeInnerHTML(btn, '<span class="spinner"></span> Loading...');
 
       setTimeout(() => {
         btn.disabled = false;
         btn.textContent = originalText;
-        document.getElementById('loadingResult').innerHTML =
-          '<div class="success-msg">✓ Operation completed successfully!</div>';
+        safeInnerHTML(
+          document.getElementById('loadingResult'),
+          '<div class="success-msg">✓ Operation completed successfully!</div>'
+        );
       }, duration);
     };
 
     window.simulateLoadError = (btn) => {
       const originalText = btn.textContent;
       btn.disabled = true;
-      btn.innerHTML = '<span class="spinner"></span> Loading...';
+      safeInnerHTML(btn, '<span class="spinner"></span> Loading...');
 
       setTimeout(() => {
         btn.disabled = false;
         btn.textContent = originalText;
-        document.getElementById('loadingResult').innerHTML =
-          '<div class="error-msg">✗ Error: Connection timeout. Please try again.</div>';
+        safeInnerHTML(
+          document.getElementById('loadingResult'),
+          '<div class="error-msg">✗ Error: Connection timeout. Please try again.</div>'
+        );
       }, 1500);
     };
   },
@@ -2423,17 +2529,25 @@ demoConfigs['rest-api-controller'] = {
       const inputsDiv = document.getElementById('apiInputs');
 
       if (method === 'GET-all') {
-        inputsDiv.innerHTML =
-          '<small style="color: var(--text-muted);">No parameters needed</small>';
+        safeInnerHTML(
+          inputsDiv,
+          '<small style="color: var(--text-muted);">No parameters needed</small>'
+        );
       } else if (method === 'GET-one' || method === 'DELETE') {
-        inputsDiv.innerHTML =
-          '<input type="number" id="apiId" placeholder="User ID (1-3)" value="1" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">';
+        safeInnerHTML(
+          inputsDiv,
+          '<input type="number" id="apiId" placeholder="User ID (1-3)" value="1" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">'
+        );
       } else if (method === 'POST') {
-        inputsDiv.innerHTML =
-          '<input type="text" id="apiName" placeholder="Name" style="margin-right: var(--spacing-sm); padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);"><input type="email" id="apiEmail" placeholder="Email" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">';
+        safeInnerHTML(
+          inputsDiv,
+          '<input type="text" id="apiName" placeholder="Name" style="margin-right: var(--spacing-sm); padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);"><input type="email" id="apiEmail" placeholder="Email" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">'
+        );
       } else if (method === 'PUT') {
-        inputsDiv.innerHTML =
-          '<input type="number" id="apiId" placeholder="User ID" value="1" style="margin-right: var(--spacing-sm); padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);"><input type="text" id="apiName" placeholder="New Name" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">';
+        safeInnerHTML(
+          inputsDiv,
+          '<input type="number" id="apiId" placeholder="User ID" value="1" style="margin-right: var(--spacing-sm); padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);"><input type="text" id="apiName" placeholder="New Name" style="padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-primary);">'
+        );
       }
     };
 
@@ -2638,28 +2752,32 @@ demoConfigs['email-service'] = {
         body = body.replace(new RegExp('{{' + key + '}}', 'g'), val);
       });
 
-      document.getElementById('emailPreviewContent').innerHTML =
+      safeInnerHTML(
+        document.getElementById('emailPreviewContent'),
         '<strong>Subject:</strong> ' +
-        subject +
-        '<br><br>' +
-        '<strong>Body:</strong><br><pre style="white-space: pre-wrap; margin-top: var(--spacing-xs);">' +
-        body +
-        '</pre>';
+          subject +
+          '<br><br>' +
+          '<strong>Body:</strong><br><pre style="white-space: pre-wrap; margin-top: var(--spacing-xs);">' +
+          body +
+          '</pre>'
+      );
     };
 
     window.sendDemoEmail = () => {
       const to = document.getElementById('emailTo').value;
       const template = document.getElementById('emailTemplate').value;
 
-      document.getElementById('emailPreviewContent').innerHTML =
+      safeInnerHTML(
+        document.getElementById('emailPreviewContent'),
         '<div class="success-msg">✓ Email sent successfully!<br><br>' +
-        '<small>To: ' +
-        to +
-        '<br>Template: ' +
-        template +
-        '<br>Timestamp: ' +
-        new Date().toISOString() +
-        '</small></div>';
+          '<small>To: ' +
+          to +
+          '<br>Template: ' +
+          template +
+          '<br>Timestamp: ' +
+          new Date().toISOString() +
+          '</small></div>'
+      );
     };
 
     window.previewEmailTemplate();
@@ -2745,13 +2863,15 @@ demoConfigs['debounce-throttle'] = {
       const throttleEff =
         throttleEvents > 0 ? Math.round((1 - throttleProcessed / throttleEvents) * 100) : 0;
 
-      document.getElementById('efficiencyStats').innerHTML =
+      safeInnerHTML(
+        document.getElementById('efficiencyStats'),
         '• Debounce saved <strong style="color: #10b981;">' +
-        debounceEff +
-        '%</strong> of function calls<br>' +
-        '• Throttle saved <strong style="color: #10b981;">' +
-        throttleEff +
-        '%</strong> of function calls';
+          debounceEff +
+          '%</strong> of function calls<br>' +
+          '• Throttle saved <strong style="color: #10b981;">' +
+          throttleEff +
+          '%</strong> of function calls'
+      );
     }
   },
 };
@@ -2822,16 +2942,19 @@ demoConfigs['date-time-utils'] = {
         { label: 'Unix Timestamp', value: Math.floor(date.getTime() / 1000) },
       ];
 
-      document.getElementById('dateFormats').innerHTML = formats
-        .map(
-          (f) =>
-            '<div style="display: flex; justify-content: space-between; padding: var(--spacing-xs) 0; border-bottom: 1px solid var(--border-light);"><span style="color: var(--text-secondary);">' +
-            f.label +
-            ':</span><code style="color: var(--primary-color);">' +
-            f.value +
-            '</code></div>'
-        )
-        .join('');
+      safeInnerHTML(
+        document.getElementById('dateFormats'),
+        formats
+          .map(
+            (f) =>
+              '<div style="display: flex; justify-content: space-between; padding: var(--spacing-xs) 0; border-bottom: 1px solid var(--border-light);"><span style="color: var(--text-secondary);">' +
+              f.label +
+              ':</span><code style="color: var(--primary-color);">' +
+              f.value +
+              '</code></div>'
+          )
+          .join('')
+      );
     };
 
     function timeAgo(date) {
@@ -2862,16 +2985,19 @@ demoConfigs['date-time-utils'] = {
       { label: 'Last week', date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
     ];
 
-    document.getElementById('relativeExamples').innerHTML = examples
-      .map(
-        (ex) =>
-          '<div style="display: flex; justify-content: space-between; padding: var(--spacing-sm); background: var(--bg-card); border-radius: var(--radius-sm);"><span>' +
-          ex.label +
-          '</span><code style="color: var(--primary-color);">' +
-          timeAgo(ex.date) +
-          '</code></div>'
-      )
-      .join('');
+    safeInnerHTML(
+      document.getElementById('relativeExamples'),
+      examples
+        .map(
+          (ex) =>
+            '<div style="display: flex; justify-content: space-between; padding: var(--spacing-sm); background: var(--bg-card); border-radius: var(--radius-sm);"><span>' +
+            ex.label +
+            '</span><code style="color: var(--primary-color);">' +
+            timeAgo(ex.date) +
+            '</code></div>'
+        )
+        .join('')
+    );
 
     window.formatDuration = () => {
       const seconds = parseInt(document.getElementById('durationInput').value) || 0;
@@ -3004,11 +3130,13 @@ function filterTemplates(searchTerm = '') {
 
 function displayTemplates(templatesToShow) {
   const grid = document.getElementById('templatesGrid');
-  grid.innerHTML = '';
+  safeInnerHTML(grid, '');
 
   if (templatesToShow.length === 0) {
-    grid.innerHTML =
-      '<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">No templates found. Try a different search or category.</p>';
+    safeInnerHTML(
+      grid,
+      '<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">No templates found. Try a different search or category.</p>'
+    );
     return;
   }
 
@@ -3029,7 +3157,9 @@ function createTemplateCard(template) {
     .map((tag) => `<span class="badge">${tag}</span>`)
     .join('');
 
-  card.innerHTML = `
+  safeInnerHTML(
+    card,
+    `
         <div class="template-card-header">
             <h3 class="template-card-title">${template.title}</h3>
         </div>
@@ -3038,7 +3168,8 @@ function createTemplateCard(template) {
             <span class="badge badge-primary">${template.language}</span>
             ${tagsHTML}
         </div>
-    `;
+    `
+  );
 
   return card;
 }
@@ -3053,8 +3184,8 @@ function openTemplateModal(template) {
   document.getElementById('templateCategory').className =
     'badge badge-' + getCategoryBadgeClass(template.category);
   document.getElementById('templateLanguage').textContent = template.language;
-  document.getElementById('templateUsage').innerHTML = template.usage;
-  document.getElementById('templateNotes').innerHTML = template.notes;
+  safeInnerHTML(document.getElementById('templateUsage'), template.usage);
+  safeInnerHTML(document.getElementById('templateNotes'), template.notes);
 
   // Set time saved badge
   const timeSavedEl = document.getElementById('templateTimeSaved');
@@ -3079,7 +3210,7 @@ function loadDemo(template) {
   const config =
     demoConfigs[template.id] || (template.code ? buildCodePreviewDemo(template) : defaultDemo);
 
-  demoArea.innerHTML = config.html;
+  safeInnerHTML(demoArea, config.html);
 
   // Initialize demo after rendering
   setTimeout(() => {

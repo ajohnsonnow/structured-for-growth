@@ -2,7 +2,7 @@
  * Unit Tests: Client Routes
  * Tests CRUD operations, search, filtering, and statistics
  */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../../server/models/database.js', () => ({
   initializeDatabase: vi.fn(),
@@ -22,9 +22,10 @@ vi.mock('../../server/models/database.js', () => ({
 }));
 
 import request from 'supertest';
-import { createTestApp, adminToken } from '../helpers.js';
+import { execute, query, queryOne } from '../../server/models/database.js';
 import clientRouter from '../../server/routes/clients.js';
-import { query, queryOne, execute } from '../../server/models/database.js';
+import { TEST_CONTACT, TEST_CREDENTIALS } from '../fixtures.js';
+import { adminToken, createTestApp } from '../helpers.js';
 
 const app = createTestApp('/api/clients', clientRouter);
 
@@ -132,7 +133,7 @@ describe('Client Routes', () => {
         .set('Authorization', `Bearer ${token}`)
         .send({
           name: 'New Client',
-          email: 'new@client.com',
+          email: TEST_CONTACT.clientEmail,
           company: 'NewCo',
           status: 'active',
         });
@@ -144,7 +145,7 @@ describe('Client Routes', () => {
       const res = await request(app)
         .post('/api/clients')
         .set('Authorization', `Bearer ${token}`)
-        .send({ email: 'no-name@test.com' });
+        .send({ email: TEST_CREDENTIALS.invalid.email });
       expect(res.status).toBe(400);
     });
   });

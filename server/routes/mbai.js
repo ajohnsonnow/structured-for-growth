@@ -7,9 +7,23 @@
  */
 
 import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
 import { readdir, readFile } from 'fs/promises';
-import { join, resolve } from 'path';
+import { join, normalize, resolve, sep } from 'path';
 import { fileURLToPath } from 'url';
+
+/**
+ * Resolve a path under a base directory and verify it stays confined.
+ * Throws if the resolved path escapes the base.
+ */
+function safeJoin(baseDir, ...segments) {
+  const resolved = resolve(baseDir, ...segments);
+  const normalBase = normalize(baseDir) + sep;
+  if (!resolved.startsWith(normalBase) && resolved !== normalize(baseDir)) {
+    throw Object.assign(new Error('Path traversal blocked'), { code: 'EACCES' });
+  }
+  return resolved;
+}
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const PROJECT_ROOT = resolve(__dirname, '..', '..');
@@ -17,6 +31,14 @@ const MBAI_ROOT = join(PROJECT_ROOT, 'data', 'mbai');
 const TEMPLATES_DIR = join(MBAI_ROOT, 'templates');
 
 const router = Router();
+
+/** Stricter rate limit for file-system-backed MBAi routes */
+const mbaiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60,
+  message: { error: 'Too many requests, please try again later.' },
+});
+router.use(mbaiLimiter);
 
 // ── GET /api/mbai/manifest ────────────────────────────────
 // Returns the top-level manifest with pillars, categories, and template list
@@ -57,7 +79,7 @@ router.get('/templates', async (_req, res) => {
 router.get('/templates/:id', async (req, res) => {
   try {
     const safeName = req.params.id.replace(/[^a-zA-Z0-9_-]/g, '');
-    const filePath = join(TEMPLATES_DIR, `${safeName}.json`);
+    const filePath = safeJoin(TEMPLATES_DIR, `${safeName}.json`);
     const raw = await readFile(filePath, 'utf-8');
     res.json(JSON.parse(raw));
   } catch (err) {

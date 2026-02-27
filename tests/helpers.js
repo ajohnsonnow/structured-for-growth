@@ -4,8 +4,9 @@
  */
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import { TEST_SECRETS } from './fixtures.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'test-secret-key-for-testing-only';
+const JWT_SECRET = TEST_SECRETS.jwtSecret;
 
 /**
  * Creates an Express app configured for testing with a specific route module
@@ -15,6 +16,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'test-secret-key-for-testing-only';
  */
 export function createTestApp(prefix, router) {
   const app = express();
+  app.disable('x-powered-by');
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(prefix, router);

@@ -198,23 +198,23 @@ structured-for-growth/
 
 ## 🌐 API Endpoints
 
-| Route                        | Description                              |
-| ---------------------------- | ---------------------------------------- |
-| `/api/auth`                  | Login, register, JWT authentication      |
-| `/api/clients`               | Client CRUD operations                   |
-| `/api/projects`              | Project management                       |
-| `/api/contact`               | Contact form submissions                 |
-| `/api/compliance/frameworks` | Compliance framework data (12 frameworks)|
-| `/api/compliance/crossmap`   | Cross-framework control mapping          |
-| `/api/compliance/oscal`      | NIST OSCAL catalog listing               |
-| `/api/compliance/evidence`   | Evidence requirements matrix             |
-| `/api/portal`                | Client portal data                       |
-| `/api/messages`              | Threaded messaging                       |
-| `/api/campaigns`             | Email campaign management                |
-| `/api/backup`                | Database backup & restore                |
-| `/api/demo`                  | Demo/sandbox routes                      |
-| `/api/mbai`                  | MBAi Paradigm templates & manifests      |
-| `/api/health`                | Health check                             |
+| Route                        | Description                               |
+| ---------------------------- | ----------------------------------------- |
+| `/api/auth`                  | Login, register, JWT authentication       |
+| `/api/clients`               | Client CRUD operations                    |
+| `/api/projects`              | Project management                        |
+| `/api/contact`               | Contact form submissions                  |
+| `/api/compliance/frameworks` | Compliance framework data (12 frameworks) |
+| `/api/compliance/crossmap`   | Cross-framework control mapping           |
+| `/api/compliance/oscal`      | NIST OSCAL catalog listing                |
+| `/api/compliance/evidence`   | Evidence requirements matrix              |
+| `/api/portal`                | Client portal data                        |
+| `/api/messages`              | Threaded messaging                        |
+| `/api/campaigns`             | Email campaign management                 |
+| `/api/backup`                | Database backup & restore                 |
+| `/api/demo`                  | Demo/sandbox routes                       |
+| `/api/mbai`                  | MBAi Paradigm templates & manifests       |
+| `/api/health`                | Health check                              |
 
 ## 📚 Template Library
 
@@ -249,18 +249,18 @@ Each template saves 1-8 hours of development time. See [docs/CLIENT-GUIDE.md](do
 
 ## 🚦 Scripts
 
-| Command                | Description                                      |
-| ---------------------- | ------------------------------------------------ |
-| `npm run dev`          | Start development servers (frontend + API)       |
-| `npm run build`        | Build for production (generates docs + Vite)     |
-| `npm start`            | Run production server                            |
-| `npm run predeploy`    | Generate docs + audit with version bump          |
-| `npm run prepush`      | Generate docs + audit (no version bump)          |
-| `npm run docs:generate`| Regenerate docs-manifest.json                    |
-| `npm run audit`        | Run pre-deploy audit                             |
-| `npm run audit:bump`   | Audit and bump patch version                     |
-| `npm run audit:major`  | Audit and bump major version                     |
-| `npm run audit:minor`  | Audit and bump minor version                     |
+| Command                 | Description                                  |
+| ----------------------- | -------------------------------------------- |
+| `npm run dev`           | Start development servers (frontend + API)   |
+| `npm run build`         | Build for production (generates docs + Vite) |
+| `npm start`             | Run production server                        |
+| `npm run predeploy`     | Generate docs + audit with version bump      |
+| `npm run prepush`       | Generate docs + audit (no version bump)      |
+| `npm run docs:generate` | Regenerate docs-manifest.json                |
+| `npm run audit`         | Run pre-deploy audit                         |
+| `npm run audit:bump`    | Audit and bump patch version                 |
+| `npm run audit:major`   | Audit and bump major version                 |
+| `npm run audit:minor`   | Audit and bump minor version                 |
 
 ## 📖 Documentation
 
@@ -319,6 +319,6 @@ For inquiries, use the contact form on the website or reach out directly at <con
 
 ---
 
-**Version**: 1.8.1
+**Version**: 1.8.9
 **Last Updated**: February 2026
 _Built with ❤️ by Structured for Growth_

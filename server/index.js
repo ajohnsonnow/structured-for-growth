@@ -1,5 +1,6 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import { doubleCsrf } from 'csrf-csrf';
 import dotenv from 'dotenv';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
@@ -7,7 +8,6 @@ import helmet from 'helmet';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createLogger } from './lib/logger.js';
-import { csrfProtection, csrfToken } from './middleware/csrf.js';
 import { requestId } from './middleware/requestId.js';
 
 // P5.1 — Architecture Modernization
@@ -62,10 +62,32 @@ try {
 }
 
 const app = express();
+
+// Cookie parser must be registered before CSRF so the double-submit cookie is available.
+app.use(cookieParser());
+
 const PORT = process.env.PORT || 3000;
 
 // Trust proxy for Render and other PaaS platforms
 app.set('trust proxy', 1);
+
+// P1.2.3 — CSRF protection using csrf-csrf (double-submit cookie pattern)
+const { doubleCsrfProtection, generateToken } = doubleCsrf({
+  getSecret: () => process.env.CSRF_SECRET || 'csrf-secret-change-in-production',
+  cookieName: '__csrf',
+  cookieOptions: {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+  },
+  getTokenFromRequest: (req) =>
+    req.headers['x-csrf-token'] || req.headers['x-xsrf-token'] || req.body?._csrf,
+  ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
+});
+
+// Apply app-level CSRF protection (double-submit cookie pattern via csrf-csrf).
+app.use(doubleCsrfProtection);
 
 // Initialize database
 await initializeDatabase();
@@ -94,6 +116,7 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", "'unsafe-inline'", 'https://gc.zgo.at', 'https://cdn.jsdelivr.net'],
+        scriptSrcAttr: ["'unsafe-inline'"],
         styleSrc: [
           "'self'",
           "'unsafe-inline'",
@@ -148,9 +171,6 @@ app.use('/.well-known', (req, res) => {
   res.status(204).end();
 });
 
-// Cookie parser for CSRF tokens
-app.use(cookieParser());
-
 // CORS configuration
 const corsOptions = {
   origin: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:5173'],
@@ -187,12 +207,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// CSRF token endpoint (GET) and protection (state-changing routes)
-app.get('/api/csrf-token', csrfToken);
-
-// P1.2.3 — CSRF protection on all state-changing API requests
-// Skips GET/HEAD/OPTIONS and Bearer-authenticated requests automatically
-app.use('/api/', csrfProtection);
+// CSRF token endpoint (GET) — generates a new CSRF token for the client
+app.get('/api/csrf-token', (req, res) => {
+  const token = generateToken(req, res);
+  res.json({ csrfToken: token });
+});
 
 // P4.4.2 — PIV/CAC smart card authentication (reads client cert headers)
 app.use(pivCacAuth);
@@ -302,7 +321,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
-    version: process.env.npm_package_version || '1.8.1',
+    version: process.env.npm_package_version || '1.8.9',
     requestId: req.id,
     uptime: `${Math.floor(uptime / 3600)}h ${Math.floor((uptime % 3600) / 60)}m ${Math.floor(uptime % 60)}s`,
     memory: {
@@ -363,11 +382,16 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '../dist/skills.html'));
   });
 
-  // Catch-all route for main page
+  // Catch-all route for main page (only serve index.html for page navigations)
   app.get('*', (req, res) => {
     // Don't catch API routes
     if (req.path.startsWith('/api')) {
       return res.status(404).json({ error: 'API endpoint not found' });
+    }
+    // Don't serve index.html for requests with file extensions (.js, .css, etc.)
+    // This prevents sw.js and other assets from getting text/html responses.
+    if (path.extname(req.path)) {
+      return res.status(404).end();
     }
     res.sendFile(path.join(__dirname, '../dist/index.html'));
   });
@@ -408,8 +432,17 @@ if (process.env.NODE_ENV !== 'production') {
     if (req.path.startsWith('/api')) {
       return next();
     }
-    // Try to serve matching .html file
-    const htmlPath = path.join(__dirname, `../client${req.path}.html`);
+    // Sanitize: only allow simple page names (no path traversal)
+    const safePage = path.basename(req.path).replace(/[^a-zA-Z0-9_-]/g, '');
+    if (!safePage) {
+      return next();
+    }
+    const htmlPath = path.resolve(__dirname, '../client', `${safePage}.html`);
+    // Verify resolved path stays inside the client directory
+    const clientDir = path.resolve(__dirname, '../client');
+    if (!htmlPath.startsWith(clientDir + path.sep)) {
+      return next();
+    }
     res.sendFile(htmlPath, (err) => {
       if (err) {
         next();

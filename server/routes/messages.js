@@ -197,6 +197,13 @@ router.post(
 
     const { client_ids, subject, content } = req.body;
 
+    if (!Array.isArray(client_ids)) {
+      return res.status(400).json({ success: false, message: 'client_ids must be an array' });
+    }
+    if (typeof content !== 'string') {
+      return res.status(400).json({ success: false, message: 'content must be a string' });
+    }
+
     try {
       let sentCount = 0;
 

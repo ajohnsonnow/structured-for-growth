@@ -311,8 +311,37 @@ self.addEventListener('notificationclick', (event) => {
 // Update Notification (P5.2.8)
 // ────────────────────────────────────────────────────────────
 
+// snyk-ignore: javascript/InsufficientPostmessageValidation — origin validated explicitly before any data access
 self.addEventListener('message', (event) => {
-  if (event.data?.type === 'SKIP_WAITING') {
+  // Strict origin check: reject missing, empty, or cross-origin senders
+  const expectedOrigin = self.location.origin;
+  if (typeof event.origin !== 'string' || event.origin === '' || event.origin !== expectedOrigin) {
+    return;
+  }
+  // Belt-and-suspenders: also verify source URL for browsers that omit event.origin
+  if (!event.source || !event.source.url) {
+    return;
+  }
+  try {
+    const sourceOrigin = new URL(event.source.url).origin;
+    if (sourceOrigin !== expectedOrigin) {
+      return;
+    }
+  } catch (_) {
+    return;
+  }
+
+  // Validate message structure — only accept known message types
+  if (!event.data || typeof event.data !== 'object' || typeof event.data.type !== 'string') {
+    return;
+  }
+
+  const ALLOWED_TYPES = ['SKIP_WAITING'];
+  if (!ALLOWED_TYPES.includes(event.data.type)) {
+    return;
+  }
+
+  if (event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });

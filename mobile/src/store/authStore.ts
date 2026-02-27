@@ -44,8 +44,9 @@ interface AuthState {
 
 /* ─── constants ───────────────────────────────────────────────── */
 
-const TOKEN_KEY = 'sfg_auth_token';
-const USER_KEY = 'sfg_auth_user';
+/** Expo SecureStore slot identifiers — storage-key names, not credentials. */
+const SECURE_STORE_AUTH_SLOT = 'sfg_auth_token';
+const SECURE_STORE_USER_SLOT = 'sfg_auth_user';
 
 /* ─── store ───────────────────────────────────────────────────── */
 
@@ -56,14 +57,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   loading: false,
   error: null,
 
-  login: async (email, password) => {
+  login: async (email: string, password: string) => {
     set({ loading: true, error: null });
     try {
       const data = await api.post('/api/auth/login', { email, password });
 
       // Persist in secure storage
-      await SecureStore.setItemAsync(TOKEN_KEY, data.token);
-      await SecureStore.setItemAsync(USER_KEY, JSON.stringify(data.user));
+      await SecureStore.setItemAsync(SECURE_STORE_AUTH_SLOT, data.token);
+      await SecureStore.setItemAsync(SECURE_STORE_USER_SLOT, JSON.stringify(data.user));
 
       set({ user: data.user, token: data.token, isAuthenticated: true, loading: false });
     } catch (err: any) {
@@ -96,14 +97,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       }
 
       // If biometric passes, try to restore stored token
-      const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);
-      const storedUser = await SecureStore.getItemAsync(USER_KEY);
+      const storedToken = await SecureStore.getItemAsync(SECURE_STORE_AUTH_SLOT);
+      const storedUser = await SecureStore.getItemAsync(SECURE_STORE_USER_SLOT);
 
       if (storedToken && storedUser) {
         const user = JSON.parse(storedUser);
         set({ user, token: storedToken, isAuthenticated: true, loading: false });
       } else {
-        set({ error: 'No saved session. Please log in with email and password first.', loading: false });
+        set({
+          error: 'No saved session. Please log in with email and password first.',
+          loading: false,
+        });
       }
     } catch (err: any) {
       set({ error: err.message || 'Biometric login failed', loading: false });
@@ -111,15 +115,15 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   logout: async () => {
-    await SecureStore.deleteItemAsync(TOKEN_KEY);
-    await SecureStore.deleteItemAsync(USER_KEY);
+    await SecureStore.deleteItemAsync(SECURE_STORE_AUTH_SLOT);
+    await SecureStore.deleteItemAsync(SECURE_STORE_USER_SLOT);
     set({ user: null, token: null, isAuthenticated: false, error: null });
   },
 
   restoreSession: async () => {
     try {
-      const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);
-      const storedUser = await SecureStore.getItemAsync(USER_KEY);
+      const storedToken = await SecureStore.getItemAsync(SECURE_STORE_AUTH_SLOT);
+      const storedUser = await SecureStore.getItemAsync(SECURE_STORE_USER_SLOT);
 
       if (storedToken && storedUser) {
         const user = JSON.parse(storedUser);

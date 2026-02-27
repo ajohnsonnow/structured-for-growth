@@ -38,7 +38,7 @@ const openApiSpec = {
   openapi: '3.0.3',
   info: {
     title: 'Structured For Growth API',
-    version: '1.8.1',
+    version: '1.8.9',
     description:
       'REST API for the Structured For Growth platform — CRM, client portal, template library, compliance knowledge base, and MBAi methodology.',
     contact: {
@@ -328,8 +328,8 @@ const openApiSpec = {
               },
               {
                 status: 'ok',
-                timestamp: '2025-06-01T12:00:00.000Z',
-                version: '1.8.1',
+                timestamp: '2026-02-25T12:00:00.000Z',
+                version: '1.8.9',
                 requestId: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
               }
             ),
@@ -361,7 +361,7 @@ const openApiSpec = {
               example: {
                 username: 'newuser',
                 email: 'user@example.com',
-                password: 'securePassword123',
+                password: '<replace-with-strong-password>',
               },
             },
           },
@@ -399,7 +399,7 @@ const openApiSpec = {
                   password: { type: 'string' },
                 },
               },
-              example: { username: 'admin', password: 'securePassword123' },
+              example: { username: 'admin', password: '<replace-with-strong-password>' },
             },
           },
         },
@@ -1499,7 +1499,7 @@ const openApiSpec = {
                   password: { type: 'string' },
                 },
               },
-              example: { email: 'jane@acme.com', password: 'clientPassword123' },
+              example: { email: 'jane@acme.com', password: '<replace-with-strong-password>' },
             },
           },
         },

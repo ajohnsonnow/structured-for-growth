@@ -295,7 +295,10 @@ function trackSession(sessionId, req, trustScore) {
  * (set ZT_ENFORCE=true to enable blocking in dev).
  */
 export function zeroTrustEnforce(req, res, next) {
-  const policy = resolvePolicy(req.path);
+  // Use full path (baseUrl + path) because app.use('/api', ...) strips the
+  // mount prefix from req.path, which would break pattern matching.
+  const fullPath = (req.baseUrl || '') + req.path;
+  const policy = resolvePolicy(fullPath);
 
   // Public routes — skip evaluation
   if (policy.name === 'public') {

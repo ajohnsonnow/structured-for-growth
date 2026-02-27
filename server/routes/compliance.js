@@ -9,9 +9,23 @@
  */
 
 import { Router } from 'express';
-import { readdir, readFile, access } from 'fs/promises';
-import { join, resolve } from 'path';
+import rateLimit from 'express-rate-limit';
+import { access, readdir, readFile } from 'fs/promises';
+import { join, normalize, resolve, sep } from 'path';
 import { fileURLToPath } from 'url';
+
+/**
+ * Resolve a path under a base directory and verify it stays confined.
+ * Throws if the resolved path escapes the base.
+ */
+function safeJoin(baseDir, ...segments) {
+  const resolved = resolve(baseDir, ...segments);
+  const normalBase = normalize(baseDir) + sep;
+  if (!resolved.startsWith(normalBase) && resolved !== normalize(baseDir)) {
+    throw Object.assign(new Error('Path traversal blocked'), { code: 'EACCES' });
+  }
+  return resolved;
+}
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -48,6 +62,14 @@ const KB_DIR = resolve(PROJECT_ROOT, '..', 'Compliance-as-Code', 'knowledge-base
 
 const router = Router();
 
+/** Stricter rate limit for file-system-backed compliance routes */
+const complianceLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60,
+  message: { error: 'Too many requests, please try again later.' },
+});
+router.use(complianceLimiter);
+
 // ── GET /api/compliance/frameworks ─────────────────────────
 // Returns all framework summaries in a single list
 router.get('/frameworks', async (_req, res) => {
@@ -75,7 +97,7 @@ router.get('/frameworks', async (_req, res) => {
 router.get('/frameworks/:id', async (req, res) => {
   try {
     const safeName = req.params.id.replace(/[^a-zA-Z0-9_-]/g, '');
-    const filePath = join(FRAMEWORKS_DIR, `${safeName}.json`);
+    const filePath = safeJoin(FRAMEWORKS_DIR, `${safeName}.json`);
     const raw = await readFile(filePath, 'utf-8');
     res.json(JSON.parse(raw));
   } catch (err) {
@@ -141,7 +163,7 @@ router.get('/oscal', async (_req, res) => {
 router.get('/oscal/:framework', async (req, res) => {
   try {
     const safeName = req.params.framework.replace(/[^a-zA-Z0-9_-]/g, '');
-    const filePath = join(OSCAL_DIR, `catalog-${safeName}.json`);
+    const filePath = safeJoin(OSCAL_DIR, `catalog-${safeName}.json`);
     const raw = await readFile(filePath, 'utf-8');
     res.json(JSON.parse(raw));
   } catch (err) {
@@ -197,7 +219,7 @@ router.get('/evidence', async (_req, res) => {
 router.get('/guidance/:framework', async (req, res) => {
   try {
     const safeName = req.params.framework.replace(/[^a-zA-Z0-9_-]/g, '');
-    const guidePath = join(KB_DIR, safeName, 'implementation-guide.md');
+    const guidePath = safeJoin(KB_DIR, safeName, 'implementation-guide.md');
     const content = await readFile(guidePath, 'utf-8');
     res.type('text/markdown').send(content);
   } catch (err) {

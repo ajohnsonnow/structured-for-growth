@@ -210,20 +210,42 @@ export function captureError(err, context = {}) {
 
 /**
  * Persist an error record to logs/errors.jsonl (append-only).
+ * Throttled: writes are batched to avoid unbounded filesystem calls.
  */
-function persistError(record) {
+const _pendingWrites = [];
+let _writeScheduled = false;
+const WRITE_BATCH_INTERVAL = 2000; // Flush every 2 seconds
+
+function _flushWrites() {
+  _writeScheduled = false;
+  if (_pendingWrites.length === 0) {
+    return;
+  }
+  const batch = _pendingWrites.splice(0);
   try {
     const dir = path.dirname(PERSIST_FILE);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    const line = JSON.stringify({
-      ...record,
-      stack: record.stack?.split('\n').slice(0, 5).join('\n'), // Truncate stack for storage
-    });
-    fs.appendFileSync(PERSIST_FILE, line + '\n');
+    const lines = batch
+      .map((record) =>
+        JSON.stringify({
+          ...record,
+          stack: record.stack?.split('\n').slice(0, 5).join('\n'),
+        })
+      )
+      .join('\n');
+    fs.appendFileSync(PERSIST_FILE, lines + '\n');
   } catch (writeErr) {
-    logger.warn('Failed to persist error record', { error: writeErr.message });
+    logger.warn('Failed to persist error records', { error: writeErr.message });
+  }
+}
+
+function persistError(record) {
+  _pendingWrites.push(record);
+  if (!_writeScheduled) {
+    _writeScheduled = true;
+    setTimeout(_flushWrites, WRITE_BATCH_INTERVAL);
   }
 }
 

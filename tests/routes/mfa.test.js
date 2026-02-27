@@ -52,6 +52,7 @@ import speakeasy from 'speakeasy';
 import request from 'supertest';
 import { execute, queryOne } from '../../server/models/database.js';
 import mfaRouter from '../../server/routes/mfa.js';
+import { TEST_MFA } from '../fixtures.js';
 import { createTestApp } from '../helpers.js';
 
 const app = createTestApp('/api/auth/mfa', mfaRouter);
@@ -92,11 +93,13 @@ describe('MFA Routes', () => {
     it('should verify and enable MFA', async () => {
       queryOne.mockReturnValue({
         id: 1,
-        mfa_temp_secret: 'KVKFKRCPNZQUYMLXOVYDSQKJKZDTSRLD',
+        mfa_temp_secret: TEST_MFA.totpSeed,
       });
       speakeasy.totp.verify.mockReturnValue(true);
 
-      const res = await request(app).post('/api/auth/mfa/verify').send({ token: '123456' });
+      const res = await request(app)
+        .post('/api/auth/mfa/verify')
+        .send({ token: TEST_MFA.validToken });
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -120,7 +123,9 @@ describe('MFA Routes', () => {
     it('should reject when no setup in progress', async () => {
       queryOne.mockReturnValue({ id: 1, mfa_temp_secret: null });
 
-      const res = await request(app).post('/api/auth/mfa/verify').send({ token: '123456' });
+      const res = await request(app)
+        .post('/api/auth/mfa/verify')
+        .send({ token: TEST_MFA.validToken });
 
       expect(res.status).toBe(400);
       expect(res.body.message).toMatch(/setup/i);
@@ -129,11 +134,13 @@ describe('MFA Routes', () => {
     it('should reject invalid TOTP token', async () => {
       queryOne.mockReturnValue({
         id: 1,
-        mfa_temp_secret: 'KVKFKRCPNZQUYMLXOVYDSQKJKZDTSRLD',
+        mfa_temp_secret: TEST_MFA.totpSeed,
       });
       speakeasy.totp.verify.mockReturnValue(false);
 
-      const res = await request(app).post('/api/auth/mfa/verify').send({ token: '000000' });
+      const res = await request(app)
+        .post('/api/auth/mfa/verify')
+        .send({ token: TEST_MFA.invalidToken });
 
       expect(res.status).toBe(400);
       expect(res.body.message).toMatch(/invalid/i);
@@ -144,14 +151,14 @@ describe('MFA Routes', () => {
     it('should validate TOTP during login', async () => {
       queryOne.mockReturnValue({
         id: 1,
-        mfa_secret: 'KVKFKRCPNZQUYMLXOVYDSQKJKZDTSRLD',
+        mfa_secret: TEST_MFA.totpSeed,
         mfa_enabled: 1,
       });
       speakeasy.totp.verify.mockReturnValue(true);
 
       const res = await request(app)
         .post('/api/auth/mfa/validate')
-        .send({ userId: 1, token: '123456' });
+        .send({ userId: 1, token: TEST_MFA.validToken });
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -171,7 +178,7 @@ describe('MFA Routes', () => {
 
       const res = await request(app)
         .post('/api/auth/mfa/validate')
-        .send({ userId: 1, token: '123456' });
+        .send({ userId: 1, token: TEST_MFA.validToken });
 
       expect(res.status).toBe(400);
       expect(res.body.message).toMatch(/not enabled/i);
@@ -180,14 +187,14 @@ describe('MFA Routes', () => {
     it('should reject invalid TOTP token during login', async () => {
       queryOne.mockReturnValue({
         id: 1,
-        mfa_secret: 'KVKFKRCPNZQUYMLXOVYDSQKJKZDTSRLD',
+        mfa_secret: TEST_MFA.totpSeed,
         mfa_enabled: 1,
       });
       speakeasy.totp.verify.mockReturnValue(false);
 
       const res = await request(app)
         .post('/api/auth/mfa/validate')
-        .send({ userId: 1, token: '000000' });
+        .send({ userId: 1, token: TEST_MFA.invalidToken });
 
       expect(res.status).toBe(401);
     });
@@ -197,12 +204,12 @@ describe('MFA Routes', () => {
     it('should disable MFA with valid token', async () => {
       queryOne.mockReturnValue({
         id: 1,
-        mfa_secret: 'KVKFKRCPNZQUYMLXOVYDSQKJKZDTSRLD',
+        mfa_secret: TEST_MFA.totpSeed,
         mfa_enabled: 1,
       });
       speakeasy.totp.verify.mockReturnValue(true);
 
-      const res = await request(app).delete('/api/auth/mfa').send({ token: '123456' });
+      const res = await request(app).delete('/api/auth/mfa').send({ token: TEST_MFA.validToken });
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -223,7 +230,7 @@ describe('MFA Routes', () => {
     it('should reject when MFA not enabled', async () => {
       queryOne.mockReturnValue({ id: 1, mfa_secret: null, mfa_enabled: 0 });
 
-      const res = await request(app).delete('/api/auth/mfa').send({ token: '123456' });
+      const res = await request(app).delete('/api/auth/mfa').send({ token: TEST_MFA.validToken });
 
       expect(res.status).toBe(400);
       expect(res.body.message).toMatch(/not enabled/i);
@@ -232,12 +239,12 @@ describe('MFA Routes', () => {
     it('should reject disable with invalid TOTP', async () => {
       queryOne.mockReturnValue({
         id: 1,
-        mfa_secret: 'KVKFKRCPNZQUYMLXOVYDSQKJKZDTSRLD',
+        mfa_secret: TEST_MFA.totpSeed,
         mfa_enabled: 1,
       });
       speakeasy.totp.verify.mockReturnValue(false);
 
-      const res = await request(app).delete('/api/auth/mfa').send({ token: '000000' });
+      const res = await request(app).delete('/api/auth/mfa').send({ token: TEST_MFA.invalidToken });
 
       expect(res.status).toBe(401);
     });

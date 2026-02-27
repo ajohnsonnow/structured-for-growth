@@ -2,16 +2,17 @@
  * Unit Tests: Contact Routes
  * Tests form submission with validation
  */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { TEST_CONTACT, TEST_CREDENTIALS } from '../fixtures.js';
 
 vi.mock('../../server/controllers/contactController.js', () => ({
   sendContactEmail: vi.fn(() => Promise.resolve()),
 }));
 
 import request from 'supertest';
-import { createTestApp } from '../helpers.js';
-import contactRouter from '../../server/routes/contact.js';
 import { sendContactEmail } from '../../server/controllers/contactController.js';
+import contactRouter from '../../server/routes/contact.js';
+import { createTestApp } from '../helpers.js';
 
 const app = createTestApp('/api/contact', contactRouter);
 
@@ -30,7 +31,7 @@ describe('Contact Routes', () => {
     it('should reject submission with invalid email', async () => {
       const res = await request(app).post('/api/contact').send({
         name: 'Test User',
-        email: 'invalid',
+        email: TEST_CREDENTIALS.invalid.email,
         subject: 'Test Subject',
         message: 'Test message content here',
       });
@@ -40,7 +41,7 @@ describe('Contact Routes', () => {
     it('should reject submission with short name', async () => {
       const res = await request(app).post('/api/contact').send({
         name: 'A',
-        email: 'test@test.com',
+        email: TEST_CONTACT.validEmail,
         subject: 'Test Subject',
         message: 'Test message content here',
       });
@@ -50,7 +51,7 @@ describe('Contact Routes', () => {
     it('should reject submission with short message', async () => {
       const res = await request(app).post('/api/contact').send({
         name: 'Test User',
-        email: 'test@test.com',
+        email: TEST_CONTACT.validEmail,
         subject: 'Test Subject',
         message: 'Short',
       });
@@ -60,7 +61,7 @@ describe('Contact Routes', () => {
     it('should accept valid submission', async () => {
       const res = await request(app).post('/api/contact').send({
         name: 'Test User',
-        email: 'test@test.com',
+        email: TEST_CONTACT.validEmail,
         subject: 'Test Subject',
         message: 'This is a valid test message with enough length',
       });
@@ -74,7 +75,7 @@ describe('Contact Routes', () => {
 
       const res = await request(app).post('/api/contact').send({
         name: 'Test User',
-        email: 'test@test.com',
+        email: TEST_CONTACT.validEmail,
         subject: 'Test Subject',
         message: 'This is a valid test message with enough length',
       });

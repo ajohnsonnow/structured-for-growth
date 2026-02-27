@@ -23,17 +23,18 @@ import jwt from 'jsonwebtoken';
 import request from 'supertest';
 import { execute, logActivity, query, queryOne } from '../../server/models/database.js';
 import portalRouter from '../../server/routes/portal.js';
+import { TEST_CREDENTIALS, TEST_PORTAL, TEST_SECRETS } from '../fixtures.js';
 import { createTestApp } from '../helpers.js';
 
 const app = createTestApp('/api/portal', portalRouter);
 
-const _JWT_SECRET = process.env.JWT_SECRET || 'test-secret-key-for-testing-only';
+const _JWT_SECRET = TEST_SECRETS.jwtSecret;
 
 function portalToken(clientId = 1, userId = 2) {
   return jwt.sign(
     { userId, clientId, type: 'client_portal' },
-    // Portal route uses its own JWT_SECRET — match it
-    process.env.JWT_SECRET || 'structured-for-growth-portal-secret-2024',
+    // Portal route uses getJwtSecret() — match it
+    TEST_SECRETS.jwtSecret,
     { expiresIn: '1h' }
   );
 }
@@ -70,21 +71,21 @@ describe('Portal Routes', () => {
 
       const res = await request(app)
         .post('/api/portal/login')
-        .send({ username: 'baduser', password: 'badpass' });
+        .send({ username: TEST_PORTAL.badUser, password: TEST_PORTAL.badPass });
 
       expect(res.status).toBe(401);
       expect(res.body.message).toMatch(/invalid/i);
     });
 
     it('should login successfully with valid credentials', async () => {
-      const hashedPassword = await bcrypt.hash('correctpass', 10);
+      const hashedPassword = await bcrypt.hash(TEST_CREDENTIALS.client.password, 10);
 
       // First call: find user
       queryOne
         .mockReturnValueOnce({
           id: 2,
           username: 'clientuser',
-          email: 'client@test.com',
+          email: TEST_CREDENTIALS.client.email,
           password: hashedPassword,
           role: 'user',
           is_active: 1,
@@ -96,16 +97,17 @@ describe('Portal Routes', () => {
         .mockReturnValueOnce({
           id: 1,
           name: 'Test Client',
-          email: 'client@test.com',
+          email: TEST_CREDENTIALS.client.email,
           company: 'Test Co',
           phone: '555-1234',
           status: 'active',
           monthly_retainer: 2000,
         });
 
-      const res = await request(app)
-        .post('/api/portal/login')
-        .send({ username: 'clientuser', password: 'correctpass' });
+      const res = await request(app).post('/api/portal/login').send({
+        username: TEST_CREDENTIALS.client.username,
+        password: TEST_CREDENTIALS.client.password,
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.message).toMatch(/successful/i);
@@ -115,12 +117,12 @@ describe('Portal Routes', () => {
     });
 
     it('should reject when no client account found', async () => {
-      const hashedPassword = await bcrypt.hash('pass123', 10);
+      const hashedPassword = await bcrypt.hash(TEST_CREDENTIALS.client.password, 10);
 
       queryOne
         .mockReturnValueOnce({
           id: 2,
-          username: 'noClient',
+          username: TEST_PORTAL.noClientUser,
           email: 'noclient@test.com',
           password: hashedPassword,
           role: 'user',
@@ -133,7 +135,7 @@ describe('Portal Routes', () => {
 
       const res = await request(app)
         .post('/api/portal/login')
-        .send({ username: 'noClient', password: 'pass123' });
+        .send({ username: TEST_PORTAL.noClientUser, password: TEST_CREDENTIALS.client.password });
 
       expect(res.status).toBe(403);
       expect(res.body.message).toMatch(/no client/i);
@@ -149,11 +151,9 @@ describe('Portal Routes', () => {
 
     it('should reject non-portal tokens', async () => {
       // Create a regular admin token (not type: client_portal)
-      const token = jwt.sign(
-        { userId: 1, role: 'admin' },
-        process.env.JWT_SECRET || 'structured-for-growth-portal-secret-2024',
-        { expiresIn: '1h' }
-      );
+      const token = jwt.sign({ userId: 1, role: 'admin' }, TEST_SECRETS.jwtSecret, {
+        expiresIn: '1h',
+      });
 
       const res = await request(app)
         .get('/api/portal/me')
@@ -166,7 +166,7 @@ describe('Portal Routes', () => {
       const clientData = {
         id: 1,
         name: 'Test Client',
-        email: 'client@test.com',
+        email: TEST_CREDENTIALS.client.email,
         company: 'Test Co',
         phone: '555-1234',
         website: 'https://test.com',

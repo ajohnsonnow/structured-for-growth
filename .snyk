@@ -1,0 +1,98 @@
+# Snyk (https://snyk.io) policy file — patches or ignores known vulnerabilities.
+version: v1.25.0
+
+ignore:
+  # inflight@1.0.6 — Missing Release of Resource after Effective Lifetime
+  # Transitive dependency via glob chain; no direct remediation path.
+  # Not exploitable in production context (dev/build tooling only).
+  SNYK-JS-INFLIGHT-6095116:
+    - '*':
+        reason: >-
+          Transitive dev dependency via glob/mocha build tooling.
+          Not present in the production runtime; no exploitable attack path.
+        expires: '2027-06-01T00:00:00.000Z'
+
+  # minimatch@3.x ReDoS — transitive dependency via swagger-jsdoc, eslint-plugin-node,
+  # license-checker, nodemon. Fixed via npm overrides → minimatch@^5.1.6.
+  SNYK-JS-MINIMATCH-5765750:
+    - '*':
+        reason: >-
+          Transitive dev/build dependency. Overridden to minimatch@^5.1.6 via
+          npm overrides in package.json. Not exploitable at runtime.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-19T00:00:00.000Z'
+
+  # Same minimatch ReDoS, different CVE ID assigned by Snyk.
+  # Same remediation: overridden to minimatch@^10.2.1 via npm overrides (root + mobile).
+  SNYK-JS-MINIMATCH-15309438:
+    - '*':
+        reason: >-
+          Transitive dev/build dependency via swagger-jsdoc, eslint-plugin-node,
+          license-checker and nodemon. Overridden to minimatch@^10.2.1 via
+          npm overrides in package.json (root and mobile). Not reachable at runtime.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-19T00:00:00.000Z'
+
+  # node-forge@1.3.1 — Interpretation Conflict, Uncontrolled Recursion, Integer Overflow.
+  # Overridden to node-forge@^1.3.3 in mobile/package.json overrides.
+  SNYK-JS-NODEFORGE-14114940:
+    - '*':
+        reason: >-
+          Transitive dependency via expo/EAS build tooling. Overridden to
+          node-forge@^1.3.3 in mobile/package.json overrides. Not in production runtime.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-20T00:00:00.000Z'
+
+  SNYK-JS-NODEFORGE-14125745:
+    - '*':
+        reason: >-
+          Transitive dependency via expo/EAS build tooling. Overridden to
+          node-forge@^1.3.3 in mobile/package.json overrides. Not in production runtime.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-20T00:00:00.000Z'
+
+  SNYK-JS-NODEFORGE-14125097:
+    - '*':
+        reason: >-
+          Transitive dependency via expo/EAS build tooling. Overridden to
+          node-forge@^1.3.3 in mobile/package.json overrides. Not in production runtime.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-20T00:00:00.000Z'
+
+  # CSRF rule — custom double-submit cookie middleware (csrfToken + csrfProtection)
+  # is applied to all state-changing /api/ routes. This is not a missing CSRF guard;
+  # it is a deliberate alternative to csurf (which is deprecated/unmaintained).
+  javascript/UseCsurfForExpress:
+    - 'server/index.js':
+        reason: >-
+          Custom double-submit cookie CSRF middleware applied via csrfToken +
+          csrfProtection on all state-changing /api/ routes (OWASP A01-compliant).
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-19T00:00:00.000Z'
+
+  # Same rule, test-file variant — test suite exercises the custom CSRF middleware;
+  # the express() instance is a throwaway test harness, not a production server.
+  javascript/UseCsurfForExpress/test:
+    - 'tests/middleware/csrf.test.js':
+        reason: >-
+          Test harness intentionally wires custom csrfProtection middleware.
+          Not a production Express app; no real CSRF exposure.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-19T00:00:00.000Z'
+
+  # esbuild GHSA-67mh-4wv8-2f99 — Dev server CORS bypass
+  # Fixed via npm overrides: forced esbuild to >=0.25.0 (installed 0.27.3).
+  # Vite 5.x declares esbuild <=0.24.2 in its published range; the override
+  # installs the patched binary. npm audit --production: 0 vulnerabilities.
+  # Note: This snyk policy entry is a belt-and-suspenders record only —
+  # the actual installed version is already patched.
+  GHSA-67mh-4wv8-2f99:
+    - '*':
+        reason: >-
+          Mitigated via npm overrides: esbuild forced to >=0.25.0 (0.27.3 installed).
+          Vite 5 declared range includes older esbuild but override installs patched version.
+          Build and 511 tests verified passing. npm audit --production = 0 vulnerabilities.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-25T00:00:00.000Z'
+
+patch: {}

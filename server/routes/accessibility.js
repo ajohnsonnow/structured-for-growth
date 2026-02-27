@@ -215,12 +215,16 @@ router.post(
     try {
       const { pageUrl, pageTitle, scanTool, violations, passes, incomplete } = req.body;
 
+      if (!Array.isArray(violations)) {
+        return res.status(400).json({ error: 'violations must be an array' });
+      }
+
       const criticalCount = violations.filter((v) => v.impact === 'critical').length;
       const seriousCount = violations.filter((v) => v.impact === 'serious').length;
       const moderateCount = violations.filter((v) => v.impact === 'moderate').length;
       const minorCount = violations.filter((v) => v.impact === 'minor').length;
-      const passesCount = passes?.length || 0;
-      const incompleteCount = incomplete?.length || 0;
+      const passesCount = Array.isArray(passes) ? passes.length : 0;
+      const incompleteCount = Array.isArray(incomplete) ? incomplete.length : 0;
 
       const totalChecks = violations.length + passesCount + incompleteCount;
       const conformanceScore = totalChecks > 0 ? Math.round((passesCount / totalChecks) * 100) : 0;

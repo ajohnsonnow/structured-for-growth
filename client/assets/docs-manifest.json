@@ -1,6 +1,6 @@
 {
-  "generated": "2026-02-18T08:13:46.686Z",
-  "version": "1.8.7",
+  "generated": "2026-02-27T00:45:12.543Z",
+  "version": "1.8.9",
   "summary": {
     "totalRoutes": 166,
     "totalPages": 10,
@@ -2069,9 +2069,9 @@
   },
   "pkg": {
     "name": "structured-for-growth-www",
-    "version": "1.8.7",
+    "version": "1.8.9",
     "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
-    "nodeEngine": ">=18.0.0",
+    "nodeEngine": ">=20.0.0",
     "scripts": [
       {
         "name": "dev",
@@ -2256,8 +2256,8 @@
         "version": "^2.8.5"
       },
       {
-        "name": "csurf",
-        "version": "^1.11.0"
+        "name": "dompurify",
+        "version": "^3.3.1"
       },
       {
         "name": "dotenv",
@@ -2285,7 +2285,7 @@
       },
       {
         "name": "nodemailer",
-        "version": "^6.9.7"
+        "version": "^8.0.1"
       },
       {
         "name": "qrcode",
@@ -2421,7 +2421,7 @@
         "Start production server",
         "📧 Contact"
       ],
-      "wordCount": 1647
+      "wordCount": 1649
     },
     {
       "file": "SETUP.md",
@@ -2600,7 +2600,7 @@
     {
       "file": "client/styles/components.css",
       "customProperties": 138,
-      "selectors": 111
+      "selectors": 112
     },
     {
       "file": "client/styles/dashboard.css",
@@ -2635,7 +2635,7 @@
     {
       "file": "client/styles/nav.css",
       "customProperties": 58,
-      "selectors": 105
+      "selectors": 106
     },
     {
       "file": "client/styles/portal.css",

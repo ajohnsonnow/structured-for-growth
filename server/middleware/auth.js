@@ -1,4 +1,14 @@
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+
+/** Lazy-generated random fallback so we never ship a known literal. */
+let _devFallback;
+function devFallback() {
+  if (!_devFallback) {
+    _devFallback = crypto.randomBytes(64).toString('hex');
+  }
+  return _devFallback;
+}
 
 /**
  * Get JWT secret - fails fast if not configured in production
@@ -8,7 +18,7 @@ function getJwtSecret() {
   if (!secret && process.env.NODE_ENV === 'production') {
     throw new Error('JWT_SECRET environment variable is required');
   }
-  return secret || 'dev-only-secret-change-in-production';
+  return secret || devFallback();
 }
 
 export { getJwtSecret };

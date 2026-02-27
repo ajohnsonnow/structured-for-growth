@@ -1,0 +1,16 @@
+{
+  "connector": {
+    "name": "local"
+  },
+  "hints": {
+    "typescript-config/is-valid": "off"
+  },
+  "ignoredUrls": [
+    {
+      "domain": "node_modules/*",
+      "hints": [
+        "*"
+      ]
+    }
+  ]
+}

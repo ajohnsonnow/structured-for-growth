@@ -3,6 +3,7 @@
  * Tests registration, login, token verification, password change, and admin user management
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { TEST_CREDENTIALS, TEST_MOCKS } from '../fixtures.js';
 
 // Mock the database module before importing routes
 vi.mock('../../server/models/database.js', () => ({
@@ -44,8 +45,8 @@ describe('Auth Routes', () => {
     it('should reject registration with short username', async () => {
       const res = await request(app).post('/api/auth/register').send({
         username: 'ab',
-        email: 'test@test.com',
-        password: 'password123',
+        email: TEST_CREDENTIALS.admin.email,
+        password: TEST_CREDENTIALS.admin.password,
       });
       expect(res.status).toBe(400);
       expect(res.body.errors).toBeDefined();
@@ -53,18 +54,18 @@ describe('Auth Routes', () => {
 
     it('should reject registration with invalid email', async () => {
       const res = await request(app).post('/api/auth/register').send({
-        username: 'testuser',
-        email: 'notanemail',
-        password: 'password123',
+        username: TEST_CREDENTIALS.user.username,
+        email: TEST_CREDENTIALS.invalid.email,
+        password: TEST_CREDENTIALS.admin.password,
       });
       expect(res.status).toBe(400);
     });
 
     it('should reject registration with short password', async () => {
       const res = await request(app).post('/api/auth/register').send({
-        username: 'testuser',
-        email: 'test@test.com',
-        password: 'short',
+        username: TEST_CREDENTIALS.user.username,
+        email: TEST_CREDENTIALS.admin.email,
+        password: TEST_CREDENTIALS.invalid.password,
       });
       expect(res.status).toBe(400);
     });
@@ -72,9 +73,9 @@ describe('Auth Routes', () => {
     it('should reject duplicate username/email', async () => {
       queryOne.mockReturnValueOnce({ id: 1 });
       const res = await request(app).post('/api/auth/register').send({
-        username: 'existinguser',
-        email: 'existing@test.com',
-        password: 'password123',
+        username: TEST_CREDENTIALS.existing.username,
+        email: TEST_CREDENTIALS.existing.email,
+        password: TEST_CREDENTIALS.admin.password,
       });
       expect(res.status).toBe(409);
       expect(res.body.message).toContain('already exists');
@@ -87,9 +88,9 @@ describe('Auth Routes', () => {
       execute.mockReturnValueOnce({ changes: 1, lastInsertRowid: 2 });
 
       const res = await request(app).post('/api/auth/register').send({
-        username: 'newuser',
-        email: 'new@test.com',
-        password: 'password123',
+        username: TEST_CREDENTIALS.newUser.username,
+        email: TEST_CREDENTIALS.newUser.email,
+        password: TEST_CREDENTIALS.admin.password,
       });
       expect(res.status).toBe(201);
       expect(res.body.success).toBe(true);
@@ -103,9 +104,9 @@ describe('Auth Routes', () => {
       execute.mockReturnValueOnce({ changes: 1, lastInsertRowid: 1 });
 
       const res = await request(app).post('/api/auth/register').send({
-        username: 'firstuser',
-        email: 'first@test.com',
-        password: 'password123',
+        username: TEST_CREDENTIALS.firstUser.username,
+        email: TEST_CREDENTIALS.admin.email,
+        password: TEST_CREDENTIALS.admin.password,
       });
       expect(res.status).toBe(201);
       expect(res.body.message).toContain('administrator');
@@ -121,8 +122,8 @@ describe('Auth Routes', () => {
     it('should reject login with invalid credentials', async () => {
       queryOne.mockReturnValueOnce(null);
       const res = await request(app).post('/api/auth/login').send({
-        username: 'noone',
-        password: 'wrongpassword',
+        username: TEST_CREDENTIALS.nonExistent.username,
+        password: TEST_CREDENTIALS.invalid.wrongPassword,
       });
       expect(res.status).toBe(401);
       expect(res.body.message).toContain('Invalid credentials');
@@ -131,13 +132,13 @@ describe('Auth Routes', () => {
     it('should reject login for disabled account', async () => {
       queryOne.mockReturnValueOnce({
         id: 1,
-        username: 'disabled',
+        username: TEST_CREDENTIALS.disabled.username,
         is_active: 0,
-        password: '$2a$10$hash',
+        password: TEST_MOCKS.bcryptHash,
       });
       const res = await request(app).post('/api/auth/login').send({
-        username: 'disabled',
-        password: 'password123',
+        username: TEST_CREDENTIALS.disabled.username,
+        password: TEST_CREDENTIALS.admin.password,
       });
       expect(res.status).toBe(401);
       expect(res.body.message).toContain('disabled');

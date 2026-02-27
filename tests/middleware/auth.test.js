@@ -2,11 +2,12 @@
  * Unit Tests: Middleware (auth.js)
  * Tests JWT authentication and role-based access control
  */
-import { describe, it, expect, vi } from 'vitest';
-import { authenticateToken, requireRole } from '../../server/middleware/auth.js';
 import jwt from 'jsonwebtoken';
+import { describe, expect, it, vi } from 'vitest';
+import { authenticateToken, requireRole } from '../../server/middleware/auth.js';
+import { TEST_SECRETS } from '../fixtures.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'test-secret-key-for-testing-only';
+const JWT_SECRET = TEST_SECRETS.jwtSecret;
 
 function mockReq(overrides = {}) {
   return {

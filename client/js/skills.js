@@ -10,7 +10,7 @@
  */
 
 import { initIcons } from './modules/icons.js';
-import { escapeHTML } from './modules/sanitize.js';
+import { escapeHTML, safeInnerHTML } from './modules/sanitize.js';
 import { initUnifiedNav } from './modules/unifiedNav.js';
 
 /* ── State ──────────────────────────────────── */
@@ -81,7 +81,7 @@ function renderMapView() {
   if (!container) {
     return;
   }
-  container.innerHTML = '';
+  safeInnerHTML(container, '');
 
   const skills = getFilteredSkills();
 
@@ -104,11 +104,14 @@ function renderMapView() {
 
     const header = document.createElement('div');
     header.className = 'cluster-header';
-    header.innerHTML = `
+    safeInnerHTML(
+      header,
+      `
       <span class="cluster-indicator"></span>
       <h3 class="cluster-title">${escapeHTML(cat.label)}</h3>
       <span class="cluster-count">${groups[cat.id].length} skills</span>
-    `;
+    `
+    );
     cluster.appendChild(header);
 
     const chipList = document.createElement('div');
@@ -127,10 +130,13 @@ function renderMapView() {
           (_, i) => `<span class="chip-dot${i < skill.level ? ' filled' : ''}"></span>`
         ).join('');
 
-        chip.innerHTML = `
+        safeInnerHTML(
+          chip,
+          `
           <span class="chip-name">${escapeHTML(skill.name)}</span>
           <span class="chip-level" aria-hidden="true">${dots}</span>
-        `;
+        `
+        );
         chipList.appendChild(chip);
       });
 
@@ -145,7 +151,7 @@ function renderGridView() {
   if (!grid) {
     return;
   }
-  grid.innerHTML = '';
+  safeInnerHTML(grid, '');
 
   const skills = getFilteredSkills()
     .slice()
@@ -174,7 +180,9 @@ function renderGridView() {
       .map((r) => `<span class="card-tag">${escapeHTML(r.name)}</span>`)
       .join('');
 
-    card.innerHTML = `
+    safeInnerHTML(
+      card,
+      `
       <div class="card-top">
         <span class="card-badge" style="background:${cat?.color || '#6b7280'}">${escapeHTML(cat?.label || '')}</span>
         <span class="card-dots" aria-label="Level ${skill.level} of 5">${dots}</span>
@@ -185,7 +193,8 @@ function renderGridView() {
         <p>${escapeHTML(skill.clientValue)}</p>
       </div>
       ${related ? `<div class="card-tags">${related}</div>` : ''}
-    `;
+    `
+    );
     grid.appendChild(card);
   });
 }
@@ -196,7 +205,7 @@ function renderJourneysView() {
   if (!list || !skillsData.clientJourneys) {
     return;
   }
-  list.innerHTML = '';
+  safeInnerHTML(list, '');
 
   const catMap = Object.fromEntries(skillsData.categories.map((c) => [c.id, c]));
   const skillMap = Object.fromEntries(skillsData.skills.map((s) => [s.id, s]));
@@ -225,7 +234,9 @@ function renderJourneysView() {
       })
       .join('');
 
-    card.innerHTML = `
+    safeInnerHTML(
+      card,
+      `
       <div class="journey-header">
         <span class="journey-num">${String(ji + 1).padStart(2, '0')}</span>
         <div class="journey-meta">
@@ -241,7 +252,8 @@ function renderJourneysView() {
           <p class="outcome-text">${escapeHTML(journey.outcome)}</p>
         </div>
       </div>
-    `;
+    `
+    );
     list.appendChild(card);
   });
 }
@@ -286,7 +298,7 @@ function showDetail(skillId) {
   // Level dots
   const levelEl = $('#detailLevel');
   if (levelEl) {
-    levelEl.innerHTML = '';
+    safeInnerHTML(levelEl, '');
     for (let i = 1; i <= 5; i++) {
       const dot = document.createElement('span');
       dot.className = `skill-level-dot${i <= skill.level ? ' filled' : ''}`;
@@ -299,7 +311,7 @@ function showDetail(skillId) {
   // Use cases
   const usesEl = $('#detailUseCases');
   if (usesEl) {
-    usesEl.innerHTML = '';
+    safeInnerHTML(usesEl, '');
     skill.useCases.forEach((uc) => {
       const li = document.createElement('li');
       li.textContent = uc;
@@ -310,7 +322,7 @@ function showDetail(skillId) {
   // Related chips
   const relEl = $('#detailRelated');
   if (relEl) {
-    relEl.innerHTML = '';
+    safeInnerHTML(relEl, '');
     (skill.related || []).forEach((rid) => {
       const rel = skillsData.skills.find((s) => s.id === rid);
       if (!rel) {

@@ -1,11 +1,11 @@
 {
   "name": "structured-for-growth-www",
-  "version": "1.8.8",
+  "version": "1.8.9",
   "description": "Structured For Growth - Content Engineering Portfolio & Template Library",
   "main": "server/index.js",
   "type": "module",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
@@ -51,6 +51,11 @@
     "generate:nist171": "node scripts/generate-nist-800-171r3.js",
     "prepare": "husky"
   },
+  "overrides": {
+    "minimatch": "^10.2.4",
+    "esbuild": ">=0.25.0",
+    "rollup": ">=4.58.0"
+  },
   "keywords": [
     "content-engineering",
     "portfolio",
@@ -69,14 +74,14 @@
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "csurf": "^1.11.0",
+    "dompurify": "^3.3.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-rate-limit": "^7.1.5",
     "express-validator": "^7.0.1",
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
-    "nodemailer": "^6.9.7",
+    "nodemailer": "^8.0.1",
     "qrcode": "^1.5.4",
     "speakeasy": "^2.0.0",
     "sql.js": "^1.13.0",

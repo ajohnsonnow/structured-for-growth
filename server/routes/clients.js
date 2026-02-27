@@ -1,5 +1,5 @@
 ﻿import express from 'express';
-import { body, validationResult } from 'express-validator';
+import { body, matchedData, query as validateQuery, validationResult } from 'express-validator';
 import { authenticateToken } from '../middleware/auth.js';
 import { requireOwnership } from '../middleware/ownershipGuard.js';
 import { execute, logActivity, query, queryOne } from '../models/database.js';
@@ -10,66 +10,83 @@ const router = express.Router();
 router.use(authenticateToken);
 
 // Get all clients with optional filtering
-router.get('/', (req, res) => {
-  try {
-    const { status, search, limit = 100, offset = 0 } = req.query;
+router.get(
+  '/',
+  [
+    validateQuery('status').optional().isString().trim().escape(),
+    validateQuery('search').optional().isString().trim().escape(),
+    validateQuery('limit').optional().isInt({ min: 1, max: 1000 }).toInt(),
+    validateQuery('offset').optional().isInt({ min: 0 }).toInt(),
+  ],
+  (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ success: false, errors: errors.array() });
+      }
+      const data = matchedData(req);
+      const status = data.status;
+      const search = data.search;
+      const limit = data.limit ?? 100;
+      const offset = data.offset ?? 0;
 
-    let sql = `
+      let sql = `
             SELECT c.*, u.username as created_by_username,
                    (SELECT COUNT(*) FROM projects WHERE client_id = c.id) as project_count
             FROM clients c
             LEFT JOIN users u ON c.created_by = u.id
             WHERE 1=1
         `;
-    const params = [];
+      const params = [];
 
-    if (status) {
-      sql += ` AND c.status = ?`;
-      params.push(status);
+      if (status) {
+        sql += ` AND c.status = ?`;
+        params.push(status);
+      }
+
+      if (search && typeof search === 'string') {
+        sql += ` AND (c.name LIKE ? OR c.email LIKE ? OR c.company LIKE ?)`;
+        const searchTerm = `%${search}%`;
+        params.push(searchTerm, searchTerm, searchTerm);
+      }
+
+      sql += ` ORDER BY c.created_at DESC LIMIT ? OFFSET ?`;
+      params.push(limit, offset);
+
+      const clients = query(sql, params);
+
+      // Get total count
+      let countSql = `SELECT COUNT(*) as total FROM clients WHERE 1=1`;
+      const countParams = [];
+      if (status) {
+        countSql += ` AND status = ?`;
+        countParams.push(status);
+      }
+      if (search && typeof search === 'string') {
+        countSql += ` AND (name LIKE ? OR email LIKE ? OR company LIKE ?)`;
+        const searchTerm = `%${search}%`;
+        countParams.push(searchTerm, searchTerm, searchTerm);
+      }
+      const total = queryOne(countSql, countParams)?.total || 0;
+
+      res.json({
+        success: true,
+        clients,
+        pagination: {
+          total,
+          limit,
+          offset,
+        },
+      });
+    } catch (error) {
+      console.error('Get clients error:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to retrieve clients',
+      });
     }
-
-    if (search) {
-      sql += ` AND (c.name LIKE ? OR c.email LIKE ? OR c.company LIKE ?)`;
-      const searchTerm = `%${search}%`;
-      params.push(searchTerm, searchTerm, searchTerm);
-    }
-
-    sql += ` ORDER BY c.created_at DESC LIMIT ? OFFSET ?`;
-    params.push(parseInt(limit), parseInt(offset));
-
-    const clients = query(sql, params);
-
-    // Get total count
-    let countSql = `SELECT COUNT(*) as total FROM clients WHERE 1=1`;
-    const countParams = [];
-    if (status) {
-      countSql += ` AND status = ?`;
-      countParams.push(status);
-    }
-    if (search) {
-      countSql += ` AND (name LIKE ? OR email LIKE ? OR company LIKE ?)`;
-      const searchTerm = `%${search}%`;
-      countParams.push(searchTerm, searchTerm, searchTerm);
-    }
-    const total = queryOne(countSql, countParams)?.total || 0;
-
-    res.json({
-      success: true,
-      clients,
-      pagination: {
-        total,
-        limit: parseInt(limit),
-        offset: parseInt(offset),
-      },
-    });
-  } catch (error) {
-    console.error('Get clients error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to retrieve clients',
-    });
   }
-});
+);
 
 // Get client statistics
 router.get('/stats/overview', (req, res) => {

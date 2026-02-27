@@ -26,6 +26,7 @@
  */
 
 import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
 import { body, param, validationResult } from 'express-validator';
 import fs from 'fs/promises';
 import path from 'path';
@@ -37,6 +38,14 @@ import { execute, query, queryOne } from '../models/database.js';
 
 const router = Router();
 const logger = createLogger('usace-routes');
+
+// Rate limit USACE routes (per NIST SI-4 monitoring guidance)
+const usaceRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60,
+  message: { success: false, error: 'Too many USACE API requests, try again later.' },
+});
+router.use(usaceRateLimit);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '../../data/usace');
@@ -345,6 +354,10 @@ router.post(
 
     try {
       const { projectName, reviewType, comments, reviewer } = req.body;
+
+      if (!Array.isArray(comments)) {
+        return res.status(400).json({ error: 'comments must be an array' });
+      }
 
       // Generate DrChecks-compatible XML-like format
       const drChecksExport = {

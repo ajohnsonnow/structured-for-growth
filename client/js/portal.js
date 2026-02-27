@@ -1,5 +1,5 @@
 ﻿// Client Portal JavaScript
-import { escapeHTML } from './modules/sanitize.js';
+import { escapeHTML, safeInnerHTML } from './modules/sanitize.js';
 
 let authToken = localStorage.getItem('portalToken');
 let clientData = null;
@@ -174,11 +174,11 @@ async function loadProjects() {
       displayProjects(data.projects);
       updateSummary(data.projects);
     } else {
-      container.innerHTML = '<p class="empty-message">Unable to load projects</p>';
+      safeInnerHTML(container, '<p class="empty-message">Unable to load projects</p>');
     }
   } catch (error) {
     console.error('Load projects error:', error);
-    container.innerHTML = '<p class="empty-message">Error loading projects</p>';
+    safeInnerHTML(container, '<p class="empty-message">Error loading projects</p>');
   }
 }
 
@@ -186,14 +186,18 @@ function displayProjects(projects) {
   const container = document.getElementById('projectsList');
 
   if (!projects || projects.length === 0) {
-    container.innerHTML =
-      '<p class="empty-message">No projects yet. Contact us to get started!</p>';
+    safeInnerHTML(
+      container,
+      '<p class="empty-message">No projects yet. Contact us to get started!</p>'
+    );
     return;
   }
 
-  container.innerHTML = projects
-    .map(
-      (project) => `
+  safeInnerHTML(
+    container,
+    projects
+      .map(
+        (project) => `
         <div class="project-card">
             <div class="project-header">
                 <h3>${escapeHTML(project.title)}</h3>
@@ -235,8 +239,9 @@ function displayProjects(projects) {
             }
         </div>
     `
-    )
-    .join('');
+      )
+      .join('')
+  );
 }
 
 function updateSummary(projects) {
@@ -293,9 +298,11 @@ function displayPaymentInfo(billing) {
 function displayEstimates(estimates) {
   const container = document.getElementById('estimatesList');
 
-  container.innerHTML = estimates
-    .map(
-      (estimate) => `
+  safeInnerHTML(
+    container,
+    estimates
+      .map(
+        (estimate) => `
         <div class="estimate-card">
             <div class="estimate-header">
                 <h4>${escapeHTML(estimate.title)}</h4>
@@ -318,8 +325,9 @@ function displayEstimates(estimates) {
             }
         </div>
     `
-    )
-    .join('');
+      )
+      .join('')
+  );
 }
 
 // ============ EVENT LISTENERS ============

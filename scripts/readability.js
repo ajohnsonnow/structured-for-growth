@@ -13,7 +13,7 @@
  */
 
 import { readFileSync, readdirSync, statSync } from 'fs';
-import { join, relative } from 'path';
+import { join, relative, resolve } from 'path';
 
 const TARGET_GRADE = 8;
 const jsonMode = process.argv.includes('--json');
@@ -108,13 +108,29 @@ function collectFiles(dir) {
 
 const args = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const projectRoot = process.cwd();
-const files = args.length > 0 ? args : collectFiles(join(projectRoot, 'docs'));
+
+// Resolve and validate file paths to prevent directory traversal
+function safePath(filePath) {
+  const resolved = resolve(filePath);
+  if (!resolved.startsWith(projectRoot)) {
+    throw new Error(`Path traversal blocked: ${filePath} escapes project root`);
+  }
+  return resolved;
+}
+
+/** Read a file only if it passes path validation */
+function safeReadFile(filePath) {
+  const validated = safePath(filePath);
+  return readFileSync(validated, 'utf-8');
+}
+
+const files = args.length > 0 ? args.map(safePath) : collectFiles(join(projectRoot, 'docs'));
 
 const results = [];
 let failures = 0;
 
 for (const file of files) {
-  const raw = readFileSync(file, 'utf-8');
+  const raw = safeReadFile(file);
   const prose = stripMarkdown(raw);
   const grade = fleschKincaid(prose);
   const ws = words(prose);

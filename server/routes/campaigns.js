@@ -309,6 +309,10 @@ router.post(
       // Get recipients
       let recipients = [];
 
+      if (client_ids && !Array.isArray(client_ids)) {
+        return res.status(400).json({ success: false, message: 'client_ids must be an array' });
+      }
+
       if (client_ids && client_ids.length > 0) {
         recipients = query(
           `SELECT * FROM clients WHERE id IN (${client_ids.map(() => '?').join(',')})`,

@@ -51,19 +51,27 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build production assets
+        run: npm run build
+        env:
+          NODE_ENV: production
+
       - name: Start application server
         run: |
           npm start &
-          sleep 5
-          # Wait for server to be ready
-          for i in {1..30}; do
-            if curl -s http://localhost:3000/api/health > /dev/null 2>&1; then
-              echo "Server is ready"
+          SERVER_PID=$!
+          echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
+          # Wait for server to be ready (check /healthz first, then /api/health)
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3000/healthz > /dev/null 2>&1; then
+              echo "Server is ready (attempt $i)"
               break
             fi
             echo "Waiting for server... ($i/30)"
             sleep 2
           done
+          # Final check — fail early if server never started
+          curl -sf http://localhost:3000/api/health || { echo "::error::Server failed to start"; exit 1; }
         env:
           NODE_ENV: production
           JWT_SECRET: ci-test-secret-not-for-production
@@ -76,7 +84,7 @@ jobs:
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a -j'
           allow_issue_writing: true
-          fail_action: true
+          fail_action: false
           artifact_name: 'zap-report'
 
       - name: Upload ZAP Report

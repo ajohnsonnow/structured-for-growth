@@ -1,0 +1,32 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "cyclonedx",
+    "deepcode",
+    "fedramp",
+    "healthz",
+    "hsts",
+    "livez",
+    "mbai",
+    "navigations",
+    "qrcode",
+    "readyz",
+    "sprs",
+    "usace",
+    "wcag"
+  ],
+  "ignoreWords": [],
+  "ignorePaths": [
+    "node_modules",
+    "dist",
+    "coverage",
+    "codeql_db",
+    "archive",
+    "*.lock",
+    "package-lock.json",
+    "sbom.json",
+    "audit-report.json",
+    "lcov.info"
+  ]
+}

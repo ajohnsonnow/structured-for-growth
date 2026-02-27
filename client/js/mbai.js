@@ -4,7 +4,7 @@
  * category tabs, search, and a detail modal for each template.
  */
 
-import { escapeHTML } from './modules/sanitize.js';
+import { escapeHTML, safeInnerHTML } from './modules/sanitize.js';
 import { initUnifiedNav } from './modules/unifiedNav.js';
 
 let allTemplates = [];
@@ -40,8 +40,10 @@ async function loadTemplates() {
     renderGrid(allTemplates);
   } catch (err) {
     console.error('[mbai] Failed to load templates:', err);
-    document.getElementById('mbaiGrid').innerHTML =
-      '<p class="error-msg">Unable to load MBAi templates. Is the server running?</p>';
+    safeInnerHTML(
+      document.getElementById('mbaiGrid'),
+      '<p class="error-msg">Unable to load MBAi templates. Is the server running?</p>'
+    );
   }
 }
 
@@ -73,7 +75,7 @@ function renderCategoryTabs(categories) {
   categories.forEach((cat) => {
     html += `<button class="mbai-tab" data-category="${escapeHTML(cat.id)}">${escapeHTML(cat.icon)} ${escapeHTML(cat.name)}</button>`;
   });
-  tabsEl.innerHTML = html;
+  safeInnerHTML(tabsEl, html);
 
   tabsEl.addEventListener('click', (e) => {
     const tab = e.target.closest('.mbai-tab');
@@ -124,13 +126,15 @@ function renderGrid(templates) {
   }
 
   if (!templates.length) {
-    grid.innerHTML = '<p class="empty-state">No templates match your filter.</p>';
+    safeInnerHTML(grid, '<p class="empty-state">No templates match your filter.</p>');
     return;
   }
 
-  grid.innerHTML = templates
-    .map(
-      (t) => `
+  safeInnerHTML(
+    grid,
+    templates
+      .map(
+        (t) => `
     <div class="mbai-card" data-id="${escapeHTML(t.id)}">
       <div class="mbai-card-header">
         <span class="mbai-card-icon">${escapeHTML(t.icon || '📄')}</span>
@@ -151,8 +155,9 @@ function renderGrid(templates) {
       <button class="btn btn-secondary btn-sm mbai-card-btn">View Template →</button>
     </div>
   `
-    )
-    .join('');
+      )
+      .join('')
+  );
 
   // Card click → open modal
   grid.querySelectorAll('.mbai-card').forEach((card) => {
@@ -207,15 +212,18 @@ function openModal(tpl) {
 
   // Meta badges
   const metaEl = document.getElementById('mbaiModalMeta');
-  metaEl.innerHTML = `
+  safeInnerHTML(
+    metaEl,
+    `
     <span class="badge badge-mbai">${escapeHTML(tpl.methodology || '')}</span>
     ${(tpl.frameworks || []).map((f) => `<span class="badge badge-framework">${escapeHTML(f)}</span>`).join('')}
     <span class="badge badge-category">${escapeHTML(tpl.icon)} ${escapeHTML(formatCategory(tpl.category))}</span>
-  `;
+  `
+  );
 
   // Body - render template-specific tables
   const bodyEl = document.getElementById('mbaiModalBody');
-  bodyEl.innerHTML = renderTemplateBody(tpl);
+  safeInnerHTML(bodyEl, renderTemplateBody(tpl));
 
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';

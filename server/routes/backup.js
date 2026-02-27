@@ -1,10 +1,18 @@
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 import { body, param, validationResult } from 'express-validator';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { authenticateToken, requireRole } from '../middleware/auth.js';
 import { getDatabase, logActivity, query } from '../models/database.js';
+
+/** Stricter rate limit for expensive backup/restore file operations */
+const backupRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { success: false, error: 'Too many backup requests, please try again later.' },
+});
 
 function handleValidation(req, res) {
   const errors = validationResult(req);
@@ -22,7 +30,51 @@ function sanitizeFilename(value) {
   return value;
 }
 
+/**
+ * Resolve a file path inside the backup directory and verify it stays confined.
+ * Throws if the resolved path escapes the allowed base directory.
+ */
+function safeResolvePath(baseDir, ...segments) {
+  const resolved = path.resolve(baseDir, ...segments);
+  const normalizedBase = path.resolve(baseDir) + path.sep;
+  if (!resolved.startsWith(normalizedBase) && resolved !== path.resolve(baseDir)) {
+    throw new Error('Path traversal detected');
+  }
+  return resolved;
+}
+
+/**
+ * Whitelist of database tables that may be restored from a backup.
+ * Any table name not listed here will be rejected to prevent SQL injection.
+ */
+const VALID_TABLES = new Set([
+  'users',
+  'refresh_tokens',
+  'clients',
+  'projects',
+  'tasks',
+  'time_entries',
+  'contact_submissions',
+  'activity_log',
+  'messages',
+  'campaigns',
+  'segments',
+  'campaign_recipients',
+  'email_templates',
+  'api_keys',
+  'user_sessions',
+  'notifications',
+  'push_subscriptions',
+]);
+
+/** Only allow safe SQL identifiers (letters, digits, underscores). */
+const SAFE_IDENTIFIER = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+
 const router = express.Router();
+
+// Apply stricter rate limit to all backup routes
+router.use(backupRateLimit);
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -53,6 +105,10 @@ function exportDatabase() {
   };
 
   for (const table of tables) {
+    // Validate table name is a safe SQL identifier (defense-in-depth)
+    if (!SAFE_IDENTIFIER.test(table.name)) {
+      continue;
+    }
     data.tables[table.name] = query(`SELECT * FROM ${table.name}`);
   }
 
@@ -67,7 +123,7 @@ router.get('/list', authenticateToken, requireRole('admin'), (req, res) => {
       .readdirSync(dir)
       .filter((f) => f.endsWith('.json'))
       .map((f) => {
-        const stats = fs.statSync(path.join(dir, f));
+        const stats = fs.statSync(safeResolvePath(dir, f));
         return {
           filename: f,
           size: stats.size,
@@ -105,12 +161,13 @@ router.post(
       return;
     }
     try {
-      const { name, customPath } = req.body;
-      const dir = ensureBackupDir(customPath);
+      const { name } = req.body;
+      const dir = ensureBackupDir();
 
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-      const filename = name ? `${name}-${timestamp}.json` : `backup-${timestamp}.json`;
-      const filepath = path.join(dir, filename);
+      const safeName = (typeof name === 'string' ? name : '').replace(/[^a-zA-Z0-9_-]/g, '');
+      const filename = safeName ? `${safeName}-${timestamp}.json` : `backup-${timestamp}.json`;
+      const filepath = safeResolvePath(dir, filename);
 
       const data = exportDatabase();
       data.backupName = name || 'Manual Backup';
@@ -149,7 +206,7 @@ router.get(
     }
     try {
       const { filename } = req.params;
-      const filepath = path.join(ensureBackupDir(), filename);
+      const filepath = safeResolvePath(ensureBackupDir(), filename);
 
       if (!fs.existsSync(filepath)) {
         return res.status(404).json({ success: false, message: 'Backup not found' });
@@ -203,7 +260,7 @@ router.post(
 
       if (filename) {
         // Restore from file
-        const filepath = path.join(ensureBackupDir(), filename);
+        const filepath = safeResolvePath(ensureBackupDir(), filename);
         if (!fs.existsSync(filepath)) {
           return res.status(404).json({ success: false, message: 'Backup file not found' });
         }
@@ -220,7 +277,7 @@ router.post(
       const preRestoreData = exportDatabase();
       preRestoreData.backupName = 'Pre-Restore Automatic Backup';
       fs.writeFileSync(
-        path.join(ensureBackupDir(), preRestoreBackup),
+        safeResolvePath(ensureBackupDir(), preRestoreBackup),
         JSON.stringify(preRestoreData, null, 2)
       );
 
@@ -229,37 +286,56 @@ router.post(
       // Restore each table
       const restoredTables = [];
       for (const [tableName, records] of Object.entries(backupData.tables)) {
+        // Validate table name against whitelist to prevent SQL injection
+        if (!VALID_TABLES.has(tableName)) {
+          console.warn('Skipped unknown table during restore');
+          continue;
+        }
+
+        // At this point tableName is guaranteed to be in our whitelist.
+        // Use a local constant to make the data flow explicit for static analysis.
+        const safeTable = tableName;
+
         // Skip if no records
         if (!records || records.length === 0) {
           continue;
         }
 
         // Clear existing data
-        db.run(`DELETE FROM ${tableName}`);
+        db.run(`DELETE FROM ${safeTable}`);
 
         // Insert records
         for (const record of records) {
           const columns = Object.keys(record);
+
+          // Validate every column name is a safe SQL identifier
+          if (!columns.every((col) => SAFE_IDENTIFIER.test(col))) {
+            console.warn('Skipped record: invalid column name detected');
+            continue;
+          }
+
           const placeholders = columns.map(() => '?').join(', ');
           const values = columns.map((col) => record[col]);
 
           try {
             db.run(
-              `INSERT INTO ${tableName} (${columns.join(', ')}) VALUES (${placeholders})`,
+              `INSERT INTO ${safeTable} (${columns.join(', ')}) VALUES (${placeholders})`,
               values
             );
           } catch (insertErr) {
-            console.warn(`Skipped record in ${tableName}:`, insertErr.message);
+            console.warn('Skipped record during restore:', insertErr.message);
           }
         }
 
-        restoredTables.push({ table: tableName, records: records.length });
+        restoredTables.push({ table: safeTable, records: records.length });
       }
 
       // Save the database
       const data = db.export();
       const buffer = Buffer.from(data);
-      const dbPath = process.env.DB_PATH || path.join(__dirname, '../../data/database.db');
+      const dbPath = path.resolve(
+        process.env.DB_PATH || path.join(__dirname, '../../data/database.db')
+      );
       fs.writeFileSync(dbPath, buffer);
 
       logActivity(
@@ -299,7 +375,7 @@ router.delete(
     }
     try {
       const { filename } = req.params;
-      const filepath = path.join(ensureBackupDir(), filename);
+      const filepath = safeResolvePath(ensureBackupDir(), filename);
 
       if (!fs.existsSync(filepath)) {
         return res.status(404).json({ success: false, message: 'Backup not found' });
@@ -377,8 +453,9 @@ export function triggerAutoBackup(action, userId = null, details = null) {
 
     const dir = ensureBackupDir();
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const filename = `auto-${action.toLowerCase()}-${timestamp}.json`;
-    const filepath = path.join(dir, filename);
+    const safeAction = action.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    const filename = `auto-${safeAction}-${timestamp}.json`;
+    const filepath = safeResolvePath(dir, filename);
 
     const data = exportDatabase();
     data.backupName = `Auto-backup: ${action}`;
@@ -399,12 +476,12 @@ function cleanOldBackups(dir, maxBackups) {
     const files = fs
       .readdirSync(dir)
       .filter((f) => f.startsWith('auto-') && f.endsWith('.json'))
-      .map((f) => ({ name: f, time: fs.statSync(path.join(dir, f)).mtime }))
+      .map((f) => ({ name: f, time: fs.statSync(safeResolvePath(dir, f)).mtime }))
       .sort((a, b) => b.time - a.time);
 
     if (files.length > maxBackups) {
       for (const file of files.slice(maxBackups)) {
-        fs.unlinkSync(path.join(dir, file.name));
+        fs.unlinkSync(safeResolvePath(dir, file.name));
         console.log(`🗑️ Removed old backup: ${file.name}`);
       }
     }

@@ -20,7 +20,9 @@ beforeEach(async () => {
 });
 
 function createCsrfApp() {
+  // snyk-disable-next-line javascript/UseCsurfForExpress javascript/UseCsurfForExpress/test -- test-only app exercising custom CSRF middleware; not a production server
   const app = express();
+  app.disable('x-powered-by');
   app.use(cookieParser());
   app.use(express.json());
 

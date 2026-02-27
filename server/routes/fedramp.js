@@ -141,7 +141,7 @@ router.get('/ssp/controls', (req, res) => {
   const { family, status } = req.query;
   let controls = SSP_CONTROLS;
 
-  if (family) {
+  if (family && typeof family === 'string') {
     controls = controls.filter((c) => c.family === family.toUpperCase());
   }
   if (status) {
@@ -418,6 +418,11 @@ router.post(
     }
 
     const findings = req.body.findings;
+
+    if (!Array.isArray(findings)) {
+      return res.status(400).json({ error: 'findings must be an array' });
+    }
+
     const counts = {
       critical: findings.filter((f) => f.severity === 'critical').length,
       high: findings.filter((f) => f.severity === 'high').length,

@@ -12,7 +12,7 @@
 ## Executive Summary
 
 This plan synthesizes deep research across **twelve domains** and a **full codebase audit** of the
-structured-for-growth platform (v1.8.1). It identifies **192 specific development items** organized
+structured-for-growth platform (v1.8.9). It identifies **192 specific development items** organized
 into **19 work streams** across **6 priority phases**.
 
 ### Current State Strengths
@@ -23,7 +23,7 @@ into **19 work streams** across **6 priority phases**.
 - **Authentication and basic security exist** — JWT, bcrypt, Helmet, rate limiting, express-validator
 - **Pre-deploy audit tooling exists** — audit.js with history tracking
 
-### Critical Gaps — Status as of v1.8.1
+### Critical Gaps — Status as of v1.8.9
 
 > **Note:** Many gaps identified in the original audit (v1.4.8) have been resolved. Items marked ✅ are complete.
 
@@ -46,7 +46,6 @@ into **19 work streams** across **6 priority phases**.
 5. [Phase 5: Platform Expansion (Weeks 27–36)](#phase-5-platform-expansion-weeks-2736)
 6. [Phase 6: Web Presence Redesign (Weeks 37–42)](#phase-6-web-presence-redesign-weeks-3742)
 7. [Work Stream Details](#work-stream-details)
-
    - [WS-1: Testing & CI/CD Infrastructure](#ws-1-testing--cicd-infrastructure)
    - [WS-2: Section 508 & Accessibility](#ws-2-section-508--accessibility)
    - [WS-3: Security Hardening](#ws-3-security-hardening)
@@ -66,6 +65,7 @@ into **19 work streams** across **6 priority phases**.
    - [WS-17: Glossary & Tooltip Dictionary System](#ws-17-glossary--tooltip-dictionary-system)
    - [WS-18: Header & Navigation Redesign](#ws-18-header--navigation-redesign)
    - [WS-19: Web Presence Redesign](#ws-19-web-presence-redesign)
+
 8. [Standards Reference Matrix](#standards-reference-matrix)
 9. [Risk Register](#risk-register)
 10. [Success Metrics](#success-metrics)
@@ -81,46 +81,46 @@ into **19 work streams** across **6 priority phases**.
 
 ## P1.1 — Testing Infrastructure [WS-1]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 1.1.1 | Install and configure Vitest (already have vite.config.js) | P0 | 2h | NIST SSDF PW.8 |
-| 1.1.2 | Add eslint + prettier with configs | P0 | 2h | OWASP Secure Coding |
-| 1.1.3 | Write unit tests for all server routes (auth, clients, compliance, contact, campaigns, projects, messages, portal, backup, demo, mbai) | P0 | 16h | MIL-STD-498 STD/STR |
-| 1.1.4 | Write unit tests for client-side modules (navigation, contactForm, smoothScroll) | P0 | 4h | NIST SSDF PW.8 |
-| 1.1.5 | Add integration tests for critical workflows (auth flow, client CRUD, compliance lookup) | P0 | 8h | OWASP ASVS L2 |
-| 1.1.6 | Configure GitHub Actions CI pipeline (lint → test → build → audit) | P0 | 4h | NIST SSDF PO.3 |
-| 1.1.7 | Add pre-commit hooks (husky + lint-staged) | P1 | 2h | NIST SSDF PS.1 |
-| 1.1.8 | Code coverage reporting with threshold (≥80%) | P1 | 2h | CMMI VER |
+| ID    | Item                                                                                                                                   | Priority | Effort | Standard            |
+| ----- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------ | ------------------- |
+| 1.1.1 | Install and configure Vitest (already have vite.config.js)                                                                             | P0       | 2h     | NIST SSDF PW.8      |
+| 1.1.2 | Add eslint + prettier with configs                                                                                                     | P0       | 2h     | OWASP Secure Coding |
+| 1.1.3 | Write unit tests for all server routes (auth, clients, compliance, contact, campaigns, projects, messages, portal, backup, demo, mbai) | P0       | 16h    | MIL-STD-498 STD/STR |
+| 1.1.4 | Write unit tests for client-side modules (navigation, contactForm, smoothScroll)                                                       | P0       | 4h     | NIST SSDF PW.8      |
+| 1.1.5 | Add integration tests for critical workflows (auth flow, client CRUD, compliance lookup)                                               | P0       | 8h     | OWASP ASVS L2       |
+| 1.1.6 | Configure GitHub Actions CI pipeline (lint → test → build → audit)                                                                     | P0       | 4h     | NIST SSDF PO.3      |
+| 1.1.7 | Add pre-commit hooks (husky + lint-staged)                                                                                             | P1       | 2h     | NIST SSDF PS.1      |
+| 1.1.8 | Code coverage reporting with threshold (≥80%)                                                                                          | P1       | 2h     | CMMI VER            |
 
 ## P1.2 — Critical Security Fixes [WS-3]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 1.2.1 | Enable and configure Content Security Policy (CSP) | P0 | 4h | OWASP A05, NIST SC-18 |
-| 1.2.2 | Remove hardcoded JWT fallback secret; fail fast if not set | P0 | 1h | OWASP A07, NIST IA-5 |
-| 1.2.3 | Add CSRF protection (csurf or double-submit cookie) | P0 | 3h | OWASP A01 |
-| 1.2.4 | Configure cookie security flags (httpOnly, secure, sameSite) | P0 | 1h | OWASP A07 |
-| 1.2.5 | Add request body size limits (express.json limit) | P1 | 1h | OWASP API4 |
-| 1.2.6 | Add graceful shutdown handling (SIGTERM/SIGINT) | P1 | 2h | Cloud-native best practice |
+| ID    | Item                                                         | Priority | Effort | Standard                   |
+| ----- | ------------------------------------------------------------ | -------- | ------ | -------------------------- |
+| 1.2.1 | Enable and configure Content Security Policy (CSP)           | P0       | 4h     | OWASP A05, NIST SC-18      |
+| 1.2.2 | Remove hardcoded JWT fallback secret; fail fast if not set   | P0       | 1h     | OWASP A07, NIST IA-5       |
+| 1.2.3 | Add CSRF protection (csurf or double-submit cookie)          | P0       | 3h     | OWASP A01                  |
+| 1.2.4 | Configure cookie security flags (httpOnly, secure, sameSite) | P0       | 1h     | OWASP A07                  |
+| 1.2.5 | Add request body size limits (express.json limit)            | P1       | 1h     | OWASP API4                 |
+| 1.2.6 | Add graceful shutdown handling (SIGTERM/SIGINT)              | P1       | 2h     | Cloud-native best practice |
 
 ## P1.3 — Essential Accessibility Fixes [WS-2]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 1.3.1 | Fix dashboard.html: add skip-nav, ARIA landmarks on nav/sidebar, replace emoji-only icons with sr-only labels | P0 | 4h | Section 508 E205, WCAG 2.4.1 |
-| 1.3.2 | Fix portal.html: add skip-nav, ARIA landmarks, role="navigation" | P0 | 3h | Section 508 E205, WCAG 1.3.1 |
-| 1.3.3 | Add aria-live regions for dynamic content updates on all pages | P0 | 4h | WCAG 4.1.3 |
-| 1.3.4 | Fix modal focus management (trap focus, return focus on close) | P0 | 4h | WCAG 2.4.3, APG Dialog |
-| 1.3.5 | Keyboard-test all interactive elements across all pages | P1 | 4h | WCAG 2.1.1, Trusted Tester #1 |
-| 1.3.6 | Verify color contrast on all pages (4.5:1 normal, 3:1 large text) | P1 | 3h | WCAG 1.4.3 |
+| ID    | Item                                                                                                          | Priority | Effort | Standard                      |
+| ----- | ------------------------------------------------------------------------------------------------------------- | -------- | ------ | ----------------------------- |
+| 1.3.1 | Fix dashboard.html: add skip-nav, ARIA landmarks on nav/sidebar, replace emoji-only icons with sr-only labels | P0       | 4h     | Section 508 E205, WCAG 2.4.1  |
+| 1.3.2 | Fix portal.html: add skip-nav, ARIA landmarks, role="navigation"                                              | P0       | 3h     | Section 508 E205, WCAG 1.3.1  |
+| 1.3.3 | Add aria-live regions for dynamic content updates on all pages                                                | P0       | 4h     | WCAG 4.1.3                    |
+| 1.3.4 | Fix modal focus management (trap focus, return focus on close)                                                | P0       | 4h     | WCAG 2.4.3, APG Dialog        |
+| 1.3.5 | Keyboard-test all interactive elements across all pages                                                       | P1       | 4h     | WCAG 2.1.1, Trusted Tester #1 |
+| 1.3.6 | Verify color contrast on all pages (4.5:1 normal, 3:1 large text)                                             | P1       | 3h     | WCAG 1.4.3                    |
 
 ## P1.4 — Essential Documentation [WS-5]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 1.4.1 | Create CHANGELOG.md following Keep a Changelog format | P0 | 2h | SemVer, Release Notes best practice |
-| 1.4.2 | Create CONTRIBUTING.md with code style, PR process, review requirements | P1 | 3h | Open source best practice |
-| 1.4.3 | ✅ Add ESLint + Prettier configuration — Migrated to ESLint flat config (`eslint.config.js`) for v10 | P0 | 1h | Code quality |
+| ID    | Item                                                                                                 | Priority | Effort | Standard                            |
+| ----- | ---------------------------------------------------------------------------------------------------- | -------- | ------ | ----------------------------------- |
+| 1.4.1 | Create CHANGELOG.md following Keep a Changelog format                                                | P0       | 2h     | SemVer, Release Notes best practice |
+| 1.4.2 | Create CONTRIBUTING.md with code style, PR process, review requirements                              | P1       | 3h     | Open source best practice           |
+| 1.4.3 | ✅ Add ESLint + Prettier configuration — Migrated to ESLint flat config (`eslint.config.js`) for v10 | P0       | 1h     | Code quality                        |
 
 ---
 
@@ -130,53 +130,53 @@ into **19 work streams** across **6 priority phases**.
 
 ## P2.1 — CUI Marking System [WS-4]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 2.1.1 | Build CUI banner marking component (configurable: CUI Basic, CUI Specified, category, dissemination controls) | P0 | 8h | 32 CFR 2002, NARA CUI Registry |
-| 2.1.2 | Build CUI portion marking component (inline paragraph-level marking) | P0 | 6h | 32 CFR 2002.20 |
-| 2.1.3 | Build CUI designation indicator block component (Controlled By, Category, Distribution, POC) | P0 | 4h | 32 CFR 2002 |
-| 2.1.4 | Add CUI metadata fields to document/template data model (category, subcategory, dissemination control, designating agency) | P0 | 4h | CUI Registry |
-| 2.1.5 | Build CUI header/footer marking for print/PDF output | P1 | 6h | DoD Manual 5200.01 |
-| 2.1.6 | Create CUI marking configuration UI (select category, subcategory, dissemination controls from registry data) | P1 | 8h | NARA CUI Registry |
-| 2.1.7 | Add Distribution Statement component (A through F, plus X) per DoD Directive 5230.24 | P1 | 4h | DoD Dir 5230.24 |
+| ID    | Item                                                                                                                       | Priority | Effort | Standard                       |
+| ----- | -------------------------------------------------------------------------------------------------------------------------- | -------- | ------ | ------------------------------ |
+| 2.1.1 | Build CUI banner marking component (configurable: CUI Basic, CUI Specified, category, dissemination controls)              | P0       | 8h     | 32 CFR 2002, NARA CUI Registry |
+| 2.1.2 | Build CUI portion marking component (inline paragraph-level marking)                                                       | P0       | 6h     | 32 CFR 2002.20                 |
+| 2.1.3 | Build CUI designation indicator block component (Controlled By, Category, Distribution, POC)                               | P0       | 4h     | 32 CFR 2002                    |
+| 2.1.4 | Add CUI metadata fields to document/template data model (category, subcategory, dissemination control, designating agency) | P0       | 4h     | CUI Registry                   |
+| 2.1.5 | Build CUI header/footer marking for print/PDF output                                                                       | P1       | 6h     | DoD Manual 5200.01             |
+| 2.1.6 | Create CUI marking configuration UI (select category, subcategory, dissemination controls from registry data)              | P1       | 8h     | NARA CUI Registry              |
+| 2.1.7 | Add Distribution Statement component (A through F, plus X) per DoD Directive 5230.24                                       | P1       | 4h     | DoD Dir 5230.24                |
 
 ## P2.2 — VPAT & Accessibility Compliance [WS-2]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 2.2.1 | Install and configure axe-core in CI pipeline (zero-violation build gate) | P0 | 3h | DHS Trusted Tester |
-| 2.2.2 | Run full WCAG 2.1 AA automated audit (axe-core + Lighthouse) and document results | P0 | 4h | WCAG 2.1 AA |
-| 2.2.3 | Conduct manual Trusted Tester baseline testing (20 baseline tests) | P0 | 16h | DHS Trusted Tester v5.1 |
-| 2.2.4 | Create VPAT 2.5 Rev (Accessibility Conformance Report) | P0 | 12h | VPAT 2.5, FAR 39.2 |
-| 2.2.5 | Fix all P0/P1 findings from accessibility audit | P0 | 20h | Section 508 |
-| 2.2.6 | Add WCAG 2.2 proactive support (focus-not-obscured, target size ≥24px, accessible auth, redundant entry) | P1 | 12h | WCAG 2.2 AA |
+| ID    | Item                                                                                                     | Priority | Effort | Standard                |
+| ----- | -------------------------------------------------------------------------------------------------------- | -------- | ------ | ----------------------- |
+| 2.2.1 | Install and configure axe-core in CI pipeline (zero-violation build gate)                                | P0       | 3h     | DHS Trusted Tester      |
+| 2.2.2 | Run full WCAG 2.1 AA automated audit (axe-core + Lighthouse) and document results                        | P0       | 4h     | WCAG 2.1 AA             |
+| 2.2.3 | Conduct manual Trusted Tester baseline testing (20 baseline tests)                                       | P0       | 16h    | DHS Trusted Tester v5.1 |
+| 2.2.4 | Create VPAT 2.5 Rev (Accessibility Conformance Report)                                                   | P0       | 12h    | VPAT 2.5, FAR 39.2      |
+| 2.2.5 | Fix all P0/P1 findings from accessibility audit                                                          | P0       | 20h    | Section 508             |
+| 2.2.6 | Add WCAG 2.2 proactive support (focus-not-obscured, target size ≥24px, accessible auth, redundant entry) | P1       | 12h    | WCAG 2.2 AA             |
 
 ## P2.3 — Supply Chain Security [WS-8]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 2.3.1 | Add SBOM generation to build (CycloneDX format via @cyclonedx/bom) | P0 | 3h | EO 14028, OMB M-22-18 |
-| 2.3.2 | Configure Dependabot or Renovate for automated dependency updates | P0 | 2h | NIST SP 800-53 RA-5, SI-2 |
-| 2.3.3 | Add npm audit step to CI pipeline (fail on critical/high) | P0 | 1h | OWASP A06 |
-| 2.3.4 | Generate SBOM artifact on every release and attach to GitHub release | P1 | 2h | NTIA SBOM minimum elements |
-| 2.3.5 | Add license compliance check (license-checker or similar) | P1 | 2h | DFARS 252.227 |
+| ID    | Item                                                                 | Priority | Effort | Standard                   |
+| ----- | -------------------------------------------------------------------- | -------- | ------ | -------------------------- |
+| 2.3.1 | Add SBOM generation to build (CycloneDX format via @cyclonedx/bom)   | P0       | 3h     | EO 14028, OMB M-22-18      |
+| 2.3.2 | Configure Dependabot or Renovate for automated dependency updates    | P0       | 2h     | NIST SP 800-53 RA-5, SI-2  |
+| 2.3.3 | Add npm audit step to CI pipeline (fail on critical/high)            | P0       | 1h     | OWASP A06                  |
+| 2.3.4 | Generate SBOM artifact on every release and attach to GitHub release | P1       | 2h     | NTIA SBOM minimum elements |
+| 2.3.5 | Add license compliance check (license-checker or similar)            | P1       | 2h     | DFARS 252.227              |
 
 ## P2.4 — NIST SP 800-171 Documentation [WS-6]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 2.4.1 | Create System Security Plan (SSP) template for the platform | P0 | 16h | NIST SP 800-171 3.12.4 |
-| 2.4.2 | Create Plan of Action & Milestones (POA&M) template | P0 | 4h | NIST SP 800-171 3.12.2 |
-| 2.4.3 | Self-assess against all 110 NIST SP 800-171 controls and document status | P1 | 24h | CMMC Level 2 |
-| 2.4.4 | Calculate preliminary SPRS score | P1 | 4h | DFARS 252.204-7019 |
+| ID    | Item                                                                     | Priority | Effort | Standard               |
+| ----- | ------------------------------------------------------------------------ | -------- | ------ | ---------------------- |
+| 2.4.1 | Create System Security Plan (SSP) template for the platform              | P0       | 16h    | NIST SP 800-171 3.12.4 |
+| 2.4.2 | Create Plan of Action & Milestones (POA&M) template                      | P0       | 4h     | NIST SP 800-171 3.12.2 |
+| 2.4.3 | Self-assess against all 110 NIST SP 800-171 controls and document status | P1       | 24h    | CMMC Level 2           |
+| 2.4.4 | Calculate preliminary SPRS score                                         | P1       | 4h     | DFARS 252.204-7019     |
 
 ## P2.5 — API Documentation [WS-5]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 2.5.1 | Document all API endpoints in OpenAPI 3.0 spec (routes: auth, clients, compliance, contact, campaigns, projects, messages, portal, backup, demo, mbai) | P0 | 12h | OpenAPI 3.0, IEEE 1063 |
-| 2.5.2 | Serve Swagger UI at /api-docs endpoint | P1 | 3h | Developer documentation |
-| 2.5.3 | Add request/response examples to every endpoint | P1 | 8h | API documentation |
+| ID    | Item                                                                                                                                                   | Priority | Effort | Standard                |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ------ | ----------------------- |
+| 2.5.1 | Document all API endpoints in OpenAPI 3.0 spec (routes: auth, clients, compliance, contact, campaigns, projects, messages, portal, backup, demo, mbai) | P0       | 12h    | OpenAPI 3.0, IEEE 1063  |
+| 2.5.2 | Serve Swagger UI at /api-docs endpoint                                                                                                                 | P1       | 3h     | Developer documentation |
+| 2.5.3 | Add request/response examples to every endpoint                                                                                                        | P1       | 8h     | API documentation       |
 
 ---
 
@@ -186,32 +186,34 @@ into **19 work streams** across **6 priority phases**.
 
 ## P3.1 — Observability & Structured Logging [WS-7]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 3.1.1 | Replace console.log/error with structured logger (winston or pino) with JSON output | P0 | 6h | NIST AU-2, AU-3 |
-| 3.1.2 | Add request ID middleware (correlation IDs for every HTTP request) | P0 | 3h | OWASP A09 |
-| 3.1.3 | Add HTTP access logging middleware (method, URL, status, duration, IP, user) | P0 | 3h | NIST AU-3 |
-| 3.1.4 | Implement security event logging (auth attempts, role changes, data access) | P0 | 6h | NIST AU-2, OMB M-21-31 |
-| 3.1.5 | Add log rotation and retention policy (configurable, default 90 days) | P1 | 3h | GRS 3.2 |
-| 3.1.6 | Build admin audit log viewer with search/filter in dashboard | P1 | 8h | DoD 5015.02-STD |
-| 3.1.7 | Add error monitoring integration (Sentry or equivalent) | P2 | 4h | Operational excellence |
+| ID    | Item                                                                                | Priority | Effort | Standard               |
+| ----- | ----------------------------------------------------------------------------------- | -------- | ------ | ---------------------- |
+| 3.1.1 | Replace console.log/error with structured logger (winston or pino) with JSON output | P0       | 6h     | NIST AU-2, AU-3        |
+| 3.1.2 | Add request ID middleware (correlation IDs for every HTTP request)                  | P0       | 3h     | OWASP A09              |
+| 3.1.3 | Add HTTP access logging middleware (method, URL, status, duration, IP, user)        | P0       | 3h     | NIST AU-3              |
+| 3.1.4 | Implement security event logging (auth attempts, role changes, data access)         | P0       | 6h     | NIST AU-2, OMB M-21-31 |
+| 3.1.5 | Add log rotation and retention policy (configurable, default 90 days)               | P1       | 3h     | GRS 3.2                |
+| 3.1.6 | Build admin audit log viewer with search/filter in dashboard                        | P1       | 8h     | DoD 5015.02-STD        |
+| 3.1.7 | Add error monitoring integration (Sentry or equivalent)                             | P2       | 4h     | Operational excellence |
 
 ## P3.2 — Advanced Security [WS-3]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 3.2.1 | Add SAST scanning to CI (CodeQL or Semgrep) | P0 | 4h | NIST SSDF PW.7, CMMC |
-| 3.2.2 | Add DAST scanning for staging environment (OWASP ZAP) | P1 | 6h | FedRAMP ConMon |
-| 3.2.3 | Implement session management best practices (expiry, refresh token rotation, revocation) | P0 | 8h | OWASP A07, ASVS L2 |
-| 3.2.4 | Add custom error classes with error codes | P1 | 4h | API best practices |
-| 3.2.5 | Implement MFA support (TOTP via speakeasy or similar) | P1 | 12h | NIST IA-2, OMB M-22-09 |
-| 3.2.6 | Add security headers audit script (verify Helmet config) | P2 | 2h | OWASP A05 |
+| ID    | Item                                                                                     | Priority | Effort | Standard               |
+| ----- | ---------------------------------------------------------------------------------------- | -------- | ------ | ---------------------- |
+| 3.2.1 | Add SAST scanning to CI (CodeQL or Semgrep)                                              | P0       | 4h     | NIST SSDF PW.7, CMMC   |
+| 3.2.2 | Add DAST scanning for staging environment (OWASP ZAP)                                    | P1       | 6h     | FedRAMP ConMon         |
+| 3.2.3 | Implement session management best practices (expiry, refresh token rotation, revocation) | P0       | 8h     | OWASP A07, ASVS L2     |
+| 3.2.4 | Add custom error classes with error codes                                                | P1       | 4h     | API best practices     |
+| 3.2.5 | Implement MFA support (TOTP via speakeasy or similar)                                    | P1       | 12h    | NIST IA-2, OMB M-22-09 |
+| 3.2.6 | Add security headers audit script (verify Helmet config)                                 | P2       | 2h     | OWASP A05              |
 
 ## P3.3 — Records Management Features [WS-10]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
+| ID  | Item | Priority | Effort | Standard |
+| --- | ---- | -------- | ------ | -------- |
+
 <!-- markdownlint-disable-next-line MD013 -->
+
 | 3.3.1 | Add document metadata schema (Dublin Core + government extensions: CUI category, retention schedule, distribution statement, originator, classification) | P0 | 8h | 36 CFR 1236, Dublin Core, NARA |
 | 3.3.2 | Build retention schedule engine (time-based and event-based disposition) | P1 | 12h | DoD 5015.02-STD, GRS |
 | 3.3.3 | Add legal hold capability (suspend disposition for specific records) | P1 | 6h | DoD 5015.02-STD |
@@ -220,24 +222,24 @@ into **19 work streams** across **6 priority phases**.
 
 ## P3.4 — Compliance Engine Enhancement [WS-6]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 3.4.1 | Build evidence tracking backend (persist evidence records with timestamps, attachments, assessor) | P0 | 12h | FedRAMP, CMMC L2 |
-| 3.4.2 | Add automated compliance gap scoring (% complete per framework, per control family) | P1 | 8h | SPRS methodology |
-| 3.4.3 | Add compliance assessment scheduling and reminders | P1 | 6h | FedRAMP ConMon |
-| 3.4.4 | Add NIST SP 800-53 Rev 5 framework (full 800+ controls for FedRAMP path) | P1 | 8h | NIST SP 800-53 Rev 5 |
-| 3.4.5 | Add NIST SP 800-171 Rev 3 framework (97 requirements) | P1 | 6h | NIST SP 800-171 Rev 3 |
-| 3.4.6 | Export assessment results as POA&M (standard format) | P2 | 6h | NIST SP 800-171 |
+| ID    | Item                                                                                              | Priority | Effort | Standard              |
+| ----- | ------------------------------------------------------------------------------------------------- | -------- | ------ | --------------------- |
+| 3.4.1 | Build evidence tracking backend (persist evidence records with timestamps, attachments, assessor) | P0       | 12h    | FedRAMP, CMMC L2      |
+| 3.4.2 | Add automated compliance gap scoring (% complete per framework, per control family)               | P1       | 8h     | SPRS methodology      |
+| 3.4.3 | Add compliance assessment scheduling and reminders                                                | P1       | 6h     | FedRAMP ConMon        |
+| 3.4.4 | Add NIST SP 800-53 Rev 5 framework (full 800+ controls for FedRAMP path)                          | P1       | 8h     | NIST SP 800-53 Rev 5  |
+| 3.4.5 | Add NIST SP 800-171 Rev 3 framework (97 requirements)                                             | P1       | 6h     | NIST SP 800-171 Rev 3 |
+| 3.4.6 | Export assessment results as POA&M (standard format)                                              | P2       | 6h     | NIST SP 800-171       |
 
 ## P3.5 — Technical Writing Tooling [WS-5]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 3.5.1 | Configure vale (prose linter) with Microsoft, write-good, and government styles | P1 | 4h | Microsoft Style Guide, plain language |
-| 3.5.2 | Add markdownlint configuration | P1 | 1h | Markdown best practices |
-| 3.5.3 | Add readability scoring to documentation CI (Flesch-Kincaid target ≤ grade 8 for public content) | P2 | 4h | Plain Writing Act |
-| 3.5.4 | Create project style sheet (terminology, abbreviations, voice/tone) | P2 | 6h | GPO Style Manual |
-| 3.5.5 | Create Architecture Decision Records (ADR) template and first 5 ADRs | P2 | 8h | ADR best practice |
+| ID    | Item                                                                                             | Priority | Effort | Standard                              |
+| ----- | ------------------------------------------------------------------------------------------------ | -------- | ------ | ------------------------------------- |
+| 3.5.1 | Configure vale (prose linter) with Microsoft, write-good, and government styles                  | P1       | 4h     | Microsoft Style Guide, plain language |
+| 3.5.2 | Add markdownlint configuration                                                                   | P1       | 1h     | Markdown best practices               |
+| 3.5.3 | Add readability scoring to documentation CI (Flesch-Kincaid target ≤ grade 8 for public content) | P2       | 4h     | Plain Writing Act                     |
+| 3.5.4 | Create project style sheet (terminology, abbreviations, voice/tone)                              | P2       | 6h     | GPO Style Manual                      |
+| 3.5.5 | Create Architecture Decision Records (ADR) template and first 5 ADRs                             | P2       | 8h     | ADR best practice                     |
 
 ---
 
@@ -247,46 +249,46 @@ into **19 work streams** across **6 priority phases**.
 
 ## P4.1 — Agentic AI Integration [WS-9]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 4.1.1 | Design multi-agent architecture for compliance assistance (orchestrator + specialist agents) | P1 | 16h | NIST AI RMF |
-| 4.1.2 | Build AI guardrails layer (input validation, output filtering, prompt injection defense) | P0 | 12h | OWASP LLM Top 10 |
-| 4.1.3 | Implement AI-assisted document generation (templates → filled documents using LLM) | P1 | 20h | Responsible AI principles |
-| 4.1.4 | Add AI-powered compliance gap analysis (analyze system description → map to controls) | P1 | 20h | NIST AI RMF |
-| 4.1.5 | Build AI conversation audit trail (log all prompts, responses, tool calls, tokens) | P0 | 8h | NIST AU-2, AI observability |
-| 4.1.6 | Implement human-in-the-loop approval for AI-generated content | P0 | 8h | ISO 42001, Responsible AI |
-| 4.1.7 | Add AI cost tracking and token usage monitoring | P1 | 6h | FinOps |
-| 4.1.8 | Create AI model evaluation framework (accuracy, safety, bias testing) | P2 | 16h | NIST AI RMF |
+| ID    | Item                                                                                         | Priority | Effort | Standard                    |
+| ----- | -------------------------------------------------------------------------------------------- | -------- | ------ | --------------------------- |
+| 4.1.1 | Design multi-agent architecture for compliance assistance (orchestrator + specialist agents) | P1       | 16h    | NIST AI RMF                 |
+| 4.1.2 | Build AI guardrails layer (input validation, output filtering, prompt injection defense)     | P0       | 12h    | OWASP LLM Top 10            |
+| 4.1.3 | Implement AI-assisted document generation (templates → filled documents using LLM)           | P1       | 20h    | Responsible AI principles   |
+| 4.1.4 | Add AI-powered compliance gap analysis (analyze system description → map to controls)        | P1       | 20h    | NIST AI RMF                 |
+| 4.1.5 | Build AI conversation audit trail (log all prompts, responses, tool calls, tokens)           | P0       | 8h     | NIST AU-2, AI observability |
+| 4.1.6 | Implement human-in-the-loop approval for AI-generated content                                | P0       | 8h     | ISO 42001, Responsible AI   |
+| 4.1.7 | Add AI cost tracking and token usage monitoring                                              | P1       | 6h     | FinOps                      |
+| 4.1.8 | Create AI model evaluation framework (accuracy, safety, bias testing)                        | P2       | 16h    | NIST AI RMF                 |
 
 ## P4.2 — USACE/DoD Integration [WS-10]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 4.2.1 | Build USACE document template library (ER format, EP format, ETL format, ERDC TR format) | P1 | 16h | ER 25-1-100, EP 25-1-100 |
-| 4.2.2 | Build Standard Form 298 (Report Documentation Page) generator | P1 | 8h | ANSI Z39.18 |
-| 4.2.3 | Add Distribution Statement selector (A–F, X) with proper marking output | P1 | 4h | DoD Dir 5230.24 |
-| 4.2.4 | Build DrChecks-compatible comment/response export format | P2 | 12h | ER 1110-1-8159 |
-| 4.2.5 | Add MIL-STD-498 document type templates (SDP, SRS, SDD, STP, STR, SVD, SUM) | P1 | 16h | MIL-STD-498 DIDs |
-| 4.2.6 | Build CDRL management tracker (DD Form 1423 fields, status tracking) | P2 | 12h | DFARS |
-| 4.2.7 | Add NEPA document template support (EIS structure, EA structure, FONSI) | P2 | 12h | CEQ 40 CFR 1500–1508 |
+| ID    | Item                                                                                     | Priority | Effort | Standard                 |
+| ----- | ---------------------------------------------------------------------------------------- | -------- | ------ | ------------------------ |
+| 4.2.1 | Build USACE document template library (ER format, EP format, ETL format, ERDC TR format) | P1       | 16h    | ER 25-1-100, EP 25-1-100 |
+| 4.2.2 | Build Standard Form 298 (Report Documentation Page) generator                            | P1       | 8h     | ANSI Z39.18              |
+| 4.2.3 | Add Distribution Statement selector (A–F, X) with proper marking output                  | P1       | 4h     | DoD Dir 5230.24          |
+| 4.2.4 | Build DrChecks-compatible comment/response export format                                 | P2       | 12h    | ER 1110-1-8159           |
+| 4.2.5 | Add MIL-STD-498 document type templates (SDP, SRS, SDD, STP, STR, SVD, SUM)              | P1       | 16h    | MIL-STD-498 DIDs         |
+| 4.2.6 | Build CDRL management tracker (DD Form 1423 fields, status tracking)                     | P2       | 12h    | DFARS                    |
+| 4.2.7 | Add NEPA document template support (EIS structure, EA structure, FONSI)                  | P2       | 12h    | CEQ 40 CFR 1500–1508     |
 
 ## P4.3 — Advanced Accessibility [WS-2]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 4.3.1 | Build accessibility dashboard (conformance metrics, trend tracking, remediation status) | P2 | 16h | Accessibility Program Management |
-| 4.3.2 | Add PDF/UA-compliant document export | P1 | 12h | ISO 14289 (PDF/UA) |
-| 4.3.3 | Implement cognitive accessibility patterns (auto-save, step wizards, error prevention) | P2 | 12h | COGA, WCAG 3.3.4 |
-| 4.3.4 | Mobile accessibility audit and fixes (44px touch targets, reflow, orientation) | P1 | 8h | WCAG 2.5.5, 1.4.10 |
+| ID    | Item                                                                                    | Priority | Effort | Standard                         |
+| ----- | --------------------------------------------------------------------------------------- | -------- | ------ | -------------------------------- |
+| 4.3.1 | Build accessibility dashboard (conformance metrics, trend tracking, remediation status) | P2       | 16h    | Accessibility Program Management |
+| 4.3.2 | Add PDF/UA-compliant document export                                                    | P1       | 12h    | ISO 14289 (PDF/UA)               |
+| 4.3.3 | Implement cognitive accessibility patterns (auto-save, step wizards, error prevention)  | P2       | 12h    | COGA, WCAG 3.3.4                 |
+| 4.3.4 | Mobile accessibility audit and fixes (44px touch targets, reflow, orientation)          | P1       | 8h     | WCAG 2.5.5, 1.4.10               |
 
 ## P4.4 — Zero Trust & FedRAMP Path [WS-3]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 4.4.1 | Design Zero Trust architecture model (identity-centric, per-request authorization) | P2 | 12h | NIST SP 800-207 |
-| 4.4.2 | Add PIV/CAC authentication support (client certificate auth) | P2 | 16h | OMB M-22-09, HSPD-12 |
-| 4.4.3 | Build FedRAMP SSP template generator (auto-populate from platform config) | P2 | 20h | FedRAMP SSP Template |
-| 4.4.4 | Add continuous monitoring dashboard (vulnerability status, POA&M, scan results) | P2 | 16h | FedRAMP ConMon |
+| ID    | Item                                                                               | Priority | Effort | Standard             |
+| ----- | ---------------------------------------------------------------------------------- | -------- | ------ | -------------------- |
+| 4.4.1 | Design Zero Trust architecture model (identity-centric, per-request authorization) | P2       | 12h    | NIST SP 800-207      |
+| 4.4.2 | Add PIV/CAC authentication support (client certificate auth)                       | P2       | 16h    | OMB M-22-09, HSPD-12 |
+| 4.4.3 | Build FedRAMP SSP template generator (auto-populate from platform config)          | P2       | 20h    | FedRAMP SSP Template |
+| 4.4.4 | Add continuous monitoring dashboard (vulnerability status, POA&M, scan results)    | P2       | 16h    | FedRAMP ConMon       |
 
 ---
 
@@ -296,93 +298,93 @@ into **19 work streams** across **6 priority phases**.
 
 ## P5.1 — Full-Stack Architecture Modernization [WS-11]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 5.1.1 | Design and implement API versioning strategy (v1/ prefix, deprecation headers) | P0 | 8h | REST maturity, Twelve-Factor |
-| 5.1.2 | Migrate all routes to OpenAPI 3.0 contract-first design with Swagger UI | P1 | 16h | OpenAPI 3.0, IEEE 1016 |
-| 5.1.3 | Implement database migration framework (Knex or Prisma) replacing raw SQL | P0 | 12h | Twelve-Factor, ISO 25010 |
-| 5.1.4 | Add centralized error handling middleware with RFC 7807 Problem Details | P1 | 6h | RFC 7807, OWASP |
-| 5.1.5 | Add Zod/Joi input validation schemas for all request payloads | P1 | 10h | OWASP Input Validation |
-| 5.1.6 | Implement health check endpoints (/healthz, /readyz, /livez) | P1 | 4h | Kubernetes probes, 12-Factor |
-| 5.1.7 | Establish performance budgets (Lighthouse CI ≥90, bundle size limits) | P2 | 8h | Web Vitals, ISO 25010 |
-| 5.1.8 | Implement database connection pooling and query optimization | P1 | 6h | ISO 25010 Performance |
-| 5.1.9 | Evaluate and configure monorepo tooling (Nx or Turborepo) | P2 | 8h | IEEE 730 |
-| 5.1.10 | Add environment-based configuration management (dotenv-vault or similar) | P0 | 4h | Twelve-Factor Config |
+| ID     | Item                                                                           | Priority | Effort | Standard                     |
+| ------ | ------------------------------------------------------------------------------ | -------- | ------ | ---------------------------- |
+| 5.1.1  | Design and implement API versioning strategy (v1/ prefix, deprecation headers) | P0       | 8h     | REST maturity, Twelve-Factor |
+| 5.1.2  | Migrate all routes to OpenAPI 3.0 contract-first design with Swagger UI        | P1       | 16h    | OpenAPI 3.0, IEEE 1016       |
+| 5.1.3  | Implement database migration framework (Knex or Prisma) replacing raw SQL      | P0       | 12h    | Twelve-Factor, ISO 25010     |
+| 5.1.4  | Add centralized error handling middleware with RFC 7807 Problem Details        | P1       | 6h     | RFC 7807, OWASP              |
+| 5.1.5  | Add Zod/Joi input validation schemas for all request payloads                  | P1       | 10h    | OWASP Input Validation       |
+| 5.1.6  | Implement health check endpoints (/healthz, /readyz, /livez)                   | P1       | 4h     | Kubernetes probes, 12-Factor |
+| 5.1.7  | Establish performance budgets (Lighthouse CI ≥90, bundle size limits)          | P2       | 8h     | Web Vitals, ISO 25010        |
+| 5.1.8  | Implement database connection pooling and query optimization                   | P1       | 6h     | ISO 25010 Performance        |
+| 5.1.9  | Evaluate and configure monorepo tooling (Nx or Turborepo)                      | P2       | 8h     | IEEE 730                     |
+| 5.1.10 | Add environment-based configuration management (dotenv-vault or similar)       | P0       | 4h     | Twelve-Factor Config         |
 
 ## P5.2 — Progressive Web App (PWA) [WS-12]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 5.2.1 | Create Web App Manifest with icons (192/512/maskable), theme, display, shortcuts | P0 | 4h | W3C Web App Manifest |
-| 5.2.2 | Implement Service Worker with Workbox (precaching, runtime caching strategies) | P0 | 12h | W3C Service Workers |
-| 5.2.3 | Build offline fallback page with cached core content | P1 | 6h | Workbox, PWA checklist |
-| 5.2.4 | Implement IndexedDB offline data store for checklists and templates | P1 | 10h | W3C IndexedDB |
-| 5.2.5 | Add background sync for queued form submissions | P1 | 8h | W3C Background Sync |
-| 5.2.6 | Set up push notification infrastructure (VAPID keys, subscription management) | P2 | 10h | W3C Push API |
-| 5.2.7 | Implement app install prompt UX (beforeinstallprompt handling) | P1 | 4h | Chrome PWA criteria |
-| 5.2.8 | Add update notification flow ("New version available — refresh") | P1 | 4h | Service Worker lifecycle |
-| 5.2.9 | Build offline status indicator UI component | P1 | 3h | UX best practices |
-| 5.2.10 | Add Lighthouse PWA audit to CI pipeline (score ≥90 gate) | P0 | 4h | Google Lighthouse |
+| ID     | Item                                                                             | Priority | Effort | Standard                 |
+| ------ | -------------------------------------------------------------------------------- | -------- | ------ | ------------------------ |
+| 5.2.1  | Create Web App Manifest with icons (192/512/maskable), theme, display, shortcuts | P0       | 4h     | W3C Web App Manifest     |
+| 5.2.2  | Implement Service Worker with Workbox (precaching, runtime caching strategies)   | P0       | 12h    | W3C Service Workers      |
+| 5.2.3  | Build offline fallback page with cached core content                             | P1       | 6h     | Workbox, PWA checklist   |
+| 5.2.4  | Implement IndexedDB offline data store for checklists and templates              | P1       | 10h    | W3C IndexedDB            |
+| 5.2.5  | Add background sync for queued form submissions                                  | P1       | 8h     | W3C Background Sync      |
+| 5.2.6  | Set up push notification infrastructure (VAPID keys, subscription management)    | P2       | 10h    | W3C Push API             |
+| 5.2.7  | Implement app install prompt UX (beforeinstallprompt handling)                   | P1       | 4h     | Chrome PWA criteria      |
+| 5.2.8  | Add update notification flow ("New version available — refresh")                 | P1       | 4h     | Service Worker lifecycle |
+| 5.2.9  | Build offline status indicator UI component                                      | P1       | 3h     | UX best practices        |
+| 5.2.10 | Add Lighthouse PWA audit to CI pipeline (score ≥90 gate)                         | P0       | 4h     | Google Lighthouse        |
 
 ## P5.3 — Mobile Application Development [WS-13]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 5.3.1 | Select cross-platform framework (React Native vs Flutter) and create project scaffold | P0 | 8h | ISO 25010, OWASP MASVS |
-| 5.3.2 | Implement mobile authentication (biometric login, secure token storage in keychain/keystore) | P0 | 12h | OWASP MASVS-AUTH |
-| 5.3.3 | Build offline-first data sync engine with conflict resolution | P1 | 16h | OWASP MASVS-STORAGE |
-| 5.3.4 | Create mobile UI component library (44pt+ touch targets, gesture navigation) | P1 | 12h | Apple HIG, Material Design 3 |
-| 5.3.5 | Implement camera-based document capture with OCR integration | P2 | 12h | Mobile UX patterns |
-| 5.3.6 | Set up mobile push notifications (APNs + FCM) | P1 | 8h | W3C Push, platform APIs |
-| 5.3.7 | Perform mobile accessibility audit and remediation (Dynamic Type, VoiceOver, TalkBack) | P0 | 10h | WCAG 2.1 mobile, Section 508 |
-| 5.3.8 | Prepare App Store / Play Store submission (metadata, screenshots, review reqs) | P1 | 8h | App Store Guidelines, Play Policies |
-| 5.3.9 | Implement mobile security hardening (cert pinning, root detection, obfuscation) | P0 | 10h | OWASP MASVS-RESILIENCE |
-| 5.3.10 | Set up mobile CI/CD pipeline (Fastlane or EAS Build) | P1 | 8h | CI/CD best practices |
+| ID     | Item                                                                                         | Priority | Effort | Standard                            |
+| ------ | -------------------------------------------------------------------------------------------- | -------- | ------ | ----------------------------------- |
+| 5.3.1  | Select cross-platform framework (React Native vs Flutter) and create project scaffold        | P0       | 8h     | ISO 25010, OWASP MASVS              |
+| 5.3.2  | Implement mobile authentication (biometric login, secure token storage in keychain/keystore) | P0       | 12h    | OWASP MASVS-AUTH                    |
+| 5.3.3  | Build offline-first data sync engine with conflict resolution                                | P1       | 16h    | OWASP MASVS-STORAGE                 |
+| 5.3.4  | Create mobile UI component library (44pt+ touch targets, gesture navigation)                 | P1       | 12h    | Apple HIG, Material Design 3        |
+| 5.3.5  | Implement camera-based document capture with OCR integration                                 | P2       | 12h    | Mobile UX patterns                  |
+| 5.3.6  | Set up mobile push notifications (APNs + FCM)                                                | P1       | 8h     | W3C Push, platform APIs             |
+| 5.3.7  | Perform mobile accessibility audit and remediation (Dynamic Type, VoiceOver, TalkBack)       | P0       | 10h    | WCAG 2.1 mobile, Section 508        |
+| 5.3.8  | Prepare App Store / Play Store submission (metadata, screenshots, review reqs)               | P1       | 8h     | App Store Guidelines, Play Policies |
+| 5.3.9  | Implement mobile security hardening (cert pinning, root detection, obfuscation)              | P0       | 10h    | OWASP MASVS-RESILIENCE              |
+| 5.3.10 | Set up mobile CI/CD pipeline (Fastlane or EAS Build)                                         | P1       | 8h     | CI/CD best practices                |
 
 ## P5.4 — Desktop Application Development [WS-14]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 5.4.1 | Select desktop framework (Tauri preferred, Electron fallback) and scaffold project | P0 | 8h | Tauri Security Model |
-| 5.4.2 | Implement auto-update mechanism with differential updates and code signing verification | P0 | 10h | Windows WACK, macOS Gatekeeper |
-| 5.4.3 | Build native file system integration (open/save dialogs, file watchers, drag-drop) | P1 | 8h | ISO 25010 Usability |
-| 5.4.4 | Add system tray / menu bar integration with notification badges | P2 | 6h | Platform HIG |
-| 5.4.5 | Implement native printing with CUI marking in print layout | P1 | 8h | 32 CFR 2002, CUI Printing |
-| 5.4.6 | Build offline-first architecture with local SQLite database | P0 | 10h | Twelve-Factor, local-first |
-| 5.4.7 | Create cross-platform installer pipeline (Windows MSIX, macOS DMG, Linux AppImage) | P1 | 12h | Platform packaging standards |
-| 5.4.8 | Obtain code signing certificates (Windows Authenticode, Apple Developer ID) | P0 | 4h | Platform trust requirements |
-| 5.4.9 | Implement desktop security hardening (context isolation, CSP, no remote code exec) | P0 | 8h | Electron/Tauri Security |
-| 5.4.10 | Add OS-level accessibility support (UI Automation, macOS Accessibility API) | P1 | 8h | Section 508 desktop, WCAG |
+| ID     | Item                                                                                    | Priority | Effort | Standard                       |
+| ------ | --------------------------------------------------------------------------------------- | -------- | ------ | ------------------------------ |
+| 5.4.1  | Select desktop framework (Tauri preferred, Electron fallback) and scaffold project      | P0       | 8h     | Tauri Security Model           |
+| 5.4.2  | Implement auto-update mechanism with differential updates and code signing verification | P0       | 10h    | Windows WACK, macOS Gatekeeper |
+| 5.4.3  | Build native file system integration (open/save dialogs, file watchers, drag-drop)      | P1       | 8h     | ISO 25010 Usability            |
+| 5.4.4  | Add system tray / menu bar integration with notification badges                         | P2       | 6h     | Platform HIG                   |
+| 5.4.5  | Implement native printing with CUI marking in print layout                              | P1       | 8h     | 32 CFR 2002, CUI Printing      |
+| 5.4.6  | Build offline-first architecture with local SQLite database                             | P0       | 10h    | Twelve-Factor, local-first     |
+| 5.4.7  | Create cross-platform installer pipeline (Windows MSIX, macOS DMG, Linux AppImage)      | P1       | 12h    | Platform packaging standards   |
+| 5.4.8  | Obtain code signing certificates (Windows Authenticode, Apple Developer ID)             | P0       | 4h     | Platform trust requirements    |
+| 5.4.9  | Implement desktop security hardening (context isolation, CSP, no remote code exec)      | P0       | 8h     | Electron/Tauri Security        |
+| 5.4.10 | Add OS-level accessibility support (UI Automation, macOS Accessibility API)             | P1       | 8h     | Section 508 desktop, WCAG      |
 
 ## P5.5 — IDE & Developer Tooling [WS-15]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 5.5.1 | Create VS Code workspace configuration (.vscode/settings.json, extensions.json, launch.json) | P0 | 4h | VS Code workspace API |
-| 5.5.2 | Create EditorConfig for cross-IDE consistency | P0 | 2h | EditorConfig spec |
-| 5.5.3 | Build Dev Container definition (devcontainer.json + Dockerfile) | P1 | 8h | Dev Containers spec |
-| 5.5.4 | Document recommended extensions with justifications | P1 | 3h | DX best practices |
-| 5.5.5 | Create debug configurations for server, client, and tests | P1 | 4h | DAP |
-| 5.5.6 | Create task runner configurations (tasks.json for build, lint, test) | P1 | 3h | VS Code Tasks API |
-| 5.5.7 | Build code snippet library for project patterns (routes, middleware, tests, components) | P2 | 6h | DX best practices |
-| 5.5.8 | Document AI coding assistant configuration guidelines (Copilot, Cursor rules) | P2 | 4h | AI-assisted dev |
-| 5.5.9 | Standardize Git hooks (husky + lint-staged + commitlint with Conventional Commits) | P0 | 4h | Conventional Commits 1.0 |
-| 5.5.10 | Create TypeScript migration plan (progressive JS → TS with strict mode) | P1 | 8h | TypeScript strict mode |
+| ID     | Item                                                                                         | Priority | Effort | Standard                 |
+| ------ | -------------------------------------------------------------------------------------------- | -------- | ------ | ------------------------ |
+| 5.5.1  | Create VS Code workspace configuration (.vscode/settings.json, extensions.json, launch.json) | P0       | 4h     | VS Code workspace API    |
+| 5.5.2  | Create EditorConfig for cross-IDE consistency                                                | P0       | 2h     | EditorConfig spec        |
+| 5.5.3  | Build Dev Container definition (devcontainer.json + Dockerfile)                              | P1       | 8h     | Dev Containers spec      |
+| 5.5.4  | Document recommended extensions with justifications                                          | P1       | 3h     | DX best practices        |
+| 5.5.5  | Create debug configurations for server, client, and tests                                    | P1       | 4h     | DAP                      |
+| 5.5.6  | Create task runner configurations (tasks.json for build, lint, test)                         | P1       | 3h     | VS Code Tasks API        |
+| 5.5.7  | Build code snippet library for project patterns (routes, middleware, tests, components)      | P2       | 6h     | DX best practices        |
+| 5.5.8  | Document AI coding assistant configuration guidelines (Copilot, Cursor rules)                | P2       | 4h     | AI-assisted dev          |
+| 5.5.9  | Standardize Git hooks (husky + lint-staged + commitlint with Conventional Commits)           | P0       | 4h     | Conventional Commits 1.0 |
+| 5.5.10 | Create TypeScript migration plan (progressive JS → TS with strict mode)                      | P1       | 8h     | TypeScript strict mode   |
 
 ## P5.6 — Coding Language Standards [WS-16]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 5.6.1 | Write JavaScript/TypeScript style guide and strict ESLint config (no-any, explicit-return-types) | P0 | 8h | ECMAScript 2024, TS 5.x |
-| 5.6.2 | Write Python style guide and configure Black + Ruff + mypy strict | P1 | 6h | PEP 8, PEP 484 |
-| 5.6.3 | Write SQL coding standards and configure SQLFluff | P1 | 4h | SQL style guide |
-| 5.6.4 | Write HTML/CSS standards and configure Stylelint + W3C Validator | P0 | 4h | W3C, Stylelint, BEM |
-| 5.6.5 | Write Shell/PowerShell scripting standards with ShellCheck + PSScriptAnalyzer | P1 | 4h | POSIX, ShellCheck |
-| 5.6.6 | Create naming convention reference document (camelCase JS, snake_case Python, etc.) | P0 | 3h | Language conventions |
-| 5.6.7 | Document error handling patterns per language (Result types, try/catch, error boundaries) | P1 | 6h | Language best practices |
-| 5.6.8 | Document code documentation standards per language (JSDoc, docstrings, rustdoc) | P1 | 4h | JSDoc, PEP 257 |
-| 5.6.9 | Create code review checklist per language | P1 | 4h | IEEE 730 SQA |
-| 5.6.10 | Create language-specific security checklist (injection, type coercion, memory safety) | P0 | 6h | OWASP, CWE Top 25 |
+| ID     | Item                                                                                             | Priority | Effort | Standard                |
+| ------ | ------------------------------------------------------------------------------------------------ | -------- | ------ | ----------------------- |
+| 5.6.1  | Write JavaScript/TypeScript style guide and strict ESLint config (no-any, explicit-return-types) | P0       | 8h     | ECMAScript 2024, TS 5.x |
+| 5.6.2  | Write Python style guide and configure Black + Ruff + mypy strict                                | P1       | 6h     | PEP 8, PEP 484          |
+| 5.6.3  | Write SQL coding standards and configure SQLFluff                                                | P1       | 4h     | SQL style guide         |
+| 5.6.4  | Write HTML/CSS standards and configure Stylelint + W3C Validator                                 | P0       | 4h     | W3C, Stylelint, BEM     |
+| 5.6.5  | Write Shell/PowerShell scripting standards with ShellCheck + PSScriptAnalyzer                    | P1       | 4h     | POSIX, ShellCheck       |
+| 5.6.6  | Create naming convention reference document (camelCase JS, snake_case Python, etc.)              | P0       | 3h     | Language conventions    |
+| 5.6.7  | Document error handling patterns per language (Result types, try/catch, error boundaries)        | P1       | 6h     | Language best practices |
+| 5.6.8  | Document code documentation standards per language (JSDoc, docstrings, rustdoc)                  | P1       | 4h     | JSDoc, PEP 257          |
+| 5.6.9  | Create code review checklist per language                                                        | P1       | 4h     | IEEE 730 SQA            |
+| 5.6.10 | Create language-specific security checklist (injection, type coercion, memory safety)            | P0       | 6h     | OWASP, CWE Top 25       |
 
 ---
 
@@ -393,10 +395,12 @@ into **19 work streams** across **6 priority phases**.
 
 ## P6.1 — Glossary & Tooltip Dictionary System [WS-17]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
-| 6.1.1 | Design glossary data model (term, acronym, definition, category, related terms, sources) | P0 | 4h | Information Architecture |
+| ID    | Item                                                                                     | Priority | Effort | Standard                 |
+| ----- | ---------------------------------------------------------------------------------------- | -------- | ------ | ------------------------ |
+| 6.1.1 | Design glossary data model (term, acronym, definition, category, related terms, sources) | P0       | 4h     | Information Architecture |
+
 <!-- markdownlint-disable-next-line MD013 -->
+
 | 6.1.2 | Build master glossary dictionary (JSON/YAML) — all acronyms from compliance, MBAi, templates, docs (est. 200+ terms: OSCAL, CUI, NIST, VPAT, WCAG, SBOM, CMMC, etc.) | P0 | 12h | Plain Writing Act, GPO Style |
 | 6.1.3 | Build tooltip component (hover on desktop, tap on mobile) with accessible ARIA markup (role=tooltip, aria-describedby, Escape to dismiss) | P0 | 8h | WAI-ARIA 1.2, WCAG 1.3.1 |
 | 6.1.4 | Implement auto-detection — scan page content and auto-wrap recognized acronyms/terms with tooltip triggers (no manual markup per page) | P0 | 10h | DX best practices |
@@ -409,13 +413,19 @@ into **19 work streams** across **6 priority phases**.
 
 ## P6.2 — Header & Navigation Redesign [WS-18]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
+| ID  | Item | Priority | Effort | Standard |
+| --- | ---- | -------- | ------ | -------- |
+
 <!-- markdownlint-disable-next-line MD013 -->
+
 | 6.2.1 | Audit current nav inconsistencies (index.html has 9 items with hash + path links; templates/compliance/mbai/docs have 6 items with path-only links; dashboard has separate nav; portal has no shared nav) | P0 | 4h | UX audit |
+
 <!-- markdownlint-disable-next-line MD013 -->
+
 | 6.2.2 | Design unified navigation architecture — primary nav (Home, Services, Portfolio, Templates, Compliance, MBAi, Docs, Glossary) + utility nav (Client Portal, Dashboard/Login) across all pages | P0 | 6h | IA best practices |
+
 <!-- markdownlint-disable-next-line MD013 -->
+
 | 6.2.3 | Implement mega-menu / dropdown pattern for grouped items (e.g., "Resources" → Templates, Compliance, MBAi, Docs, Glossary) to reduce top-level count from 9+ to 5–6 | P0 | 12h | Navigation patterns, WCAG |
 | 6.2.4 | Build accessible mega-menu with keyboard nav (arrow keys between groups, Tab within group, Escape to close, aria-haspopup, aria-expanded) | P0 | 8h | WAI-ARIA APG Menu Pattern |
 | 6.2.5 | Create consistent nav partial/component (single source of truth; currently nav HTML is duplicated across 7 files with slight differences) | P0 | 6h | DRY, component architecture |
@@ -425,17 +435,25 @@ into **19 work streams** across **6 priority phases**.
 
 ## P6.3 — Web Presence Visual Redesign [WS-19]
 
-| ID | Item | Priority | Effort | Standard |
-| ---- | ------ | ---------- | -------- | ---------- |
+| ID  | Item | Priority | Effort | Standard |
+| --- | ---- | -------- | ------ | -------- |
+
 <!-- markdownlint-disable-next-line MD013 -->
+
 | 6.3.1 | Create design system documentation (color palette, typography scale, spacing tokens, component library) — codify existing CSS variables into a formal system | P0 | 8h | Design Systems, Atomic Design |
+
 <!-- markdownlint-disable-next-line MD013 -->
+
 | 6.3.2 | Audit and redesign index.html layout — hero section, portfolio grid, services grid, methodology section, value calculator, contact form, footer (currently 616 lines, single long scroll with no visual breaks) | P0 | 16h | Landing page best practices |
 | 6.3.3 | Redesign templates.html — improve category nav, add visual card previews, enhance search with tag filtering, add "recently added" and "popular" sections | P1 | 10h | Content discovery UX |
 | 6.3.4 | Redesign compliance.html — enhance framework cards with visual progress indicators, improve evidence tab UX, add compliance score dashboard | P1 | 10h | Dashboard UX patterns |
+
 <!-- markdownlint-disable-next-line MD013 -->
+
 | 6.3.5 | Redesign mbai.html — improve pillar visualization (replace emoji icons with proper SVG icons throughout site), enhance template categorization, add interactive MBAi methodology diagram | P1 | 10h | Visual design, data viz |
+
 <!-- markdownlint-disable-next-line MD013 -->
+
 | 6.3.6 | Redesign docs.html — add sidebar table of contents, improve API reference table with expandable rows, add code copy buttons, enhance search | P1 | 8h | Documentation UX, Docusaurus patterns |
 | 6.3.7 | Redesign portal.html — improve login UX (add "remember me", forgot password flow), enhance dashboard layout, add project timeline visualization | P2 | 10h | Portal UX patterns |
 | 6.3.8 | Replace all emoji icons (📊👥📁💬📧🔑📜⚙️🏠🎨🔧🔐🚀📚🛡️) with professional SVG icon system (Lucide, Heroicons, or custom) across all pages | P0 | 8h | Visual design maturity |
@@ -455,7 +473,7 @@ into **19 work streams** across **6 priority phases**.
 **Why this matters (in plain English):** You wouldn't build a bridge without inspecting the welds. Tests are the inspection system for software — without them, every change risks breaking something.
 Government contracts often require documented test evidence (MIL-STD-498 STR, FedRAMP SAR).
 
-> **Status (v1.8.1):** ✅ COMPLETE — 511 tests across 48 files, Vitest + v8 coverage at 80% thresholds, ESLint v10 flat config, Prettier, Husky + lint-staged pre-commit hooks, GitHub Actions CI/CD
+> **Status (v1.8.9):** ✅ COMPLETE — 511 tests across 48 files, Vitest + v8 coverage at 80% thresholds, ESLint v10 flat config, Prettier, Husky + lint-staged pre-commit hooks, GitHub Actions CI/CD
 > pipeline.
 
 **Standards covered:** NIST SSDF SP 800-218 (PW.7, PW.8), MIL-STD-498 (STP, STD, STR), OWASP ASVS, CMMI VER/VAL, ISO 9001 Clause 8.6
@@ -556,7 +574,7 @@ contract payments. Beyond compliance, excellent documentation is what makes your
 **Why this matters:** Your compliance framework is already strong (12 frameworks, OSCAL, cross-mapping). But evidence tracking is UI-only (no persistence), there's no automated scoring, and continuous
 monitoring needs improvement.
 
-> **Status (v1.8.1):** NIST SP 800-53 Rev 5 (322 controls) and 800-171 Rev 3 (115 requirements) added in v1.7.0. Evidence tracking backend, scoring, and POA&M export remain open.
+> **Status (v1.8.9):** NIST SP 800-53 Rev 5 (322 controls) and 800-171 Rev 3 (115 requirements) added in v1.7.0. Evidence tracking backend, scoring, and POA&M export remain open.
 
 **Standards covered:** NIST SP 800-53 Rev 5, NIST SP 800-171 Rev 2/3, CMMC 2.0, FedRAMP, OSCAL, SPRS scoring
 
@@ -912,138 +930,138 @@ prefers-color-scheme, Web Content Accessibility Guidelines (color contrast in bo
 
 ## Standards Reference Matrix
 
-| Standard | Primary Domain | Phases | Required For |
-| ---------- | --------------- | -------- | ------------- |
-| **Section 508** (29 U.S.C. § 794d) | Accessibility | 1, 2, 4 | All federal sales |
-| **WCAG 2.1 AA** | Accessibility | 1, 2 | Section 508 baseline |
-| **WCAG 2.2** | Accessibility | 2, 4 | Forward compliance |
-| **WAI-ARIA 1.2** | Accessibility | 1, 2 | Dynamic content |
-| **32 CFR Part 2002** | CUI | 2 | Any CUI handling |
-| **NIST SP 800-171** | Security | 2, 3 | DoD contractor CUI |
-| **NIST SP 800-53 Rev 5** | Security | 3 | FedRAMP |
-| **CMMC 2.0** | Security | 2, 3 | DoD contracts |
-| **OWASP Top 10** | Security | 1, 3 | Industry standard |
-| **OWASP ASVS** | Security | 1, 3 | AppSec verification |
-| **FedRAMP** | Security | 3, 4 | Cloud for federal |
-| **NIST AI RMF** | AI | 4 | AI governance |
-| **ISO 42001** | AI | 4 | AI management system |
-| **NIST SSDF SP 800-218** | Dev practices | 1, 2, 3, 5 | Secure development |
-| **EO 14028** | Supply chain | 2 | Federal software |
-| **MIL-STD-498** | Documentation | 4 | DoD contracts |
-| **NIST SP 800-207** | Architecture | 4 | Zero Trust |
-| **OMB M-22-09** | Architecture | 4 | Federal Zero Trust |
-| **Plain Writing Act** | Documentation | 1, 3 | Federal content |
-| **DoD 5015.02-STD** | Records | 3 | DoD records |
-| **NARA 36 CFR 12xx** | Records | 3 | Federal records |
-| **GPO Style Manual** | Documentation | 3 | Gov publications |
-| **ISO 9001** | Quality | 3 | Contract-dependent |
-| **USACE ER/EP** | Integration | 4 | USACE work |
-| **DHS Trusted Tester** | Accessibility | 2 | A11y verification |
-| **Twelve-Factor App** | Architecture | 5 | Cloud-native design |
-| **OpenAPI 3.0** | API Design | 3, 5 | API documentation |
-| **ISO/IEC 25010** | Software Quality | 5 | Quality attributes |
-| **ISO/IEC 12207** | Software Lifecycle | 5 | Process maturity |
-| **IEEE 730** | Quality Assurance | 5 | SQA planning |
-| **IEEE 1016** | Software Design | 5 | Design documentation |
-| **W3C Web App Manifest** | PWA | 5 | Installable PWA |
-| **W3C Service Workers** | PWA | 5 | Offline support |
-| **W3C Push API** | PWA | 5 | Push notifications |
-| **OWASP MASVS 2.0** | Mobile Security | 5 | Mobile app security |
-| **OWASP MASTG** | Mobile Testing | 5 | Mobile security testing |
-| **Apple HIG** | Mobile UX | 5 | iOS compliance |
-| **Material Design 3** | Mobile UX | 5 | Android UX |
-| **NIST SP 800-124 Rev 2** | Mobile Security | 5 | Gov mobile devices |
-| **Tauri Security Model** | Desktop Security | 5 | Desktop app security |
-| **Electron Security Checklist** | Desktop Security | 5 | Desktop app security |
-| **XDG Base Directory** | Desktop (Linux) | 5 | Linux compliance |
-| **Conventional Commits 1.0** | Dev Tooling | 5 | Commit standards |
-| **EditorConfig** | Dev Tooling | 5 | Cross-IDE consistency |
-| **ECMAScript 2024+** | Coding Standards | 5 | JS/TS development |
-| **TypeScript Strict Mode** | Coding Standards | 5 | Type safety |
-| **PEP 8 / PEP 484** | Coding Standards | 5 | Python development |
-| **SemVer 2.0.0** | Versioning | 1, 5 | Release management |
-| **RFC 7807** | API Standards | 5 | Error responses |
-| **WAI-ARIA APG Menubar** | Navigation | 6 | Accessible mega-menu |
-| **Schema.org BreadcrumbList** | SEO/Navigation | 6 | Sub-page breadcrumbs |
-| **Schema.org DefinedTerm** | Glossary/SEO | 6 | Glossary structured data |
-| **Open Graph Protocol** | Social/SEO | 6 | Social sharing previews |
-| **View Transitions API** | UX | 6 | Page transitions |
-| **Atomic Design** | Design System | 6 | Component architecture |
-| **CSS Layers (W3C)** | CSS Architecture | 6 | Modular CSS |
-| **Core Web Vitals** | Performance/SEO | 6 | Google ranking factors |
+| Standard                           | Primary Domain     | Phases     | Required For             |
+| ---------------------------------- | ------------------ | ---------- | ------------------------ |
+| **Section 508** (29 U.S.C. § 794d) | Accessibility      | 1, 2, 4    | All federal sales        |
+| **WCAG 2.1 AA**                    | Accessibility      | 1, 2       | Section 508 baseline     |
+| **WCAG 2.2**                       | Accessibility      | 2, 4       | Forward compliance       |
+| **WAI-ARIA 1.2**                   | Accessibility      | 1, 2       | Dynamic content          |
+| **32 CFR Part 2002**               | CUI                | 2          | Any CUI handling         |
+| **NIST SP 800-171**                | Security           | 2, 3       | DoD contractor CUI       |
+| **NIST SP 800-53 Rev 5**           | Security           | 3          | FedRAMP                  |
+| **CMMC 2.0**                       | Security           | 2, 3       | DoD contracts            |
+| **OWASP Top 10**                   | Security           | 1, 3       | Industry standard        |
+| **OWASP ASVS**                     | Security           | 1, 3       | AppSec verification      |
+| **FedRAMP**                        | Security           | 3, 4       | Cloud for federal        |
+| **NIST AI RMF**                    | AI                 | 4          | AI governance            |
+| **ISO 42001**                      | AI                 | 4          | AI management system     |
+| **NIST SSDF SP 800-218**           | Dev practices      | 1, 2, 3, 5 | Secure development       |
+| **EO 14028**                       | Supply chain       | 2          | Federal software         |
+| **MIL-STD-498**                    | Documentation      | 4          | DoD contracts            |
+| **NIST SP 800-207**                | Architecture       | 4          | Zero Trust               |
+| **OMB M-22-09**                    | Architecture       | 4          | Federal Zero Trust       |
+| **Plain Writing Act**              | Documentation      | 1, 3       | Federal content          |
+| **DoD 5015.02-STD**                | Records            | 3          | DoD records              |
+| **NARA 36 CFR 12xx**               | Records            | 3          | Federal records          |
+| **GPO Style Manual**               | Documentation      | 3          | Gov publications         |
+| **ISO 9001**                       | Quality            | 3          | Contract-dependent       |
+| **USACE ER/EP**                    | Integration        | 4          | USACE work               |
+| **DHS Trusted Tester**             | Accessibility      | 2          | A11y verification        |
+| **Twelve-Factor App**              | Architecture       | 5          | Cloud-native design      |
+| **OpenAPI 3.0**                    | API Design         | 3, 5       | API documentation        |
+| **ISO/IEC 25010**                  | Software Quality   | 5          | Quality attributes       |
+| **ISO/IEC 12207**                  | Software Lifecycle | 5          | Process maturity         |
+| **IEEE 730**                       | Quality Assurance  | 5          | SQA planning             |
+| **IEEE 1016**                      | Software Design    | 5          | Design documentation     |
+| **W3C Web App Manifest**           | PWA                | 5          | Installable PWA          |
+| **W3C Service Workers**            | PWA                | 5          | Offline support          |
+| **W3C Push API**                   | PWA                | 5          | Push notifications       |
+| **OWASP MASVS 2.0**                | Mobile Security    | 5          | Mobile app security      |
+| **OWASP MASTG**                    | Mobile Testing     | 5          | Mobile security testing  |
+| **Apple HIG**                      | Mobile UX          | 5          | iOS compliance           |
+| **Material Design 3**              | Mobile UX          | 5          | Android UX               |
+| **NIST SP 800-124 Rev 2**          | Mobile Security    | 5          | Gov mobile devices       |
+| **Tauri Security Model**           | Desktop Security   | 5          | Desktop app security     |
+| **Electron Security Checklist**    | Desktop Security   | 5          | Desktop app security     |
+| **XDG Base Directory**             | Desktop (Linux)    | 5          | Linux compliance         |
+| **Conventional Commits 1.0**       | Dev Tooling        | 5          | Commit standards         |
+| **EditorConfig**                   | Dev Tooling        | 5          | Cross-IDE consistency    |
+| **ECMAScript 2024+**               | Coding Standards   | 5          | JS/TS development        |
+| **TypeScript Strict Mode**         | Coding Standards   | 5          | Type safety              |
+| **PEP 8 / PEP 484**                | Coding Standards   | 5          | Python development       |
+| **SemVer 2.0.0**                   | Versioning         | 1, 5       | Release management       |
+| **RFC 7807**                       | API Standards      | 5          | Error responses          |
+| **WAI-ARIA APG Menubar**           | Navigation         | 6          | Accessible mega-menu     |
+| **Schema.org BreadcrumbList**      | SEO/Navigation     | 6          | Sub-page breadcrumbs     |
+| **Schema.org DefinedTerm**         | Glossary/SEO       | 6          | Glossary structured data |
+| **Open Graph Protocol**            | Social/SEO         | 6          | Social sharing previews  |
+| **View Transitions API**           | UX                 | 6          | Page transitions         |
+| **Atomic Design**                  | Design System      | 6          | Component architecture   |
+| **CSS Layers (W3C)**               | CSS Architecture   | 6          | Modular CSS              |
+| **Core Web Vitals**                | Performance/SEO    | 6          | Google ranking factors   |
 
 ---
 
 ## Risk Register
 
-| Risk | Impact | Likelihood | Mitigation |
-| ------ | -------- | ----------- | ------------ |
-| ✅ ~~No test coverage~~ | ~~Critical~~ | ~~Resolved~~ | 511 tests, 80% coverage thresholds |
-| ✅ ~~CSP disabled~~ | ~~Critical~~ | ~~Resolved~~ | CSP enabled v1.5.0 |
-| ✅ ~~No VPAT~~ | ~~Critical~~ | ~~Resolved~~ | VPAT 2.5 ACR created v1.8.0 |
-| ✅ ~~Hardcoded JWT secret~~ | ~~Critical~~ | ~~Resolved~~ | Fail-fast in production v1.5.0 |
-| ✅ ~~No SBOM~~ | ~~High~~ | ~~Resolved~~ | CycloneDX `npm run sbom` v1.5.0 |
-| CUI data without markings = regulatory violation | Critical | Medium | Phase 2 — WS-4 |
-| ✅ ~~No structured logging~~ | ~~High~~ | ~~Resolved~~ | Winston + error monitoring v1.6.0 |
-| AI without guardrails = prompt injection risk | High | Medium | Phase 4 — WS-9 |
-| USACE format mismatch = client rejection | Medium | Medium | Phase 4 — WS-10 |
-| Scope creep across 192 items | Medium | High | Phased approach, weekly reviews |
-| Multi-platform fragmentation (PWA + mobile + desktop) | High | Medium | Phase 5 — shared core, platform-specific shells |
-| Mobile app store rejection (policy violations, missing metadata) | Medium | Medium | Phase 5 — WS-13, app review prep |
-| Desktop auto-update bypass = unsigned code execution | Critical | Low | Phase 5 — WS-14, code signing certs |
-| TypeScript migration breaks existing JS workflows | Medium | Medium | Phase 5 — WS-15, progressive migration |
-| Language standard drift across polyglot codebase | Medium | High | Phase 5 — WS-16, automated linting enforcement |
-| Offline data sync conflicts (PWA/mobile/desktop) | High | Medium | Phase 5 — conflict resolution patterns |
-| Nav overflow as pages grow (Glossary, Pricing, Blog) | Medium | High (existing) | Phase 6 — WS-18 mega-menu architecture |
-| Inconsistent UX across pages erodes trust | Medium | High (existing) | Phase 6 — WS-19 unified design system |
-| Tooltip auto-detection false positives (wrong terms matched) | Low | Medium | Phase 6 — WS-17 whitelist/exclusion config |
-| Dark/light mode color contrast failures | Medium | Medium | Phase 6 — WS-19 dual-theme WCAG testing |
+| Risk                                                             | Impact       | Likelihood      | Mitigation                                      |
+| ---------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------------- |
+| ✅ ~~No test coverage~~                                          | ~~Critical~~ | ~~Resolved~~    | 511 tests, 80% coverage thresholds              |
+| ✅ ~~CSP disabled~~                                              | ~~Critical~~ | ~~Resolved~~    | CSP enabled v1.5.0                              |
+| ✅ ~~No VPAT~~                                                   | ~~Critical~~ | ~~Resolved~~    | VPAT 2.5 ACR created v1.8.0                     |
+| ✅ ~~Hardcoded JWT secret~~                                      | ~~Critical~~ | ~~Resolved~~    | Fail-fast in production v1.5.0                  |
+| ✅ ~~No SBOM~~                                                   | ~~High~~     | ~~Resolved~~    | CycloneDX `npm run sbom` v1.5.0                 |
+| CUI data without markings = regulatory violation                 | Critical     | Medium          | Phase 2 — WS-4                                  |
+| ✅ ~~No structured logging~~                                     | ~~High~~     | ~~Resolved~~    | Winston + error monitoring v1.6.0               |
+| AI without guardrails = prompt injection risk                    | High         | Medium          | Phase 4 — WS-9                                  |
+| USACE format mismatch = client rejection                         | Medium       | Medium          | Phase 4 — WS-10                                 |
+| Scope creep across 192 items                                     | Medium       | High            | Phased approach, weekly reviews                 |
+| Multi-platform fragmentation (PWA + mobile + desktop)            | High         | Medium          | Phase 5 — shared core, platform-specific shells |
+| Mobile app store rejection (policy violations, missing metadata) | Medium       | Medium          | Phase 5 — WS-13, app review prep                |
+| Desktop auto-update bypass = unsigned code execution             | Critical     | Low             | Phase 5 — WS-14, code signing certs             |
+| TypeScript migration breaks existing JS workflows                | Medium       | Medium          | Phase 5 — WS-15, progressive migration          |
+| Language standard drift across polyglot codebase                 | Medium       | High            | Phase 5 — WS-16, automated linting enforcement  |
+| Offline data sync conflicts (PWA/mobile/desktop)                 | High         | Medium          | Phase 5 — conflict resolution patterns          |
+| Nav overflow as pages grow (Glossary, Pricing, Blog)             | Medium       | High (existing) | Phase 6 — WS-18 mega-menu architecture          |
+| Inconsistent UX across pages erodes trust                        | Medium       | High (existing) | Phase 6 — WS-19 unified design system           |
+| Tooltip auto-detection false positives (wrong terms matched)     | Low          | Medium          | Phase 6 — WS-17 whitelist/exclusion config      |
+| Dark/light mode color contrast failures                          | Medium       | Medium          | Phase 6 — WS-19 dual-theme WCAG testing         |
 
 ---
 
 ## Success Metrics
 
-| Metric | Current | Phase 1 Target | Phase 2 Target | Phase 4 Target | Phase 5 Target | Phase 6 Target |
-| -------- | --------- | --------------- | --------------- | --------------- | --------------- | --------------- |
-| Test coverage | 0% | ≥80% | ≥85% | ≥90% | ≥90% all platforms | ≥90% |
-| Automated a11y violations | Unknown | ≤5 non-critical | 0 critical, ≤3 serious | 0 violations | 0 (web + mobile + desktop) | 0 (both themes) |
-| VPAT conformance | None | N/A | ≥85% "Supports" | ≥95% "Supports" | ≥95% all channels | ≥95% |
-| OWASP Top 10 gaps | 3+ (CSP, CSRF, logging) | 0 critical | 0 | 0 | 0 (incl. MASVS, LLM Top 10) | 0 |
-| NIST 800-171 controls met | Unknown | N/A | ≥70/110 | ≥100/110 | ≥100/110 | ≥100/110 |
-| CUI marking capability | None | N/A | Full implementation | Full + print/PDF | Full + desktop native print | Full + tooltips in print |
-| SBOM generation | None | N/A | Automated per release | Automated + VEX | All platforms (web + desktop) | All platforms |
-| Compliance frameworks | 10 | 10 | 12 (add 800-53, 800-171r3) | 12+ | 12+ | 12+ |
-| Documentation pages | 5 | 8 (add CHANGELOG, CONTRIBUTING, OpenAPI) | 10+ | 15+ | 20+ (all platform guides) | 22+ (+ Glossary) |
-| CI/CD pipeline | None | Lint → Test → Build | + SAST + a11y + SBOM | + DAST + monitoring | + mobile CI + desktop CI | + Lighthouse CI |
-| Structured log coverage | 0% | N/A | N/A | 100% of routes | 100% all platforms | 100% |
-| USACE templates | 0 | 0 | 0 | 7+ document types | 7+ document types | 7+ |
-| Lighthouse PWA score | N/A | N/A | N/A | N/A | ≥90 | ≥90 |
-| Mobile app MASVS compliance | N/A | N/A | N/A | N/A | L1 full, L2 partial | L1 full |
-| Desktop installer coverage | N/A | N/A | N/A | N/A | Windows + macOS + Linux | All 3 |
-| ESLint/Prettier compliance | 0% | 100% | 100% | 100% | 100% (all languages linted) | 100% |
-| TypeScript migration | 0% JS→TS | N/A | N/A | N/A | ≥50% strict TS | ≥50% |
-| Dev Container ready | No | No | No | No | Yes (one-click onboarding) | Yes |
-| Glossary terms defined | 0 | N/A | N/A | N/A | N/A | ≥200 terms |
-| Nav consistency (shared component) | 0/7 pages | N/A | N/A | N/A | N/A | 8/8 pages (single source) |
-| Pages with full footer | 1/7 | N/A | N/A | N/A | N/A | 8/8 pages |
-| Open Graph meta tags | 0/7 pages | N/A | N/A | N/A | N/A | 8/8 pages |
-| Emoji icons remaining | 30+ | N/A | N/A | N/A | N/A | 0 (all SVG) |
-| Lighthouse Performance score | Unknown | N/A | N/A | N/A | N/A | ≥90 all pages |
-| Schema.org structured data | 0 types | N/A | N/A | N/A | N/A | 5+ types |
+| Metric                             | Current                 | Phase 1 Target                           | Phase 2 Target             | Phase 4 Target      | Phase 5 Target                | Phase 6 Target            |
+| ---------------------------------- | ----------------------- | ---------------------------------------- | -------------------------- | ------------------- | ----------------------------- | ------------------------- |
+| Test coverage                      | 0%                      | ≥80%                                     | ≥85%                       | ≥90%                | ≥90% all platforms            | ≥90%                      |
+| Automated a11y violations          | Unknown                 | ≤5 non-critical                          | 0 critical, ≤3 serious     | 0 violations        | 0 (web + mobile + desktop)    | 0 (both themes)           |
+| VPAT conformance                   | None                    | N/A                                      | ≥85% "Supports"            | ≥95% "Supports"     | ≥95% all channels             | ≥95%                      |
+| OWASP Top 10 gaps                  | 3+ (CSP, CSRF, logging) | 0 critical                               | 0                          | 0                   | 0 (incl. MASVS, LLM Top 10)   | 0                         |
+| NIST 800-171 controls met          | Unknown                 | N/A                                      | ≥70/110                    | ≥100/110            | ≥100/110                      | ≥100/110                  |
+| CUI marking capability             | None                    | N/A                                      | Full implementation        | Full + print/PDF    | Full + desktop native print   | Full + tooltips in print  |
+| SBOM generation                    | None                    | N/A                                      | Automated per release      | Automated + VEX     | All platforms (web + desktop) | All platforms             |
+| Compliance frameworks              | 10                      | 10                                       | 12 (add 800-53, 800-171r3) | 12+                 | 12+                           | 12+                       |
+| Documentation pages                | 5                       | 8 (add CHANGELOG, CONTRIBUTING, OpenAPI) | 10+                        | 15+                 | 20+ (all platform guides)     | 22+ (+ Glossary)          |
+| CI/CD pipeline                     | None                    | Lint → Test → Build                      | + SAST + a11y + SBOM       | + DAST + monitoring | + mobile CI + desktop CI      | + Lighthouse CI           |
+| Structured log coverage            | 0%                      | N/A                                      | N/A                        | 100% of routes      | 100% all platforms            | 100%                      |
+| USACE templates                    | 0                       | 0                                        | 0                          | 7+ document types   | 7+ document types             | 7+                        |
+| Lighthouse PWA score               | N/A                     | N/A                                      | N/A                        | N/A                 | ≥90                           | ≥90                       |
+| Mobile app MASVS compliance        | N/A                     | N/A                                      | N/A                        | N/A                 | L1 full, L2 partial           | L1 full                   |
+| Desktop installer coverage         | N/A                     | N/A                                      | N/A                        | N/A                 | Windows + macOS + Linux       | All 3                     |
+| ESLint/Prettier compliance         | 0%                      | 100%                                     | 100%                       | 100%                | 100% (all languages linted)   | 100%                      |
+| TypeScript migration               | 0% JS→TS                | N/A                                      | N/A                        | N/A                 | ≥50% strict TS                | ≥50%                      |
+| Dev Container ready                | No                      | No                                       | No                         | No                  | Yes (one-click onboarding)    | Yes                       |
+| Glossary terms defined             | 0                       | N/A                                      | N/A                        | N/A                 | N/A                           | ≥200 terms                |
+| Nav consistency (shared component) | 0/7 pages               | N/A                                      | N/A                        | N/A                 | N/A                           | 8/8 pages (single source) |
+| Pages with full footer             | 1/7                     | N/A                                      | N/A                        | N/A                 | N/A                           | 8/8 pages                 |
+| Open Graph meta tags               | 0/7 pages               | N/A                                      | N/A                        | N/A                 | N/A                           | 8/8 pages                 |
+| Emoji icons remaining              | 30+                     | N/A                                      | N/A                        | N/A                 | N/A                           | 0 (all SVG)               |
+| Lighthouse Performance score       | Unknown                 | N/A                                      | N/A                        | N/A                 | N/A                           | ≥90 all pages             |
+| Schema.org structured data         | 0 types                 | N/A                                      | N/A                        | N/A                 | N/A                           | 5+ types                  |
 
 ---
 
 ## Appendix A: Effort Summary
 
-| Phase | Items | Estimated Effort | Calendar |
-| ------- | ------- | ----------------- | ---------- |
-| Phase 1 (Foundation) | 23 | ~95 hours | Weeks 1–4 |
-| Phase 2 (Gov Readiness) | 25 | ~195 hours | Weeks 5–10 |
-| Phase 3 (Enterprise) | 29 | ~235 hours | Weeks 11–18 |
-| Phase 4 (Advanced) | 23 | ~305 hours | Weeks 19–26 |
-| Phase 5 (Platform Expansion) | 60 | ~480 hours | Weeks 27–36 |
-| Phase 6 (Web Presence Redesign) | 32 | ~235 hours | Weeks 37–42 |
-| **Total** | **192** | **~1,545 hours** | **~42 weeks** |
+| Phase                           | Items   | Estimated Effort | Calendar      |
+| ------------------------------- | ------- | ---------------- | ------------- |
+| Phase 1 (Foundation)            | 23      | ~95 hours        | Weeks 1–4     |
+| Phase 2 (Gov Readiness)         | 25      | ~195 hours       | Weeks 5–10    |
+| Phase 3 (Enterprise)            | 29      | ~235 hours       | Weeks 11–18   |
+| Phase 4 (Advanced)              | 23      | ~305 hours       | Weeks 19–26   |
+| Phase 5 (Platform Expansion)    | 60      | ~480 hours       | Weeks 27–36   |
+| Phase 6 (Web Presence Redesign) | 32      | ~235 hours       | Weeks 37–42   |
+| **Total**                       | **192** | **~1,545 hours** | **~42 weeks** |
 
 ---
 
@@ -1052,53 +1070,53 @@ prefers-color-scheme, Web Content Accessibility Guidelines (color contrast in bo
 The following deep research was conducted to produce this plan:
 
 1. **Agentic Software Development** — Multi-agent architecture patterns, AutoGen/Semantic Kernel/LangChain, AI safety/guardrails, Responsible AI (NIST AI RMF, ISO 42001), MLOps/LLMOps, agent testing,
-API design, state management, error handling, observability. Results documented in [AGENTIC-SOFTWARE-DEVELOPMENT-REPORT.md](AGENTIC-SOFTWARE-DEVELOPMENT-REPORT.md).
+   API design, state management, error handling, observability. Results documented in [AGENTIC-SOFTWARE-DEVELOPMENT-REPORT.md](AGENTIC-SOFTWARE-DEVELOPMENT-REPORT.md).
 
 2. **Government & Military Standards** — USACE ER/EP series, ERDC publication standards, NEPA documentation, MIL-STD-498, MIL-STD-40051, DIDs, CDRL, TDP, Federal Plain Language, OMB A-130, NIST SP
-800-53 documentation, FedRAMP documentation, FISMA, NARA records management, DoD 5015.02-STD, retention schedules, MIL-HDBK-61A configuration management, ISO 9001, CMMI. Results documented in
-[GOVERNMENT-STANDARDS-COMPLIANCE-REPORT.md](GOVERNMENT-STANDARDS-COMPLIANCE-REPORT.md).
+   800-53 documentation, FedRAMP documentation, FISMA, NARA records management, DoD 5015.02-STD, retention schedules, MIL-HDBK-61A configuration management, ISO 9001, CMMI. Results documented in
+   [GOVERNMENT-STANDARDS-COMPLIANCE-REPORT.md](GOVERNMENT-STANDARDS-COMPLIANCE-REPORT.md).
 
 3. **Technical Writing Standards** — IEEE 1063/830, DITA, S1000D, ASD-STE100, Microsoft/Google/GPO style guides, information architecture, topic-based authoring, single-source publishing, content
-strategy, documentation-as-code, vale/textlint/markdownlint, readability scoring, Docs-as-Code, OpenAPI, ADRs, editorial workflows. Results documented in
-[TECHNICAL-WRITING-AND-ACCESSIBILITY-REPORT.md](TECHNICAL-WRITING-AND-ACCESSIBILITY-REPORT.md).
+   strategy, documentation-as-code, vale/textlint/markdownlint, readability scoring, Docs-as-Code, OpenAPI, ADRs, editorial workflows. Results documented in
+   [TECHNICAL-WRITING-AND-ACCESSIBILITY-REPORT.md](TECHNICAL-WRITING-AND-ACCESSIBILITY-REPORT.md).
 
 4. **Section 508 & Accessibility** — Revised Section 508 (2018), WCAG 2.1/2.2, VPAT 2.5, DHS Trusted Tester v5.1, axe-core/WAVE/Lighthouse/Pa11y/ARC, JAWS/NVDA/VoiceOver testing, WAI-ARIA 1.2, SPA
-accessibility, COGA cognitive accessibility, mobile accessibility, shift-left accessibility, champions programs, remediation planning, monitoring governance.
+   accessibility, COGA cognitive accessibility, mobile accessibility, shift-left accessibility, champions programs, remediation planning, monitoring governance.
 
 5. **Security, CUI & Data Protection** — CUI program (32 CFR 2002), NIST CSF 2.0, NIST SP 800-171 Rev 2/3, CMMC 2.0, OWASP Top 10/ASVS/API Security, FedRAMP, SBOM (EO 14028), SLSA, NIST Privacy
-Framework, PIAs/SORNs, NIST SSDF SP 800-218, SAST/DAST/SCA, Zero Trust (NIST SP 800-207, DoD ZTA).
+   Framework, PIAs/SORNs, NIST SSDF SP 800-218, SAST/DAST/SCA, Zero Trust (NIST SP 800-207, DoD ZTA).
 
 6. **Codebase Audit** — Full audit of all HTML pages, server code, middleware, routes, client JS, compliance data, templates, documentation, logs, and package.json against all standards above.
 
 7. **Full-Stack Software Development** — Frontend/backend architecture patterns, Twelve-Factor App methodology, database design (relational, NoSQL, migrations), REST/GraphQL API design, OpenAPI 3.0,
-authentication patterns (JWT, OAuth 2.0, OIDC), DevOps/CI-CD pipelines, code quality (linting, formatting, static analysis), performance optimization (caching, CDN, lazy loading, code splitting),
-monorepo tooling (Nx, Turborepo), error handling (RFC 7807), health checks, rate limiting, configuration management.
+   authentication patterns (JWT, OAuth 2.0, OIDC), DevOps/CI-CD pipelines, code quality (linting, formatting, static analysis), performance optimization (caching, CDN, lazy loading, code splitting),
+   monorepo tooling (Nx, Turborepo), error handling (RFC 7807), health checks, rate limiting, configuration management.
 
 8. **Progressive Web App (PWA) Development** — W3C Web App Manifest, Service Workers API, Workbox strategies (precaching, runtime caching, stale-while-revalidate), IndexedDB offline storage,
-Background Sync API, Push API (VAPID), Badging API, install prompt UX (beforeinstallprompt), cache versioning, update flows, Lighthouse PWA audit criteria, PWA security (HTTPS, CSP, SRI), app
-distribution (web, TWA, Microsoft Store).
+   Background Sync API, Push API (VAPID), Badging API, install prompt UX (beforeinstallprompt), cache versioning, update flows, Lighthouse PWA audit criteria, PWA security (HTTPS, CSP, SRI), app
+   distribution (web, TWA, Microsoft Store).
 
 9. **Mobile Application Development (iOS & Android)** — Native development (Swift/SwiftUI, Kotlin/Jetpack Compose), cross-platform frameworks (React Native, Flutter, .NET MAUI, Kotlin Multiplatform),
-OWASP MASVS v2.0 (AUTH, STORAGE, NETWORK, PLATFORM, CODE, RESILIENCE), OWASP MASTG, Apple Human Interface Guidelines, Material Design 3, mobile-specific accessibility (Dynamic Type, VoiceOver,
-TalkBack, switch control), biometric authentication, secure keychain/keystore, certificate pinning, app store submission/review, Fastlane CI/CD, mobile crash reporting.
+   OWASP MASVS v2.0 (AUTH, STORAGE, NETWORK, PLATFORM, CODE, RESILIENCE), OWASP MASTG, Apple Human Interface Guidelines, Material Design 3, mobile-specific accessibility (Dynamic Type, VoiceOver,
+   TalkBack, switch control), biometric authentication, secure keychain/keystore, certificate pinning, app store submission/review, Fastlane CI/CD, mobile crash reporting.
 
 10. **IDE & Developer Tooling** — VS Code workspace configuration, EditorConfig, Dev Containers (devcontainer.json), AI-assisted development (Copilot, Cursor, Windsurf, Codeium), Language Server
-Protocol, Debug Adapter Protocol, extension recommendations, task/launch configurations, Git hooks (husky, lint-staged, commitlint), JetBrains code style integration, remote development (SSH, WSL,
-containers), snippet libraries, team standardization patterns.
+    Protocol, Debug Adapter Protocol, extension recommendations, task/launch configurations, Git hooks (husky, lint-staged, commitlint), JetBrains code style integration, remote development (SSH, WSL,
+    containers), snippet libraries, team standardization patterns.
 
 11. **Coding Language Best Practices** — JavaScript/TypeScript (ESLint strict, ECMAScript 2024+, TypeScript 5.x strict mode, Node.js best practices), Python (PEP 8, PEP 484, Black, Ruff, mypy), Rust
-(Edition 2024, Clippy, cargo-audit), Go (Effective Go, staticcheck, govulncheck), C# (.NET conventions, Roslyn analyzers), Swift (API Design Guidelines, SwiftLint), Kotlin (Coding Conventions,
-detekt), SQL (SQLFluff, style guides), HTML/CSS (W3C Validator, Stylelint, BEM), Shell (ShellCheck, POSIX compliance), Semantic Versioning, Conventional Commits, JSDoc/TSDoc/docstring standards.
+    (Edition 2024, Clippy, cargo-audit), Go (Effective Go, staticcheck, govulncheck), C# (.NET conventions, Roslyn analyzers), Swift (API Design Guidelines, SwiftLint), Kotlin (Coding Conventions,
+    detekt), SQL (SQLFluff, style guides), HTML/CSS (W3C Validator, Stylelint, BEM), Shell (ShellCheck, POSIX compliance), Semantic Versioning, Conventional Commits, JSDoc/TSDoc/docstring standards.
 
 12. **Desktop Application Development** — Framework comparison (Electron, Tauri, WPF, WinUI 3, .NET MAUI, Qt, GTK, SwiftUI, Avalonia, Flutter Desktop), auto-update mechanisms (Squirrel,
-electron-updater, Tauri updater), native file system integration, system tray/menu bar, cross-platform packaging (MSIX, DMG, AppImage, Flatpak, Snap), code signing (Authenticode, Apple Developer ID,
-notarization), desktop security (context isolation, sandbox, CSP, no remote code execution), OS-level accessibility (UI Automation, macOS Accessibility API, ATK/AT-SPI), deep linking/protocol
-handlers, crash reporting, local-first architecture.
+    electron-updater, Tauri updater), native file system integration, system tray/menu bar, cross-platform packaging (MSIX, DMG, AppImage, Flatpak, Snap), code signing (Authenticode, Apple Developer ID,
+    notarization), desktop security (context isolation, sandbox, CSP, no remote code execution), OS-level accessibility (UI Automation, macOS Accessibility API, ATK/AT-SPI), deep linking/protocol
+    handlers, crash reporting, local-first architecture.
 
 13. **Web Presence & UX Audit (February 2026)** — Complete codebase review of all 7 HTML pages (index.html 616 lines, dashboard.html 927 lines, templates.html 135 lines, compliance.html 213 lines,
-mbai.html 142 lines, docs.html 165 lines, portal.html 180 lines), all 8 CSS files (5,925 total lines), all 10 JS files (8,729 total lines), navigation system (7 separate nav implementations with
-inconsistencies), header/menu architecture (flat 9-item menu overflowing at 1024px, no dropdowns, no mega-menu), visual design audit (emoji icons, missing footers, no design system documentation,
-dark-only theme, no Open Graph/structured data, no analytics on sub-pages), glossary/tooltip needs assessment (200+ undefined acronyms across compliance, MBAi, and documentation content).
+    mbai.html 142 lines, docs.html 165 lines, portal.html 180 lines), all 8 CSS files (5,925 total lines), all 10 JS files (8,729 total lines), navigation system (7 separate nav implementations with
+    inconsistencies), header/menu architecture (flat 9-item menu overflowing at 1024px, no dropdowns, no mega-menu), visual design audit (emoji icons, missing footers, no design system documentation,
+    dark-only theme, no Open Graph/structured data, no analytics on sub-pages), glossary/tooltip needs assessment (200+ undefined acronyms across compliance, MBAi, and documentation content).
 
 ---
 

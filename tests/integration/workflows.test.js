@@ -6,9 +6,10 @@
  *  2) Client CRUD:       create → read → update → list → delete → confirm gone
  *  3) Compliance lookup:  frameworks list → single framework → crossmap → oscal
  */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import request from 'supertest';
-import { createTestApp, adminToken, authHeader } from '../helpers.js';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { TEST_CREDENTIALS } from '../fixtures.js';
+import { adminToken, authHeader, createTestApp } from '../helpers.js';
 
 /* ──────────────────────────────────────────────
  *  1. Auth Flow Integration
@@ -22,8 +23,8 @@ vi.mock('../../server/models/database.js', () => ({
   initializeDatabase: vi.fn(),
 }));
 
-import { query, queryOne, execute, logActivity } from '../../server/models/database.js';
 import bcrypt from 'bcryptjs';
+import { execute, logActivity, query, queryOne } from '../../server/models/database.js';
 
 describe('Integration: Auth Flow', () => {
   let app;
@@ -51,28 +52,31 @@ describe('Integration: Auth Flow', () => {
       .mockReturnValueOnce(null) // existing user check
       .mockReturnValueOnce({ count: 0 }); // user count (first user → admin)
 
-    const regRes = await request(app)
-      .post('/api/auth/register')
-      .send({ username: 'newadmin', email: 'admin@sfg.com', password: 'Str0ngP@ss!' });
+    const regRes = await request(app).post('/api/auth/register').send({
+      username: TEST_CREDENTIALS.newUser.username,
+      email: TEST_CREDENTIALS.admin.email,
+      password: TEST_CREDENTIALS.admin.password,
+    });
 
     expect(regRes.status).toBe(201);
     expect(regRes.body.success).toBe(true);
     expect(regRes.body.message).toContain('administrator');
 
     // ── Step 2: Login ──
-    const hashed = await bcrypt.hash('Str0ngP@ss!', 10);
+    const hashed = await bcrypt.hash(TEST_CREDENTIALS.admin.password, 10);
     queryOne.mockReturnValueOnce({
       id: 42,
-      username: 'newadmin',
-      email: 'admin@sfg.com',
+      username: TEST_CREDENTIALS.newUser.username,
+      email: TEST_CREDENTIALS.admin.email,
       password: hashed,
       role: 'admin',
       is_active: 1,
     });
 
-    const loginRes = await request(app)
-      .post('/api/auth/login')
-      .send({ username: 'newadmin', password: 'Str0ngP@ss!' });
+    const loginRes = await request(app).post('/api/auth/login').send({
+      username: TEST_CREDENTIALS.newUser.username,
+      password: TEST_CREDENTIALS.admin.password,
+    });
 
     expect(loginRes.status).toBe(200);
     expect(loginRes.body.success).toBe(true);
@@ -82,8 +86,8 @@ describe('Integration: Auth Flow', () => {
     // ── Step 3: Verify token ──
     queryOne.mockReturnValueOnce({
       id: 42,
-      username: 'newadmin',
-      email: 'admin@sfg.com',
+      username: TEST_CREDENTIALS.newUser.username,
+      email: TEST_CREDENTIALS.admin.email,
       role: 'admin',
       is_active: 1,
     });
@@ -94,15 +98,15 @@ describe('Integration: Auth Flow', () => {
 
     expect(verifyRes.status).toBe(200);
     expect(verifyRes.body.success).toBe(true);
-    expect(verifyRes.body.user.username).toBe('newadmin');
+    expect(verifyRes.body.user.username).toBe(TEST_CREDENTIALS.newUser.username);
   });
 
   it('should reject login with wrong password', async () => {
-    const hashed = await bcrypt.hash('correct-password', 10);
+    const hashed = await bcrypt.hash(TEST_CREDENTIALS.admin.password, 10);
     queryOne.mockReturnValueOnce({
       id: 1,
       username: 'bob',
-      email: 'bob@test.com',
+      email: TEST_CREDENTIALS.user.email,
       password: hashed,
       role: 'user',
       is_active: 1,
@@ -110,7 +114,7 @@ describe('Integration: Auth Flow', () => {
 
     const res = await request(app)
       .post('/api/auth/login')
-      .send({ username: 'bob', password: 'wrong-password' });
+      .send({ username: 'bob', password: TEST_CREDENTIALS.invalid.wrongPassword });
 
     expect(res.status).toBe(401);
     expect(res.body.message).toBe('Invalid credentials');
@@ -119,7 +123,7 @@ describe('Integration: Auth Flow', () => {
   it('should reject verify with expired/invalid token', async () => {
     const res = await request(app)
       .get('/api/auth/verify')
-      .set('Authorization', 'Bearer invalid.token.here');
+      .set('Authorization', `Bearer ${TEST_CREDENTIALS.invalid.badToken}`);
 
     expect(res.status).toBe(401);
   });
@@ -127,9 +131,11 @@ describe('Integration: Auth Flow', () => {
   it('should reject registration with duplicate username', async () => {
     queryOne.mockReturnValueOnce({ id: 1 }); // existing user found
 
-    const res = await request(app)
-      .post('/api/auth/register')
-      .send({ username: 'existing', email: 'new@test.com', password: 'Password1!' });
+    const res = await request(app).post('/api/auth/register').send({
+      username: TEST_CREDENTIALS.existing.username,
+      email: TEST_CREDENTIALS.newUser.email,
+      password: TEST_CREDENTIALS.newUser.password,
+    });
 
     expect(res.status).toBe(409);
     expect(res.body.message).toContain('already exists');
@@ -161,7 +167,7 @@ describe('Integration: Client CRUD Lifecycle', () => {
   it('create → read → update → list → delete (full CRUD)', async () => {
     const clientData = {
       name: 'USACE District',
-      email: 'contracts@usace.mil',
+      email: TEST_CREDENTIALS.user.email,
       company: 'US Army Corps of Engineers',
       phone: '202-555-0100',
     };

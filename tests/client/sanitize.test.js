@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
 /**
  * Sanitize Module Tests
- * Tests the XSS prevention utilities: escapeHTML, sanitizeHTML, safeInnerHTML, createSafeFragment.
+ * Tests the XSS prevention utilities: escapeHTML, sanitizeHTML, safeInnerHTML, createSafeFragment, isSafeUrl.
  */
 import { beforeEach, describe, expect, it } from 'vitest';
 
-let escapeHTML, sanitizeHTML, safeInnerHTML, createSafeFragment;
+let escapeHTML, sanitizeHTML, safeInnerHTML, createSafeFragment, isSafeUrl;
 
 describe('Sanitize Module', () => {
   beforeEach(async () => {
@@ -14,6 +14,7 @@ describe('Sanitize Module', () => {
     sanitizeHTML = mod.sanitizeHTML;
     safeInnerHTML = mod.safeInnerHTML;
     createSafeFragment = mod.createSafeFragment;
+    isSafeUrl = mod.isSafeUrl;
   });
 
   describe('escapeHTML()', () => {
@@ -94,6 +95,45 @@ describe('Sanitize Module', () => {
       expect(frag).toBeInstanceOf(DocumentFragment);
       expect(frag.querySelector('p')).not.toBeNull();
       expect(frag.querySelector('script')).toBeNull();
+    });
+  });
+
+  describe('isSafeUrl()', () => {
+    it('should allow https:// URLs', () => {
+      expect(isSafeUrl('https://example.com')).toBe(true);
+    });
+
+    it('should allow http:// URLs', () => {
+      expect(isSafeUrl('http://example.com')).toBe(true);
+    });
+
+    it('should allow mailto: URLs', () => {
+      expect(isSafeUrl('mailto:user@example.com')).toBe(true);
+    });
+
+    it('should allow root-relative paths', () => {
+      expect(isSafeUrl('/some/path')).toBe(true);
+    });
+
+    it('should allow hash anchors', () => {
+      expect(isSafeUrl('#section')).toBe(true);
+    });
+
+    it('should block javascript: URLs', () => {
+      expect(isSafeUrl('javascript:alert(1)')).toBe(false);
+    });
+
+    it('should block data: URLs', () => {
+      expect(isSafeUrl('data:text/html,<script>xss</script>')).toBe(false);
+    });
+
+    it('should return false for empty string', () => {
+      expect(isSafeUrl('')).toBe(false);
+    });
+
+    it('should return false for non-string input', () => {
+      expect(isSafeUrl(null)).toBe(false);
+      expect(isSafeUrl(undefined)).toBe(false);
     });
   });
 });

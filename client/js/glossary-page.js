@@ -12,7 +12,7 @@
 
 import { initGlossaryTooltips } from './modules/glossaryTooltip.js';
 import { initIcons } from './modules/icons.js';
-import { escapeHTML } from './modules/sanitize.js';
+import { escapeHTML, safeInnerHTML } from './modules/sanitize.js';
 import { initUnifiedNav } from './modules/unifiedNav.js';
 
 // ─── Init page chrome ──────────────────────────────────────────
@@ -78,14 +78,17 @@ function renderAlphaIndex() {
   );
 
   const allLetters = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  indexEl.innerHTML = allLetters
-    .map((letter) => {
-      const hasTerms = letters.has(letter);
-      return hasTerms
-        ? `<li><a href="#letter-${letter}" class="alpha-link">${letter}</a></li>`
-        : `<li><span class="alpha-link disabled" aria-disabled="true">${letter}</span></li>`;
-    })
-    .join('');
+  safeInnerHTML(
+    indexEl,
+    allLetters
+      .map((letter) => {
+        const hasTerms = letters.has(letter);
+        return hasTerms
+          ? `<li><a href="#letter-${letter}" class="alpha-link">${letter}</a></li>`
+          : `<li><span class="alpha-link disabled" aria-disabled="true">${letter}</span></li>`;
+      })
+      .join('')
+  );
 }
 
 /**
@@ -125,7 +128,7 @@ function renderTermList() {
 
   // No results
   if (filtered.length === 0) {
-    listEl.innerHTML = '';
+    safeInnerHTML(listEl, '');
     if (noResultsEl) {
       noResultsEl.hidden = false;
     }
@@ -207,7 +210,7 @@ function renderTermList() {
     html += '</div></div>';
   }
 
-  listEl.innerHTML = html;
+  safeInnerHTML(listEl, html);
 
   // If there's a hash, scroll to it
   scrollToHash();
@@ -351,10 +354,12 @@ async function initGlossaryPage() {
   // Handle hash changes
   window.addEventListener('hashchange', scrollToHash);
 
-  // Prefill search from URL params
+  // Prefill search from URL params (sanitize to prevent DOM XSS from location)
   const params = new URLSearchParams(window.location.search);
-  const q = params.get('q');
-  if (q) {
+  const rawQ = params.get('q');
+  if (rawQ) {
+    // Strip any HTML tags from URL search param before entering the data flow
+    const q = rawQ.replace(/<[^>]*>/g, '').slice(0, 200);
     const input = document.getElementById('glossarySearch');
     if (input) {
       input.value = q;

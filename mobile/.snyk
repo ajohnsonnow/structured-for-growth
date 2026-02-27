@@ -1,0 +1,46 @@
+# Snyk (https://snyk.io) policy file — mobile sub-project.
+version: v1.25.0
+
+ignore:
+  # inflight@1.0.6 — Missing Release of Resource after Effective Lifetime.
+  # Transitive dev/build dependency pulled in by expo/EAS tooling.
+  # No upstream fix available; not present in the production mobile runtime.
+  SNYK-JS-INFLIGHT-6095116:
+    - '*':
+        reason: >-
+          Transitive dev/build dependency via expo/EAS tooling (glob chain).
+          No exploitable attack path in the production mobile app.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-20T00:00:00.000Z'
+
+  # node-forge@1.3.x vulnerabilities — overridden to ^1.3.3 in package.json overrides.
+  SNYK-JS-NODEFORGE-14114940:
+    - '*':
+        reason: >-
+          Overridden to node-forge@^1.3.3 in mobile/package.json overrides.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-20T00:00:00.000Z'
+
+  SNYK-JS-NODEFORGE-14125745:
+    - '*':
+        reason: >-
+          Overridden to node-forge@^1.3.3 in mobile/package.json overrides.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-20T00:00:00.000Z'
+
+  SNYK-JS-NODEFORGE-14125097:
+    - '*':
+        reason: >-
+          Overridden to node-forge@^1.3.3 in mobile/package.json overrides.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-20T00:00:00.000Z'
+
+  # minimatch ReDoS — overridden to ^10.2.1 in package.json overrides.
+  SNYK-JS-MINIMATCH-15309438:
+    - '*':
+        reason: >-
+          Overridden to minimatch@^10.2.1 in mobile/package.json overrides.
+        expires: '2027-06-01T00:00:00.000Z'
+        created: '2026-02-20T00:00:00.000Z'
+
+patch: {}

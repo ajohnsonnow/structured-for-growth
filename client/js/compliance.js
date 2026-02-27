@@ -4,7 +4,7 @@
  * the compliance knowledge base page within the SFG site.
  */
 
-import { escapeHTML } from './modules/sanitize.js';
+import { escapeHTML, safeInnerHTML } from './modules/sanitize.js';
 import { initUnifiedNav } from './modules/unifiedNav.js';
 
 // ── Template Registry ──────────────────────────────────────
@@ -404,12 +404,15 @@ function renderStats(fws) {
   if (!el) {
     return;
   }
-  el.innerHTML = `
+  safeInnerHTML(
+    el,
+    `
     <div class="compliance-stat"><span class="compliance-stat-value">${fws.length}</span><span class="compliance-stat-label">Frameworks</span></div>
     <div class="compliance-stat"><span class="compliance-stat-value">${totalControls}</span><span class="compliance-stat-label">Controls</span></div>
     <div class="compliance-stat"><span class="compliance-stat-value">${COMPLIANCE_TEMPLATES.length}</span><span class="compliance-stat-label">Templates</span></div>
     <div class="compliance-stat"><span class="compliance-stat-value">12</span><span class="compliance-stat-label">Cross-Mappings</span></div>
-  `;
+  `
+  );
 }
 
 // ── Render Framework Grid ──────────────────────────────────
@@ -420,12 +423,14 @@ function renderFrameworkGrid(fws) {
       '<p style="color:var(--text-muted);text-align:center;grid-column:1/-1;">No frameworks match your search.</p>';
     return;
   }
-  grid.innerHTML = fws
-    .map((fw) => {
-      const controlCount = (fw.domains || []).reduce((s, d) => s + (d.controls || []).length, 0);
-      const domainCount = (fw.domains || []).length;
-      const desc = fw.description ? fw.description.substring(0, 120) + '...' : '';
-      return `
+  safeInnerHTML(
+    grid,
+    fws
+      .map((fw) => {
+        const controlCount = (fw.domains || []).reduce((s, d) => s + (d.controls || []).length, 0);
+        const domainCount = (fw.domains || []).length;
+        const desc = fw.description ? fw.description.substring(0, 120) + '...' : '';
+        return `
       <div class="compliance-card" data-fw-id="${escapeHTML(fw.id)}">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <span class="compliance-card-title">${escapeHTML(fw.name)}</span>
@@ -446,8 +451,9 @@ function renderFrameworkGrid(fws) {
           <div class="compliance-card-stat"><span class="compliance-card-stat-value">${escapeHTML(fw.certificationDetails?.auditCycle || '-')}</span><span class="compliance-card-stat-label">Cycle</span></div>
         </div>
       </div>`;
-    })
-    .join('');
+      })
+      .join('')
+  );
 
   grid.querySelectorAll('.compliance-card[data-fw-id]').forEach((card) => {
     card.addEventListener('click', () => {
@@ -480,7 +486,9 @@ function showFrameworkModal(fw) {
     })
     .join('');
 
-  body.innerHTML = `
+  safeInnerHTML(
+    body,
+    `
     <p style="color:var(--text-secondary);margin-bottom:var(--spacing-md);">${escapeHTML(fw.description || '')}</p>
     <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:var(--spacing-md);">
       <span class="compliance-badge">${escapeHTML(fw.version || '')}</span>
@@ -507,7 +515,8 @@ function showFrameworkModal(fw) {
     `
         : ''
     }
-  `;
+  `
+  );
 
   document.getElementById('detailModal').classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -552,9 +561,11 @@ function renderTemplates(list) {
       '<p style="color:var(--text-muted);text-align:center;grid-column:1/-1;">No templates match your filters.</p>';
     return;
   }
-  grid.innerHTML = list
-    .map(
-      (t) => `
+  safeInnerHTML(
+    grid,
+    list
+      .map(
+        (t) => `
     <div class="compliance-card">
       <div style="display:flex;justify-content:space-between;align-items:center;">
         <span class="compliance-card-title">${t.title}</span>
@@ -567,8 +578,9 @@ function renderTemplates(list) {
       </div>
     </div>
   `
-    )
-    .join('');
+      )
+      .join('')
+  );
 }
 
 // ── Load Cross-Map ─────────────────────────────────────────
@@ -606,11 +618,14 @@ function renderCrossMap(mappings) {
     })
     .join('');
 
-  container.innerHTML = `
+  safeInnerHTML(
+    container,
+    `
     <table class="compliance-matrix">
       <thead><tr><th>Control Objective</th>${headers}</tr></thead>
       <tbody>${rows}</tbody>
-    </table>`;
+    </table>`
+  );
 }
 
 // ── Modal ──────────────────────────────────────────────────
@@ -665,7 +680,10 @@ async function loadEvidence() {
           return `<button class="cat-btn" data-framework="${escapeHTML(id)}">${escapeHTML(name)}</button>`;
         })
         .join('');
-      filterNav.innerHTML = `<button class="cat-btn active" data-framework="all">All Frameworks</button>${buttons}`;
+      safeInnerHTML(
+        filterNav,
+        `<button class="cat-btn active" data-framework="all">All Frameworks</button>${buttons}`
+      );
 
       filterNav.addEventListener('click', (e) => {
         const btn = e.target.closest('.cat-btn');
@@ -699,9 +717,11 @@ function renderEvidence(list) {
     return;
   }
 
-  grid.innerHTML = list
-    .map(
-      (ev) => `
+  safeInnerHTML(
+    grid,
+    list
+      .map(
+        (ev) => `
     <div class="compliance-card">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;">
         <span class="compliance-card-title" style="font-size:0.85rem;">${escapeHTML(ev.controlId)}</span>
@@ -717,8 +737,9 @@ function renderEvidence(list) {
       </div>
     </div>
   `
-    )
-    .join('');
+      )
+      .join('')
+  );
 }
 
 // ── OSCAL Catalogs ─────────────────────────────────────────
@@ -736,9 +757,11 @@ async function loadOSCAL() {
     const data = await res.json();
     const catalogs = data.catalogs || [];
 
-    grid.innerHTML = catalogs
-      .map(
-        (cat) => `
+    safeInnerHTML(
+      grid,
+      catalogs
+        .map(
+          (cat) => `
       <div class="compliance-card">
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <span class="compliance-card-title">${escapeHTML(cat.id.toUpperCase())}</span>
@@ -753,8 +776,9 @@ async function loadOSCAL() {
         </div>
       </div>
     `
-      )
-      .join('');
+        )
+        .join('')
+    );
   } catch {
     grid.innerHTML =
       '<p style="color:var(--text-muted);text-align:center;grid-column:1/-1;">OSCAL data requires the API server.</p>';

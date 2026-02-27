@@ -4,7 +4,7 @@
  * a searchable, tabbed documentation experience.
  */
 
-import { escapeHTML } from './modules/sanitize.js';
+import { escapeHTML, safeInnerHTML } from './modules/sanitize.js';
 import { initUnifiedNav } from './modules/unifiedNav.js';
 
 let manifest = null;
@@ -26,8 +26,10 @@ async function init() {
     }
     manifest = await res.json();
   } catch (_err) {
-    document.getElementById('docs-content').innerHTML =
-      `<div class="container"><div class="no-results">Could not load documentation manifest.<br>Run <code>npm run docs:generate</code> first.</div></div>`;
+    safeInnerHTML(
+      document.getElementById('docs-content'),
+      `<div class="container"><div class="no-results">Could not load documentation manifest.<br>Run <code>npm run docs:generate</code> first.</div></div>`
+    );
     return;
   }
 
@@ -46,13 +48,16 @@ async function init() {
 
 function renderMeta() {
   const s = manifest.summary;
-  document.getElementById('docsMeta').innerHTML = [
-    `<span class="meta-badge"><strong>${s.totalFeatures}</strong> Features</span>`,
-    `<span class="meta-badge"><strong>${s.totalRoutes}</strong> API Routes</span>`,
-    `<span class="meta-badge"><strong>${s.totalTemplates}</strong> Templates</span>`,
-    `<span class="meta-badge"><strong>${s.totalFrameworks}</strong> Frameworks</span>`,
-    `<span class="meta-badge">v<strong>${escapeHTML(manifest.version)}</strong></span>`,
-  ].join('');
+  safeInnerHTML(
+    document.getElementById('docsMeta'),
+    [
+      `<span class="meta-badge"><strong>${s.totalFeatures}</strong> Features</span>`,
+      `<span class="meta-badge"><strong>${s.totalRoutes}</strong> API Routes</span>`,
+      `<span class="meta-badge"><strong>${s.totalTemplates}</strong> Templates</span>`,
+      `<span class="meta-badge"><strong>${s.totalFrameworks}</strong> Frameworks</span>`,
+      `<span class="meta-badge">v<strong>${escapeHTML(manifest.version)}</strong></span>`,
+    ].join('')
+  );
 
   const ts = new Date(manifest.generated);
   const tsEl = document.getElementById('genTimestamp');
@@ -68,26 +73,32 @@ function renderMeta() {
 
 function renderOverview() {
   const s = manifest.summary;
-  document.getElementById('overviewStats').innerHTML = [
-    stat(s.totalFeatures, 'Features'),
-    stat(s.totalRoutes, 'API Endpoints'),
-    stat(s.totalTemplates, 'Code Templates'),
-    stat(s.totalFrameworks, 'Compliance Frameworks'),
-    stat(s.totalPages, 'Client Pages'),
-    stat(s.totalDocs, 'Doc Files'),
-  ].join('');
+  safeInnerHTML(
+    document.getElementById('overviewStats'),
+    [
+      stat(s.totalFeatures, 'Features'),
+      stat(s.totalRoutes, 'API Endpoints'),
+      stat(s.totalTemplates, 'Code Templates'),
+      stat(s.totalFrameworks, 'Compliance Frameworks'),
+      stat(s.totalPages, 'Client Pages'),
+      stat(s.totalDocs, 'Doc Files'),
+    ].join('')
+  );
 
-  document.getElementById('docsFileList').innerHTML = manifest.docs
-    .map(
-      (d) => `
+  safeInnerHTML(
+    document.getElementById('docsFileList'),
+    manifest.docs
+      .map(
+        (d) => `
     <div class="doc-file-card" data-search="${escapeHTML(d.file)} ${escapeHTML(d.headings.join(' '))}">
       <div class="doc-filename">${escapeHTML(d.file)}</div>
       <div class="doc-words">${d.wordCount.toLocaleString()} words</div>
       <div class="doc-headings">${escapeHTML(d.headings.slice(0, 6).join(' · '))}${d.headings.length > 6 ? ' …' : ''}</div>
     </div>
   `
-    )
-    .join('');
+      )
+      .join('')
+  );
 }
 
 function stat(val, label) {
@@ -97,11 +108,13 @@ function stat(val, label) {
 /* ── Features panel ─────────────────────────── */
 
 function renderFeatures() {
-  document.getElementById('featuresList').innerHTML = manifest.features
-    .map((f) => {
-      const routeCount = Array.isArray(f.relatedRoutes) ? f.relatedRoutes.length : 0;
-      const pages = (f.relatedPages || []).join(', ');
-      return `
+  safeInnerHTML(
+    document.getElementById('featuresList'),
+    manifest.features
+      .map((f) => {
+        const routeCount = Array.isArray(f.relatedRoutes) ? f.relatedRoutes.length : 0;
+        const pages = (f.relatedPages || []).join(', ');
+        return `
     <div class="feature-card" data-search="${escapeHTML(f.name)} ${escapeHTML(f.description)} ${escapeHTML(f.category)} ${escapeHTML(pages)}">
       <h3>${escapeHTML(f.name)}</h3>
       <p>${escapeHTML(f.description)}</p>
@@ -112,20 +125,24 @@ function renderFeatures() {
       ${pages ? `<div class="feature-routes">Pages: ${escapeHTML(pages)}</div>` : ''}
       ${routeCount ? `<div class="feature-routes">${routeCount} related endpoint${routeCount > 1 ? 's' : ''}</div>` : ''}
     </div>`;
-    })
-    .join('');
+      })
+      .join('')
+  );
 }
 
 /* ── API Reference panel ────────────────────── */
 
 function renderApi() {
   const modules = ['all', ...new Set(manifest.routes.map((r) => r.module))];
-  document.getElementById('apiFilters').innerHTML = modules
-    .map(
-      (m) =>
-        `<button class="api-filter-btn${m === 'all' ? ' active' : ''}" data-module="${escapeHTML(m)}">${m === 'all' ? 'All Modules' : escapeHTML(m)}</button>`
-    )
-    .join('');
+  safeInnerHTML(
+    document.getElementById('apiFilters'),
+    modules
+      .map(
+        (m) =>
+          `<button class="api-filter-btn${m === 'all' ? ' active' : ''}" data-module="${escapeHTML(m)}">${m === 'all' ? 'All Modules' : escapeHTML(m)}</button>`
+      )
+      .join('')
+  );
 
   renderApiRows('all');
 
@@ -144,9 +161,11 @@ function renderApi() {
 function renderApiRows(module) {
   const rows =
     module === 'all' ? manifest.routes : manifest.routes.filter((r) => r.module === module);
-  document.getElementById('apiTableBody').innerHTML = rows
-    .map(
-      (r) => `
+  safeInnerHTML(
+    document.getElementById('apiTableBody'),
+    rows
+      .map(
+        (r) => `
     <tr data-search="${escapeHTML(r.method)} ${escapeHTML(r.path)} ${escapeHTML(r.auth)} ${escapeHTML(r.module)} ${escapeHTML(r.description)}">
       <td><span class="method-badge method-${escapeHTML(r.method)}">${escapeHTML(r.method)}</span></td>
       <td class="path-cell">${escapeHTML(r.path)}</td>
@@ -155,20 +174,24 @@ function renderApiRows(module) {
       <td>${escapeHTML(r.description || '-')}</td>
     </tr>
   `
-    )
-    .join('');
+      )
+      .join('')
+  );
 }
 
 /* ── Templates panel ────────────────────────── */
 
 function renderTemplates() {
   const cats = ['all', ...new Set(manifest.templates.map((t) => t.category))];
-  document.getElementById('templateFilters').innerHTML = cats
-    .map(
-      (c) =>
-        `<button class="api-filter-btn${c === 'all' ? ' active' : ''}" data-cat="${escapeHTML(c)}">${c === 'all' ? 'All Categories' : escapeHTML(c)}</button>`
-    )
-    .join('');
+  safeInnerHTML(
+    document.getElementById('templateFilters'),
+    cats
+      .map(
+        (c) =>
+          `<button class="api-filter-btn${c === 'all' ? ' active' : ''}" data-cat="${escapeHTML(c)}">${c === 'all' ? 'All Categories' : escapeHTML(c)}</button>`
+      )
+      .join('')
+  );
 
   renderTemplateCards('all');
 
@@ -191,9 +214,11 @@ function renderTemplateCards(category) {
     category === 'all'
       ? manifest.templates
       : manifest.templates.filter((t) => t.category === category);
-  document.getElementById('templateGrid').innerHTML = items
-    .map(
-      (t) => `
+  safeInnerHTML(
+    document.getElementById('templateGrid'),
+    items
+      .map(
+        (t) => `
     <div class="template-doc-card" data-search="${escapeHTML(t.id)} ${escapeHTML(t.title)} ${escapeHTML(t.category)} ${escapeHTML(t.description)} ${escapeHTML(t.language)}">
       <h4>${escapeHTML(t.title)}</h4>
       <p>${escapeHTML(t.description)}</p>
@@ -204,16 +229,19 @@ function renderTemplateCards(category) {
       </div>
     </div>
   `
-    )
-    .join('');
+      )
+      .join('')
+  );
 }
 
 /* ── Compliance panel ───────────────────────── */
 
 function renderCompliance() {
-  document.getElementById('frameworkList').innerHTML = manifest.compliance.frameworks
-    .map(
-      (fw) => `
+  safeInnerHTML(
+    document.getElementById('frameworkList'),
+    manifest.compliance.frameworks
+      .map(
+        (fw) => `
     <div class="fw-doc-card" data-search="${escapeHTML(fw.id)} ${escapeHTML(fw.name)} ${escapeHTML(fw.description)}">
       <h4>${escapeHTML(fw.name)}</h4>
       <p>${escapeHTML(fw.description)}</p>
@@ -223,8 +251,9 @@ function renderCompliance() {
       </div>
     </div>
   `
-    )
-    .join('');
+      )
+      .join('')
+  );
 
   const oscalHtml = manifest.compliance.oscal
     .map(
@@ -239,11 +268,14 @@ function renderCompliance() {
     )
     .join('');
 
-  document.getElementById('complianceSupport').innerHTML = `
+  safeInnerHTML(
+    document.getElementById('complianceSupport'),
+    `
     <div class="arch-columns">
       <div><h4 style="color:var(--text-secondary);margin-bottom:0.5rem">OSCAL Catalogs</h4>${oscalHtml}</div>
       <div><h4 style="color:var(--text-secondary);margin-bottom:0.5rem">Cross-Framework Mappings</h4>${mapHtml}</div>
-    </div>`;
+    </div>`
+  );
 }
 
 /* ── Architecture panel ─────────────────────── */
@@ -251,48 +283,63 @@ function renderCompliance() {
 function renderArchitecture() {
   const pkg = manifest.pkg;
 
-  document.getElementById('pkgInfo').innerHTML = `
+  safeInnerHTML(
+    document.getElementById('pkgInfo'),
+    `
     <div class="pkg-info-grid">
       <div class="pkg-row"><span class="pkg-label">Name</span><span class="pkg-value">${escapeHTML(pkg.name)}</span></div>
       <div class="pkg-row"><span class="pkg-label">Version</span><span class="pkg-value">${escapeHTML(pkg.version)}</span></div>
       <div class="pkg-row"><span class="pkg-label">Node</span><span class="pkg-value">${escapeHTML(pkg.nodeEngine)}</span></div>
       ${pkg.description ? `<div class="pkg-row"><span class="pkg-label">Description</span><span class="pkg-value">${escapeHTML(pkg.description)}</span></div>` : ''}
-    </div>`;
+    </div>`
+  );
 
-  document.getElementById('scriptsList').innerHTML = pkg.scripts
-    .map(
-      (s) =>
-        `<div class="script-row" data-search="${escapeHTML(s.name)} ${escapeHTML(s.command)}"><span class="script-name">${escapeHTML(s.name)}</span><span class="script-cmd" title="${esc(s.command)}">${esc(s.command)}</span></div>`
-    )
-    .join('');
+  safeInnerHTML(
+    document.getElementById('scriptsList'),
+    pkg.scripts
+      .map(
+        (s) =>
+          `<div class="script-row" data-search="${escapeHTML(s.name)} ${escapeHTML(s.command)}"><span class="script-name">${escapeHTML(s.name)}</span><span class="script-cmd" title="${esc(s.command)}">${esc(s.command)}</span></div>`
+      )
+      .join('')
+  );
 
   const allDeps = [
     ...pkg.dependencies.map((d) => ({ ...d, dev: false })),
     ...pkg.devDependencies.map((d) => ({ ...d, dev: true })),
   ];
-  document.getElementById('depsList').innerHTML = allDeps
-    .map(
-      (d) =>
-        `<div class="dep-row" data-search="${escapeHTML(d.name)} ${escapeHTML(d.version)}"><span class="dep-name">${escapeHTML(d.name)}${d.dev ? ' <small style="color:var(--text-muted)">(dev)</small>' : ''}</span><span class="dep-ver">${escapeHTML(d.version)}</span></div>`
-    )
-    .join('');
+  safeInnerHTML(
+    document.getElementById('depsList'),
+    allDeps
+      .map(
+        (d) =>
+          `<div class="dep-row" data-search="${escapeHTML(d.name)} ${escapeHTML(d.version)}"><span class="dep-name">${escapeHTML(d.name)}${d.dev ? ' <small style="color:var(--text-muted)">(dev)</small>' : ''}</span><span class="dep-ver">${escapeHTML(d.version)}</span></div>`
+      )
+      .join('')
+  );
 
-  document.getElementById('stylesList').innerHTML = manifest.styles
-    .map(
-      (s) =>
-        `<div class="style-row" data-search="${escapeHTML(s.file)}"><span class="dep-name">${escapeHTML(s.file)}</span><span class="dep-ver">${s.selectors} rules / ${s.customProperties} vars</span></div>`
-    )
-    .join('');
+  safeInnerHTML(
+    document.getElementById('stylesList'),
+    manifest.styles
+      .map(
+        (s) =>
+          `<div class="style-row" data-search="${escapeHTML(s.file)}"><span class="dep-name">${escapeHTML(s.file)}</span><span class="dep-ver">${s.selectors} rules / ${s.customProperties} vars</span></div>`
+      )
+      .join('')
+  );
 
-  document.getElementById('pagesList').innerHTML = manifest.pages
-    .map(
-      (p) =>
-        `<div class="page-row" data-search="${escapeHTML(p.file)} ${escapeHTML(p.title)} ${escapeHTML(p.slug)}">
+  safeInnerHTML(
+    document.getElementById('pagesList'),
+    manifest.pages
+      .map(
+        (p) =>
+          `<div class="page-row" data-search="${escapeHTML(p.file)} ${escapeHTML(p.title)} ${escapeHTML(p.slug)}">
       <span class="dep-name">${escapeHTML(p.title)}</span>
       <span class="dep-ver">${escapeHTML(p.slug)} &nbsp;·&nbsp; ${p.sections}§ ${p.forms}f ${p.modals}m</span>
     </div>`
-    )
-    .join('');
+      )
+      .join('')
+  );
 }
 
 function esc(str) {

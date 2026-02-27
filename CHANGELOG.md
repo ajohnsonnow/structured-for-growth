@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.9] - 2026-02-26
+
+### Added
+
+- **`isSafeUrl(url)`** — New exported function in `client/js/modules/sanitize.js` that validates URLs against the `SAFE_PROTOCOLS` allow-list (`http:`, `https:`, `mailto:`, `#`, `/`). Blocks `javascript:` and `data:` URIs. Backed by 9 new tests.
+
+### Fixed
+
+- **`SAFE_PROTOCOLS` unused variable** — Wired the constant into the new `isSafeUrl()` validator, eliminating the ESLint `no-unused-vars` warning in `sanitize.js`
+
+### Changed
+
+- **Full deploy pipeline executed** — lint auto-fix, strict lint (0 errors / 0 warnings), full test suite (520 passing), docs regeneration, security audit, and production build (2026-02-26)
+- **docs-manifest.json** — Regenerated; 166 routes, 10 pages, 33 templates, 12 frameworks, 14 stylesheets
+- **WCAG-AUDIT-RESULTS.md** — Updated; 0 violations across all 10 pages (345 rules passed, 13 incomplete items need manual review)
+- **Production build** — Rebuilt; 44 modules transformed, all pages compiled (dist/)
+- **`package.json` overrides** — Added `esbuild: >=0.25.0` override, forcing esbuild from 0.24.2 to 0.27.3 (fixes GHSA-67mh-4wv8-2f99)
+
+### Security
+
+- **esbuild GHSA-67mh-4wv8-2f99** — Fixed via `npm overrides`; forced esbuild to >=0.25.0 (installed 0.27.3). Vite 5 declared `esbuild <=0.24.2` in its range; the override installs the patched version. Build and all 520 tests verified passing.
+- **ajv ReDoS GHSA-2g4f-4pwh-qvx6** — Resolved via `npm audit fix` (eslint transitive dep updated)
+- `npm audit --production`: 0 vulnerabilities
+
+### Stats
+
+- ESLint: 0 errors, 0 warnings
+- Tests: 520 passing across 48 files
+- Audit: 108 passed / 4 warnings / 0 errors
+- Production build: 44 modules, all 10 pages compiled
+- WCAG: 0 violations (zero critical, serious, moderate, or minor)
+- Routes: 166 | Pages: 10 | Templates: 33 | Frameworks: 12
+- npm audit: 0 vulnerabilities (production)
+
+---
+
 ## [1.8.2] - 2026-02-17
 
 ### Fixed

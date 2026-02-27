@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
+import { getJwtSecret } from '../middleware/auth.js';
 import { execute, logActivity, query, queryOne } from '../models/database.js';
 
 function handleValidation(req, res) {
@@ -14,7 +15,7 @@ function handleValidation(req, res) {
 
 const router = express.Router();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'structured-for-growth-portal-secret-2024';
+const JWT_SECRET = getJwtSecret();
 
 // Middleware to verify client portal token
 function authenticateClient(req, res, next) {

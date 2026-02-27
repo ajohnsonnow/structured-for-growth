@@ -225,7 +225,7 @@ Provide a structured gap analysis with:
 System Description:
 ${systemDescription}
 
-${currentControls?.length ? `Currently implemented controls: ${currentControls.join(', ')}` : ''}`;
+${Array.isArray(currentControls) && currentControls.length ? `Currently implemented controls: ${currentControls.join(', ')}` : ''}`;
 
       const result = await orchestrate({
         prompt,

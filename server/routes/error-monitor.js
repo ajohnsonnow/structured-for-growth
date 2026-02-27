@@ -14,6 +14,7 @@
  */
 
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 import { param, validationResult } from 'express-validator';
 import {
   getErrorByFingerprint,
@@ -32,6 +33,14 @@ function handleValidation(req, res) {
 }
 
 const router = express.Router();
+
+// Rate limit error-monitor routes to prevent abuse (NIST AU-6)
+const errorMonitorRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60,
+  message: { success: false, error: 'Too many requests to error monitor, try again later.' },
+});
+router.use(errorMonitorRateLimit);
 
 // All error-monitor routes require admin authentication
 router.use(authenticateToken, requireRole('admin'));
