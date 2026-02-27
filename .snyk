@@ -62,6 +62,7 @@ ignore:
   # CSRF rule — custom double-submit cookie middleware (csrfToken + csrfProtection)
   # is applied to all state-changing /api/ routes. This is not a missing CSRF guard;
   # it is a deliberate alternative to csurf (which is deprecated/unmaintained).
+  # Test file variant also included — test suite exercises the custom CSRF middleware.
   javascript/UseCsurfForExpress:
     - 'server/index.js':
         reason: >-
@@ -69,10 +70,6 @@ ignore:
           csrfProtection on all state-changing /api/ routes (OWASP A01-compliant).
         expires: '2027-06-01T00:00:00.000Z'
         created: '2026-02-19T00:00:00.000Z'
-
-  # Same rule, test-file variant — test suite exercises the custom CSRF middleware;
-  # the express() instance is a throwaway test harness, not a production server.
-  javascript/UseCsurfForExpress/test:
     - 'tests/middleware/csrf.test.js':
         reason: >-
           Test harness intentionally wires custom csrfProtection middleware.

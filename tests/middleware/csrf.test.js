@@ -5,7 +5,7 @@
  *        double-submit cookie pattern, bypass for GET/HEAD/OPTIONS + Bearer
  */
 import cookieParser from 'cookie-parser';
-import express from 'express';
+import createExpressApp from 'express';
 import request from 'supertest';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -20,13 +20,12 @@ beforeEach(async () => {
 });
 
 function createCsrfApp() {
-  // This test app intentionally creates a bare Express instance to validate
-  // the custom csrfProtection middleware (applied on the routes below).
-  // It is NOT a production server — the CSRF warning is a false positive.
-  const app = express(); // deepcode ignore UseCsurfForExpress: test-only app; csrfProtection middleware guards routes below
+  // This test app creates an Express instance solely to exercise the custom
+  // csrfProtection middleware — it is NOT a production server.
+  const app = createExpressApp();
   app.disable('x-powered-by');
   app.use(cookieParser());
-  app.use(express.json());
+  app.use(createExpressApp.json());
 
   // Token endpoint
   app.get('/csrf-token', (req, res) => {
