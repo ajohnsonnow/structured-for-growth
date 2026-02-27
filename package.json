@@ -5,8 +5,10 @@
   "main": "server/index.js",
   "type": "module",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
   },
+  "packageManager": "npm@10.8.2",
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "nodemon server/index.js",
